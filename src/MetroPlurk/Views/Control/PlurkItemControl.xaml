@@ -1,0 +1,73 @@
+﻿<UserControl
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:MetroPlurk_Views_ImageLoader="clr-namespace:MetroPlurk.Views.ImageLoader"
+    mc:Ignorable="d"
+    x:Class="MetroPlurk.PlurkItemControl"
+    d:DesignWidth="400" d:DesignHeight="207">
+
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="65" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <controls:ContextMenuService.ContextMenu>
+            <controls:ContextMenu x:Name="Menu" Background="#FFCF682F">
+                <controls:MenuItem x:Name="MenuReply" Header="reply" Margin="0,-10,0,-10" Foreground="{StaticResource PhoneForegroundBrush}" />
+                <controls:MenuItem x:Name="MenuReplurk" Header="replurk" Margin="0,-10,0,-10" Foreground="{StaticResource PhoneForegroundBrush}" />
+                <controls:MenuItem x:Name="MenuLike" Header="like" Margin="0,-10,0,-10" Foreground="{StaticResource PhoneForegroundBrush}" />
+                <controls:MenuItem x:Name="MenuMute" Header="mute" Margin="0,-10,0,-10" Foreground="{StaticResource PhoneForegroundBrush}" />
+            </controls:ContextMenu>
+        </controls:ContextMenuService.ContextMenu>
+        <Border Background="{Binding FavoriteColorView}">
+            <Border
+                Height="45" Width="45"
+                Margin="0,10,0,0"
+                VerticalAlignment="Top"
+                Background="{StaticResource PhoneInactiveBrush}">
+                <Image MetroPlurk_Views_ImageLoader:LowProfileImageLoader.UriSource="{Binding AvatarView}" />
+            </Border>
+        </Border>
+        <StackPanel Grid.Column="1">
+            <StackPanel Orientation="Horizontal" Height="40">
+                <TextBlock
+        			Text="{Binding UserName}"
+        			VerticalAlignment="Top"
+        			HorizontalAlignment="Left"
+        			TextWrapping="NoWrap"
+        			Style="{StaticResource PhoneTextTitle2Style}"
+        			Margin="0" MaxWidth="300"/>
+                <Border VerticalAlignment="Bottom" Margin="5,0,0,3">
+                    <Border.Background>
+                        <SolidColorBrush x:Name="QualifierColorBrush" />
+                    </Border.Background>
+                    <TextBlock Text="{Binding Qualifier}" Foreground="White" TextWrapping="NoWrap" Margin="5,0,5,0" />
+                </Border>
+            </StackPanel>
+            <TextBlock Text="{Binding ContentRaw}" TextWrapping="Wrap" Foreground="{StaticResource PhoneSubtleBrush}" />
+            <Grid
+                HorizontalAlignment="Right"
+                Width="350">
+                <Grid HorizontalAlignment="Right"
+                      Margin="0,0,120,0">
+                    <TextBlock Text="●" Foreground="Red" Visibility="{Binding IsAllResponsesSeen}" />
+                    <TextBlock                        
+        			    VerticalAlignment="Bottom" HorizontalAlignment="Right"
+        			    Text="{Binding ResponseCountView}"
+                        Margin="12,0,0,0"
+               			Foreground="{StaticResource PhoneForegroundBrush}"
+            			FontSize="{StaticResource PhoneFontSizeSmall}" />
+                </Grid>
+                <TextBlock
+        				Text="{Binding TimeView}"
+                        VerticalAlignment="Bottom" HorizontalAlignment="Right"
+                        Margin="0,0,5,0"
+        				FontSize="{StaticResource PhoneFontSizeSmall}"
+        				Foreground="{StaticResource PhoneForegroundBrush}" />
+            </Grid>
+        </StackPanel>
+    </Grid>
+</UserControl>
