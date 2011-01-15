@@ -10,42 +10,24 @@ namespace MetroPlurk.Helpers
         {
             switch (qualifier)
             {
-                case Plurto.Core.Qualifier.Asks:
-                    return QualifierColors.Asks;
-                case Plurto.Core.Qualifier.Feels:
-                    return QualifierColors.Feels;
-                case Plurto.Core.Qualifier.Gives:
-                    return QualifierColors.Gives;
-                case Plurto.Core.Qualifier.Has:
-                    return QualifierColors.Has;
-                case Plurto.Core.Qualifier.Hates:
-                    return QualifierColors.Hates;
-                case Plurto.Core.Qualifier.Hopes:
-                    return QualifierColors.Hopes;
-                case Plurto.Core.Qualifier.Is:
-                    return QualifierColors.Is;
-                case Plurto.Core.Qualifier.Likes:
-                    return QualifierColors.Likes;
-                case Plurto.Core.Qualifier.Loves:
-                    return QualifierColors.Loves;
-                case Plurto.Core.Qualifier.Needs:
-                    return QualifierColors.Needs;
-                case Plurto.Core.Qualifier.Says:
-                    return QualifierColors.Says;
-                case Plurto.Core.Qualifier.Shares:
-                    return QualifierColors.Shares;
-                case Plurto.Core.Qualifier.Thinks:
-                    return QualifierColors.Thinks;
-                case Plurto.Core.Qualifier.Wants:
-                    return QualifierColors.Wants;
-                case Plurto.Core.Qualifier.Was:
-                    return QualifierColors.Was;
-                case Plurto.Core.Qualifier.Will:
-                    return QualifierColors.Will;
-                case Plurto.Core.Qualifier.Wishes:
-                    return QualifierColors.Wishes;
-                case Plurto.Core.Qualifier.Wonders:
-                    return QualifierColors.Wonders;
+                case Qualifier.Asks: return QualifierColors.Asks;
+                case Qualifier.Feels: return QualifierColors.Feels;
+                case Qualifier.Gives: return QualifierColors.Gives;
+                case Qualifier.Has: return QualifierColors.Has;
+                case Qualifier.Hates: return QualifierColors.Hates;
+                case Qualifier.Hopes: return QualifierColors.Hopes;
+                case Qualifier.Is: return QualifierColors.Is;
+                case Qualifier.Likes: return QualifierColors.Likes;
+                case Qualifier.Loves: return QualifierColors.Loves;
+                case Qualifier.Needs: return QualifierColors.Needs;
+                case Qualifier.Says: return QualifierColors.Says;
+                case Qualifier.Shares: return QualifierColors.Shares;
+                case Qualifier.Thinks: return QualifierColors.Thinks;
+                case Qualifier.Wants: return QualifierColors.Wants;
+                case Qualifier.Was: return QualifierColors.Was;
+                case Qualifier.Will: return QualifierColors.Will;
+                case Qualifier.Wishes: return QualifierColors.Wishes;
+                case Qualifier.Wonders: return QualifierColors.Wonders;
             }
             return default(Color);
         }
