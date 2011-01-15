@@ -6,7 +6,7 @@ using MetroPlurk.Views;
 
 namespace MetroPlurk.ViewModels
 {
-    public class MainPageViewModel : LoginPivotViewModel, ISearchPage
+    public sealed class MainPageViewModel : LoginPivotViewModel, ISearchPage
     {
         private readonly INavigationService _navigationService;
         private readonly IPlurkService _plurkService;

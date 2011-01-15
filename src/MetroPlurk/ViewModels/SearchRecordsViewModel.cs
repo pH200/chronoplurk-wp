@@ -8,7 +8,7 @@ using MetroPlurk.Helpers;
 
 namespace MetroPlurk.ViewModels
 {
-    public class SearchRecordsViewModel : Screen
+    public sealed class SearchRecordsViewModel : Screen
     {
         public const int MaxRecords = 20;
 

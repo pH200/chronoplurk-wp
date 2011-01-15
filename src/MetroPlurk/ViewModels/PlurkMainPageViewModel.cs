@@ -7,7 +7,7 @@ using MetroPlurk.Views;
 
 namespace MetroPlurk.ViewModels
 {
-    public class PlurkMainPageViewModel : PlurkAppBarPage
+    public sealed class PlurkMainPageViewModel : PlurkAppBarPage
     {
         private readonly TimelineViewModel _timeline;
 

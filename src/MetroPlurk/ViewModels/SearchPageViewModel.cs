@@ -6,7 +6,7 @@ using MetroPlurk.Views;
 
 namespace MetroPlurk.ViewModels
 {
-    public class SearchPageViewModel : PlurkAppBarPage, ISearchPage
+    public sealed class SearchPageViewModel : PlurkAppBarPage, ISearchPage
     {
         private readonly IProgressService _progressService;
         private readonly SearchResultViewModel _searchResult;

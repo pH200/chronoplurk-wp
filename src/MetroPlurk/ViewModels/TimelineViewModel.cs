@@ -7,7 +7,7 @@ using Plurto.Entities;
 
 namespace MetroPlurk.ViewModels
 {
-    public class TimelineViewModel : TimelineBaseViewModel<PollingResult>, IRefreshSync
+    public sealed class TimelineViewModel : TimelineBaseViewModel<PollingResult>, IRefreshSync
     {
         public bool RefreshOnActivate { get; set; }
 

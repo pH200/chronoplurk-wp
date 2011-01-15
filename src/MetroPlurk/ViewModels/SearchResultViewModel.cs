@@ -7,7 +7,7 @@ using Plurto.Entities;
 
 namespace MetroPlurk.ViewModels
 {
-    public class SearchResultViewModel : TimelineBaseViewModel<SearchResult>
+    public sealed class SearchResultViewModel : TimelineBaseViewModel<SearchResult>
     {
         public SearchResultViewModel(IProgressService progressService, IPlurkService plurkService)
             : base(progressService, plurkService, "Searching")
