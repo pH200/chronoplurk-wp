@@ -9,10 +9,8 @@ using Plurto.Exceptions;
 
 namespace MetroPlurk.Helpers
 {
-    public static partial class PlurkResources
+    public static class PlurkErrorHandling
     {
-        public static TimeSpan DefaultTimeout = TimeSpan.FromSeconds(10.0);
-
         public static IObservable<TSource> PlurkException<TSource>
             (this IObservable<TSource> source, Action<PlurkError> onError, IProgressService progressService = null)
         {
@@ -26,7 +24,7 @@ namespace MetroPlurk.Helpers
                 {
                     return TimeoutHandling(source, onError, progressService);
                 }
-                PlurkErrorHandling(ex, onError);
+                PlurkExceptionHandling(ex, onError);
                 return Observable.Empty<TSource>();
             });
         }
@@ -48,7 +46,7 @@ namespace MetroPlurk.Helpers
             }, Scheduler.Dispatcher).First();
         }
 
-        public static void PlurkErrorHandling(Exception ex, Action<PlurkError> onError)
+        public static void PlurkExceptionHandling(Exception ex, Action<PlurkError> onError)
         {
             string errorMessage;
             var error = PlurkError.UnknownError;

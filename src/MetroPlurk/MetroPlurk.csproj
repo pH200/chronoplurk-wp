@@ -89,6 +89,7 @@
     <Compile Include="Helpers\IsoSettings.cs" />
     <Compile Include="Helpers\PlurkErrorHandling.cs" />
     <Compile Include="Helpers\PlurkResources.cs" />
+    <Compile Include="Helpers\QualifierConverter.cs" />
     <Compile Include="Services\PlurkService.cs" />
     <Compile Include="Services\ProgressService.cs" />
     <Compile Include="SpecialFrameAdapter.cs" />
