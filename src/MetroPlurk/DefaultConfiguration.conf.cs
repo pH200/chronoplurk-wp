@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using MetroPlurk.Helpers;
 
 namespace MetroPlurk
@@ -14,8 +14,10 @@ namespace MetroPlurk
         public static void Initialize()
         {
             #if CLEAN_DEBUG
-            PlurkResources.Username = "";
-            PlurkResources.Password = "";
+            PlurkResources.Username =
+""; // %%omit username%%
+            PlurkResources.Password =
+""; // %%omit password%%
             #endif
             
             // Set API key.

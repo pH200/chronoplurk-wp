@@ -33,3 +33,4 @@ _ReSharper*/
 *.[Pp]ublish.xml
 
 # Project Ignore Settings
+*.omitconf.bat
