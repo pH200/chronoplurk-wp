@@ -6,60 +6,28 @@ using Caliburn.Micro;
 using MetroPlurk.Helpers;
 using MetroPlurk.Services;
 using MetroPlurk.Views;
+using NotifyPropertyWeaver;
 
 namespace MetroPlurk.ViewModels
 {
+    [NotifyForAll]
     public class LoginViewModel : Screen
     {
-        private string _username;
-
-        public string Username
-        {
-            get { return _username; }
-            set
-            {
-                if (_username == value) return;
-                _username = value;
-                NotifyOfPropertyChange(() => Username);
-            }
-        }
-
-        private string _password;
-
-        public string Password
-        {
-            get { return _password; }
-            set
-            {
-                if (_password == value) return;
-                _password = value;
-                NotifyOfPropertyChange(() => Password);
-            }
-        }
-
-        private string _message;
-
-        public string Message
-        {
-            get { return _message; }
-            set
-            {
-                if (_message == value) return;
-                _message = value;
-                NotifyOfPropertyChange(() => Message);
-            }
-        }
-
-        public Uri RedirectUri { get; set; }
-
-        private LoginView _view;
-
         private readonly IPlurkService _plurkService;
         private readonly IProgressService _progressService;
         private readonly INavigationService _navigationService;
 
+        private LoginView _view;
+
         private IDisposable _requestHandler;
-        
+
+        public string Username { get; set; }
+
+        public string Password { get; set; }
+
+        public string Message { get; set; }
+
+        public Uri RedirectUri { get; set; }
 
         public LoginViewModel(
             INavigationService navigationService,

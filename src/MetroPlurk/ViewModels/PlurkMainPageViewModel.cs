@@ -4,28 +4,19 @@ using Caliburn.Micro;
 using MetroPlurk.Helpers;
 using MetroPlurk.Services;
 using MetroPlurk.Views;
+using NotifyPropertyWeaver;
 
 namespace MetroPlurk.ViewModels
 {
+    [NotifyForAll]
     public sealed class PlurkMainPageViewModel : PlurkAppBarPage
     {
         private readonly TimelineViewModel _timeline;
 
         private PlurkMainPage _view;
-
-        private string _username;
-
-        public string Username
-        {
-            get { return _username; }
-            set
-            {
-                if (_username == value) return;
-                _username = value;
-                NotifyOfPropertyChange(() => Username);
-            }
-        }
-
+        
+        public string Username { get; set; }
+        
         public PlurkMainPageViewModel(
             INavigationService navigationService,
             IPlurkService plurkService,
@@ -34,27 +25,6 @@ namespace MetroPlurk.ViewModels
             : base(navigationService, plurkService, loginViewModel)
         {
             _timeline = timeline;
-        }
-
-        private void InitializePlurkLogin()
-        {
-            PlurkService.LoadUserData();
-            PlurkService.LoginAsnc().PlurkException(
-                error => NavigationService.Navigate(new Uri("/Views/LoginViewModel.xaml", UriKind.Relative))).
-                ObserveOnDispatcher().Subscribe(message => InitializeAfterLogin());
-        }
-
-        private void InitializeAfterLogin()
-        {
-            Username = PlurkService.Username;
-            _timeline.RefreshSync();
-        }
-
-        protected override void OnViewLoaded(object view)
-        {
-            base.OnViewLoaded(view);
-
-            _view = view as PlurkMainPage;
         }
 
         protected override void OnInitialize()
@@ -77,6 +47,27 @@ namespace MetroPlurk.ViewModels
             {
                 InitializeAfterLogin();
             }
+        }
+        
+        protected override void OnViewLoaded(object view)
+        {
+            base.OnViewLoaded(view);
+
+            _view = view as PlurkMainPage;
+        }
+
+        private void InitializePlurkLogin()
+        {
+            PlurkService.LoadUserData();
+            PlurkService.LoginAsnc().PlurkException(
+                error => NavigationService.Navigate(new Uri("/Views/LoginViewModel.xaml", UriKind.Relative))).
+                ObserveOnDispatcher().Subscribe(message => InitializeAfterLogin());
+        }
+
+        private void InitializeAfterLogin()
+        {
+            Username = PlurkService.Username;
+            _timeline.RefreshSync();
         }
 
         public void RefreshAppBar()

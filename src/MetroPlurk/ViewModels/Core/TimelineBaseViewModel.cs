@@ -15,26 +15,19 @@ namespace MetroPlurk.ViewModels
     public abstract class TimelineBaseViewModel<TSource> : Screen
         where TSource : ITimeline
     {
+        #region Fields
         protected readonly INavigationService NavigationService;
         protected readonly IProgressService ProgressService;
         protected readonly IPlurkService PlurkService;
         private IDisposable _requestHandler;
+        private DateTime _timeBase;
+        private TSource _lastResult;
+        #endregion
+
+        /// <summary>
+        /// Message in progess service.
+        /// </summary>
         public string ProgressMessage { get; set; }
-
-        protected TimelineBaseViewModel
-            (INavigationService navigationService,
-            IProgressService progressService,
-            IPlurkService plurkService,
-            string progressMessage="Loading")
-        {
-            NavigationService = navigationService;
-            ProgressService = progressService;
-            PlurkService = plurkService;
-
-            ProgressMessage = progressMessage;
-
-            Items = new BindableCollection<PlurkItemViewModel>();
-        }
 
         public IObservableCollection<PlurkItemViewModel> Items { get; set; }
 
@@ -58,10 +51,8 @@ namespace MetroPlurk.ViewModels
 
         protected Func<TSource, IObservable<TSource>> RequestMoreHandler { get; set; }
 
-        private DateTime _timeBase;
-        private TSource _lastResult;
-
-        private int _listSelectedIndex = -1;
+        #region ListSelectedIndex
+        private int _listSelectedIndex = -1; // Must defualt as -1
 
         public int ListSelectedIndex
         {
@@ -72,6 +63,22 @@ namespace MetroPlurk.ViewModels
                 _listSelectedIndex = value;
                 NotifyOfPropertyChange(() => ListSelectedIndex);
             }
+        }
+        #endregion
+
+        protected TimelineBaseViewModel
+            (INavigationService navigationService,
+            IProgressService progressService,
+            IPlurkService plurkService,
+            string progressMessage = "Loading")
+        {
+            NavigationService = navigationService;
+            ProgressService = progressService;
+            PlurkService = plurkService;
+
+            ProgressMessage = progressMessage;
+
+            Items = new BindableCollection<PlurkItemViewModel>();
         }
 
         public void OnSelectionChanged(SelectionChangedEventArgs e)

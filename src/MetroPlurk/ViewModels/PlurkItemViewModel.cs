@@ -5,10 +5,12 @@ using System.Windows.Media;
 using Caliburn.Micro;
 using MetroPlurk.Helpers;
 using MetroPlurk.Services;
+using NotifyPropertyWeaver;
 using Plurto.Core;
 
 namespace MetroPlurk.ViewModels
 {
+    [NotifyForAll]
     public sealed class PlurkItemViewModel : PropertyChangedBase
     {
         private readonly IPlurkService _plurkService;
@@ -42,20 +44,7 @@ namespace MetroPlurk.ViewModels
 
         public CommentMode NoComments { get; set; }
 
-        private bool _isFavorite;
-
-        public bool IsFavorite
-        {
-            get { return _isFavorite; }
-            set
-            {
-                if (_isFavorite == value) return;
-                _isFavorite = value;
-                NotifyOfPropertyChange(() => IsFavorite);
-                NotifyOfPropertyChange(() => FavoriteColorView);
-                NotifyOfPropertyChange(() => LikeText);
-            }
-        }
+        public bool IsFavorite { get; set; }
 
         public SolidColorBrush FavoriteColorView
         {
@@ -83,20 +72,7 @@ namespace MetroPlurk.ViewModels
             }
         }
 
-        private UnreadStatus _isUnread;
-
-        public UnreadStatus IsUnread
-        {
-            get { return _isUnread; }
-            set
-            {
-                if (_isUnread == value) return;
-                _isUnread = value;
-                NotifyOfPropertyChange(() => IsUnread);
-                NotifyOfPropertyChange(() => IsUnreadView);
-                NotifyOfPropertyChange(() => MuteText);
-            }
-        }
+        public UnreadStatus IsUnread { get; set; }
 
         public Visibility IsUnreadView
         {
@@ -105,19 +81,6 @@ namespace MetroPlurk.ViewModels
 
         #region Context menu related properties
         public bool ContextMenuEnabled { get; set; }
-
-        private string _replyText = "reply";
-
-        public string ReplyText
-        {
-            get { return _replyText; }
-            set
-            {
-                if (_replyText == value) return;
-                _replyText = value;
-                NotifyOfPropertyChange(() => ReplyText);
-            }
-        }
 
         public bool CanReply
         {
@@ -160,8 +123,6 @@ namespace MetroPlurk.ViewModels
         {
             if (timeSpan.TotalSeconds <= 1)
             {
-                //return String.Format("{0} sec", (int)timeSpan.TotalSeconds);
-                //return string.Empty;
                 return "moments ago";
             }
             if (timeSpan.TotalSeconds < 120)

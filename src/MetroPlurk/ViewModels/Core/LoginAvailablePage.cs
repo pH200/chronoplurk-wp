@@ -3,6 +3,7 @@ using System.ComponentModel;
 using Caliburn.Micro;
 using MetroPlurk.Helpers;
 using Microsoft.Phone.Controls;
+using NotifyPropertyWeaver;
 
 namespace MetroPlurk.ViewModels
 {
@@ -14,61 +15,24 @@ namespace MetroPlurk.ViewModels
         void HideLoginPopup();
     }
 
+    [NotifyForAll]
     public class LoginAvailablePage : Conductor<IScreen>.Collection.OneActive, ILoginAvailablePage
     {
-        public LoginViewModel LoginViewModel { get; private set; }
         private PhoneApplicationPage _view;
+
         private bool _locked;
 
-        private double _popupWidth;
+        public LoginViewModel LoginViewModel { get; private set; }
+        
+        public double PopupWidth { get; set; }
 
-        public double PopupWidth
-        {
-            get { return _popupWidth; }
-            set
-            {
-                if (_popupWidth == value) return;
-                _popupWidth = value;
-                NotifyOfPropertyChange(() => PopupWidth);
-            }
-        }
+        public double PopupHeight { get; set; }
 
-        private double _popupHeight;
-
-        public double PopupHeight
-        {
-            get { return _popupHeight; }
-            set
-            {
-                if (_popupHeight == value) return;
-                _popupHeight = value;
-                NotifyOfPropertyChange(() => PopupHeight);
-            }
-        }
-
-        private bool _isLoginPopupOpen;
-
-        public bool IsLoginPopupOpen
-        {
-            get { return _isLoginPopupOpen; }
-            private set
-            {
-                if (_isLoginPopupOpen == value) return;
-                _isLoginPopupOpen = value;
-                NotifyOfPropertyChange(() => IsLoginPopupOpen);
-            }
-        }
+        public bool IsLoginPopupOpen { get; private set; }
         
         public LoginAvailablePage(LoginViewModel loginViewModel)
         {
             LoginViewModel = loginViewModel;
-        }
-
-        private void SetParent()
-        {
-            var node = LoginViewModel as IChild<IConductor>;
-            if(node != null && node.Parent != this)
-                node.Parent = this;
         }
 
         protected override void OnInitialize()
@@ -94,6 +58,13 @@ namespace MetroPlurk.ViewModels
             base.OnDeactivate(close);
             HideLoginPopup();
         }
+        
+        private void SetParent()
+        {
+            var node = LoginViewModel as IChild<IConductor>;
+            if (node != null && node.Parent != this)
+                node.Parent = this;
+        }
 
         private void SetPopupSize(PageOrientation orientation)
         {
@@ -112,7 +83,7 @@ namespace MetroPlurk.ViewModels
             }
         }
 
-        void ViewOrientationChanged(object sender, OrientationChangedEventArgs e)
+        private void ViewOrientationChanged(object sender, OrientationChangedEventArgs e)
         {
             SetPopupSize(e.Orientation);
         }

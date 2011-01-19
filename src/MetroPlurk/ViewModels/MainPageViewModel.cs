@@ -4,9 +4,11 @@ using System.Windows.Input;
 using Caliburn.Micro;
 using MetroPlurk.Services;
 using MetroPlurk.Views;
+using NotifyPropertyWeaver;
 
 namespace MetroPlurk.ViewModels
 {
+    [NotifyForAll]
     public sealed class MainPageViewModel : LoginPivotViewModel, ISearchPage
     {
         private readonly INavigationService _navigationService;
@@ -14,33 +16,11 @@ namespace MetroPlurk.ViewModels
         private readonly SearchResultViewModel _searchResult;
         private readonly SearchRecordsViewModel _searchRecords;
         private MainPage _view;
-        
-        private string _searchField;
 
         [SurviveTombstone]
-        public string SearchField
-        {
-            get { return _searchField; }
-            set
-            {
-                if (_searchField == value) return;
-                _searchField = value;
-                NotifyOfPropertyChange(() => SearchField);
-            }
-        }
+        public string SearchField { get; set; }
 
-        private string _loginButtonText;
-
-        public string LoginButtonText
-        {
-            get { return _loginButtonText; }
-            set
-            {
-                if (_loginButtonText == value) return;
-                _loginButtonText = value;
-                NotifyOfPropertyChange(() => LoginButtonText);
-            }
-        }
+        public string LoginButtonText { get; set; }
 
         public MainPageViewModel(
             INavigationService navigationService,
@@ -54,22 +34,6 @@ namespace MetroPlurk.ViewModels
             _plurkService = plurkService;
             _searchResult = searchResult;
             _searchRecords = searchRecords;
-        }
-
-        protected override void OnViewLoaded(object view)
-        {
-            base.OnViewLoaded(view);
-            
-            _view = view as MainPage;
-            
-            if (SearchField == null)
-            {
-                SearchField = "";
-            }
-            if (_searchResult.Items.IsEmpty())
-            {
-                _searchResult.Search(SearchField);
-            }
         }
 
         protected override void OnInitialize()
@@ -86,6 +50,22 @@ namespace MetroPlurk.ViewModels
             base.OnActivate();
 
             SetupLoginButton();
+        }
+
+        protected override void OnViewLoaded(object view)
+        {
+            base.OnViewLoaded(view);
+
+            _view = (MainPage) view;
+
+            if (SearchField == null)
+            {
+                SearchField = "";
+            }
+            if (_searchResult.Items.IsEmpty())
+            {
+                _searchResult.Search(SearchField);
+            }
         }
 
         private void SetupLoginButton()

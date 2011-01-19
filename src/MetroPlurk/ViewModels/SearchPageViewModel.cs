@@ -4,9 +4,11 @@ using System.Windows.Input;
 using Caliburn.Micro;
 using MetroPlurk.Services;
 using MetroPlurk.Views;
+using NotifyPropertyWeaver;
 
 namespace MetroPlurk.ViewModels
 {
+    [NotifyForAll]
     public sealed class SearchPageViewModel : PlurkAppBarPage, ISearchPage
     {
         private readonly IProgressService _progressService;
@@ -14,19 +16,8 @@ namespace MetroPlurk.ViewModels
         private readonly SearchRecordsViewModel _searchRecords;
         private SearchPage _view;
 
-        private string _searchField;
-
         [SurviveTombstone]
-        public string SearchField
-        {
-            get { return _searchField; }
-            set
-            {
-                if (_searchField == value) return;
-                _searchField = value;
-                NotifyOfPropertyChange(() => SearchField);
-            }
-        }
+        public string SearchField { get; set; }
 
         public SearchPageViewModel(
             INavigationService navigationService,
@@ -42,11 +33,32 @@ namespace MetroPlurk.ViewModels
             _searchRecords = searchRecords;
         }
 
+        protected override void OnInitialize()
+        {
+            base.OnInitialize();
+
+            Items.Add(_searchResult);
+            Items.Add(_searchRecords);
+            ActivateItem(_searchResult);
+        }
+        
         protected override void OnViewLoaded(object view)
         {
             base.OnViewLoaded(view);
 
-            _view = (SearchPage) view;
+            _view = (SearchPage)view;
+            SearchOnLoaded();
+        }
+
+        protected override void OnDeactivate(bool close)
+        {
+            base.OnDeactivate(close);
+
+            _progressService.Hide();
+        }
+
+        private void SearchOnLoaded()
+        {
             if (_searchResult.Items.IsEmpty() &&
                 SearchField != null &&
                 SearchField.Trim() != "")
@@ -57,22 +69,6 @@ namespace MetroPlurk.ViewModels
             {
                 _view.SearchField.Focus();
             }
-        }
-
-        protected override void OnInitialize()
-        {
-            base.OnInitialize();
-
-            Items.Add(_searchResult);
-            Items.Add(_searchRecords);
-            ActivateItem(_searchResult);
-        }
-
-        protected override void OnDeactivate(bool close)
-        {
-            base.OnDeactivate(close);
-
-            _progressService.Hide();
         }
 
         public void Search()
