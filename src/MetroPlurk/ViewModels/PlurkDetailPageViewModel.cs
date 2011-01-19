@@ -3,10 +3,12 @@ using System.Linq;
 using System.Windows.Media;
 using MetroPlurk.Helpers;
 using MetroPlurk.Services;
+using NotifyPropertyWeaver;
 using Plurto.Core;
 
 namespace MetroPlurk.ViewModels
 {
+    [NotifyForAll]
     public class PlurkDetailPageViewModel : LoginAvailablePage
     {
         private readonly IPlurkService _plurkService;
@@ -38,19 +40,7 @@ namespace MetroPlurk.ViewModels
 
         public CommentMode NoComments { get; set; }
 
-        private bool _isFavorite;
-
-        public bool IsFavorite
-        {
-            get { return _isFavorite; }
-            set
-            {
-                if (_isFavorite == value) return;
-                _isFavorite = value;
-                NotifyOfPropertyChange(() => IsFavorite);
-                NotifyOfPropertyChange(() => LikeText);
-            }
-        }
+        public bool IsFavorite { get; set; }
 
         public int ResponseCount { get; set; }
 
@@ -70,19 +60,7 @@ namespace MetroPlurk.ViewModels
             }
         }
 
-        private UnreadStatus _isUnread;
-
-        public UnreadStatus IsUnread
-        {
-            get { return _isUnread; }
-            set
-            {
-                if (_isUnread == value) return;
-                _isUnread = value;
-                NotifyOfPropertyChange(() => IsUnread);
-                NotifyOfPropertyChange(() => MuteText);
-            }
-        }
+        public UnreadStatus IsUnread { get; set; }
 
         public bool CanReply
         {

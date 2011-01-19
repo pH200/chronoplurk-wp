@@ -66,6 +66,9 @@
     <Reference Include="Microsoft.Phone.Controls" />
     <Reference Include="Microsoft.Phone.Controls.Toolkit, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b772ad94eb9ca604, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Phone.Interop" />
+    <Reference Include="NotifyPropertyWeaver">
+      <HintPath>..\Dependencies\NotifyPropertyWeaver.dll</HintPath>
+    </Reference>
     <Reference Include="System.CoreEx, Version=1.0.2838.370, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Interactive, Version=1.0.2838.370, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Observable" />
@@ -225,12 +228,11 @@
   <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
+  <UsingTask TaskName="NotifyPropertyWeaverMsBuildTask.WeavingTask" AssemblyFile="$(SolutionDir)Dependencies\NotifyPropertyWeaverMsBuildTask.dll" />
   <Target Name="AfterBuild">
+    <NotifyPropertyWeaverMsBuildTask.WeavingTask TargetPath="$(TargetPath)" EventInvokerName="NotifyOfPropertyChange" />
   </Target>
-  -->
   <ProjectExtensions />
 </Project>
