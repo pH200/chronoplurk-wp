@@ -128,11 +128,9 @@
     <Compile Include="Views\Control\PlurkItemControl.xaml.cs">
       <DependentUpon>PlurkItemControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ProgressBar\PerformanceProgressBar.cs" />
     <Compile Include="Views\ProgressBar\ProgressView.xaml.cs">
       <DependentUpon>ProgressView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ProgressBar\RelativeAnimationContentControl.cs" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -168,8 +166,8 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ProgressBar\ProgressView.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\SearchPage.xaml">
       <SubType>Designer</SubType>

@@ -6,7 +6,7 @@
     xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     xmlns:MetroPlurk_Views_ImageLoader="clr-namespace:MetroPlurk.Views.ImageLoader"
     mc:Ignorable="d"
-    x:Class="MetroPlurk.PlurkItemControl"
+    x:Class="MetroPlurk.Views.PlurkControls.PlurkItemControl"
     d:DesignWidth="400" d:DesignHeight="207">
 
     <Grid x:Name="LayoutRoot" Background="Transparent">

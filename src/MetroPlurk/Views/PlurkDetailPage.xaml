@@ -10,8 +10,9 @@
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro"
     xmlns:imgloader="clr-namespace:MetroPlurk.Views.ImageLoader"
-    xmlns:MetroPlurk="clr-namespace:MetroPlurk"
-    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="728"
+    xmlns:pcontrols="clr-namespace:MetroPlurk.Views.PlurkControls"
+    mc:Ignorable="d"
+    d:DesignWidth="480" d:DesignHeight="728"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
@@ -19,7 +20,7 @@
     shell:SystemTray.IsVisible="False">
 
     <Grid x:Name="LayoutRoot" Background="Transparent">
-        <MetroPlurk:PlurkDetailHeaderControl QualifierColor="{Binding QualifierColor}" />
+        <pcontrols:PlurkDetailHeaderControl QualifierColor="{Binding QualifierColor}" />
         
         <!-- login popup -->
         <Popup

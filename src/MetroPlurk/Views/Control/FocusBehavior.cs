@@ -1,11 +1,9 @@
-﻿using System;
-using System.Windows;
-using System.Windows.Controls;
+﻿using System.Windows;
 using System.Windows.Interactivity;
 
-namespace MetroPlurk
+namespace MetroPlurk.Views.PlurkControls
 {
-    public class FocusBehavior : Behavior<Control>
+    public class FocusBehavior : Behavior<System.Windows.Controls.Control>
     {
         protected override void OnAttached()
         {

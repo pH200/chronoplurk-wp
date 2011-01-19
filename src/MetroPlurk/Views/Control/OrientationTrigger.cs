@@ -1,9 +1,8 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Interactivity;
 using Microsoft.Phone.Controls;
 
-namespace MetroPlurk
+namespace MetroPlurk.Views.PlurkControls
 {
     public class OrientationTrigger : TriggerAction<PhoneApplicationPage>
     {

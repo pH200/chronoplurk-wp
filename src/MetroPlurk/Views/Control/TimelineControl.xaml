@@ -1,12 +1,11 @@
-﻿<UserControl x:Class="MetroPlurk.TimelineControl"
+﻿<UserControl x:Class="MetroPlurk.Views.PlurkControls.TimelineControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     xmlns:MetroPlurk="clr-namespace:MetroPlurk"
-    xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro"
-    mc:Ignorable="d"
+    xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro" xmlns:pcontrols="clr-namespace:MetroPlurk.Views.PlurkControls" mc:Ignorable="d"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
@@ -57,7 +56,7 @@
              cal:Message.Attach="[Event SelectionChanged] = [Action OnSelectionChanged($eventArgs)]">
         <ListBox.ItemTemplate>
             <DataTemplate>
-                <MetroPlurk:PlurkItemControl
+                <pcontrols:PlurkItemControl
                     QualifierColor="{Binding QualifierColor}"
                     ContextMenuEnabled="{Binding ContextMenuEnabled}" />
             </DataTemplate>

@@ -4,14 +4,14 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro"
-    xmlns:MetroPlurk="clr-namespace:MetroPlurk"
+    xmlns:pcontrols="clr-namespace:MetroPlurk.Views.PlurkControls"
     mc:Ignorable="d"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     d:DesignHeight="480" d:DesignWidth="480">
 
-    <MetroPlurk:TimelineControl
+    <pcontrols:TimelineControl
         x:Name="Timeline"
         cal:Message.Attach="[Event RequestMoreClick] = [Action RequestMore()]" />
 </UserControl>
