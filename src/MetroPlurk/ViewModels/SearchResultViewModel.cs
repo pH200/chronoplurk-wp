@@ -9,6 +9,8 @@ namespace MetroPlurk.ViewModels
 {
     public sealed class SearchResultViewModel : TimelineBaseViewModel<SearchResult>
     {
+        private Type _lastParent;
+
         public SearchResultViewModel
             (INavigationService navigationService,
             IProgressService progressService,
@@ -17,6 +19,25 @@ namespace MetroPlurk.ViewModels
         {
             this.DisplayName = "search";
             IsHasMoreHandler = plurks => plurks.HasMore;
+        }
+
+        protected override void OnActivate()
+        {
+            base.OnActivate();
+
+            if (_lastParent != null &&
+                _lastParent == typeof(MainPageViewModel) &&
+                !(Parent is MainPageViewModel))
+            {
+                this.Clear();
+            }
+        }
+
+        protected override void OnDeactivate(bool close)
+        {
+            _lastParent = Parent.GetType();
+
+            base.OnDeactivate(close);
         }
 
         public void Search(string query, int? offset = null)

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows.Input;
 using Caliburn.Micro;
 using MetroPlurk.Services;
@@ -65,7 +66,10 @@ namespace MetroPlurk.ViewModels
             {
                 SearchField = "";
             }
-            _searchResult.Search(SearchField);
+            if (_searchResult.Items.IsEmpty())
+            {
+                _searchResult.Search(SearchField);
+            }
         }
 
         protected override void OnInitialize()

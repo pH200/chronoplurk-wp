@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows.Input;
 using Caliburn.Micro;
 using MetroPlurk.Services;
@@ -46,7 +47,9 @@ namespace MetroPlurk.ViewModels
             base.OnViewLoaded(view);
 
             _view = (SearchPage) view;
-            if (SearchField != null && SearchField.Trim() != "")
+            if (_searchResult.Items.IsEmpty() &&
+                SearchField != null &&
+                SearchField.Trim() != "")
             {
                 Search();
             }

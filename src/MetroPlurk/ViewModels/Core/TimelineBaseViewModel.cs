@@ -6,10 +6,12 @@ using System.Windows.Controls;
 using Caliburn.Micro;
 using MetroPlurk.Helpers;
 using MetroPlurk.Services;
+using NotifyPropertyWeaver;
 using Plurto.Entities;
 
 namespace MetroPlurk.ViewModels
 {
+    [NotifyForAll]
     public abstract class TimelineBaseViewModel<TSource> : Screen
         where TSource : ITimeline
     {
@@ -36,33 +38,9 @@ namespace MetroPlurk.ViewModels
 
         public IObservableCollection<PlurkItemViewModel> Items { get; set; }
 
-        private string _message;
+        public string Message { get; set; }
 
-        public string Message
-        {
-            get { return _message; }
-            set
-            {
-                if (_message == value) return;
-                _message = value;
-                NotifyOfPropertyChange(() => Message);
-            }
-        }
-
-        private bool _isHasMore;
-
-        public bool IsHasMore
-        {
-            get { return _isHasMore; }
-            set
-            {
-                if (_isHasMore == value) return;
-                _isHasMore = value;
-                NotifyOfPropertyChange(() => IsHasMore);
-            }
-        }
-
-        private double _isHasMoreOpacity;
+        public bool IsHasMore { get; set; }
 
         public double IsHasMoreOpacity
         {
@@ -72,13 +50,7 @@ namespace MetroPlurk.ViewModels
                 {
                     return 0.0;
                 }
-                return _isHasMoreOpacity;
-            }
-            set
-            {
-                if (_isHasMoreOpacity == value) return;
-                _isHasMoreOpacity = value;
-                NotifyOfPropertyChange(() => IsHasMoreOpacity);
+                return IsHasMore ? 1.0 : 0.0;
             }
         }
 
@@ -113,6 +85,12 @@ namespace MetroPlurk.ViewModels
             NavigationService.Navigate(location);
         }
 
+        public void Clear()
+        {
+            Items.Clear();
+            IsHasMore = false;
+        }
+
         public void Request(IObservable<TSource> observable)
         {
             _timeBase = DateTime.Now;
@@ -129,9 +107,7 @@ namespace MetroPlurk.ViewModels
             Request(RequestMoreHandler(_lastResult), false);
         }
 
-        private void Request
-            (IObservable<TSource> observable,
-            bool clear)
+        private void Request(IObservable<TSource> observable, bool clear)
         {
             if (_requestHandler != null)
             {
@@ -144,8 +120,7 @@ namespace MetroPlurk.ViewModels
             IsHasMore = false;
             if (clear)
             {
-                Items.Clear();
-                IsHasMoreOpacity = 0.0;
+                Clear();
             }
 
             _requestHandler = observable.
@@ -177,6 +152,7 @@ namespace MetroPlurk.ViewModels
                         Qualifier = plurk.Plurk.QualifierTranslatedOrDefault,
                         PostDate = plurk.Plurk.PostDate,
                         PostTimeFromNow = _timeBase - plurk.Plurk.PostDate,
+                        Content = plurk.Plurk.Content,
                         ContentRaw = plurk.Plurk.ContentRaw,
                         AvatarView = plurk.User.AvatarBig,
                         IsFavorite = plurk.Plurk.Favorite,
@@ -187,7 +163,6 @@ namespace MetroPlurk.ViewModels
                         ContextMenuEnabled = PlurkService.IsLoaded,
                     }));
                 }
-                IsHasMoreOpacity = IsHasMore ? 1.0 : 0.0;
             }, () => Execute.OnUIThread(() => ProgressService.Hide()));
         }
 
