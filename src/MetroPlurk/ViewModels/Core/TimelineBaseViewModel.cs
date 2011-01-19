@@ -2,6 +2,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using Caliburn.Micro;
 using MetroPlurk.Helpers;
 using MetroPlurk.Services;
@@ -12,23 +13,28 @@ namespace MetroPlurk.ViewModels
     public abstract class TimelineBaseViewModel<TSource> : Screen
         where TSource : ITimeline
     {
+        protected readonly INavigationService NavigationService;
         protected readonly IProgressService ProgressService;
         protected readonly IPlurkService PlurkService;
         private IDisposable _requestHandler;
         public string ProgressMessage { get; set; }
 
         protected TimelineBaseViewModel
-            (IProgressService progressService, IPlurkService plurkService, string progressMessage="Loading")
+            (INavigationService navigationService,
+            IProgressService progressService,
+            IPlurkService plurkService,
+            string progressMessage="Loading")
         {
+            NavigationService = navigationService;
             ProgressService = progressService;
             PlurkService = plurkService;
 
             ProgressMessage = progressMessage;
 
-            Items = new ObservableCollection<PlurkItemViewModel>();
+            Items = new BindableCollection<PlurkItemViewModel>();
         }
 
-        public ObservableCollection<PlurkItemViewModel> Items { get; set; }
+        public IObservableCollection<PlurkItemViewModel> Items { get; set; }
 
         private string _message;
 
@@ -82,6 +88,30 @@ namespace MetroPlurk.ViewModels
 
         private DateTime _timeBase;
         private TSource _lastResult;
+
+        private int _listSelectedIndex = -1;
+
+        public int ListSelectedIndex
+        {
+            get { return _listSelectedIndex; }
+            set
+            {
+                if (_listSelectedIndex == value) return;
+                _listSelectedIndex = value;
+                NotifyOfPropertyChange(() => ListSelectedIndex);
+            }
+        }
+
+        public void OnSelectionChanged(SelectionChangedEventArgs e)
+        {
+            if (ListSelectedIndex == -1)
+            {
+                return;
+            }
+            var item = Items[ListSelectedIndex];
+            var location = new PlurkLocation(item);
+            NavigationService.Navigate(location);
+        }
 
         public void Request(IObservable<TSource> observable)
         {
@@ -141,25 +171,21 @@ namespace MetroPlurk.ViewModels
                 }
                 else
                 {
-                    foreach (var plurk in result)
+                    Items.AddRange(result.Select(plurk => new PlurkItemViewModel()
                     {
-                        var p = new PlurkItemViewModel(PlurkService)
-                        {
-                            UserName = plurk.User.DisplayNameOrNickName,
-                            Qualifier = plurk.Plurk.QualifierTranslatedOrDefault,
-                            PostDate = plurk.Plurk.PostDate,
-                            PostTimeFromNow = _timeBase - plurk.Plurk.PostDate,
-                            ContentRaw = plurk.Plurk.ContentRaw,
-                            AvatarView = plurk.User.AvatarBig,
-                            IsFavorite = plurk.Plurk.Favorite,
-                            QualifierEnum = plurk.Plurk.Qualifier,
-                            ResponseCount = plurk.Plurk.ResponseCount,
-                            IsUnread = plurk.Plurk.IsUnread,
-                            NoComments = plurk.Plurk.NoComments,
-                            ContextMenuEnabled = PlurkService.IsLoaded,
-                        };
-                        Execute.OnUIThread(() => Items.Add(p));
-                    }
+                        Username = plurk.User.DisplayNameOrNickName,
+                        Qualifier = plurk.Plurk.QualifierTranslatedOrDefault,
+                        PostDate = plurk.Plurk.PostDate,
+                        PostTimeFromNow = _timeBase - plurk.Plurk.PostDate,
+                        ContentRaw = plurk.Plurk.ContentRaw,
+                        AvatarView = plurk.User.AvatarBig,
+                        IsFavorite = plurk.Plurk.Favorite,
+                        QualifierEnum = plurk.Plurk.Qualifier,
+                        ResponseCount = plurk.Plurk.ResponseCount,
+                        IsUnread = plurk.Plurk.IsUnread,
+                        NoComments = plurk.Plurk.NoComments,
+                        ContextMenuEnabled = PlurkService.IsLoaded,
+                    }));
                 }
                 IsHasMoreOpacity = IsHasMore ? 1.0 : 0.0;
             }, () => Execute.OnUIThread(() => ProgressService.Hide()));

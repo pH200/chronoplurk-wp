@@ -33,7 +33,7 @@
         <StackPanel Grid.Column="1">
             <StackPanel Orientation="Horizontal" Height="40">
                 <TextBlock
-        			Text="{Binding UserName}"
+        			Text="{Binding Username}"
         			VerticalAlignment="Top"
         			HorizontalAlignment="Left"
         			TextWrapping="NoWrap"

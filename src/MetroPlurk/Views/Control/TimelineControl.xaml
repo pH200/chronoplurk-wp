@@ -52,7 +52,9 @@
     
     <ListBox x:Name="Items" ItemsSource="{Binding Items}"
              Style="{StaticResource FooterListBox}"
-             ItemContainerStyle="{StaticResource ListBoxItemStyle}">
+             ItemContainerStyle="{StaticResource ListBoxItemStyle}"
+             SelectedIndex="{Binding ListSelectedIndex, Mode=TwoWay}"
+             cal:Message.Attach="[Event SelectionChanged] = [Action OnSelectionChanged($eventArgs)]">
         <ListBox.ItemTemplate>
             <DataTemplate>
                 <MetroPlurk:PlurkItemControl

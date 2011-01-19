@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Linq;
-using System.Windows;
 using System.Windows.Media;
-using Caliburn.Micro;
 using MetroPlurk.Helpers;
 using MetroPlurk.Services;
 using Plurto.Core;
 
 namespace MetroPlurk.ViewModels
 {
-    public sealed class PlurkItemViewModel : PropertyChangedBase
+    public class PlurkDetailPageViewModel : LoginAvailablePage
     {
         private readonly IPlurkService _plurkService;
 
@@ -28,11 +26,9 @@ namespace MetroPlurk.ViewModels
             get { return QualifierConverter.ConvertQualifierColor(QualifierEnum); }
         }
 
-        public TimeSpan PostTimeFromNow { get; set; }
-
         public DateTime PostDate { get; set; }
 
-        public string TimeView { get { return ConvertTimeSpan(PostTimeFromNow, PostDate); } }
+        public string TimeView { get { return PostDate.ToShortDateString(); } }
 
         public string ContentRaw { get; set; }
 
@@ -52,16 +48,7 @@ namespace MetroPlurk.ViewModels
                 if (_isFavorite == value) return;
                 _isFavorite = value;
                 NotifyOfPropertyChange(() => IsFavorite);
-                NotifyOfPropertyChange(() => FavoriteColorView);
                 NotifyOfPropertyChange(() => LikeText);
-            }
-        }
-
-        public SolidColorBrush FavoriteColorView
-        {
-            get
-            {
-                return IsFavorite ? PlurkResources.PhoneAccentBrush : null;
             }
         }
 
@@ -93,35 +80,13 @@ namespace MetroPlurk.ViewModels
                 if (_isUnread == value) return;
                 _isUnread = value;
                 NotifyOfPropertyChange(() => IsUnread);
-                NotifyOfPropertyChange(() => IsUnreadView);
                 NotifyOfPropertyChange(() => MuteText);
-            }
-        }
-
-        public Visibility IsUnreadView
-        {
-            get { return IsUnread == UnreadStatus.Unread ? Visibility.Visible : Visibility.Collapsed; }
-        }
-
-        #region Context menu related properties
-        public bool ContextMenuEnabled { get; set; }
-
-        private string _replyText = "reply";
-
-        public string ReplyText
-        {
-            get { return _replyText; }
-            set
-            {
-                if (_replyText == value) return;
-                _replyText = value;
-                NotifyOfPropertyChange(() => ReplyText);
             }
         }
 
         public bool CanReply
         {
-            get 
+            get
             {
                 switch (NoComments)
                 {
@@ -145,42 +110,13 @@ namespace MetroPlurk.ViewModels
         {
             get { return IsFavorite ? "unlike" : "like"; }
         }
-        #endregion
-
-        public PlurkItemViewModel()
-        {
-        }
-
-        public PlurkItemViewModel(IPlurkService plurkService)
+        
+        public PlurkDetailPageViewModel
+            (IPlurkService plurkService,
+            LoginViewModel loginViewModel)
+            : base(loginViewModel)
         {
             _plurkService = plurkService;
-        }
-        
-        public static string ConvertTimeSpan(TimeSpan timeSpan, DateTime? postDate = null)
-        {
-            if (timeSpan.TotalSeconds <= 1)
-            {
-                //return String.Format("{0} sec", (int)timeSpan.TotalSeconds);
-                //return string.Empty;
-                return "recently";
-            }
-            if (timeSpan.TotalSeconds < 120)
-            {
-                return String.Format("{0} secs ago", (int)timeSpan.TotalSeconds);
-            }
-            if (timeSpan.TotalHours < 2)
-            {
-                return String.Format("{0} mins ago", (int)timeSpan.TotalMinutes);
-            }
-            if (timeSpan.TotalDays < 2)
-            {
-                return String.Format("{0} hours ago", (int)timeSpan.TotalHours);
-            }
-            if (postDate == null)
-            {
-                postDate = DateTime.Now - timeSpan;
-            }
-            return postDate.Value.ToString("MMM d");
         }
     }
 }

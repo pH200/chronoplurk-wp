@@ -11,8 +11,11 @@ namespace MetroPlurk.ViewModels
     {
         public bool RefreshOnActivate { get; set; }
 
-        public TimelineViewModel(IProgressService progressService, IPlurkService plurkService)
-            : base(progressService, plurkService)
+        public TimelineViewModel
+            (INavigationService navigationService,
+            IProgressService progressService,
+            IPlurkService plurkService)
+            : base(navigationService, progressService, plurkService)
         {
             this.DisplayName = "timeline";
             IsHasMoreHandler = plurks => { return plurks.Plurks != null && plurks.Plurks.Count > 0; };

@@ -9,8 +9,11 @@ namespace MetroPlurk.ViewModels
 {
     public sealed class SearchResultViewModel : TimelineBaseViewModel<SearchResult>
     {
-        public SearchResultViewModel(IProgressService progressService, IPlurkService plurkService)
-            : base(progressService, plurkService, "Searching")
+        public SearchResultViewModel
+            (INavigationService navigationService,
+            IProgressService progressService,
+            IPlurkService plurkService)
+            : base(navigationService, progressService, plurkService, "Searching")
         {
             this.DisplayName = "search";
             IsHasMoreHandler = plurks => plurks.HasMore;
