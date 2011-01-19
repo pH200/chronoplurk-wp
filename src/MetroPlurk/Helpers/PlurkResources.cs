@@ -21,6 +21,7 @@ namespace MetroPlurk.Helpers
         }
 
         public static SolidColorBrush PhoneForegroundBrush { get; set; }
+        public static SolidColorBrush PhoneAccentBrush { get; set; }
 
         public static Func<double> PhoneWidthGetter;
 

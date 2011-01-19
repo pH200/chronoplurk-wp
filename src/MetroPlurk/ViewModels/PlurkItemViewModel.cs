@@ -1,13 +1,20 @@
 ﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Media;
+using Caliburn.Micro;
 using MetroPlurk.Helpers;
+using MetroPlurk.Services;
 using Plurto.Core;
 
 namespace MetroPlurk.ViewModels
 {
-    public sealed class PlurkItemViewModel
+    public sealed class PlurkItemViewModel : PropertyChangedBase
     {
+        private readonly IPlurkService _plurkService;
+
+        public int UserId { get; set; }
+
         public string UserName { get; set; }
 
         public Qualifier QualifierEnum { get; set; }
@@ -29,17 +36,28 @@ namespace MetroPlurk.ViewModels
 
         public string AvatarView { get; set; }
 
-        public bool IsLike { get; set; }
+        public CommentMode NoComments { get; set; }
+
+        private bool _isFavorite;
+
+        public bool IsFavorite
+        {
+            get { return _isFavorite; }
+            set
+            {
+                if (_isFavorite == value) return;
+                _isFavorite = value;
+                NotifyOfPropertyChange(() => IsFavorite);
+                NotifyOfPropertyChange(() => FavoriteColorView);
+                NotifyOfPropertyChange(() => LikeText);
+            }
+        }
 
         public SolidColorBrush FavoriteColorView
         {
             get
             {
-                if (IsLike)
-                {
-                    return PlurkResources.PlurkColorBrightBrush;
-                }
-                return null;
+                return IsFavorite ? PlurkResources.PhoneAccentBrush : null;
             }
         }
 
@@ -61,14 +79,77 @@ namespace MetroPlurk.ViewModels
             }
         }
 
-        public int ResponsesSeen { get; set; }
+        private UnreadStatus _isUnread;
 
-        public Visibility IsAllResponsesSeen
+        public UnreadStatus IsUnread
         {
-            get { return ResponseCount == ResponsesSeen ? Visibility.Collapsed : Visibility.Visible; }
+            get { return _isUnread; }
+            set
+            {
+                if (_isUnread == value) return;
+                _isUnread = value;
+                NotifyOfPropertyChange(() => IsUnread);
+                NotifyOfPropertyChange(() => IsUnreadView);
+            }
         }
 
+        public Visibility IsUnreadView
+        {
+            get { return IsUnread == UnreadStatus.Unread ? Visibility.Visible : Visibility.Collapsed; }
+        }
+
+        #region Context menu related properties
         public bool ContextMenuEnabled { get; set; }
+
+        private string _replyText = "reply";
+
+        public string ReplyText
+        {
+            get { return _replyText; }
+            set
+            {
+                if (_replyText == value) return;
+                _replyText = value;
+                NotifyOfPropertyChange(() => ReplyText);
+            }
+        }
+
+        public bool CanReply
+        {
+            get 
+            {
+                switch (NoComments)
+                {
+                    case CommentMode.None:
+                        return true;
+                    case CommentMode.FriendsOnly:
+                        return (_plurkService != null &&
+                                _plurkService.FriendsId != null &&
+                                _plurkService.FriendsId.Contains(UserId));
+                }
+                return false;
+            }
+        }
+
+        public string MuteText
+        {
+            get { return IsUnread == UnreadStatus.Muted ? "unmute" : "mute"; }
+        }
+
+        public string LikeText
+        {
+            get { return IsFavorite ? "unlike" : "like"; }
+        }
+        #endregion
+
+        public PlurkItemViewModel()
+        {
+        }
+
+        public PlurkItemViewModel(IPlurkService plurkService)
+        {
+            _plurkService = plurkService;
+        }
         
         public static string ConvertTimeSpan(TimeSpan timeSpan, DateTime? postDate = null)
         {

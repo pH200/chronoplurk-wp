@@ -62,6 +62,9 @@ namespace MetroPlurk.Helpers
             else
             {
                 errorMessage = "Oops. Unknown error on this application. Leave a note to us.";
+#if DEBUG
+                throw ex;
+#endif
             }
 
             Execute.OnUIThread(() => 

@@ -143,7 +143,7 @@ namespace MetroPlurk.ViewModels
                 {
                     foreach (var plurk in result)
                     {
-                        var p = new PlurkItemViewModel()
+                        var p = new PlurkItemViewModel(PlurkService)
                         {
                             UserName = plurk.User.DisplayNameOrNickName,
                             Qualifier = plurk.Plurk.QualifierTranslatedOrDefault,
@@ -151,12 +151,13 @@ namespace MetroPlurk.ViewModels
                             PostTimeFromNow = _timeBase - plurk.Plurk.PostDate,
                             ContentRaw = plurk.Plurk.ContentRaw,
                             AvatarView = plurk.User.AvatarBig,
-                            IsLike = plurk.Plurk.Favorite,
+                            IsFavorite = plurk.Plurk.Favorite,
                             QualifierEnum = plurk.Plurk.Qualifier,
                             ResponseCount = plurk.Plurk.ResponseCount,
-                            ResponsesSeen = plurk.Plurk.ResponsesSeen,
+                            IsUnread = plurk.Plurk.IsUnread,
+                            NoComments = plurk.Plurk.NoComments,
+                            ContextMenuEnabled = PlurkService.IsLoaded,
                         };
-                        p.ContextMenuEnabled = PlurkService.IsLoaded;
                         Execute.OnUIThread(() => Items.Add(p));
                     }
                 }

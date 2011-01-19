@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using MetroPlurk.Helpers;
@@ -12,6 +13,7 @@ namespace MetroPlurk.Services
         string Username { get; set; }
         string Password { get; set; }
         CookieCollection Cookie { get; set; }
+        IEnumerable<int> FriendsId { get; set; }
         bool IsLoaded { get; }
         IObservable<bool> LoginAsnc();
         IObservable<bool> LoginAsnc(string username, string password);
@@ -25,6 +27,7 @@ namespace MetroPlurk.Services
         public string Username { get; set; }
         public string Password { get; set; }
         public CookieCollection Cookie { get; set; }
+        public IEnumerable<int> FriendsId { get; set; }
 
         public bool IsLoaded { get; private set; }
 

@@ -18,7 +18,6 @@ namespace MetroPlurk
             InitializeComponent();
 
             MenuReply.Click += OnMenuReplyClick;
-            MenuReplurk.Click += OnMenuReplurkClick;
             MenuLike.Click += OnMenuLikeClick;
             MenuMute.Click += OnMenuMuteClick;
         }
@@ -28,14 +27,6 @@ namespace MetroPlurk
         protected void OnMenuReplyClick(object sender, RoutedEventArgs e)
         {
             RoutedEventHandler handler = MenuReplyClick;
-            if (handler != null) handler(this, e);
-        }
-
-        public event RoutedEventHandler MenuReplurkClick;
-
-        public void OnMenuReplurkClick(object sender, RoutedEventArgs e)
-        {
-            RoutedEventHandler handler = MenuReplurkClick;
             if (handler != null) handler(this, e);
         }
 
@@ -106,6 +97,5 @@ namespace MetroPlurk
         }
 
         #endregion
-        
     }
 }

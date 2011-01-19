@@ -16,10 +16,9 @@
         </Grid.ColumnDefinitions>
         <controls:ContextMenuService.ContextMenu>
             <controls:ContextMenu x:Name="Menu" Background="#FFCF682F">
-                <controls:MenuItem x:Name="MenuReply" Header="reply" Margin="0,-10,0,-10" Foreground="{StaticResource PhoneForegroundBrush}" />
-                <controls:MenuItem x:Name="MenuReplurk" Header="replurk" Margin="0,-10,0,-10" Foreground="{StaticResource PhoneForegroundBrush}" />
-                <controls:MenuItem x:Name="MenuLike" Header="like" Margin="0,-10,0,-10" Foreground="{StaticResource PhoneForegroundBrush}" />
-                <controls:MenuItem x:Name="MenuMute" Header="mute" Margin="0,-10,0,-10" Foreground="{StaticResource PhoneForegroundBrush}" />
+                <controls:MenuItem x:Name="MenuReply" Header="{Binding ReplyText}" IsEnabled="{Binding CanReply}" Margin="0,-10,0,-10" Foreground="{StaticResource PhoneForegroundBrush}" />
+                <controls:MenuItem x:Name="MenuMute" Header="{Binding MuteText}" Margin="0,-10,0,-10" Foreground="{StaticResource PhoneForegroundBrush}" />
+                <controls:MenuItem x:Name="MenuLike" Header="{Binding LikeText}" Margin="0,-10,0,-10" Foreground="{StaticResource PhoneForegroundBrush}" />
             </controls:ContextMenu>
         </controls:ContextMenuService.ContextMenu>
         <Border Background="{Binding FavoriteColorView}">
@@ -53,7 +52,7 @@
                 Width="350">
                 <Grid HorizontalAlignment="Right"
                       Margin="0,0,120,0">
-                    <TextBlock Text="●" Foreground="Red" Visibility="{Binding IsAllResponsesSeen}" />
+                    <TextBlock Text="●" Foreground="{StaticResource PhoneAccentBrush}" Visibility="{Binding IsUnreadView}" />
                     <TextBlock                        
         			    VerticalAlignment="Bottom" HorizontalAlignment="Right"
         			    Text="{Binding ResponseCountView}"
