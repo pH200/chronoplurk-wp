@@ -19,7 +19,10 @@ namespace MetroPlurk.ViewModels
 
         public string Username { get; set; }
 
-        public Qualifier QualifierEnum { get; set; }
+        [NotifyProperty(AlsoNotifyFor = new []{"QualifierColor"})]
+        public int QualifierEnumInt { get; set; }
+        
+        public Qualifier QualifierEnum { get { return (Qualifier) QualifierEnumInt; } }
 
         public string Qualifier { get; set; }
 
@@ -28,9 +31,12 @@ namespace MetroPlurk.ViewModels
             get { return QualifierConverter.ConvertQualifierColor(QualifierEnum); }
         }
 
-        public DateTime PostDate { get; set; }
+        [NotifyProperty(AlsoNotifyFor = new []{"TimeView"})]
+        public long PostDateTicks { get; set; }
 
-        public string TimeView { get { return PostDate.ToShortDateString(); } }
+        public DateTime PostDate { get { return new DateTime(PostDateTicks, DateTimeKind.Local); } }
+
+        public string TimeView { get { return PostDate.ToString(); } }
 
         public string ContentRaw { get; set; }
 
@@ -38,7 +44,9 @@ namespace MetroPlurk.ViewModels
 
         public string AvatarView { get; set; }
 
-        public CommentMode NoComments { get; set; }
+        public int NoCommentsInt { get; set; }
+
+        public CommentMode NoComments { get { return (CommentMode) NoCommentsInt; } }
 
         public bool IsFavorite { get; set; }
 
@@ -60,7 +68,9 @@ namespace MetroPlurk.ViewModels
             }
         }
 
-        public UnreadStatus IsUnread { get; set; }
+        public int IsUnreadInt { get; set; }
+
+        public UnreadStatus IsUnread { get { return (UnreadStatus) IsUnreadInt; } }
 
         public bool CanReply
         {

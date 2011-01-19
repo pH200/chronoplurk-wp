@@ -117,6 +117,9 @@
     <Compile Include="ViewModels\TimelineViewModel.cs" />
     <Compile Include="Views\Control\FocusBehavior.cs" />
     <Compile Include="Views\Control\OrientationTrigger.cs" />
+    <Compile Include="Views\Control\PlurkDetailHeaderControl.xaml.cs">
+      <DependentUpon>PlurkDetailHeaderControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Control\TimelineControl.xaml.cs">
       <DependentUpon>TimelineControl.xaml</DependentUpon>
     </Compile>
@@ -137,6 +140,10 @@
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
     <Page Include="Themes\Generic.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Control\PlurkDetailHeaderControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

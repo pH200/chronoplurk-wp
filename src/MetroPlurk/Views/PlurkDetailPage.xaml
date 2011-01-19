@@ -19,29 +19,7 @@
     shell:SystemTray.IsVisible="False">
 
     <Grid x:Name="LayoutRoot" Background="Transparent">
-        <StackPanel>
-            <TextBlock
-        		Text="{Binding Username}"
-        		VerticalAlignment="Top"
-        		HorizontalAlignment="Left"
-        		TextWrapping="NoWrap"
-        		Style="{StaticResource PhoneTextTitle2Style}" />
-            <Border VerticalAlignment="Bottom" Margin="5,0,0,3">
-                <Border.Background>
-                    <SolidColorBrush x:Name="QualifierColorBrush" />
-                </Border.Background>
-                <TextBlock Text="{Binding Qualifier}" Foreground="White" TextWrapping="NoWrap" Margin="5,0,5,0" />
-            </Border>
-            <TextBlock Text="{Binding Content}" TextWrapping="Wrap" Foreground="{StaticResource PhoneSubtleBrush}" />
-            <TextBlock Text="{Binding ResponseCountView}"
-                       VerticalAlignment="Bottom"
-               		   Foreground="{StaticResource PhoneForegroundBrush}"
-            		   FontSize="{StaticResource PhoneFontSizeSmall}" />
-            <TextBlock Text="{Binding TimeView}"
-                       VerticalAlignment="Bottom"
-        			   FontSize="{StaticResource PhoneFontSizeSmall}"
-        			   Foreground="{StaticResource PhoneForegroundBrush}" />
-        </StackPanel>
+        <MetroPlurk:PlurkDetailHeaderControl QualifierColor="{Binding QualifierColor}" />
         
         <!-- login popup -->
         <Popup
