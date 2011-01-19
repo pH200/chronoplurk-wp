@@ -162,7 +162,7 @@ namespace MetroPlurk.ViewModels
             {
                 //return String.Format("{0} sec", (int)timeSpan.TotalSeconds);
                 //return string.Empty;
-                return "recently";
+                return "moments ago";
             }
             if (timeSpan.TotalSeconds < 120)
             {

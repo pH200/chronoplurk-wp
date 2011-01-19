@@ -51,7 +51,7 @@
                 HorizontalAlignment="Right"
                 Width="350">
                 <Grid HorizontalAlignment="Right"
-                      Margin="0,0,120,0">
+                      Margin="0,0,130,0">
                     <TextBlock Text="●" Foreground="{StaticResource PhoneAccentBrush}" Visibility="{Binding IsUnreadView}" />
                     <TextBlock                        
         			    VerticalAlignment="Bottom" HorizontalAlignment="Right"
