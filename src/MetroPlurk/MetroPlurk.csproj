@@ -16,8 +16,7 @@
     <TargetFrameworkProfile>WindowsPhone</TargetFrameworkProfile>
     <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
     <SilverlightApplication>true</SilverlightApplication>
-    <SupportedCultures>
-    </SupportedCultures>
+    <SupportedCultures></SupportedCultures>
     <XapOutputs>true</XapOutputs>
     <GenerateSilverlightManifest>true</GenerateSilverlightManifest>
     <XapFilename>MetroPlurk.xap</XapFilename>
@@ -66,9 +65,6 @@
     <Reference Include="Microsoft.Phone.Controls" />
     <Reference Include="Microsoft.Phone.Controls.Toolkit, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b772ad94eb9ca604, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Phone.Interop" />
-    <Reference Include="NotifyPropertyWeaver">
-      <HintPath>..\Dependencies\NotifyPropertyWeaver.dll</HintPath>
-    </Reference>
     <Reference Include="System.CoreEx, Version=1.0.2856.370, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Interactive, Version=1.0.2856.370, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Observable" />
@@ -79,6 +75,9 @@
     <Reference Include="System.Net" />
     <Reference Include="System.Windows.Interactivity, Version=3.7.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml" />
+    <Reference Include="NotifyPropertyWeaver">
+      <HintPath>$(SolutionDir)Dependencies\NotifyPropertyWeaver.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -233,11 +232,10 @@
   <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />
-  <Target Name="BeforeBuild">
-  </Target>
-  <UsingTask TaskName="NotifyPropertyWeaverMsBuildTask.WeavingTask" AssemblyFile="$(SolutionDir)Dependencies\NotifyPropertyWeaverMsBuildTask.dll" />
+  <Target Name="BeforeBuild"></Target>
   <Target Name="AfterBuild">
-    <NotifyPropertyWeaverMsBuildTask.WeavingTask TargetPath="$(TargetPath)" EventInvokerName="NotifyOfPropertyChange" />
+    <NotifyPropertyWeaverMsBuildTask.WeavingTask TargetPath="$(TargetPath)" TryToWeaveAllTypes="false" CheckForEquality="true" EventInvokerName="NotifyOfPropertyChange" />
   </Target>
   <ProjectExtensions />
+  <UsingTask TaskName="NotifyPropertyWeaverMsBuildTask.WeavingTask" AssemblyFile="$(SolutionDir)Dependencies\NotifyPropertyWeaverMsBuildTask.dll" />
 </Project>

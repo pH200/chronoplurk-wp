@@ -35,6 +35,7 @@ namespace MetroPlurk.ViewModels
 
         public bool IsHasMore { get; set; }
 
+        [DependsOn("IsHasMore")]
         public double IsHasMoreOpacity
         {
             get
@@ -137,10 +138,6 @@ namespace MetroPlurk.ViewModels
             }).Subscribe(plurks =>
             {
                 _lastResult = plurks;
-                if (IsHasMoreHandler != null)
-                {
-                    IsHasMore = IsHasMoreHandler(plurks);
-                }
 
                 var result = plurks.Zip();
                 if (result.IsEmpty())
@@ -169,6 +166,11 @@ namespace MetroPlurk.ViewModels
                         NoComments = plurk.Plurk.NoComments,
                         ContextMenuEnabled = PlurkService.IsLoaded,
                     }));
+                    
+                    if (IsHasMoreHandler != null)
+                    {
+                        IsHasMore = IsHasMoreHandler(plurks);
+                    }
                 }
             }, () => Execute.OnUIThread(() => ProgressService.Hide()));
         }
