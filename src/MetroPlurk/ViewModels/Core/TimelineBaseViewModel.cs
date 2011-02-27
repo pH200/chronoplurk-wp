@@ -79,7 +79,7 @@ namespace MetroPlurk.ViewModels
 
             ProgressMessage = progressMessage;
 
-            Items = new BindableCollection<PlurkItemViewModel>();
+            Items = new AdditiveBindableCollection<PlurkItemViewModel>();
         }
 
         public void OnSelectionChanged(SelectionChangedEventArgs e)

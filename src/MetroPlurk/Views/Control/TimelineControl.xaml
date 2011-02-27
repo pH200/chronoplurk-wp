@@ -3,16 +3,16 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
-    xmlns:MetroPlurk="clr-namespace:MetroPlurk"
-    xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro" xmlns:pcontrols="clr-namespace:MetroPlurk.Views.PlurkControls" mc:Ignorable="d"
+    xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro"
+    xmlns:pcontrols="clr-namespace:MetroPlurk.Views.PlurkControls"
+    mc:Ignorable="d"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     d:DesignHeight="480" d:DesignWidth="480">
 
     <UserControl.Resources>
-        <Style x:Key="FooterListBox" TargetType="ListBox">
+        <Style x:Key="HeaderListBox" TargetType="ListBox">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="Foreground" Value="{StaticResource PhoneForegroundBrush}"/>
             <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
@@ -24,18 +24,18 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="ListBox">
                         <Grid>
-                            <TextBlock x:Name="Message" Text="{Binding Message}" />
-                            <ScrollViewer x:Name="ScrollViewer" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Foreground="{TemplateBinding Foreground}" Padding="{TemplateBinding Padding}">
+                            <TextBlock Text="{Binding Message}" />
+                            <ScrollViewer x:Name="ScrollViewer"
+                                          BorderBrush="{TemplateBinding BorderBrush}"
+                                          BorderThickness="{TemplateBinding BorderThickness}"
+                                          Background="{TemplateBinding Background}"
+                                          Foreground="{TemplateBinding Foreground}"
+                                          Padding="{TemplateBinding Padding}">
                                 <StackPanel>
+                                    <ContentControl cal:View.Model="{Binding ListHeader}" />
                                     <ItemsPresenter/>
                                     <StackPanel Margin="0,0,0,50" HorizontalAlignment="Stretch">
-                                        <Button
-                                            x:Name="RequestMore"
-                                            Content="more"
-                                            IsEnabled="{Binding IsHasMore}"
-                                            Opacity="{Binding IsHasMoreOpacity}"
-                                            Click="RequestMore_Click" />
-                                    </StackPanel>
+                                        <Button x:Name="RequestMore"                                                Content="more"                                                IsEnabled="{Binding IsHasMore}"                                                Opacity="{Binding IsHasMoreOpacity}"                                                Click="RequestMore_Click" />                                    </StackPanel>
                                 </StackPanel>
                             </ScrollViewer>
                         </Grid>
@@ -43,14 +43,15 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        
         <Style x:Key="ListBoxItemStyle" TargetType="ListBoxItem">
             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
         </Style>
     </UserControl.Resources>
-    
+
     <ListBox x:Name="Items" ItemsSource="{Binding Items}"
-             Style="{StaticResource FooterListBox}"
+             Style="{StaticResource HeaderListBox}"
              ItemContainerStyle="{StaticResource ListBoxItemStyle}"
              SelectedIndex="{Binding ListSelectedIndex, Mode=TwoWay}"
              cal:Message.Attach="[Event SelectionChanged] = [Action OnSelectionChanged($eventArgs)]">
@@ -62,5 +63,5 @@
             </DataTemplate>
         </ListBox.ItemTemplate>
     </ListBox>
-    
+
 </UserControl>

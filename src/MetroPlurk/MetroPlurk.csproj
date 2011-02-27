@@ -16,7 +16,8 @@
     <TargetFrameworkProfile>WindowsPhone</TargetFrameworkProfile>
     <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
     <SilverlightApplication>true</SilverlightApplication>
-    <SupportedCultures></SupportedCultures>
+    <SupportedCultures>
+    </SupportedCultures>
     <XapOutputs>true</XapOutputs>
     <GenerateSilverlightManifest>true</GenerateSilverlightManifest>
     <XapFilename>MetroPlurk.xap</XapFilename>
@@ -89,6 +90,7 @@
     <Compile Include="Framework\PivotFix.cs" />
     <Compile Include="Framework\SimpleContainer.cs" />
     <Compile Include="Helpers\IsoSettings.cs" />
+    <Compile Include="Helpers\VisualTree.cs" />
     <Compile Include="Services\NavigationExtensions.cs" />
     <Compile Include="Helpers\PlurkErrorHandling.cs" />
     <Compile Include="Services\PlurkLocation.cs" />
@@ -97,6 +99,7 @@
     <Compile Include="Services\PlurkService.cs" />
     <Compile Include="Services\ProgressService.cs" />
     <Compile Include="SpecialFrameAdapter.cs" />
+    <Compile Include="ViewModels\Core\BindableCollectionEx.cs" />
     <Compile Include="ViewModels\Core\IRefreshSync.cs" />
     <Compile Include="ViewModels\Core\ISearchPage.cs" />
     <Compile Include="ViewModels\Core\LoginAvailablePage.cs" />
@@ -232,7 +235,8 @@
   <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />
-  <Target Name="BeforeBuild"></Target>
+  <Target Name="BeforeBuild">
+  </Target>
   <Target Name="AfterBuild">
     <NotifyPropertyWeaverMsBuildTask.WeavingTask TargetPath="$(TargetPath)" TryToWeaveAllTypes="false" CheckForEquality="true" EventInvokerName="NotifyOfPropertyChange" />
   </Target>
