@@ -7,10 +7,10 @@ namespace MetroPlurk.Helpers
 {
     public static class VisualTree
     {
-        public static T FindChildOfType<T>(this DependencyObject root) where T : class
+        public static T FindChildOfType<T>(this DependencyObject parent) where T : class
         {
             var queue = new Queue<DependencyObject>();
-            queue.Enqueue(root);
+            queue.Enqueue(parent);
 
             while (queue.Count > 0)
             {
@@ -31,21 +31,28 @@ namespace MetroPlurk.Helpers
 
         public static T FindVisualChildByName<T>(this DependencyObject parent, string name) where T : DependencyObject
         {
-            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(parent); i++)
+            var queue = new Queue<DependencyObject>();
+            queue.Enqueue(parent);
+
+            while (queue.Count > 0)
             {
-                var child = VisualTreeHelper.GetChild(parent, i);
-                var controlName = child.GetValue(FrameworkElement.NameProperty) as string;
-                if (controlName == name)
+                var current = queue.Dequeue();
+                var childrenCount = VisualTreeHelper.GetChildrenCount(current);
+
+                for (int i = 0; i < childrenCount; i++)
                 {
-                    var typedChild = child as T;
-                    if (typedChild != null)
+                    var child = VisualTreeHelper.GetChild(current, i);
+                    var controlName = child.GetValue(FrameworkElement.NameProperty) as string;
+                    if (controlName == name)
                     {
-                        return typedChild;
+                        var typedChild = child as T;
+                        if (typedChild != null)
+                        {
+                            return typedChild;
+                        }
                     }
+                    queue.Enqueue(child);
                 }
-                
-                var result = FindVisualChildByName<T>(child, name);
-                if (result != null) return result;
             }
             return null;
         }
