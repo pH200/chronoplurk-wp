@@ -112,6 +112,12 @@ namespace MetroPlurk.ViewModels
 
         public PlurkItemViewModel()
         {
+#if !DEBUG
+            if (!Bootstrapper.IsInDesignMode)
+            {
+                throw new InvalidOperationException("Parameterless ctor only in design mode.");
+            }
+#endif
         }
 
         public PlurkItemViewModel(IPlurkService plurkService)

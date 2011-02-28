@@ -91,6 +91,8 @@ namespace MetroPlurk.ViewModels
             var item = Items[ListSelectedIndex];
             var location = new PlurkLocation(item);
             NavigationService.Navigate(location);
+
+            ListSelectedIndex = -1;
         }
 
         public void Clear()
@@ -150,7 +152,7 @@ namespace MetroPlurk.ViewModels
                 }
                 else
                 {
-                    Items.AddRange(result.Select(plurk => new PlurkItemViewModel()
+                    Items.AddRange(result.Select(plurk => new PlurkItemViewModel(PlurkService)
                     {
                         Username = plurk.User.DisplayNameOrNickName,
                         Qualifier = plurk.Plurk.QualifierTranslatedOrDefault,

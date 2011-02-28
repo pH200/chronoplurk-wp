@@ -12,61 +12,36 @@
     d:DesignHeight="480" d:DesignWidth="480">
 
     <UserControl.Resources>
-        <Style x:Key="HeaderListBox" TargetType="ListBox">
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Foreground" Value="{StaticResource PhoneForegroundBrush}"/>
-            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
-            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="BorderBrush" Value="Transparent"/>
-            <Setter Property="Padding" Value="0"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="ListBox">
-                        <Grid>
-                            <TextBlock Text="{Binding Message}" />
-                            <ScrollViewer x:Name="ScrollViewer"
-                                          BorderBrush="{TemplateBinding BorderBrush}"
-                                          BorderThickness="{TemplateBinding BorderThickness}"
-                                          Background="{TemplateBinding Background}"
-                                          Foreground="{TemplateBinding Foreground}"
-                                          Padding="{TemplateBinding Padding}">
-                                <StackPanel>
-                                    <ContentControl cal:View.Model="{Binding ListHeader}" />
-                                    <ItemsPresenter/>
-                                    <StackPanel Margin="0,0,0,50" HorizontalAlignment="Stretch">
-                                        <Button x:Name="RequestMore"
-                                                Content="more"
-                                                IsEnabled="{Binding IsHasMore}"
-                                                Opacity="{Binding IsHasMoreOpacity}"
-                                                Click="RequestMore_Click" />
-                                    </StackPanel>
-                                </StackPanel>
-                            </ScrollViewer>
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        
         <Style x:Key="ListBoxItemStyle" TargetType="ListBoxItem">
             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
         </Style>
     </UserControl.Resources>
-
-    <ListBox x:Name="Items" ItemsSource="{Binding Items}"
-             Style="{StaticResource HeaderListBox}"
-             ItemContainerStyle="{StaticResource ListBoxItemStyle}"
-             SelectedIndex="{Binding ListSelectedIndex, Mode=TwoWay}"
-             cal:Message.Attach="[Event SelectionChanged] = [Action OnSelectionChanged($eventArgs)]">
-        <ListBox.ItemTemplate>
-            <DataTemplate>
-                <pcontrols:PlurkItemControl
-                    QualifierColor="{Binding QualifierColor}"
-                    ContextMenuEnabled="{Binding ContextMenuEnabled}" />
-            </DataTemplate>
-        </ListBox.ItemTemplate>
-    </ListBox>
-
+    
+    <ScrollViewer x:Name="ListScroll">
+        <StackPanel>
+            <ContentControl cal:View.Model="{Binding ListHeader}" />
+            <ListBox ItemsSource="{Binding Items}"
+                     ItemContainerStyle="{StaticResource ListBoxItemStyle}"
+                     ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                     SelectedIndex="{Binding ListSelectedIndex, Mode=TwoWay}"
+                     cal:Message.Attach="[Event SelectionChanged] = [Action OnSelectionChanged($eventArgs)]">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <pcontrols:PlurkItemControl
+                            QualifierColor="{Binding QualifierColor}"
+                            ContextMenuEnabled="{Binding ContextMenuEnabled}" />
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <StackPanel Margin="0,0,0,50" HorizontalAlignment="Stretch">
+                <Button x:Name="RequestMore"
+                        Content="more"
+                        IsEnabled="{Binding IsHasMore}"
+                        Opacity="{Binding IsHasMoreOpacity}"
+                        Click="RequestMore_Click" />
+            </StackPanel>
+            <TextBlock Text="{Binding Message}" />
+        </StackPanel>
+    </ScrollViewer>
 </UserControl>
