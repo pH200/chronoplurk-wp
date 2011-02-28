@@ -182,5 +182,19 @@ namespace MetroPlurk.ViewModels
             Execute.OnUIThread(() => ProgressService.Hide());
             _requestHandler.Dispose();
         }
+
+        public void ScrollToTop()
+        {
+            var view = GetView(null) as UIElement;
+            if (view == null)
+            {
+                return;
+            }
+            var scroll = view.FindVisualChildByName<ScrollViewer>("ListScroll");
+            if (scroll != null)
+            {
+                scroll.ScrollToVerticalOffset(0);
+            }
+        }
     }
 }

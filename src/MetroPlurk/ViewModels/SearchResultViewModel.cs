@@ -46,6 +46,8 @@ namespace MetroPlurk.ViewModels
             RequestMoreHandler = plurks => SearchCommand.Find(query, plurks.LastOffset, PlurkService.Cookie).LoadAsync();
 
             Request(getPlurks);
+            
+            ScrollToTop();
         }
     }
 }
