@@ -83,6 +83,7 @@ namespace MetroPlurk.ViewModels
 
         public UnreadStatus IsUnread { get { return (UnreadStatus)IsUnreadInt; } }
 
+        [DependsOn("NoComments")]
         public bool CanReply
         {
             get
@@ -92,9 +93,7 @@ namespace MetroPlurk.ViewModels
                     case CommentMode.None:
                         return true;
                     case CommentMode.FriendsOnly:
-                        return (_plurkService != null &&
-                                _plurkService.FriendsId != null &&
-                                _plurkService.FriendsId.Contains(UserId));
+                        return true;
                 }
                 return false;
             }

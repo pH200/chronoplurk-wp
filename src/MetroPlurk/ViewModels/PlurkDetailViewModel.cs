@@ -30,6 +30,7 @@ namespace MetroPlurk.ViewModels
             : base(navigationService, progressService, plurkService)
         {
             ListHeader = plurkDetailHeaderViewModel;
+            IgnoreSelection = true;
         }
 
         protected override void OnActivate()

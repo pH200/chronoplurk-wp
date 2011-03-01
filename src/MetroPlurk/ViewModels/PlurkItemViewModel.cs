@@ -82,6 +82,7 @@ namespace MetroPlurk.ViewModels
         #region Context menu related properties
         public bool ContextMenuEnabled { get; set; }
 
+        [DependsOn("NoComments")]
         public bool CanReply
         {
             get 
@@ -91,9 +92,7 @@ namespace MetroPlurk.ViewModels
                     case CommentMode.None:
                         return true;
                     case CommentMode.FriendsOnly:
-                        return (_plurkService != null &&
-                                _plurkService.FriendsId != null &&
-                                _plurkService.FriendsId.Contains(UserId));
+                        return true;
                 }
                 return false;
             }

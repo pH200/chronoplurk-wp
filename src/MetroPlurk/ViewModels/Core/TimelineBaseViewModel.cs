@@ -53,6 +53,7 @@ namespace MetroPlurk.ViewModels
         protected Func<TSource, IObservable<TSource>> RequestMoreHandler { get; set; }
 
         #region ListSelectedIndex
+        
         private int _listSelectedIndex = -1; // Must defualt as -1
 
         public int ListSelectedIndex
@@ -65,6 +66,9 @@ namespace MetroPlurk.ViewModels
                 NotifyOfPropertyChange(() => ListSelectedIndex);
             }
         }
+
+        public bool IgnoreSelection { get; set; }
+
         #endregion
 
         protected TimelineBaseViewModel
@@ -84,6 +88,10 @@ namespace MetroPlurk.ViewModels
 
         public void OnSelectionChanged(SelectionChangedEventArgs e)
         {
+            if (IgnoreSelection)
+            {
+                return;
+            }
             if (ListSelectedIndex == -1)
             {
                 return;
