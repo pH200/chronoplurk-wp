@@ -142,7 +142,7 @@ namespace MetroPlurk.ViewModels
                 _lastResult = plurks;
 
                 var result = plurks.Zip();
-                if (result.IsEmpty())
+                if (result == null || result.IsEmpty())
                 {
                     if (clear)
                     {
@@ -154,6 +154,8 @@ namespace MetroPlurk.ViewModels
                 {
                     Items.AddRange(result.Select(plurk => new PlurkItemViewModel(PlurkService)
                     {
+                        Id = plurk.Plurk.Id,
+                        UserId = plurk.Plurk.UserId,
                         Username = plurk.User.DisplayNameOrNickName,
                         Qualifier = plurk.Plurk.QualifierTranslatedOrDefault,
                         PostDate = plurk.Plurk.PostDate,

@@ -24,6 +24,14 @@ namespace MetroPlurk.ViewModels
             PlurkDetailViewModel = plurkDetailViewModel;
         }
 
+        protected override void OnActivate()
+        {
+            PlurkDetailViewModel.RefreshOnActivate = true;
+            ActivateItem(PlurkDetailViewModel);
+
+            base.OnActivate();
+        }
+
         public object GetRedirectedViewModel()
         {
             return PlurkDetailViewModel.ListHeader;
