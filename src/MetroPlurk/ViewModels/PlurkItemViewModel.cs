@@ -13,8 +13,6 @@ namespace MetroPlurk.ViewModels
     [NotifyForAll]
     public sealed class PlurkItemViewModel : PropertyChangedBase
     {
-        private readonly IPlurkService _plurkService;
-
         public int Id { get; set; }
 
         public int UserId { get; set; }
@@ -108,21 +106,6 @@ namespace MetroPlurk.ViewModels
             get { return IsFavorite ? "unlike" : "like"; }
         }
         #endregion
-
-        public PlurkItemViewModel()
-        {
-#if !DEBUG
-            if (!Bootstrapper.IsInDesignMode)
-            {
-                throw new InvalidOperationException("Parameterless ctor only in design mode.");
-            }
-#endif
-        }
-
-        public PlurkItemViewModel(IPlurkService plurkService)
-        {
-            _plurkService = plurkService;
-        }
         
         public static string ConvertTimeSpan(TimeSpan timeSpan, DateTime? postDate = null)
         {

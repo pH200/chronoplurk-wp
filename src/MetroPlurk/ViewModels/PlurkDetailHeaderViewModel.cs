@@ -12,8 +12,6 @@ namespace MetroPlurk.ViewModels
     [NotifyForAll]
     public class PlurkDetailHeaderViewModel : Screen
     {
-        private readonly IPlurkService _plurkService;
-
         #region Public Properties
 
         public int Id { get; set; }
@@ -110,10 +108,5 @@ namespace MetroPlurk.ViewModels
         }
 
         #endregion
-
-        public PlurkDetailHeaderViewModel(IPlurkService plurkService)
-        {
-            _plurkService = plurkService;
-        }
     }
 }

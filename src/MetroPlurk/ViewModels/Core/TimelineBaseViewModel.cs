@@ -160,7 +160,7 @@ namespace MetroPlurk.ViewModels
                 }
                 else
                 {
-                    Items.AddRange(result.Select(plurk => new PlurkItemViewModel(PlurkService)
+                    Items.AddRange(result.Select(plurk => new PlurkItemViewModel()
                     {
                         Id = plurk.Plurk.Id,
                         UserId = plurk.Plurk.UserId,
