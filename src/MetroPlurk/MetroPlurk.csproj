@@ -91,6 +91,7 @@
     <Compile Include="Framework\SimpleContainer.cs" />
     <Compile Include="Helpers\IsoSettings.cs" />
     <Compile Include="Helpers\VisualTree.cs" />
+    <Compile Include="Services\INavigationInjectRedirect.cs" />
     <Compile Include="Services\NavigationExtensions.cs" />
     <Compile Include="Helpers\PlurkErrorHandling.cs" />
     <Compile Include="Services\PlurkLocation.cs" />
@@ -108,7 +109,9 @@
     <Compile Include="ViewModels\Core\TimelineBaseViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
+    <Compile Include="ViewModels\PlurkDetailHeaderViewModel.cs" />
     <Compile Include="ViewModels\PlurkDetailPageViewModel.cs" />
+    <Compile Include="ViewModels\PlurkDetailViewModel.cs" />
     <Compile Include="ViewModels\PlurkItemViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\PlurkMainPageViewModel.cs" />
@@ -159,7 +162,15 @@
       <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\PlurkDetailHeaderView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\PlurkDetailPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PlurkDetailView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -20,7 +20,9 @@
     
     <ScrollViewer x:Name="ListScroll">
         <StackPanel>
-            <ContentControl cal:View.Model="{Binding ListHeader}" />
+            <ContentControl cal:View.Model="{Binding ListHeader}"
+                            HorizontalAlignment="Stretch"
+                            HorizontalContentAlignment="Stretch" />
             <ListBox ItemsSource="{Binding Items}"
                      ItemContainerStyle="{StaticResource ListBoxItemStyle}"
                      ScrollViewer.VerticalScrollBarVisibility="Disabled"

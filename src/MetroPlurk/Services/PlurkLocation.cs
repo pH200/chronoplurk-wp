@@ -6,7 +6,12 @@ namespace MetroPlurk.Services
     public class PlurkLocation
     {
         private const string PageUri =
-            "/Views/PlurkDetailPage.xaml?Id={0}&UserId={1}&Username={2}&QualifierEnumInt={3}&Qualifier={4}&PostDateTicks={5}&Content={6}&AvatarView={7}NoCommentsInt={8}&IsFavorite={9}&ResponseCount={10}&IsUnreadInt={11}";
+            "/Views/PlurkDetailPage.xaml?" +
+            "Id={0}&UserId={1}&Username={2}" +
+            "&QualifierEnumInt={3}&Qualifier={4}" +
+            "&PostDateTicks={5}&Content={6}" +
+            "&AvatarView={7}&NoCommentsInt={8}&IsFavorite={9}"+
+            "&ResponseCount={10}&IsUnreadInt={11}";
 
         public PlurkLocation(PlurkItemViewModel item)
         {

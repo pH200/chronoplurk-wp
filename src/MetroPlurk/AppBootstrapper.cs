@@ -30,7 +30,8 @@ namespace MetroPlurk
             container.RegisterSingleton(typeof(TimelineViewModel), null, typeof(TimelineViewModel));
             container.RegisterSingleton(typeof(SearchPageViewModel), "SearchPageViewModel", typeof(SearchPageViewModel));
             container.RegisterSingleton(typeof(PlurkDetailPageViewModel), "PlurkDetailPageViewModel", typeof(PlurkDetailPageViewModel));
-            
+            container.RegisterSingleton(typeof(PlurkDetailViewModel), null, typeof(PlurkDetailViewModel));
+            container.RegisterSingleton(typeof(PlurkDetailHeaderViewModel), null, typeof(PlurkDetailHeaderViewModel));
             
             container.RegisterSingleton(typeof(IProgressService), null, typeof(ProgressService));
             container.RegisterSingleton(typeof(IPlurkService), null, typeof(PlurkService));

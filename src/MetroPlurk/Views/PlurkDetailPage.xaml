@@ -4,12 +4,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
-    xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro"
-    xmlns:imgloader="clr-namespace:MetroPlurk.Views.ImageLoader"
     xmlns:pcontrols="clr-namespace:MetroPlurk.Views.PlurkControls"
     mc:Ignorable="d"
     d:DesignWidth="480" d:DesignHeight="728"
@@ -20,8 +17,10 @@
     shell:SystemTray.IsVisible="False">
 
     <Grid x:Name="LayoutRoot" Background="Transparent">
-        <pcontrols:PlurkDetailHeaderControl QualifierColor="{Binding QualifierColor}" />
-        
+        <ContentControl x:Name="PlurkDetailViewModel"
+                        HorizontalContentAlignment="Stretch"
+                        VerticalContentAlignment="Stretch" />
+
         <!-- login popup -->
         <Popup
                IsOpen="{Binding IsLoginPopupOpen}">
