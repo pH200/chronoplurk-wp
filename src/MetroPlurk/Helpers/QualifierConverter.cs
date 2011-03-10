@@ -6,6 +6,11 @@ namespace MetroPlurk.Helpers
 {
     public static class QualifierConverter
     {
+        public static SolidColorBrush ConvertQualifierBrush(Qualifier qualifier)
+        {
+            return new SolidColorBrush(ConvertQualifierColor(qualifier));
+        }
+
         public static Color ConvertQualifierColor(Qualifier qualifier)
         {
             switch (qualifier)

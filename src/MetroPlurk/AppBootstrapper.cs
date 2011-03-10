@@ -28,6 +28,7 @@ namespace MetroPlurk
             RegisterViewModel<PlurkMainPageViewModel>();
             RegisterViewModel<SearchPageViewModel>();
             RegisterViewModel<PlurkDetailPageViewModel>();
+            RegisterViewModel<ComposePageViewModel>();
 
             _kernel.Bind(typeof(MainPageViewModel)).ToSelf().InSingletonScope();
             _kernel.Bind(typeof(SearchResultViewModel)).ToSelf().InSingletonScope();
@@ -38,6 +39,7 @@ namespace MetroPlurk
             _kernel.Bind(typeof(PlurkDetailPageViewModel)).ToSelf().InSingletonScope();
             _kernel.Bind(typeof(PlurkDetailViewModel)).ToSelf().InSingletonScope();
             _kernel.Bind(typeof(PlurkDetailHeaderViewModel)).ToSelf().InSingletonScope();
+            _kernel.Bind(typeof(ComposePageViewModel)).ToSelf().InSingletonScope();
 
             _kernel.Bind<IProgressService>().To<ProgressService>().InSingletonScope();
             _kernel.Bind<IPlurkService>().To<PlurkService>().InSingletonScope();
