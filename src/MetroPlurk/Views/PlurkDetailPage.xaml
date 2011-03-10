@@ -43,8 +43,6 @@
             <shell:ApplicationBar.MenuItems>
                 <cal:AppBarMenuItem Text="like" Message="LikeAppBar" />
                 <cal:AppBarMenuItem Text="mute" Message="MuteAppBar" />
-                <cal:AppBarMenuItem Text="edit" Message="EditAppBar" />
-                <cal:AppBarMenuItem Text="delete" Message="DeleteAppBar" />
             </shell:ApplicationBar.MenuItems>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>

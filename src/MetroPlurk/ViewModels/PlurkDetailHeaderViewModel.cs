@@ -79,6 +79,7 @@ namespace MetroPlurk.ViewModels
 
         public int IsUnreadInt { get; set; }
 
+        [DependsOn("IsUnreadInt")]
         public UnreadStatus IsUnread { get { return (UnreadStatus)IsUnreadInt; } }
 
         [DependsOn("NoComments")]
@@ -97,11 +98,13 @@ namespace MetroPlurk.ViewModels
             }
         }
 
+        [DependsOn("IsUnread")]
         public string MuteText
         {
             get { return IsUnread == UnreadStatus.Muted ? "unmute" : "mute"; }
         }
 
+        [DependsOn("IsFavorite")]
         public string LikeText
         {
             get { return IsFavorite ? "unlike" : "like"; }

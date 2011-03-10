@@ -22,6 +22,7 @@ namespace MetroPlurk.ViewModels
         private IDisposable _requestHandler;
         private DateTime _timeBase;
         private TSource _lastResult;
+        private WeakReference _scrollCache;
         #endregion
 
         /// <summary>
@@ -195,16 +196,50 @@ namespace MetroPlurk.ViewModels
 
         public void ScrollToTop()
         {
-            var view = GetView(null) as UIElement;
-            if (view == null)
-            {
-                return;
-            }
-            var scroll = view.FindVisualChildByName<ScrollViewer>("ListScroll");
+            var scroll = FindScroll();
             if (scroll != null)
             {
                 scroll.ScrollToVerticalOffset(0);
             }
+        }
+
+        public void ScrollToEnd()
+        {
+            var scroll = FindScroll();
+            if (scroll != null)
+            {
+                scroll.ScrollToVerticalOffset(double.MaxValue);
+            }
+        }
+
+        private ScrollViewer FindScroll()
+        {
+            if (_scrollCache != null)
+            {
+                var cachedScroll = _scrollCache.Target as ScrollViewer;
+                if (cachedScroll != null)
+                {
+                    return cachedScroll;
+                }
+            }
+            
+            var view = GetView(null) as UIElement;
+            if (view == null)
+            {
+                return null;
+            }
+            var scroll = view.FindVisualChildByName<ScrollViewer>("ListScroll");
+            
+            if (_scrollCache == null)
+            {
+                _scrollCache = new WeakReference(scroll, false);
+            }
+            else
+            {
+                _scrollCache.Target = scroll;
+            }
+
+            return scroll;
         }
     }
 }

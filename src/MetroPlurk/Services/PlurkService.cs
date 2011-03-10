@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using Caliburn.Micro;
 using MetroPlurk.Helpers;
+using MetroPlurk.ViewModels;
 using Plurto;
 using Plurto.Commands;
 
@@ -10,6 +12,7 @@ namespace MetroPlurk.Services
 {
     public interface IPlurkService
     {
+        int UserId { get; set; }
         string Username { get; set; }
         string Password { get; set; }
         CookieCollection Cookie { get; set; }
@@ -24,6 +27,7 @@ namespace MetroPlurk.Services
 
     public class PlurkService : IPlurkService
     {
+        public int UserId { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
         public CookieCollection Cookie { get; set; }
@@ -37,10 +41,10 @@ namespace MetroPlurk.Services
             var encodedUsername = HttpUtility.UrlEncode(Username);
             var login = UsersCommand.LoginNoData(encodedUsername, Password).LoadAsync();
             return login.Do(cookie =>
-                                {
-                                    Cookie = cookie;
-                                    IsLoaded = true;
-                                }).Select(c => c != null);
+            {
+                Cookie = cookie;
+                IsLoaded = true;
+            }).Select(c => c != null);
         }
 
         public IObservable<bool> LoginAsnc(string username, string password)
