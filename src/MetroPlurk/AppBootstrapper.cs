@@ -1,45 +1,51 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO.IsolatedStorage;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Caliburn.Micro;
-using MetroPlurk.Framework;
 using MetroPlurk.Helpers;
 using MetroPlurk.Services;
 using MetroPlurk.ViewModels;
+using Ninject;
 
 namespace MetroPlurk
 {
     public class AppBootstrapper : PhoneBootstrapper
     {
-        PhoneContainer container;
+        private IDictionary<string, Type> _viewModelDictionary;
+        private IKernel _kernel;
 
         protected override void Configure()
         {
             DefaultConfiguration.Initialize();
 
-            container = new PhoneContainer(this);
+            _kernel = new StandardKernel();
+            _viewModelDictionary = new Dictionary<string, Type>();
 
-            container.RegisterSingleton(typeof(MainPageViewModel), "MainPageViewModel", typeof(MainPageViewModel));
-            container.RegisterSingleton(typeof(SearchResultViewModel), null, typeof(SearchResultViewModel));
-            container.RegisterSingleton(typeof(SearchRecordsViewModel), null, typeof(SearchRecordsViewModel));
-            container.RegisterSingleton(typeof(PlurkMainPageViewModel), "PlurkMainPageViewModel", typeof(PlurkMainPageViewModel));
-            container.RegisterSingleton(typeof(TimelineViewModel), null, typeof(TimelineViewModel));
-            container.RegisterSingleton(typeof(SearchPageViewModel), "SearchPageViewModel", typeof(SearchPageViewModel));
-            container.RegisterSingleton(typeof(PlurkDetailPageViewModel), "PlurkDetailPageViewModel", typeof(PlurkDetailPageViewModel));
-            container.RegisterSingleton(typeof(PlurkDetailViewModel), null, typeof(PlurkDetailViewModel));
-            container.RegisterSingleton(typeof(PlurkDetailHeaderViewModel), null, typeof(PlurkDetailHeaderViewModel));
-            
-            container.RegisterSingleton(typeof(IProgressService), null, typeof(ProgressService));
-            container.RegisterSingleton(typeof(IPlurkService), null, typeof(PlurkService));
-            
-            container.RegisterPerRequest(typeof(LoginViewModel), null, typeof(LoginViewModel));
+            RegisterViewModel<MainPageViewModel>();
+            RegisterViewModel<PlurkMainPageViewModel>();
+            RegisterViewModel<SearchPageViewModel>();
+            RegisterViewModel<PlurkDetailPageViewModel>();
 
-            container.RegisterInstance(typeof(INavigationService), null, new SpecialFrameAdapter(RootFrame));
-            container.RegisterInstance(typeof(IPhoneService), null, new PhoneApplicationServiceAdapter(PhoneService));
+            _kernel.Bind(typeof(MainPageViewModel)).ToSelf().InSingletonScope();
+            _kernel.Bind(typeof(SearchResultViewModel)).ToSelf().InSingletonScope();
+            _kernel.Bind(typeof(SearchRecordsViewModel)).ToSelf().InSingletonScope();
+            _kernel.Bind(typeof(PlurkMainPageViewModel)).ToSelf().InSingletonScope();
+            _kernel.Bind(typeof(TimelineViewModel)).ToSelf().InSingletonScope();
+            _kernel.Bind(typeof(SearchPageViewModel)).ToSelf().InSingletonScope();
+            _kernel.Bind(typeof(PlurkDetailPageViewModel)).ToSelf().InSingletonScope();
+            _kernel.Bind(typeof(PlurkDetailViewModel)).ToSelf().InSingletonScope();
+            _kernel.Bind(typeof(PlurkDetailHeaderViewModel)).ToSelf().InSingletonScope();
+
+            _kernel.Bind<IProgressService>().To<ProgressService>().InSingletonScope();
+            _kernel.Bind<IPlurkService>().To<PlurkService>().InSingletonScope();
+
+            _kernel.Bind<LoginViewModel>().ToSelf();
+
+            _kernel.Bind<INavigationService>().ToConstant(new SpecialFrameAdapter(RootFrame));
+            _kernel.Bind<IPhoneService>().ToConstant(new PhoneApplicationServiceAdapter(PhoneService));
 
             //container.Activator.InstallChooser<PhoneNumberChooserTask, PhoneNumberResult>();
             //container.Activator.InstallLauncher<EmailComposeTask>();
@@ -49,26 +55,51 @@ namespace MetroPlurk
             AddPhoneResources();
 
             AddNavigatingControl();
+        }
 
-#if CLEAN_DEBUG
-                // Clear settings for debugging
-                IsolatedStorageSettings.ApplicationSettings.Clear();
-#endif
+        private void RegisterViewModel<T>(string key)
+        {
+            if (_viewModelDictionary.ContainsKey(key))
+            {
+                _viewModelDictionary[key] = typeof(T);
+            }
+            else
+            {
+                _viewModelDictionary.Add(key, typeof(T));
+            }
+        }
+
+        private void RegisterViewModel<T>()
+        {
+            RegisterViewModel<T>(typeof(T).Name);
         }
 
         protected override object GetInstance(Type service, string key)
         {
-            return container.GetInstance(service, key);
+            if (service != null)
+            {
+                return _kernel.Get(service);
+            }
+
+            if (_viewModelDictionary.ContainsKey(key))
+            {
+                var viewModel = _viewModelDictionary[key];
+                if (viewModel != null)
+                {
+                    return _kernel.Get(viewModel);
+                }
+            }
+            throw new ArgumentOutOfRangeException("service");
         }
 
         protected override IEnumerable<object> GetAllInstances(Type service)
         {
-            return container.GetAllInstances(service);
+            return _kernel.GetAll(service);
         }
 
         protected override void BuildUp(object instance)
         {
-            container.BuildUp(instance);
+            _kernel.Inject(instance);
         }
 
         static void AddCustomConventions()

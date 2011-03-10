@@ -1,4 +1,5 @@
 using System;
+using System.IO.IsolatedStorage;
 using MetroPlurk.Helpers;
 
 namespace MetroPlurk
@@ -13,13 +14,16 @@ namespace MetroPlurk
         /// </summary>
         public static void Initialize()
         {
-            #if CLEAN_DEBUG
+#if CLEAN_DEBUG
             PlurkResources.Username =
 ""; // %%omit username%%
             PlurkResources.Password =
 ""; // %%omit password%%
-            #endif
-            
+
+            // Clear settings for debugging
+            IsolatedStorageSettings.ApplicationSettings.Clear();
+#endif
+
             // Set API key.
             // Plurto.Config.ApiKey = "";
         }
