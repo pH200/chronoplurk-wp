@@ -58,6 +58,11 @@ namespace MetroPlurk.ViewModels
             Qualifier = QualifierViewModel.AllQualifiers.First(q => q.Qualifier == Plurto.Core.Qualifier.Says);
         }
 
+        public void PlurkAppBar()
+        {
+            Compose();
+        }
+
         public void Compose()
         {
             if (_composeHandler != null)
@@ -68,7 +73,7 @@ namespace MetroPlurk.ViewModels
 
             _composeHandler =
                 TimelineCommand.PlurkAdd(_plurkService.Cookie, Content, Qualifier.Qualifier).LoadAsync().Timeout(
-                    TimeSpan.FromSeconds(20)).PlurkException(error => { }).Subscribe(
+                    TimeSpan.FromSeconds(20)).PlurkException(error => { }).ObserveOnDispatcher().Subscribe(
                         plurk => _navigationService.GoBack(), () => _progressService.Hide());
         }
     }

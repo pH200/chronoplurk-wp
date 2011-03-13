@@ -39,10 +39,9 @@
                                     CacheMode="BitmapCache">
                     <toolkit:ListPicker.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <Rectangle Fill="{Binding Brush}" Width="24" Height="24"/>
-                                <TextBlock Text="{Binding Text}" Margin="12 0 0 0"/>
-                            </StackPanel>
+                            <Border Background="{Binding Brush}" HorizontalAlignment="Left" MinWidth="150">
+                                <TextBlock Text="{Binding Text}" Foreground="White" Margin="8 0 8 0"/>
+                            </Border>
                         </DataTemplate>
                     </toolkit:ListPicker.ItemTemplate>
                     <toolkit:ListPicker.FullModeItemTemplate>

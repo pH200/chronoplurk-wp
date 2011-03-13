@@ -166,7 +166,7 @@ namespace MetroPlurk.ViewModels
                         Id = plurk.Plurk.Id,
                         UserId = plurk.Plurk.UserId,
                         Username = plurk.User.DisplayNameOrNickName,
-                        Qualifier = plurk.Plurk.QualifierTranslatedOrDefault,
+                        Qualifier = plurk.Plurk.QualifierTextView(),
                         PostDate = plurk.Plurk.PostDate,
                         PostTimeFromNow = _timeBase - plurk.Plurk.PostDate,
                         Content = plurk.Plurk.Content,

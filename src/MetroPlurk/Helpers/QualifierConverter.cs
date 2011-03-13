@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using System.Windows.Media;
 using Plurto.Core;
+using Plurto.Entities;
 
 namespace MetroPlurk.Helpers
 {
@@ -8,7 +12,7 @@ namespace MetroPlurk.Helpers
     {
         public static SolidColorBrush ConvertQualifierBrush(Qualifier qualifier)
         {
-            return new SolidColorBrush(ConvertQualifierColor(qualifier));
+            return QualifierBrushes.Brushes[qualifier];
         }
 
         public static Color ConvertQualifierColor(Qualifier qualifier)
@@ -33,12 +37,15 @@ namespace MetroPlurk.Helpers
                 case Qualifier.Will: return QualifierColors.Will;
                 case Qualifier.Wishes: return QualifierColors.Wishes;
                 case Qualifier.Wonders: return QualifierColors.Wonders;
+                case Qualifier.Freestyle: return QualifierColors.Freestyle;
+                case Qualifier.FreestyleColon: return QualifierColors.Freestyle;
             }
             return default(Color);
         }
 
         public static class QualifierColors
         {
+            public static readonly Color Freestyle = Color.FromArgb(255, 238, 238, 238);
             public static readonly Color Is = Color.FromArgb(255, 229, 124, 67);
             public static readonly Color Says = Color.FromArgb(255, 226, 86, 11);
             public static readonly Color Needs = Color.FromArgb(255, 122, 154, 55);
@@ -58,6 +65,43 @@ namespace MetroPlurk.Helpers
             public static readonly Color Shares = Color.FromArgb(255, 167, 73, 73);
             public static readonly Color Gives = Color.FromArgb(255, 98, 14, 14);
             public static readonly Color Wonders = Color.FromArgb(255, 46, 78, 158);
+        }
+
+        public static class QualifierBrushes
+        {
+            public static IDictionary<Qualifier, SolidColorBrush> Brushes { get; private set; }
+            
+            static QualifierBrushes()
+            {
+                Brushes =
+                    GetEnumValues<Qualifier>().
+                        ToDictionary(q => q, q => new SolidColorBrush(QualifierConverter.ConvertQualifierColor(q)));
+            }
+
+            private static T[] GetEnumValues<T>()
+            {
+                var type = typeof(T);
+                if (!type.IsEnum)
+                    throw new ArgumentException("Type '" + type.Name + "' is not an enum");
+
+                return (from field in type.GetFields(BindingFlags.Public | BindingFlags.Static)
+                        where field.IsLiteral
+                        let en = field.GetValue(type)
+                        orderby (int)en
+                        select (T)en).ToArray();
+            }
+        }
+    }
+
+    public static class PlurkExtensions
+    {
+        public static string QualifierTextView(this Plurk plurk)
+        {
+            if (plurk.Qualifier == Qualifier.Freestyle || plurk.Qualifier == Qualifier.FreestyleColon)
+            {
+                return "";
+            }
+            return !String.IsNullOrEmpty(plurk.QualifierTranslated) ? plurk.QualifierTranslated : plurk.Qualifier.ToKey();
         }
     }
 }

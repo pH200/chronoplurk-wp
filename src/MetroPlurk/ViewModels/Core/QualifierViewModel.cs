@@ -34,7 +34,9 @@ namespace MetroPlurk.ViewModels
             get
             {
                 return _allQualifiers ??
-                       (_allQualifiers = GetEnumValues<Qualifier>().Select(q => new QualifierViewModel(q)).ToArray());
+                       (_allQualifiers =
+                        GetEnumValues<Qualifier>().Where(q => q != Qualifier.Freestyle).Select(
+                            q => new QualifierViewModel(q)).ToArray());
             }
         }
 

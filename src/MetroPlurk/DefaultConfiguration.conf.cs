@@ -1,6 +1,7 @@
 using System;
 using System.IO.IsolatedStorage;
 using MetroPlurk.Helpers;
+using Plurto.Core;
 
 namespace MetroPlurk
 {
@@ -23,7 +24,10 @@ namespace MetroPlurk
             // Clear settings for debugging
             IsolatedStorageSettings.ApplicationSettings.Clear();
 #endif
-
+#if DEBUG
+            Plurto.Config.LoggingLevel = LoggingLevel.Verbose;
+            Plurto.Config.LoggingLinebreak = 80;
+#endif
             // Set API key.
             // Plurto.Config.ApiKey = "";
         }
