@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Linq;
 using System.Net;
 using System.Windows;
@@ -20,16 +21,22 @@ namespace MetroPlurk.ViewModels
     {
         public PlurkDetailHeaderViewModel ListHeader { get; private set; }
 
+        public PlurkDetailFooterViewModel ListFooter { get; private set; }
+
         public bool RefreshOnActivate { get; set; }
 
         public PlurkDetailViewModel
             (INavigationService navigationService,
             IProgressService progressService,
             IPlurkService plurkService,
-            PlurkDetailHeaderViewModel plurkDetailHeaderViewModel)
+            PlurkDetailHeaderViewModel plurkDetailHeaderViewModel,
+            PlurkDetailFooterViewModel plurkDetailFooterViewModel)
             : base(navigationService, progressService, plurkService)
         {
+            plurkDetailHeaderViewModel.Parent = this;
             ListHeader = plurkDetailHeaderViewModel;
+            plurkDetailFooterViewModel.Parent = this;
+            ListFooter = plurkDetailFooterViewModel;
             IgnoreSelection = true;
         }
 

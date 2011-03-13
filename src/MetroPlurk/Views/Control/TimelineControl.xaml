@@ -36,6 +36,7 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
+            <TextBlock Text="{Binding Message}" />
             <StackPanel Margin="0,0,0,50" HorizontalAlignment="Stretch">
                 <Button x:Name="RequestMore"
                         Content="more"
@@ -43,7 +44,9 @@
                         Opacity="{Binding IsHasMoreOpacity}"
                         Click="RequestMore_Click" />
             </StackPanel>
-            <TextBlock Text="{Binding Message}" />
+            <ContentControl cal:View.Model="{Binding ListFooter}"
+                            HorizontalAlignment="Stretch"
+                            HorizontalContentAlignment="Stretch" />
         </StackPanel>
     </ScrollViewer>
 </UserControl>
