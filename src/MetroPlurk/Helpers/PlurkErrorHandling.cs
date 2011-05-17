@@ -1,6 +1,7 @@
 ﻿using System;
-using System.Concurrency;
 using System.Linq;
+using System.Reactive.Concurrency;
+using System.Reactive.Linq;
 using System.Windows;
 using Caliburn.Micro;
 using MetroPlurk.Services;
@@ -43,7 +44,7 @@ namespace MetroPlurk.Helpers
                 }
                 onError(PlurkError.UnknownError);
                 return Observable.Empty<TSource>();
-            }, Scheduler.Dispatcher).First();
+            }, DispatcherScheduler.Instance).First();
         }
 
         public static void PlurkExceptionHandling(Exception ex, Action<PlurkError> onError)

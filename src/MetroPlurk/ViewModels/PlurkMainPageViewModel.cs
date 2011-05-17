@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Reactive.Linq;
 using Caliburn.Micro;
 using MetroPlurk.Helpers;
 using MetroPlurk.Services;

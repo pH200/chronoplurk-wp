@@ -16,7 +16,6 @@ namespace MetroPlurk.ViewModels
         private readonly SearchRecordsViewModel _searchRecords;
         private SearchPage _view;
 
-        [SurviveTombstone]
         public string SearchField { get; set; }
 
         public SearchPageViewModel(

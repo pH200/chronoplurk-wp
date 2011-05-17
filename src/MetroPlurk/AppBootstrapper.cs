@@ -48,7 +48,7 @@ namespace MetroPlurk
             _kernel.Bind<LoginViewModel>().ToSelf();
 
             _kernel.Bind<INavigationService>().ToConstant(new SpecialFrameAdapter(RootFrame));
-            _kernel.Bind<IPhoneService>().ToConstant(new PhoneApplicationServiceAdapter(PhoneService));
+            _kernel.Bind<IPhoneService>().ToConstant(new PhoneApplicationServiceAdapter(RootFrame));
 
             //container.Activator.InstallChooser<PhoneNumberChooserTask, PhoneNumberResult>();
             //container.Activator.InstallLauncher<EmailComposeTask>();

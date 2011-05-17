@@ -1,11 +1,6 @@
-# Ignore file for Visual Studio 2008
-
-# use glob syntax
 syntax: glob
 
-# Ignore Visual Studio 2008 files
 *.obj
-*.exe
 *.user
 *.aps
 *.pch
@@ -32,6 +27,8 @@ _ReSharper*/
 [Bb]uild[Ll]og.*
 *.[Pp]ublish.xml
 *.vs10x
+*.sln.docstates
 
 # Project Ignore Settings
 *.omitconf.bat
+ConfigConnectionString.exe

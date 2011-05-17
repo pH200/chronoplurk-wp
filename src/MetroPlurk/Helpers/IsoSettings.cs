@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO.IsolatedStorage;
 using System.Linq;
+using System.Reactive.Linq;
 
 namespace MetroPlurk.Helpers
 {

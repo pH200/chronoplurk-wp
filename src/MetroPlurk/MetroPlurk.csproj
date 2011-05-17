@@ -69,10 +69,14 @@
     <Reference Include="Ninject">
       <HintPath>..\Dependencies\Ninject\Ninject.dll</HintPath>
     </Reference>
-    <Reference Include="System.CoreEx, Version=1.0.2856.370, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="System.Interactive, Version=1.0.2856.370, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Observable" />
-    <Reference Include="System.Reactive, Version=1.0.2856.370, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Reactive, Version=1.1.10425.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Rx-Main.1.1.10425\lib\SL3-WP\System.Reactive.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Windows.Threading">
+      <HintPath>..\packages\Rx-Silverlight.1.1.10425\lib\SL3-WP\System.Reactive.Windows.Threading.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -89,10 +93,9 @@
     </Compile>
     <Compile Include="AppBootstrapper.cs" />
     <Compile Include="DefaultConfiguration.conf.cs" />
-    <Compile Include="Framework\PhoneContainer.cs" />
     <Compile Include="Framework\PivotFix.cs" />
-    <Compile Include="Framework\SimpleContainer.cs" />
     <Compile Include="Helpers\IsoSettings.cs" />
+    <Compile Include="Helpers\LinqExtensions.cs" />
     <Compile Include="Helpers\VisualTree.cs" />
     <Compile Include="Services\INavigationInjectRedirect.cs" />
     <Compile Include="Services\NavigationExtensions.cs" />
@@ -218,6 +221,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <None Include="Properties\AppManifest.xml" />
     <None Include="Properties\WMAppManifest.xml">
       <SubType>Designer</SubType>

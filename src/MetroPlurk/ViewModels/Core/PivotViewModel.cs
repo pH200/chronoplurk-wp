@@ -4,7 +4,6 @@ using MetroPlurk.Framework;
 
 namespace MetroPlurk.ViewModels
 {
-    [SurviveTombstone]
     public class PivotViewModel : Conductor<IScreen>.Collection.OneActive
     {
         private readonly PivotFix<IScreen> _pivotFix;
@@ -25,7 +24,6 @@ namespace MetroPlurk.ViewModels
         }
     }
 
-    [SurviveTombstone]
     public class LoginPivotViewModel : LoginAvailablePage
     {
         private readonly PivotFix<IScreen> _pivotFix;
