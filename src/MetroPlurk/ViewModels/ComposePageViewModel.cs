@@ -15,12 +15,12 @@ namespace MetroPlurk.ViewModels
     [NotifyForAll]
     public class ComposePageViewModel : LoginAvailablePage
     {
-        private readonly IPlurkService _plurkService;
+        private IPlurkService PlurkService { get; set; }
         private readonly INavigationService _navigationService;
         private readonly IProgressService _progressService;
         private IDisposable _composeHandler;
 
-        public string Username { get { return _plurkService.Username; } }
+        public string Username { get { return PlurkService.Username; } }
 
         public string Content { get; set; }
 
@@ -51,7 +51,7 @@ namespace MetroPlurk.ViewModels
             LoginViewModel loginViewModel)
             : base(loginViewModel)
         {
-            _plurkService = plurkService;
+            PlurkService = plurkService;
             _navigationService = navigationService;
             _progressService = progressService;
 
@@ -73,7 +73,7 @@ namespace MetroPlurk.ViewModels
             _progressService.Show("sending");
 
             _composeHandler =
-                TimelineCommand.PlurkAdd(_plurkService.Cookie, Content, Qualifier.Qualifier).LoadAsync().Timeout(
+                TimelineCommand.PlurkAdd(Content, Qualifier.Qualifier).Client(PlurkService.Client).LoadAsync().Timeout(
                     TimeSpan.FromSeconds(20)).PlurkException(error => { }).ObserveOnDispatcher().Subscribe(
                         plurk => _navigationService.GoBack(), () => _progressService.Hide());
         }

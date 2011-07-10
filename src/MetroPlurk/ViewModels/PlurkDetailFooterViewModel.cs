@@ -24,7 +24,7 @@ namespace MetroPlurk.ViewModels
     {
         private readonly IProgressService _progressService;
 
-        private readonly IPlurkService _plurkService;
+        private IPlurkService PlurkService { get; set; }
 
         private IDisposable _composeHandler;
 
@@ -52,7 +52,7 @@ namespace MetroPlurk.ViewModels
             (IPlurkService plurkService,
             IProgressService progressService)
         {
-            _plurkService = plurkService;
+            PlurkService = plurkService;
             _progressService = progressService;
         }
 
@@ -66,9 +66,10 @@ namespace MetroPlurk.ViewModels
 
             // TODO: url encode
             _composeHandler =
-                ResponsesCommand.ResponseAdd(_plurkService.Cookie, GetPlurkId(), Content, Qualifier.FreestyleColon).LoadAsync().Timeout(
-                    TimeSpan.FromSeconds(20)).PlurkException(error => { }).ObserveOnDispatcher().Subscribe(
-                        plurk => RefreshTimeline(), () => _progressService.Hide());
+                ResponsesCommand.ResponseAdd(GetPlurkId(), Content, Qualifier.FreestyleColon).Client(PlurkService.Client)
+                    .LoadAsync().Timeout(
+                        TimeSpan.FromSeconds(20)).PlurkException(error => { }).ObserveOnDispatcher().Subscribe(
+                            plurk => RefreshTimeline(), () => _progressService.Hide());
         }
 
         private int GetPlurkId()

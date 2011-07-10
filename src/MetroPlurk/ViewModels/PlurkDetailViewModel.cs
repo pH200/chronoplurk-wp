@@ -52,8 +52,8 @@ namespace MetroPlurk.ViewModels
         public void RefreshSync()
         {
             var getPlurks =
-                ResponsesCommand.Get(ListHeader.Id, 0, PlurkService.Cookie).
-                LoadAsync();
+                ResponsesCommand.Get(ListHeader.Id, 0)
+                    .Client(PlurkService.Client).LoadAsync();
 
             Request(getPlurks);
         }

@@ -10,7 +10,7 @@ namespace MetroPlurk.ViewModels
 {
     public class PlurkDetailPageViewModel : LoginAvailablePage, INavigationInjectionRedirect
     {
-        private readonly IPlurkService _plurkService;
+        private IPlurkService PlurkService { get; set; }
         
         public PlurkDetailViewModel PlurkDetailViewModel { get; private set; }
 
@@ -22,7 +22,7 @@ namespace MetroPlurk.ViewModels
             LoginViewModel loginViewModel)
             : base(loginViewModel)
         {
-            _plurkService = plurkService;
+            PlurkService = plurkService;
             PlurkDetailViewModel = plurkDetailViewModel;
         }
 
@@ -78,16 +78,17 @@ namespace MetroPlurk.ViewModels
             PlurkDetailViewModel.ScrollToEnd();
         }
 
+        // TODO: Unhandled IDisposables
         public void LikeAppBar()
         {
             var isLike = PlurkHeaderViewModel.IsFavorite;
             if (isLike)
             {
-                TimelineCommand.UnfavoritePlurks(_plurkService.Cookie, PlurkHeaderViewModel.Id).LoadAsync().Subscribe();
+                TimelineCommand.UnfavoritePlurks(PlurkHeaderViewModel.Id).Client(PlurkService.Client).LoadAsync().Subscribe();
             }
             else
             {
-                TimelineCommand.FavoritePlurks(_plurkService.Cookie, PlurkHeaderViewModel.Id).LoadAsync().Subscribe();
+                TimelineCommand.FavoritePlurks(PlurkHeaderViewModel.Id).Client(PlurkService.Client).LoadAsync().Subscribe();
             }
             PlurkHeaderViewModel.IsFavorite = !isLike;
 
@@ -99,11 +100,11 @@ namespace MetroPlurk.ViewModels
             var isMute = PlurkHeaderViewModel.IsUnread == UnreadStatus.Muted;
             if (isMute)
             {
-                TimelineCommand.UnmutePlurks(_plurkService.Cookie, PlurkHeaderViewModel.Id).LoadAsync().Subscribe();
+                TimelineCommand.UnmutePlurks(PlurkHeaderViewModel.Id).Client(PlurkService.Client).LoadAsync().Subscribe();
             }
             else
             {
-                TimelineCommand.MutePlurks(_plurkService.Cookie, PlurkHeaderViewModel.Id).LoadAsync().Subscribe();
+                TimelineCommand.MutePlurks(PlurkHeaderViewModel.Id).Client(PlurkService.Client).LoadAsync().Subscribe();
             }
             var unreadInt = (!isMute) ? (int)UnreadStatus.Muted : (int)UnreadStatus.Read;
             PlurkHeaderViewModel.IsUnreadInt = unreadInt;
@@ -131,7 +132,7 @@ namespace MetroPlurk.ViewModels
 
         private bool IsLoggedIn()
         {
-            return _plurkService.IsLoaded;
+            return PlurkService.IsLoaded;
         }
         #endregion
 

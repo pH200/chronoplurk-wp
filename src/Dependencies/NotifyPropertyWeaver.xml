@@ -51,5 +51,10 @@
             The names of other properties to perform notification for.
             </summary>
         </member>
+        <member name="P:NotifyPropertyWeaver.NotifyPropertyAttribute.SetIsChanged">
+            <summary>
+            Gets the object's changed status.
+            </summary>
+        </member>
     </members>
 </doc>

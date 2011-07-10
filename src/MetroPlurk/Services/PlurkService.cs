@@ -8,15 +8,16 @@ using MetroPlurk.Helpers;
 using MetroPlurk.ViewModels;
 using Plurto;
 using Plurto.Commands;
+using Plurto.Core;
 
 namespace MetroPlurk.Services
 {
     public interface IPlurkService
     {
+        IRequestClient Client { get; }
         int UserId { get; set; }
         string Username { get; set; }
         string Password { get; set; }
-        CookieCollection Cookie { get; set; }
         IEnumerable<int> FriendsId { get; set; }
         bool IsLoaded { get; }
         IObservable<bool> LoginAsnc();
@@ -28,22 +29,29 @@ namespace MetroPlurk.Services
 
     public class PlurkService : IPlurkService
     {
+        private readonly LegacyClient _client;
+        public IRequestClient Client { get { return _client; } }
+
         public int UserId { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
-        public CookieCollection Cookie { get; set; }
         public IEnumerable<int> FriendsId { get; set; }
 
         public bool IsLoaded { get; private set; }
+
+        public PlurkService()
+        {
+            _client = new LegacyClient(DefaultConfiguration.ApiKey);
+        }
 
         public IObservable<bool> LoginAsnc()
         {
             // Special handling for email login.
             var encodedUsername = HttpUtility.UrlEncode(Username);
-            var login = UsersCommand.LoginNoData(encodedUsername, Password).LoadAsync();
+            var login = UsersCommand.LoginNoData(encodedUsername, Password).Client(Client).LoadAsync();
             return login.Do(cookie =>
             {
-                Cookie = cookie;
+                _client.Cookies = cookie;
                 IsLoaded = true;
             }).Select(c => c != null);
         }
@@ -78,7 +86,6 @@ namespace MetroPlurk.Services
         {
             Username = "";
             Password = "";
-            Cookie = null;
             IsLoaded = false;
             IsoSettings.ClearAll();
         }

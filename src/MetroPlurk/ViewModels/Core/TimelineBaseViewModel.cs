@@ -17,9 +17,9 @@ namespace MetroPlurk.ViewModels
         where TSource : ITimeline
     {
         #region Fields
-        protected readonly INavigationService NavigationService;
-        protected readonly IProgressService ProgressService;
-        protected readonly IPlurkService PlurkService;
+        protected INavigationService NavigationService { get; set; }
+        protected IProgressService ProgressService { get; set; }
+        protected IPlurkService PlurkService { get; set; }
         private IDisposable _requestHandler;
         private DateTime _timeBase;
         private TSource _lastResult;

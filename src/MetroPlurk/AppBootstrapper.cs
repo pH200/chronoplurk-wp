@@ -14,7 +14,6 @@ namespace MetroPlurk
 {
     public class AppBootstrapper : PhoneBootstrapper
     {
-        private IDictionary<string, Type> _viewModelDictionary;
         private IKernel _kernel;
 
         protected override void Configure()
@@ -22,14 +21,7 @@ namespace MetroPlurk
             DefaultConfiguration.Initialize();
 
             _kernel = new StandardKernel();
-            _viewModelDictionary = new Dictionary<string, Type>();
-
-            RegisterViewModel<MainPageViewModel>();
-            RegisterViewModel<PlurkMainPageViewModel>();
-            RegisterViewModel<SearchPageViewModel>();
-            RegisterViewModel<PlurkDetailPageViewModel>();
-            RegisterViewModel<ComposePageViewModel>();
-
+     
             _kernel.Bind(typeof(MainPageViewModel)).ToSelf().InSingletonScope();
             _kernel.Bind(typeof(SearchResultViewModel)).ToSelf().InSingletonScope();
             _kernel.Bind(typeof(SearchRecordsViewModel)).ToSelf().InSingletonScope();
@@ -60,39 +52,14 @@ namespace MetroPlurk
             AddNavigatingControl();
         }
 
-        private void RegisterViewModel<T>(string key)
-        {
-            if (_viewModelDictionary.ContainsKey(key))
-            {
-                _viewModelDictionary[key] = typeof(T);
-            }
-            else
-            {
-                _viewModelDictionary.Add(key, typeof(T));
-            }
-        }
-
-        private void RegisterViewModel<T>()
-        {
-            RegisterViewModel<T>(typeof(T).Name);
-        }
-
         protected override object GetInstance(Type service, string key)
         {
             if (service != null)
             {
-                return _kernel.Get(service);
+                return _kernel.Get(service, key);
             }
 
-            if (_viewModelDictionary.ContainsKey(key))
-            {
-                var viewModel = _viewModelDictionary[key];
-                if (viewModel != null)
-                {
-                    return _kernel.Get(viewModel);
-                }
-            }
-            throw new ArgumentOutOfRangeException("service");
+            throw new ArgumentNullException("service");
         }
 
         protected override IEnumerable<object> GetAllInstances(Type service)

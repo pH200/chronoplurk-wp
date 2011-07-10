@@ -67,15 +67,14 @@
     <Reference Include="Microsoft.Phone.Controls.Toolkit, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b772ad94eb9ca604, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Phone.Interop" />
     <Reference Include="Ninject">
-      <HintPath>..\Dependencies\Ninject\Ninject.dll</HintPath>
+      <HintPath>..\packages\Ninject.2.2.1.4\lib\sl3-wp\Ninject.dll</HintPath>
     </Reference>
     <Reference Include="System.Observable" />
-    <Reference Include="System.Reactive, Version=1.1.10425.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Rx-Main.1.1.10425\lib\SL3-WP\System.Reactive.dll</HintPath>
+    <Reference Include="System.Reactive">
+      <HintPath>..\packages\Rx-Main.1.0.10621\lib\SL3-WP\System.Reactive.dll</HintPath>
     </Reference>
     <Reference Include="System.Reactive.Windows.Threading">
-      <HintPath>..\packages\Rx-Silverlight.1.1.10425\lib\SL3-WP\System.Reactive.Windows.Threading.dll</HintPath>
+      <HintPath>..\packages\Rx-Silverlight.1.0.10621\lib\SL3-WP\System.Reactive.Windows.Threading.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows" />
     <Reference Include="System" />
@@ -221,6 +220,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="Properties\AppManifest.xml" />
     <None Include="Properties\WMAppManifest.xml">

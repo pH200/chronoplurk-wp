@@ -33,13 +33,11 @@ namespace MetroPlurk.ViewModels
         public void RefreshSync()
         {
             var getPlurks =
-                PollingCommand.GetPlurks(
-                PlurkService.Cookie, DateTime.Now.Subtract(new TimeSpan(2, 0, 0, 0)), 50).
-                LoadAsync();
+                PollingCommand.GetPlurks(DateTime.Now.Subtract(new TimeSpan(2, 0, 0, 0)), 50)
+                    .Client(PlurkService.Client).LoadAsync();
             RequestMoreHandler = plurks =>
-                TimelineCommand.GetPlurks(
-                PlurkService.Cookie, new DateTime(plurks.Plurks.Min(p => p.PostDate.Ticks)),50).
-                LoadAsync();
+                                 TimelineCommand.GetPlurks(new DateTime(plurks.Plurks.Min(p => p.PostDate.Ticks)), 50).
+                                     Client(PlurkService.Client).LoadAsync();
             Request(getPlurks);
         }
     }
