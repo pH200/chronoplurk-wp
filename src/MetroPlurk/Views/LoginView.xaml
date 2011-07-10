@@ -13,7 +13,7 @@
 
     <Grid x:Name="LayoutRoot" Background="{StaticResource PhoneBackgroundBrush}">
         <StackPanel Margin="0,30,0,0" VerticalAlignment="Top">
-            <TextBlock Height="50" Text="LightPlurk" Style="{StaticResource PhoneTextTitle2Style}" />
+            <TextBlock Height="50" Text="ChronoPlurk" Style="{StaticResource PhoneTextTitle2Style}" />
             <TextBlock Height="23" Margin="12,0,0,0" Text="Nickname or email" Foreground="OrangeRed" />
             <TextBox x:Name="Username" Height="72"
                      InputScope="EmailUserName"
