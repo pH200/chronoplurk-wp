@@ -62,6 +62,9 @@
     <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="HtmlAgilityPack">
+      <HintPath>..\Dependencies\HtmlAgilityPack\HtmlAgilityPack.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Phone" />
     <Reference Include="Microsoft.Phone.Controls" />
     <Reference Include="Microsoft.Phone.Controls.Toolkit, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b772ad94eb9ca604, processorArchitecture=MSIL" />
@@ -82,9 +85,6 @@
     <Reference Include="System.Net" />
     <Reference Include="System.Windows.Interactivity, Version=3.7.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml" />
-    <Reference Include="NotifyPropertyWeaver">
-      <HintPath>$(SolutionDir)Dependencies\NotifyPropertyWeaver.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -95,6 +95,7 @@
     <Compile Include="Framework\PivotFix.cs" />
     <Compile Include="Helpers\IsoSettings.cs" />
     <Compile Include="Helpers\LinqExtensions.cs" />
+    <Compile Include="Helpers\NotifyPropertyWeaver.cs" />
     <Compile Include="Helpers\VisualTree.cs" />
     <Compile Include="Services\INavigationInjectRedirect.cs" />
     <Compile Include="Services\NavigationExtensions.cs" />
@@ -276,8 +277,8 @@
     <NotifyPropertyWeaverMsBuildTask.WeavingTask TargetPath="$(TargetPath)" TryToWeaveAllTypes="false" CheckForEquality="true" EventInvokerName="NotifyOfPropertyChange" />
   </Target>
   <ProjectExtensions />
-  <UsingTask TaskName="NotifyPropertyWeaverMsBuildTask.WeavingTask" AssemblyFile="$(SolutionDir)Dependencies\NotifyPropertyWeaverMsBuildTask.dll" />
   <Target Name="AfterCompile">
-    <NotifyPropertyWeaverMsBuildTask.WeavingTask />
+    <NotifyPropertyWeaverMsBuildTask.WeavingTask TryToWeaveAllTypes="false" />
   </Target>
+  <UsingTask TaskName="NotifyPropertyWeaverMsBuildTask.WeavingTask" AssemblyFile="$(SolutionDir)Dependencies\NotifyPropertyWeaverMsBuildTask.dll" />
 </Project>
