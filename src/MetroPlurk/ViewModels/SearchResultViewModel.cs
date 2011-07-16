@@ -42,8 +42,8 @@ namespace MetroPlurk.ViewModels
 
         public void Search(string query, int? offset = null)
         {
-            var getPlurks = SearchCommand.Find(query, offset).Client(PlurkService.Client).LoadAsync();
-            RequestMoreHandler = plurks => SearchCommand.Find(query, plurks.LastOffset).Client(PlurkService.Client).LoadAsync();
+            var getPlurks = SearchCommand.Find(query, offset).Client(PlurkService.Client).ToObservable();
+            RequestMoreHandler = plurks => SearchCommand.Find(query, plurks.LastOffset).Client(PlurkService.Client).ToObservable();
 
             Request(getPlurks);
             

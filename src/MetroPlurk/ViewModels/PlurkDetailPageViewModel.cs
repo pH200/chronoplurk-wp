@@ -84,11 +84,11 @@ namespace MetroPlurk.ViewModels
             var isLike = PlurkHeaderViewModel.IsFavorite;
             if (isLike)
             {
-                TimelineCommand.UnfavoritePlurks(PlurkHeaderViewModel.Id).Client(PlurkService.Client).LoadAsync().Subscribe();
+                TimelineCommand.UnfavoritePlurks(PlurkHeaderViewModel.Id).Client(PlurkService.Client).ToObservable().Subscribe();
             }
             else
             {
-                TimelineCommand.FavoritePlurks(PlurkHeaderViewModel.Id).Client(PlurkService.Client).LoadAsync().Subscribe();
+                TimelineCommand.FavoritePlurks(PlurkHeaderViewModel.Id).Client(PlurkService.Client).ToObservable().Subscribe();
             }
             PlurkHeaderViewModel.IsFavorite = !isLike;
 
@@ -100,11 +100,11 @@ namespace MetroPlurk.ViewModels
             var isMute = PlurkHeaderViewModel.IsUnread == UnreadStatus.Muted;
             if (isMute)
             {
-                TimelineCommand.UnmutePlurks(PlurkHeaderViewModel.Id).Client(PlurkService.Client).LoadAsync().Subscribe();
+                TimelineCommand.UnmutePlurks(PlurkHeaderViewModel.Id).Client(PlurkService.Client).ToObservable().Subscribe();
             }
             else
             {
-                TimelineCommand.MutePlurks(PlurkHeaderViewModel.Id).Client(PlurkService.Client).LoadAsync().Subscribe();
+                TimelineCommand.MutePlurks(PlurkHeaderViewModel.Id).Client(PlurkService.Client).ToObservable().Subscribe();
             }
             var unreadInt = (!isMute) ? (int)UnreadStatus.Muted : (int)UnreadStatus.Read;
             PlurkHeaderViewModel.IsUnreadInt = unreadInt;

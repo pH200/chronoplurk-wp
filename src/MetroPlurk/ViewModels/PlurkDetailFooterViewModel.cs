@@ -67,7 +67,7 @@ namespace MetroPlurk.ViewModels
             // TODO: url encode
             _composeHandler =
                 ResponsesCommand.ResponseAdd(GetPlurkId(), Content, Qualifier.FreestyleColon).Client(PlurkService.Client)
-                    .LoadAsync().Timeout(
+                    .ToObservable().Timeout(
                         TimeSpan.FromSeconds(20)).PlurkException(error => { }).ObserveOnDispatcher().Subscribe(
                             plurk => RefreshTimeline(), () => _progressService.Hide());
         }

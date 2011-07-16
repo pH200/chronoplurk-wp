@@ -48,7 +48,7 @@ namespace MetroPlurk.Services
         {
             // Special handling for email login.
             var encodedUsername = HttpUtility.UrlEncode(Username);
-            var login = UsersCommand.LoginNoData(encodedUsername, Password).Client(Client).LoadAsync();
+            var login = UsersCommand.LoginNoData(encodedUsername, Password).Client(Client).ToObservable();
             return login.Do(cookie =>
             {
                 _client.Cookies = cookie;

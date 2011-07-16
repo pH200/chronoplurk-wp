@@ -34,10 +34,10 @@ namespace MetroPlurk.ViewModels
         {
             var getPlurks =
                 PollingCommand.GetPlurks(DateTime.Now.Subtract(new TimeSpan(2, 0, 0, 0)), 50)
-                    .Client(PlurkService.Client).LoadAsync();
+                    .Client(PlurkService.Client).ToObservable();
             RequestMoreHandler = plurks =>
                                  TimelineCommand.GetPlurks(new DateTime(plurks.Plurks.Min(p => p.PostDate.Ticks)), 50).
-                                     Client(PlurkService.Client).LoadAsync();
+                                     Client(PlurkService.Client).ToObservable();
             Request(getPlurks);
         }
     }

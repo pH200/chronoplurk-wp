@@ -73,7 +73,7 @@ namespace MetroPlurk.ViewModels
             _progressService.Show("sending");
 
             _composeHandler =
-                TimelineCommand.PlurkAdd(Content, Qualifier.Qualifier).Client(PlurkService.Client).LoadAsync().Timeout(
+                TimelineCommand.PlurkAdd(Content, Qualifier.Qualifier).Client(PlurkService.Client).ToObservable().Timeout(
                     TimeSpan.FromSeconds(20)).PlurkException(error => { }).ObserveOnDispatcher().Subscribe(
                         plurk => _navigationService.GoBack(), () => _progressService.Hide());
         }

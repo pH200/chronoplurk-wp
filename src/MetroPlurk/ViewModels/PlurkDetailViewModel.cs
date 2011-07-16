@@ -53,7 +53,7 @@ namespace MetroPlurk.ViewModels
         {
             var getPlurks =
                 ResponsesCommand.Get(ListHeader.Id, 0)
-                    .Client(PlurkService.Client).LoadAsync();
+                    .Client(PlurkService.Client).ToObservable();
 
             Request(getPlurks);
         }
