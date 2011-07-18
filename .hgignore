@@ -31,4 +31,4 @@ _ReSharper*/
 
 # Project Ignore Settings
 *.omitconf.bat
-ConfigConnectionString.exe
+config_connection_string.py
