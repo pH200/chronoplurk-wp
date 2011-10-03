@@ -40,7 +40,6 @@
             <StackPanel Margin="0,0,0,50" HorizontalAlignment="Stretch">
                 <Button x:Name="RequestMore"
                         Content="more"
-                        IsEnabled="{Binding IsHasMore}"
                         Opacity="{Binding IsHasMoreOpacity}"
                         Click="RequestMore_Click" />
             </StackPanel>

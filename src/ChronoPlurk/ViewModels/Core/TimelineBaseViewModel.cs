@@ -119,12 +119,15 @@ namespace ChronoPlurk.ViewModels
 
         public void RequestMore()
         {
-            if (RequestMoreHandler == null)
+            if (IsHasMore)
             {
-                IsHasMore = false;
-                return;
+                if (RequestMoreHandler == null)
+                {
+                    IsHasMore = false;
+                    return;
+                }
+                Request(RequestMoreHandler(_lastResult), false);
             }
-            Request(RequestMoreHandler(_lastResult), false);
         }
 
         private void Request(IObservable<TSource> observable, bool clear)
