@@ -12,7 +12,7 @@ using NotifyPropertyWeaver;
 namespace ChronoPlurk.ViewModels
 {
     [NotifyForAll]
-    public class LoginViewModel : Screen
+    public class LoginViewModel : Screen, IChildT<ILoginAvailablePage>
     {
         private readonly IPlurkService _plurkService;
         private readonly IProgressService _progressService;
@@ -76,7 +76,7 @@ namespace ChronoPlurk.ViewModels
             }
             _progressService.Show("Connecting");
             _requestHandler = _plurkService.LoginAsnc(Username, Password).
-                PlurkException(error=>{}, _progressService).ObserveOnDispatcher().
+                PlurkException(error => { }, _progressService).ObserveOnDispatcher().
                 Subscribe(message =>
                 {
                     _plurkService.SaveUserData();
@@ -89,11 +89,8 @@ namespace ChronoPlurk.ViewModels
                     else
                     {
                         MessageBox.Show("Login Successful.");
-                        if (Parent is ILoginAvailablePage)
-                        {
-                            var parent = (ILoginAvailablePage)Parent;
-                            parent.HideLoginPopup();
-                        }
+                        var parent = this.GetParent();
+                        parent.HideLoginPopup();
                     }
                 });
         }

@@ -108,6 +108,7 @@
     <Compile Include="SpecialFrameAdapter.cs" />
     <Compile Include="ViewModels\ComposePageViewModel.cs" />
     <Compile Include="ViewModels\Core\BindableCollectionEx.cs" />
+    <Compile Include="ViewModels\Core\IChidT.cs" />
     <Compile Include="ViewModels\Core\IRefreshSync.cs" />
     <Compile Include="ViewModels\Core\ISearchPage.cs" />
     <Compile Include="ViewModels\Core\LoginAvailablePage.cs" />

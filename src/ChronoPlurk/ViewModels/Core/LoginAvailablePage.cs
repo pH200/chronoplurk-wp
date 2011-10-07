@@ -29,41 +29,50 @@ namespace ChronoPlurk.ViewModels
         public double PopupHeight { get; set; }
 
         public bool IsLoginPopupOpen { get; private set; }
+
+        public bool IsMenuEnabled { get; set; }
         
         public LoginAvailablePage(LoginViewModel loginViewModel)
         {
             LoginViewModel = loginViewModel;
+            IsMenuEnabled = true;
         }
 
         protected override void OnInitialize()
         {
             base.OnInitialize();
-
-            HideLoginPopup();
             SetParent();
+        }
+
+        protected override void OnActivate()
+        {
+            base.OnActivate();
+            HideLoginPopup();
         }
 
         protected override void OnViewLoaded(object view)
         {
             base.OnViewLoaded(view);
-
-            _view = (PhoneApplicationPage) view;
-            SetPopupSize(_view.Orientation);
-            _view.OrientationChanged += ViewOrientationChanged;
-            _view.BackKeyPress += BackKeyPress;
-        }
-
-        protected override void OnDeactivate(bool close)
-        {
-            base.OnDeactivate(close);
-            HideLoginPopup();
+            
+            if (IsMenuEnabled)
+            {
+                ShowApplicationBar();
+            }
+            if (_view == null)
+            {
+                _view = (PhoneApplicationPage)view;
+                SetPopupSize(_view.Orientation);
+                _view.OrientationChanged += ViewOrientationChanged;
+                _view.BackKeyPress += BackKeyPress;
+            }
         }
         
         private void SetParent()
         {
-            var node = LoginViewModel as IChild<IConductor>;
-            if (node != null && node.Parent != this)
-                node.Parent = this;
+            if (LoginViewModel != null && LoginViewModel.Parent != this)
+            {
+                LoginViewModel.Parent = this;
+            }
         }
 
         private void SetPopupSize(PageOrientation orientation)
@@ -114,13 +123,18 @@ namespace ChronoPlurk.ViewModels
 
         public void HideLoginPopup()
         {
+            ShowApplicationBar();
+
+            IsLoginPopupOpen = false;
+        }
+
+        private void ShowApplicationBar()
+        {
             if (_view != null && _view.ApplicationBar != null)
             {
                 _view.ApplicationBar.IsMenuEnabled = true;
                 _view.ApplicationBar.IsVisible = true;
             }
-
-            IsLoginPopupOpen = false;
         }
     }
 }
