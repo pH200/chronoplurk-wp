@@ -2,6 +2,7 @@
 using System.Windows.Controls.Primitives;
 using ChronoPlurk.Helpers;
 using ChronoPlurk.Views.ProgressBar;
+using Microsoft.Phone.Shell;
 
 namespace ChronoPlurk.Services
 {
@@ -14,35 +15,29 @@ namespace ChronoPlurk.Services
 
     public class ProgressService : IProgressService
     {
-        private readonly Popup _popup;
-        private readonly ProgressView _progressView;
-        private const string DefaultMessage = "Loading";
+        private readonly ProgressIndicator _progressIndicator;
 
         public ProgressService()
         {
-            _progressView = new ProgressView();
-            _popup = new Popup
-            {
-                VerticalOffset = 0,
-                Child = _progressView
-            };
+            _progressIndicator = new ProgressIndicator() {IsVisible = true};
+            SystemTray.ProgressIndicator = _progressIndicator;
         }
 
         public void Show()
         {
-            Show(DefaultMessage);
+            Show(null);
         }
 
         public void Show(string message)
         {
-            _popup.IsOpen = true;
-            _progressView.Width = PlurkResources.PhoneWidth;
-            _progressView.Message.Text = message;
+            _progressIndicator.Text = message;
+            _progressIndicator.IsIndeterminate = true;
         }
 
         public void Hide()
         {
-            _popup.IsOpen = false;
+            _progressIndicator.IsIndeterminate = false;
+            _progressIndicator.Text = null;
         }
     }
 }

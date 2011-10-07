@@ -9,12 +9,12 @@
     xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro"
     xmlns:pcontrols="clr-namespace:ChronoPlurk.Views.PlurkControls"
     mc:Ignorable="d"
-    d:DesignWidth="480" d:DesignHeight="728"
+    d:DesignWidth="480" d:DesignHeight="696"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="PortraitOrLandscape" Orientation="Portrait"
-    shell:SystemTray.IsVisible="False">
+    shell:SystemTray.IsVisible="True">
 
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <ContentControl x:Name="PlurkDetailViewModel"

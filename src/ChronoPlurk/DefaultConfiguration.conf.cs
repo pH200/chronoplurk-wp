@@ -26,7 +26,14 @@ namespace ChronoPlurk
 ""; // %%omit password%%
 
             // Clear settings for debugging
-            IsolatedStorageSettings.ApplicationSettings.Clear();
+            try
+            {
+                IsolatedStorageSettings.ApplicationSettings.Clear();
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e.ToString());
+            }
 #endif
 #if DEBUG
             Plurto.Config.LoggingLevel = LoggingLevel.Verbose;
