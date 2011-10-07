@@ -148,48 +148,49 @@ namespace ChronoPlurk.ViewModels
 
             _requestHandler = observable.
                 Timeout(TimeSpan.FromSeconds(15)).PlurkException(error =>
-            {
-                IsHasMore = tempIsHasMore;
-            }).Subscribe(plurks =>
-            {
-                _lastResult = plurks;
+                {
+                    IsHasMore = tempIsHasMore;
+                }).Subscribe(plurks =>
+                {
+                    _lastResult = plurks;
 
-                var result = plurks.Zip();
-                if (result == null || result.IsEmpty())
-                {
-                    if (clear)
+                    var result = plurks.Zip();
+                    if (result == null || result.IsEmpty())
                     {
-                        Execute.OnUIThread(() => Message = "This timeline is empty.");
+                        if (clear)
+                        {
+                            Execute.OnUIThread(() => Message = "This timeline is empty.");
+                        }
+                        IsHasMore = false;
                     }
-                    IsHasMore = false;
-                }
-                else
-                {
-                    Items.AddRange(result.Select(plurk => new PlurkItemViewModel()
+                    else
                     {
-                        Id = plurk.Plurk.Id,
-                        UserId = plurk.Plurk.UserId,
-                        Username = plurk.User.DisplayNameOrNickName,
-                        Qualifier = plurk.Plurk.QualifierTextView(),
-                        PostDate = plurk.Plurk.PostDate,
-                        PostTimeFromNow = _timeBase - plurk.Plurk.PostDate,
-                        Content = plurk.Plurk.Content,
-                        ContentRaw = plurk.Plurk.ContentRaw,
-                        AvatarView = plurk.User.AvatarBig,
-                        IsFavorite = plurk.Plurk.Favorite,
-                        QualifierEnum = plurk.Plurk.Qualifier,
-                        ResponseCount = plurk.Plurk.ResponseCount,
-                        IsUnread = plurk.Plurk.IsUnread,
-                        NoComments = plurk.Plurk.NoComments,
-                        ContextMenuEnabled = PlurkService.IsLoaded,
-                    }));
-                    
-                    if (IsHasMoreHandler != null)
-                    {
-                        IsHasMore = IsHasMoreHandler(plurks);
+                        Execute.OnUIThread(() => ProgressService.Show("Updating Timeline"));
+                        Items.AddRange(result.Select(plurk => new PlurkItemViewModel()
+                        {
+                            Id = plurk.Plurk.Id,
+                            UserId = plurk.Plurk.UserId,
+                            Username = plurk.User.DisplayNameOrNickName,
+                            Qualifier = plurk.Plurk.QualifierTextView(),
+                            PostDate = plurk.Plurk.PostDate,
+                            PostTimeFromNow = _timeBase - plurk.Plurk.PostDate,
+                            Content = plurk.Plurk.Content,
+                            ContentRaw = plurk.Plurk.ContentRaw,
+                            AvatarView = plurk.User.AvatarBig,
+                            IsFavorite = plurk.Plurk.Favorite,
+                            QualifierEnum = plurk.Plurk.Qualifier,
+                            ResponseCount = plurk.Plurk.ResponseCount,
+                            IsUnread = plurk.Plurk.IsUnread,
+                            NoComments = plurk.Plurk.NoComments,
+                            ContextMenuEnabled = PlurkService.IsLoaded,
+                        }));
+
+                        if (IsHasMoreHandler != null)
+                        {
+                            IsHasMore = IsHasMoreHandler(plurks);
+                        }
                     }
-                }
-            }, () => Execute.OnUIThread(() => ProgressService.Hide()));
+                }, () => Execute.OnUIThread(() => ProgressService.Hide()));
         }
 
         public void CancelRequest()

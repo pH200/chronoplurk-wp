@@ -58,7 +58,7 @@ namespace ChronoPlurk.ViewModels
 
         private void SearchOnLoaded()
         {
-            if (_searchResult.Items.IsEmpty() &&
+            if (_searchResult.Items.IsNullOrEmpty() &&
                 SearchField != null &&
                 SearchField.Trim() != "")
             {

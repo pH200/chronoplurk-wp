@@ -61,7 +61,7 @@ namespace ChronoPlurk.ViewModels
             {
                 SearchField = "";
             }
-            if (_searchResult.Items.IsEmpty())
+            if (_searchResult.Items.IsNullOrEmpty())
             {
                 _searchResult.Search(SearchField);
             }
