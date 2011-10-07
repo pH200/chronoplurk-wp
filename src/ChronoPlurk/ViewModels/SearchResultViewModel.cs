@@ -7,7 +7,7 @@ using Plurto.Entities;
 
 namespace ChronoPlurk.ViewModels
 {
-    public sealed class SearchResultViewModel : TimelineBaseViewModel<SearchResult>
+    public sealed class SearchResultViewModel : TimelineBaseViewModel<SearchResult>, IChildT<ISearchPage>
     {
         private Type _lastParent;
 
@@ -25,9 +25,9 @@ namespace ChronoPlurk.ViewModels
         {
             base.OnActivate();
 
-            if (_lastParent != null &&
-                _lastParent == typeof(MainPageViewModel) &&
-                !(Parent is MainPageViewModel))
+            if (_lastParent != null && // Has navigated from ISearchPage
+                _lastParent == typeof(MainPageViewModel) && // Has navigated from initial search page
+                !(Parent is MainPageViewModel)) // Isn't navigated to initial search page
             {
                 this.Clear();
             }

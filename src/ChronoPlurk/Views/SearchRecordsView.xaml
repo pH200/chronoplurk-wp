@@ -10,16 +10,18 @@
     Foreground="{StaticResource PhoneForegroundBrush}"
     d:DesignHeight="480" d:DesignWidth="480">
 
-    <Grid x:Name="LayoutRoot" Background="Transparent">
-        <ListBox x:Name="Items" ItemsSource="{Binding Items}"
-                 cal:Message.Attach="[Event SelectionChanged] = [Action OnSelectionChanged($eventArgs)]">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock x:Name="Query" Margin="12,0,0,17"
+    <UserControl.Resources>
+        <DataTemplate x:Key="queryTemplate">
+            <TextBlock x:Name="Query" Margin="12,0,0,17"
                                Text="{Binding Query}"
                                Style="{StaticResource PhoneTextTitle2Style}" />
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+        </DataTemplate>
+    </UserControl.Resources>
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <ListBox x:Name="Items"
+                 ItemsSource="{Binding Items}"
+                 SelectedIndex="{Binding ListSelectedIndex, Mode=TwoWay}"
+                 ItemTemplate="{StaticResource queryTemplate}"
+                 cal:Message.Attach="[Event SelectionChanged] = [Action OnSelectionChanged($eventArgs)]" />
     </Grid>
 </UserControl>

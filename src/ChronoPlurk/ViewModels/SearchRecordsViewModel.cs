@@ -8,13 +8,24 @@ using ChronoPlurk.Helpers;
 
 namespace ChronoPlurk.ViewModels
 {
-    public sealed class SearchRecordsViewModel : Screen
+    public sealed class SearchRecordsViewModel : Screen, IChildT<ISearchPage>
     {
         public const int MaxRecords = 20;
 
         public ObservableCollection<SearchRecord> Items { get; set; }
 
-        private ISearchPage SearchParent { get { return Parent as ISearchPage; } }
+        private int _listSelectedIndex = -1; // Must defualt as -1
+
+        public int ListSelectedIndex
+        {
+            get { return _listSelectedIndex; }
+            set
+            {
+                if (_listSelectedIndex == value) return;
+                _listSelectedIndex = value;
+                NotifyOfPropertyChange(() => ListSelectedIndex);
+            }
+        }
 
         public SearchRecordsViewModel()
         {
@@ -38,14 +49,19 @@ namespace ChronoPlurk.ViewModels
 
         public void OnSelectionChanged(SelectionChangedEventArgs e)
         {
-            if (e.AddedItems != null && e.AddedItems.Count > 0)
+            if (ListSelectedIndex == -1)
             {
-                var query = e.AddedItems.OfType<SearchRecord>().FirstOrDefault().Query;
-                if (SearchParent != null)
-                {
-                    SearchParent.Search(query);
-                }
+                return;
             }
+            
+            var item = Items[ListSelectedIndex];
+            var parent = this.GetParent();
+            if (parent != null)
+            {
+                parent.Search(item.Query);
+            }
+
+            ListSelectedIndex = -1;
         }
 
         public void Add(string record)
