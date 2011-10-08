@@ -44,7 +44,7 @@ namespace ChronoPlurk.Helpers
                 }
                 onError(PlurkError.UnknownError);
                 return Observable.Empty<TSource>();
-            }, DispatcherScheduler.Instance).First();
+            }, DispatcherScheduler.Instance).Merge();
         }
 
         public static void PlurkExceptionHandling(Exception ex, Action<PlurkError> onError)

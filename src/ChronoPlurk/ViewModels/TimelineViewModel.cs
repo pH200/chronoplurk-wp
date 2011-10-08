@@ -23,13 +23,13 @@ namespace ChronoPlurk.ViewModels
 
         protected override void OnActivate()
         {
-            base.OnActivate();
-
             if (RefreshOnActivate)
             {
                 RefreshOnActivate = false;
                 RefreshSync();
             }
+
+            base.OnActivate();
         }
 
         public void RefreshSync()

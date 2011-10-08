@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
+using System.Windows;
 using System.Windows.Controls;
 using Caliburn.Micro;
 using ChronoPlurk.Services;
@@ -70,12 +71,29 @@ namespace ChronoPlurk.ViewModels
             {
                 _composeHandler.Dispose();
             }
-            _progressService.Show("sending");
+            if (String.IsNullOrWhiteSpace(Content))
+            {
+                MessageBox.Show("Write something before you plurk!");
+            }
+            _progressService.Show("Sending");
 
-            _composeHandler =
-                TimelineCommand.PlurkAdd(Content, Qualifier.Qualifier).Client(PlurkService.Client).ToObservable().Timeout(
-                    TimeSpan.FromSeconds(20)).PlurkException(error => { }).ObserveOnDispatcher().Subscribe(
-                        plurk => _navigationService.GoBack(), () => _progressService.Hide());
+            var command =
+                TimelineCommand.PlurkAdd(Content, Qualifier.Qualifier).
+                    Client(PlurkService.Client).ToObservable().
+                    Timeout(TimeSpan.FromSeconds(20)).
+                    PlurkException(error => { }).
+                    ObserveOnDispatcher();
+
+            _composeHandler = command.Subscribe(
+                plurk =>
+                {
+                    var page = IoC.Get<PlurkMainPageViewModel>();
+                    if (page != null)
+                    {
+                        page.NewPost = true;
+                    }
+                    _navigationService.GoBack();
+                }, () => _progressService.Hide());
         }
     }
 }

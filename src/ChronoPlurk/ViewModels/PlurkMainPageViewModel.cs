@@ -17,7 +17,9 @@ namespace ChronoPlurk.ViewModels
         private PlurkMainPage _view;
         
         public string Username { get; set; }
-        
+
+        public bool NewPost { get; set; }
+
         public PlurkMainPageViewModel(
             INavigationService navigationService,
             IPlurkService plurkService,
@@ -36,6 +38,18 @@ namespace ChronoPlurk.ViewModels
             ActivateItem(_timeline);
             Username = PlurkService.Username;
             _timeline.RefreshSync();
+        }
+
+        protected override void OnActivate()
+        {
+            if (NewPost)
+            {
+                _timeline.RefreshOnActivate = true;
+                ActivateItem(_timeline);
+                NewPost = false;
+            }
+
+            base.OnActivate();
         }
         
         protected override void OnViewLoaded(object view)
