@@ -25,7 +25,16 @@ namespace ChronoPlurk.ViewModels
         public override sealed object ListHeader { get { return DetailHeader; } }
 
         [DependsOn("DetailFooter")]
-        public override sealed object ListFooter { get { return DetailFooter; } }
+        public override sealed object ListFooter
+        {
+            get
+            {
+                {
+                    return PlurkService.IsLoaded ? DetailFooter : _emptyViewModel;
+                }
+            }
+        }
+        private readonly object _emptyViewModel = new EmptyViewModel();
 
         public PlurkDetailHeaderViewModel DetailHeader { get; private set; }
         
@@ -50,18 +59,19 @@ namespace ChronoPlurk.ViewModels
 
         protected override void OnActivate()
         {
-            base.OnActivate();
+            NotifyOfPropertyChange("ListFooter");
+            if (RefreshOnActivate)
+            {
+                RefreshOnActivate = false;
+                RefreshSync();
+            }
 
-            if (!RefreshOnActivate) return;
-            RefreshOnActivate = false;
-            RefreshSync();
+            base.OnActivate();
         }
 
         public void RefreshSync()
         {
-            var getPlurks =
-                ResponsesCommand.Get(DetailHeader.Id, 0)
-                    .Client(PlurkService.Client).ToObservable();
+            var getPlurks = ResponsesCommand.Get(DetailHeader.Id, 0).Client(PlurkService.Client).ToObservable();
 
             Request(getPlurks);
         }

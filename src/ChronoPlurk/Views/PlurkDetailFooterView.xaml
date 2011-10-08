@@ -12,7 +12,8 @@
     d:DesignHeight="480" d:DesignWidth="480">
 
     <Grid Background="Black">
-        <StackPanel Margin="10">
+        <StackPanel Margin="10,0,10,0">
+            <TextBlock Margin="12,0,0,0" Text="reply" />
             <TextBox x:Name="Content"
                      VerticalAlignment="Top"
                      MinHeight="150"
@@ -25,7 +26,7 @@
             </TextBox>
             <TextBlock x:Name="TextCountLeft"
                        HorizontalAlignment="Right"
-                       Margin="0,0,15,0"
+                       Margin="0,0,15,8"
                        Foreground="{StaticResource PhoneAccentBrush}"/>
             <Button x:Name="Reply" Content="reply" />
         </StackPanel>
