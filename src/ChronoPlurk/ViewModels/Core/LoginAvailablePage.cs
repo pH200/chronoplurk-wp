@@ -118,11 +118,13 @@ namespace ChronoPlurk.ViewModels
                 _view.ApplicationBar.IsVisible = false;
             }
 
+            (LoginViewModel as IActivate).Activate();
             IsLoginPopupOpen = true;
         }
 
         public void HideLoginPopup()
         {
+            (LoginViewModel as IDeactivate).Deactivate(false);
             ShowApplicationBar();
 
             IsLoginPopupOpen = false;

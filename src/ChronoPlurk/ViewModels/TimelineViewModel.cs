@@ -7,7 +7,7 @@ using Plurto.Entities;
 
 namespace ChronoPlurk.ViewModels
 {
-    public sealed class TimelineViewModel : TimelineBaseViewModel<PollingResult>, IRefreshSync
+    public sealed class TimelineViewModel : TimelineBaseViewModel<TimelineResult>, IRefreshSync
     {
         public bool RefreshOnActivate { get; set; }
 
@@ -32,12 +32,12 @@ namespace ChronoPlurk.ViewModels
 
         public void RefreshSync()
         {
-            var getPlurks =
-                PollingCommand.GetPlurks(DateTime.Now.Subtract(new TimeSpan(2, 0, 0, 0)), 50)
-                    .Client(PlurkService.Client).ToObservable();
+            var getPlurks = TimelineCommand.GetPlurks().Client(PlurkService.Client).ToObservable();
             RequestMoreHandler = plurks =>
-                                 TimelineCommand.GetPlurks(new DateTime(plurks.Plurks.Min(p => p.PostDate.Ticks)), 50).
-                                     Client(PlurkService.Client).ToObservable();
+            {
+                var oldestOffset = new DateTime(plurks.Plurks.Min(p => p.PostDate.Ticks));
+                return TimelineCommand.GetPlurks(oldestOffset).Client(PlurkService.Client).ToObservable();
+            };
             Request(getPlurks);
         }
     }
