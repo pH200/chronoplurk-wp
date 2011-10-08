@@ -94,6 +94,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="AppBootstrapper.cs" />
+    <Compile Include="Core\SpecialFallback.cs" />
     <Compile Include="DefaultConfiguration.conf.cs" />
     <Compile Include="Framework\PivotFix.cs" />
     <Compile Include="Helpers\IsoSettings.cs" />

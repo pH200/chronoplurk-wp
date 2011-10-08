@@ -1,10 +1,12 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using Caliburn.Micro;
+using ChronoPlurk.Core;
 using ChronoPlurk.Services;
 using ChronoPlurk.Helpers;
 using NotifyPropertyWeaver;
@@ -127,10 +129,10 @@ namespace ChronoPlurk.ViewModels
             InternalRequest(observable, true);
         }
 
-        public void AppendRequest(IObservable<TSource> observable)
+        public void AppendRequest(IObservable<TSource> observable, SpecialFallback<TSource> specialFallback = null)
         {
             _timeBase = DateTime.Now;
-            InternalRequest(observable, false);
+            InternalRequest(observable, false, specialFallback);
         }
 
         public void RequestMore()
@@ -146,7 +148,7 @@ namespace ChronoPlurk.ViewModels
             }
         }
 
-        private void InternalRequest(IObservable<TSource> observable, bool clear)
+        private void InternalRequest(IObservable<TSource> observable, bool clear, SpecialFallback<TSource> specialFallback = null)
         {
             if (_requestHandler != null)
             {
@@ -169,6 +171,15 @@ namespace ChronoPlurk.ViewModels
                 }).Subscribe(plurks =>
                 {
                     _lastResult = plurks;
+
+                    if (specialFallback != null)
+                    {
+                        if (specialFallback.Predicate(plurks))
+                        {
+                            specialFallback.Fallback();
+                            return;
+                        }
+                    }
 
                     var result = plurks.Zip();
                     if (result == null || result.IsEmpty())

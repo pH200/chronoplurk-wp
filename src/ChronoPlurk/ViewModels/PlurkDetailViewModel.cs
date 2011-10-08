@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Caliburn.Micro;
+using ChronoPlurk.Core;
 using ChronoPlurk.Services;
 using NotifyPropertyWeaver;
 using Plurto.Commands;
@@ -84,7 +85,16 @@ namespace ChronoPlurk.ViewModels
             var newResponseOffset = Items.Count;
             var getPlurks = ResponsesCommand.Get(DetailHeader.Id, newResponseOffset).Client(PlurkService.Client).ToObservable();
 
-            AppendRequest(getPlurks);
+            var specialFallback = new SpecialFallback<ResponsesResult>(
+                predicate: result =>
+                {
+                    return (result == null) ||
+                           (result.Users == null) ||
+                           (!result.Users.ContainsKey(PlurkService.UserId));
+                },
+                fallback: () => Execute.OnUIThread(this.RefreshSync));
+
+            AppendRequest(getPlurks, specialFallback);
         }
 
         public void FocusThis()

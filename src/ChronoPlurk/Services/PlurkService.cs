@@ -17,6 +17,7 @@ namespace ChronoPlurk.Services
     {
         IRequestClient Client { get; }
         string Username { get; }
+        int UserId { get; }
         IEnumerable<int> FriendsId { get; set; }
         bool IsLoaded { get; }
         IObservable<bool> LoginAsnc(string username, string password);
@@ -42,6 +43,11 @@ namespace ChronoPlurk.Services
             get { return (_appUserInfo == null ? null : _appUserInfo.Username); }
         }
 
+        public int UserId
+        {
+            get { return (_appUserInfo == null ? -1 : _appUserInfo.UserId); }
+        }
+
         public IEnumerable<int> FriendsId { get; set; }
 
         public bool IsLoaded
@@ -58,15 +64,17 @@ namespace ChronoPlurk.Services
 
         public IObservable<bool> LoginAsnc(string username, string password)
         {
-            var login = UsersCommand.LoginNoData(username, password).Client(Client).ToObservable();
-            return login.Do(cookie =>
+            var login = UsersCommand.Login(username, password).Client(Client).ToObservable();
+            return login.Do(profile =>
             {
+                var cookie = profile.Cookies;
                 _client.Cookies = cookie;
                 _appUserInfo = new AppUserInfo()
                 {
                     Username = username,
                     Password = password,
                     Cookie = cookie.OfType<Cookie>().FirstOrDefault(),
+                    UserId = profile.UserInfo.Id,
                 };
             }).Select(c => c != null);
         }
@@ -116,7 +124,11 @@ namespace ChronoPlurk.Services
     public sealed class AppUserInfo
     {
         public string Username { get; set; }
+
         public string Password { get; set; }
+
         public Cookie Cookie { get; set; }
+        
+        public int UserId { get; set; }
     }
 }
