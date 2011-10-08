@@ -62,24 +62,31 @@ namespace ChronoPlurk.ViewModels
             {
                 _composeHandler.Dispose();
             }
-            var plurkId = GetPlurkId();
-            if (plurkId != -1)
+            if (String.IsNullOrWhiteSpace(Content))
             {
-                _progressService.Show("Sending");
-                LeaveFocus();
-
-                var command =
-                    ResponsesCommand.ResponseAdd(GetPlurkId(), Content, Qualifier.FreestyleColon).
-                        Client(PlurkService.Client).
-                        ToObservable().
-                        Timeout(TimeSpan.FromSeconds(20)).
-                        PlurkException(error => { }).ObserveOnDispatcher();
-
-                _composeHandler = command.Subscribe(plurk =>
+                MessageBox.Show("Write something before you plurk!");
+            }
+            else
+            {
+                var plurkId = GetPlurkId();
+                if (plurkId != -1)
                 {
-                    Execute.OnUIThread(() => Content = "");
-                    LoadNewComments();
-                }, () => _progressService.Hide());
+                    _progressService.Show("Sending");
+                    LeaveFocus();
+
+                    var command =
+                        ResponsesCommand.ResponseAdd(GetPlurkId(), Content, Qualifier.FreestyleColon).
+                            Client(PlurkService.Client).
+                            ToObservable().
+                            Timeout(TimeSpan.FromSeconds(20)).
+                            PlurkException(error => { });
+
+                    _composeHandler = command.ObserveOnDispatcher().Subscribe(plurk =>
+                    {
+                        Content = "";
+                        LoadNewComments();
+                    }, () => _progressService.Hide());
+                }
             }
         }
 

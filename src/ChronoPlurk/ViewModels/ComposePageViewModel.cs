@@ -75,25 +75,28 @@ namespace ChronoPlurk.ViewModels
             {
                 MessageBox.Show("Write something before you plurk!");
             }
-            _progressService.Show("Sending");
+            else
+            {
+                _progressService.Show("Sending");
 
-            var command =
-                TimelineCommand.PlurkAdd(Content, Qualifier.Qualifier).
-                    Client(PlurkService.Client).ToObservable().
-                    Timeout(TimeSpan.FromSeconds(20)).
-                    PlurkException(error => { }).
-                    ObserveOnDispatcher();
+                var command =
+                    TimelineCommand.PlurkAdd(Content, Qualifier.Qualifier).
+                        Client(PlurkService.Client).ToObservable().
+                        Timeout(TimeSpan.FromSeconds(20)).
+                        PlurkException(error => { });
 
-            _composeHandler = command.Subscribe(
-                plurk =>
-                {
-                    var page = IoC.Get<PlurkMainPageViewModel>();
-                    if (page != null)
+                _composeHandler = command.ObserveOnDispatcher().Subscribe(
+                    plurk =>
                     {
-                        page.NewPost = true;
-                    }
-                    _navigationService.GoBack();
-                }, () => _progressService.Hide());
+                        var page = IoC.Get<PlurkMainPageViewModel>();
+                        if (page != null)
+                        {
+                            page.NewPost = true;
+                        }
+                        Content = "";
+                        _navigationService.GoBack();
+                    }, () => _progressService.Hide());
+            }
         }
     }
 }

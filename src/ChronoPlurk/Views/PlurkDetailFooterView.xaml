@@ -13,7 +13,13 @@
 
     <Grid Background="Black">
         <StackPanel Margin="10,0,10,0">
-            <TextBlock Margin="12,0,0,0" Text="reply" />
+            <Grid>
+                <TextBlock Margin="12,0,0,0" Text="reply" />
+                <TextBlock x:Name="TextCountLeft"
+                       HorizontalAlignment="Right"
+                       Margin="0,0,15,0"
+                       Foreground="{StaticResource PhoneAccentBrush}"/>
+            </Grid>
             <TextBox x:Name="Content"
                      VerticalAlignment="Top"
                      MinHeight="150"
@@ -24,11 +30,7 @@
                     <pcontrols:FocusBehavior x:Name="ResponseFocus" />
                 </i:Interaction.Behaviors>
             </TextBox>
-            <TextBlock x:Name="TextCountLeft"
-                       HorizontalAlignment="Right"
-                       Margin="0,0,15,8"
-                       Foreground="{StaticResource PhoneAccentBrush}"/>
-            <Button x:Name="Reply" Content="reply" />
+            <Button x:Name="Reply" Content="reply" Margin="0,0,0,8" />
         </StackPanel>
     </Grid>
 </UserControl>

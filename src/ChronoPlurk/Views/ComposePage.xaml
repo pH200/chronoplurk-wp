@@ -36,6 +36,8 @@
             <StackPanel>
                 <toolkit:ListPicker ItemsSource="{Binding Qualifiers}"
                                     SelectedItem="{Binding Qualifier, Mode=TwoWay}"
+                                    Background="Transparent"
+                                    BorderBrush="{StaticResource PhoneSubtleBrush}"
                                     CacheMode="BitmapCache">
                     <toolkit:ListPicker.ItemTemplate>
                         <DataTemplate>
