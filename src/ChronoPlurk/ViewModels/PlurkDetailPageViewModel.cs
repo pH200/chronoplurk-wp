@@ -14,7 +14,7 @@ namespace ChronoPlurk.ViewModels
         
         public PlurkDetailViewModel PlurkDetailViewModel { get; private set; }
 
-        private PlurkDetailHeaderViewModel PlurkHeaderViewModel { get { return PlurkDetailViewModel.ListHeader; } }
+        private PlurkDetailHeaderViewModel PlurkHeaderViewModel { get { return PlurkDetailViewModel.DetailHeader; } }
         
         public PlurkDetailPageViewModel
             (IPlurkService plurkService,

@@ -26,6 +26,16 @@ namespace ChronoPlurk.ViewModels
         private WeakReference _scrollCache;
         #endregion
 
+        #region Empty Header and Footer
+
+        private readonly EmptyViewModel _listHeader = new EmptyViewModel();
+        public virtual object ListHeader { get { return _listHeader; } }
+
+        private readonly EmptyViewModel _listFooter = new EmptyViewModel();
+        public virtual object ListFooter { get { return _listFooter; } }
+
+        #endregion
+
         /// <summary>
         /// Message in progess service.
         /// </summary>

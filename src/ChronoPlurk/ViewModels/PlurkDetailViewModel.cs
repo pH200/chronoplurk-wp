@@ -12,16 +12,24 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Caliburn.Micro;
 using ChronoPlurk.Services;
+using NotifyPropertyWeaver;
 using Plurto.Commands;
 using Plurto.Entities;
 
 namespace ChronoPlurk.ViewModels
 {
+    [NotifyForAll]
     public class PlurkDetailViewModel : TimelineBaseViewModel<ResponsesResult>, IRefreshSync
     {
-        public PlurkDetailHeaderViewModel ListHeader { get; private set; }
+        [DependsOn("DetailHeader")]
+        public override sealed object ListHeader { get { return DetailHeader; } }
 
-        public PlurkDetailFooterViewModel ListFooter { get; private set; }
+        [DependsOn("DetailFooter")]
+        public override sealed object ListFooter { get { return DetailFooter; } }
+
+        public PlurkDetailHeaderViewModel DetailHeader { get; private set; }
+        
+        public PlurkDetailFooterViewModel DetailFooter { get; private set; }
 
         public bool RefreshOnActivate { get; set; }
 
@@ -34,9 +42,9 @@ namespace ChronoPlurk.ViewModels
             : base(navigationService, progressService, plurkService)
         {
             plurkDetailHeaderViewModel.Parent = this;
-            ListHeader = plurkDetailHeaderViewModel;
+            DetailHeader = plurkDetailHeaderViewModel;
             plurkDetailFooterViewModel.Parent = this;
-            ListFooter = plurkDetailFooterViewModel;
+            DetailFooter = plurkDetailFooterViewModel;
             IgnoreSelection = true;
         }
 
@@ -52,7 +60,7 @@ namespace ChronoPlurk.ViewModels
         public void RefreshSync()
         {
             var getPlurks =
-                ResponsesCommand.Get(ListHeader.Id, 0)
+                ResponsesCommand.Get(DetailHeader.Id, 0)
                     .Client(PlurkService.Client).ToObservable();
 
             Request(getPlurks);

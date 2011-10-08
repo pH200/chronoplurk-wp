@@ -79,7 +79,7 @@ namespace ChronoPlurk.ViewModels
             {
                 return -1;
             }
-            return parent.ListHeader.Id;
+            return parent.DetailHeader.Id;
         }
 
         private void RefreshTimeline()

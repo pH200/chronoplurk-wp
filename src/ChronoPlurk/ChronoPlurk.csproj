@@ -111,6 +111,7 @@
     <Compile Include="SpecialFrameAdapter.cs" />
     <Compile Include="ViewModels\ComposePageViewModel.cs" />
     <Compile Include="ViewModels\Core\BindableCollectionEx.cs" />
+    <Compile Include="ViewModels\Core\EmptyViewModel.cs" />
     <Compile Include="ViewModels\Core\IChidT.cs" />
     <Compile Include="ViewModels\Core\IRefreshSync.cs" />
     <Compile Include="ViewModels\Core\ISearchPage.cs" />
@@ -133,6 +134,7 @@
     <Compile Include="ViewModels\SearchResultViewModel.cs" />
     <Compile Include="Helpers\TextBoxExtensions.cs" />
     <Compile Include="ViewModels\TimelineViewModel.cs" />
+    <Compile Include="Views\Control\EmptyView.cs" />
     <Compile Include="Views\Control\FocusBehavior.cs" />
     <Compile Include="Views\Control\OrientationTrigger.cs" />
     <Compile Include="Views\Control\PlurkDetailHeaderControl.xaml.cs">
