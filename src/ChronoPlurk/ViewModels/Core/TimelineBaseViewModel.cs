@@ -124,7 +124,13 @@ namespace ChronoPlurk.ViewModels
         public void Request(IObservable<TSource> observable)
         {
             _timeBase = DateTime.Now;
-            Request(observable, true);
+            InternalRequest(observable, true);
+        }
+
+        public void AppendRequest(IObservable<TSource> observable)
+        {
+            _timeBase = DateTime.Now;
+            InternalRequest(observable, false);
         }
 
         public void RequestMore()
@@ -136,11 +142,11 @@ namespace ChronoPlurk.ViewModels
                     IsHasMore = false;
                     return;
                 }
-                Request(RequestMoreHandler(_lastResult), false);
+                InternalRequest(RequestMoreHandler(_lastResult), false);
             }
         }
 
-        private void Request(IObservable<TSource> observable, bool clear)
+        private void InternalRequest(IObservable<TSource> observable, bool clear)
         {
             if (_requestHandler != null)
             {

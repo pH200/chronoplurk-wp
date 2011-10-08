@@ -11,10 +11,10 @@ namespace ChronoPlurk.ViewModels
     public class PlurkDetailPageViewModel : LoginAvailablePage, INavigationInjectionRedirect
     {
         private IPlurkService PlurkService { get; set; }
-        
-        public PlurkDetailViewModel PlurkDetailViewModel { get; private set; }
 
         private PlurkDetailHeaderViewModel PlurkHeaderViewModel { get { return PlurkDetailViewModel.DetailHeader; } }
+        
+        public PlurkDetailViewModel PlurkDetailViewModel { get; private set; }
         
         public PlurkDetailPageViewModel
             (IPlurkService plurkService,
@@ -75,7 +75,14 @@ namespace ChronoPlurk.ViewModels
 
         public void ReplyAppBar()
         {
-            PlurkDetailViewModel.ScrollToEnd();
+            if (String.IsNullOrWhiteSpace(PlurkDetailViewModel.DetailFooter.Content))
+            {
+                PlurkDetailViewModel.ScrollToEnd();
+            }
+            else
+            {
+                PlurkDetailViewModel.DetailFooter.Reply();
+            }
         }
 
         // TODO: Unhandled IDisposables

@@ -20,7 +20,7 @@ using Plurto.Core;
 namespace ChronoPlurk.ViewModels
 {
     [NotifyForAll]
-    public class PlurkDetailFooterViewModel : Screen
+    public class PlurkDetailFooterViewModel : Screen, IChildT<PlurkDetailViewModel>
     {
         private readonly IProgressService _progressService;
 
@@ -62,35 +62,49 @@ namespace ChronoPlurk.ViewModels
             {
                 _composeHandler.Dispose();
             }
-            _progressService.Show("sending");
+            var plurkId = GetPlurkId();
+            if (plurkId != -1)
+            {
+                _progressService.Show("Sending");
+                LeaveFocus();
 
-            // TODO: url encode
-            _composeHandler =
-                ResponsesCommand.ResponseAdd(GetPlurkId(), Content, Qualifier.FreestyleColon).Client(PlurkService.Client)
-                    .ToObservable().Timeout(
-                        TimeSpan.FromSeconds(20)).PlurkException(error => { }).ObserveOnDispatcher().Subscribe(
-                            plurk => RefreshTimeline(), () => _progressService.Hide());
+                var command =
+                    ResponsesCommand.ResponseAdd(GetPlurkId(), Content, Qualifier.FreestyleColon).
+                        Client(PlurkService.Client).
+                        ToObservable().
+                        Timeout(TimeSpan.FromSeconds(20)).
+                        PlurkException(error => { }).ObserveOnDispatcher();
+
+                _composeHandler = command.Subscribe(plurk =>
+                {
+                    Execute.OnUIThread(() => Content = "");
+                    LoadNewComments();
+                }, () => _progressService.Hide());
+            }
         }
 
         private int GetPlurkId()
         {
-            var parent = Parent as PlurkDetailViewModel;
-            if (parent == null)
-            {
-                return -1;
-            }
-            return parent.DetailHeader.Id;
+            var parent = this.GetParent();
+            return parent != null ? parent.DetailHeader.Id : -1;
         }
 
-        private void RefreshTimeline()
+        private void LeaveFocus()
         {
-            var parent = Parent as PlurkDetailViewModel;
-            if (parent == null)
+            var parent = this.GetParent();
+            if (parent != null)
             {
-                return;
+                parent.FocusThis();
             }
-            // TODO: Add responses from bottom.
-            parent.RefreshSync();
+        }
+
+        private void LoadNewComments()
+        {
+            var parent = this.GetParent();
+            if (parent != null)
+            {
+                parent.LoadNewComments();
+            }
         }
     }
 }

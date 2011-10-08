@@ -54,7 +54,10 @@ namespace ChronoPlurk.ViewModels
             DetailHeader = plurkDetailHeaderViewModel;
             plurkDetailFooterViewModel.Parent = this;
             DetailFooter = plurkDetailFooterViewModel;
+            
             IgnoreSelection = true;
+
+            ProgressMessage = "Loading Responses";
         }
 
         protected override void OnActivate()
@@ -74,6 +77,23 @@ namespace ChronoPlurk.ViewModels
             var getPlurks = ResponsesCommand.Get(DetailHeader.Id, 0).Client(PlurkService.Client).ToObservable();
 
             Request(getPlurks);
+        }
+
+        public void LoadNewComments()
+        {
+            var newResponseOffset = Items.Count;
+            var getPlurks = ResponsesCommand.Get(DetailHeader.Id, newResponseOffset).Client(PlurkService.Client).ToObservable();
+
+            AppendRequest(getPlurks);
+        }
+
+        public void FocusThis()
+        {
+            var view = GetView(null) as Control;
+            if (view != null)
+            {
+                view.Focus();
+            }
         }
     }
 }
