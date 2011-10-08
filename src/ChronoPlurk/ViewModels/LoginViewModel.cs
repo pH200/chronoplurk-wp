@@ -38,11 +38,17 @@ namespace ChronoPlurk.ViewModels
             _navigationService = navigationService;
             _progressService = progressService;
             _plurkService = plurkService;
+        }
 
+        protected override void OnActivate()
+        {
 #if CLEAN_DEBUG
             Username = PlurkResources.Username;
             Password = PlurkResources.Password;
+#else
+            Username = _plurkService.Username;
 #endif
+            base.OnActivate();
         }
 
         protected override void OnViewLoaded(object view)

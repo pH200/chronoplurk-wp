@@ -1,7 +1,9 @@
 ﻿using System;
+using System.IO;
 using System.IO.IsolatedStorage;
 using System.Linq;
 using System.Reactive.Linq;
+using Polenter.Serialization;
 
 namespace ChronoPlurk.Helpers
 {
@@ -14,6 +16,45 @@ namespace ChronoPlurk.Helpers
         static IsoSettings()
         {
             Settings = IsolatedStorageSettings.ApplicationSettings;
+        }
+
+        public static void SerializeStore(object data, string filename)
+        {
+            lock (Padlock)
+            {
+                using (var appStorage = IsolatedStorageFile.GetUserStoreForApplication())
+                {
+                    using (var file = appStorage.FileExists(filename) 
+                        ? appStorage.OpenFile(filename, FileMode.Truncate)
+                        : appStorage.CreateFile(filename))
+                    {
+                        var sharpSerializer = new SharpSerializer();
+                        sharpSerializer.Serialize(data, file);
+                    }
+                }
+            }
+        }
+
+        public static object DeserializeLoad(string filename)
+        {
+            lock (Padlock)
+            {
+                using (var appStorage = IsolatedStorageFile.GetUserStoreForApplication())
+                {
+                    if (appStorage.FileExists(filename))
+                    {
+                        using (var file = appStorage.OpenFile(filename, FileMode.Open, FileAccess.Read))
+                        {
+                            var sharpSerializer = new SharpSerializer();
+                            return sharpSerializer.Deserialize(file);
+                        }
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+            }
         }
 
         public static void AddOrChange(string key, object value, bool save=false)

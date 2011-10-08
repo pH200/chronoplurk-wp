@@ -40,14 +40,7 @@ namespace ChronoPlurk.ViewModels
         {
             base.OnActivate();
 
-            if (!PlurkService.IsLoaded)
-            {
-                InitializePlurkLogin();
-            }
-            else
-            {
-                InitializeAfterLogin();
-            }
+            InitializeAfterLogin();
         }
         
         protected override void OnViewLoaded(object view)
@@ -55,14 +48,6 @@ namespace ChronoPlurk.ViewModels
             base.OnViewLoaded(view);
 
             _view = view as PlurkMainPage;
-        }
-
-        private void InitializePlurkLogin()
-        {
-            PlurkService.LoadUserData();
-            PlurkService.LoginAsnc().PlurkException(
-                error => NavigationService.Navigate(new Uri("/Views/LoginViewModel.xaml", UriKind.Relative))).
-                ObserveOnDispatcher().Subscribe(message => InitializeAfterLogin());
         }
 
         private void InitializeAfterLogin()

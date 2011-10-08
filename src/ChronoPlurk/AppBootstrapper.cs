@@ -126,7 +126,7 @@ namespace ChronoPlurk
                     return;
                 }
 
-                if (IsoSettings.Settings.Contains(AppUserInfo.StorageKey) &&
+                if (_kernel.Get<IPlurkService>().IsLoaded &&
                     e.NavigationMode != NavigationMode.Back)
                 {
                     e.Cancel = true;

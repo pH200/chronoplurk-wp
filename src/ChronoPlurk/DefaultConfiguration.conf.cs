@@ -28,6 +28,10 @@ namespace ChronoPlurk
             // Clear settings for debugging
             try
             {
+                using (var store = IsolatedStorageFile.GetUserStoreForApplication())
+                {
+                    store.Remove();
+                }
                 IsolatedStorageSettings.ApplicationSettings.Clear();
             }
             catch (Exception e)

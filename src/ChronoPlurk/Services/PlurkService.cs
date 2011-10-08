@@ -9,18 +9,16 @@ using ChronoPlurk.ViewModels;
 using Plurto;
 using Plurto.Commands;
 using Plurto.Core;
+using Polenter.Serialization;
 
 namespace ChronoPlurk.Services
 {
     public interface IPlurkService
     {
         IRequestClient Client { get; }
-        int UserId { get; set; }
-        string Username { get; set; }
-        string Password { get; set; }
+        string Username { get; }
         IEnumerable<int> FriendsId { get; set; }
         bool IsLoaded { get; }
-        IObservable<bool> LoginAsnc();
         IObservable<bool> LoginAsnc(string username, string password);
         void SaveUserData();
         bool LoadUserData();
@@ -29,72 +27,96 @@ namespace ChronoPlurk.Services
 
     public class PlurkService : IPlurkService
     {
+        private readonly IProgressService _progressService;
+
         private readonly LegacyClient _client;
+
+        private AppUserInfo _appUserInfo;
+
+        private IDisposable _saveUserInfoDisposable;
+
         public IRequestClient Client { get { return _client; } }
 
-        public int UserId { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
-        public IEnumerable<int> FriendsId { get; set; }
-
-        public bool IsLoaded { get; private set; }
-
-        public PlurkService()
+        public string Username 
         {
-            _client = new LegacyClient(DefaultConfiguration.ApiKey);
+            get { return (_appUserInfo == null ? null : _appUserInfo.Username); }
         }
 
-        public IObservable<bool> LoginAsnc()
+        public IEnumerable<int> FriendsId { get; set; }
+
+        public bool IsLoaded
         {
-            // Special handling for email login.
-            var encodedUsername = HttpUtility.UrlEncode(Username);
-            var login = UsersCommand.LoginNoData(encodedUsername, Password).Client(Client).ToObservable();
-            return login.Do(cookie =>
-            {
-                _client.Cookies = cookie;
-                IsLoaded = true;
-            }).Select(c => c != null);
+            get { return (_appUserInfo != null && _appUserInfo.Cookie != null); }
+        }
+
+        public PlurkService(IProgressService progressService)
+        {
+            _progressService = progressService;
+            _client = new LegacyClient(DefaultConfiguration.ApiKey);
+            LoadUserData();
         }
 
         public IObservable<bool> LoginAsnc(string username, string password)
         {
-            Username = username;
-            Password = password;
-
-            return LoginAsnc();
+            var login = UsersCommand.LoginNoData(username, password).Client(Client).ToObservable();
+            return login.Do(cookie =>
+            {
+                _client.Cookies = cookie;
+                _appUserInfo = new AppUserInfo()
+                {
+                    Username = username,
+                    Password = password,
+                    Cookie = cookie.OfType<Cookie>().FirstOrDefault(),
+                };
+            }).Select(c => c != null);
         }
 
         public void SaveUserData()
         {
-            IsoSettings.AddOrChange(AppUserInfo.StorageKey,
-                new AppUserInfo() { Username = Username, Password = Password });
+            if (_appUserInfo != null)
+            {
+                _progressService.Show("Creating Profile");
+                if (_saveUserInfoDisposable != null)
+                {
+                    _saveUserInfoDisposable.Dispose();
+                }
+                _saveUserInfoDisposable =
+                    Observable.Start(() => IsoSettings.SerializeStore(_appUserInfo, "appUserInfo.bin"))
+                        .Subscribe(unit => { },
+                                   () => Execute.OnUIThread(() => _progressService.Hide()));
+            }
         }
 
         public bool LoadUserData()
         {
-            AppUserInfo user;
-            if(IsoSettings.TryGetValue(AppUserInfo.StorageKey, out user))
+            var appUserInfo = IsoSettings.DeserializeLoad("appUserInfo.bin") as AppUserInfo;
+            if (appUserInfo != null)
             {
-                Username = user.Username;
-                Password = user.Password;
+                _appUserInfo = appUserInfo;
+                SetCookie(_client, _appUserInfo.Cookie);
                 return true;
             }
-            return false;
+            else
+            {
+                return false;
+            }
+        }
+
+        private void SetCookie(LegacyClient client, Cookie cookie)
+        {
+            client.Cookies = new CookieCollection() {cookie};
         }
 
         public void ClearUserData()
         {
-            Username = "";
-            Password = "";
-            IsLoaded = false;
             IsoSettings.ClearAll();
         }
     }
 
-    public class AppUserInfo
+    public sealed class AppUserInfo
     {
-        public const string StorageKey = "PlurkUser";
         public string Username { get; set; }
         public string Password { get; set; }
+        public Cookie Cookie { get; set; }
     }
 }
