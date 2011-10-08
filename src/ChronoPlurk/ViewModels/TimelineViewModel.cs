@@ -25,9 +25,11 @@ namespace ChronoPlurk.ViewModels
         {
             base.OnActivate();
 
-            if (!RefreshOnActivate) return;
-            RefreshOnActivate = false;
-            RefreshSync();
+            if (RefreshOnActivate)
+            {
+                RefreshOnActivate = false;
+                RefreshSync();
+            }
         }
 
         public void RefreshSync()

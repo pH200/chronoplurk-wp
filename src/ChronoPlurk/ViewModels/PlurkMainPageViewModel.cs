@@ -34,13 +34,8 @@ namespace ChronoPlurk.ViewModels
 
             Items.Add(_timeline);
             ActivateItem(_timeline);
-        }
-
-        protected override void OnActivate()
-        {
-            base.OnActivate();
-
-            InitializeAfterLogin();
+            Username = PlurkService.Username;
+            _timeline.RefreshSync();
         }
         
         protected override void OnViewLoaded(object view)
@@ -48,12 +43,6 @@ namespace ChronoPlurk.ViewModels
             base.OnViewLoaded(view);
 
             _view = view as PlurkMainPage;
-        }
-
-        private void InitializeAfterLogin()
-        {
-            Username = PlurkService.Username;
-            _timeline.RefreshSync();
         }
 
         public void RefreshAppBar()
