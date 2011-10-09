@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Navigation;
+using ChronoPlurk.Core;
 using ChronoPlurk.Helpers;
 using ChronoPlurk.Services;
 using ChronoPlurk.ViewModels;

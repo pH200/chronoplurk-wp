@@ -1,12 +1,10 @@
-﻿using System;
-using System.Net;
-using System.Windows;
+using System;
 using System.Windows.Controls;
 using System.Windows.Navigation;
 using Caliburn.Micro;
 using ChronoPlurk.Services;
 
-namespace ChronoPlurk
+namespace ChronoPlurk.Core
 {
     public class SpecialFrameAdapter : FrameAdapter
     {

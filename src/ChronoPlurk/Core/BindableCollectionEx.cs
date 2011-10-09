@@ -1,10 +1,7 @@
-﻿using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.ComponentModel;
 using Caliburn.Micro;
 
-namespace ChronoPlurk.ViewModels
+namespace ChronoPlurk.Core
 {
     public class AdditiveBindableCollection<T> : BindableCollection<T>
     {

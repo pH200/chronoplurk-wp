@@ -94,12 +94,15 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="AppBootstrapper.cs" />
+    <Compile Include="Core\AppUserInfo.cs" />
+    <Compile Include="Core\BindableCollectionEx.cs" />
     <Compile Include="Core\SpecialFallback.cs" />
+    <Compile Include="Core\SpecialFrameAdapter.cs" />
     <Compile Include="DefaultConfiguration.conf.cs" />
     <Compile Include="Framework\PivotFix.cs" />
     <Compile Include="Helpers\IsoSettings.cs" />
     <Compile Include="Helpers\LinqExtensions.cs" />
-    <Compile Include="Helpers\NotifyPropertyWeaver.cs" />
+    <Compile Include="Core\NotifyPropertyWeaver.cs" />
     <Compile Include="Helpers\VisualTree.cs" />
     <Compile Include="Services\INavigationInjectRedirect.cs" />
     <Compile Include="Services\NavigationExtensions.cs" />
@@ -109,9 +112,7 @@
     <Compile Include="Helpers\QualifierConverter.cs" />
     <Compile Include="Services\PlurkService.cs" />
     <Compile Include="Services\ProgressService.cs" />
-    <Compile Include="SpecialFrameAdapter.cs" />
     <Compile Include="ViewModels\ComposePageViewModel.cs" />
-    <Compile Include="ViewModels\Core\BindableCollectionEx.cs" />
     <Compile Include="ViewModels\Core\EmptyViewModel.cs" />
     <Compile Include="ViewModels\Core\IChidT.cs" />
     <Compile Include="ViewModels\Core\IRefreshSync.cs" />

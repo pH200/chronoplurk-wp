@@ -4,12 +4,10 @@ using System.Linq;
 using System.Net;
 using System.Reactive.Linq;
 using Caliburn.Micro;
+using ChronoPlurk.Core;
 using ChronoPlurk.Helpers;
-using ChronoPlurk.ViewModels;
-using Plurto;
 using Plurto.Commands;
 using Plurto.Core;
-using Polenter.Serialization;
 
 namespace ChronoPlurk.Services
 {
@@ -119,16 +117,5 @@ namespace ChronoPlurk.Services
         {
             IsoSettings.ClearAll();
         }
-    }
-
-    public sealed class AppUserInfo
-    {
-        public string Username { get; set; }
-
-        public string Password { get; set; }
-
-        public Cookie Cookie { get; set; }
-        
-        public int UserId { get; set; }
     }
 }
