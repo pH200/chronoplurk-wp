@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Windows;
@@ -54,11 +52,14 @@ namespace ChronoPlurk.ViewModels
         {
             get
             {
-                if (Items == null || Items.IsEmpty())
+                if (Items.IsNullOrEmpty())
                 {
                     return 0.0;
                 }
-                return IsHasMore ? 1.0 : 0.0;
+                else
+                {
+                    return IsHasMore ? 1.0 : 0.0;
+                }
             }
         }
 
@@ -181,8 +182,8 @@ namespace ChronoPlurk.ViewModels
                         }
                     }
 
-                    var result = plurks.Zip();
-                    if (result == null || result.IsEmpty())
+                    var result = plurks.ToUserPlurks();
+                    if (result.IsNullOrEmpty())
                     {
                         if (clear)
                         {
