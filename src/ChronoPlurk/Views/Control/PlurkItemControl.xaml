@@ -21,24 +21,32 @@
                 <controls:MenuItem x:Name="MenuLike" Header="{Binding LikeText}" Foreground="{StaticResource PhoneForegroundBrush}" />
             </controls:ContextMenu>
         </controls:ContextMenuService.ContextMenu>
-        <Border Background="{Binding FavoriteColorView}">
-            <Border
-                Height="45" Width="45"
-                Margin="0,10,0,0"
-                VerticalAlignment="Top"
-                Background="{StaticResource PhoneInactiveBrush}">
-                <Image imgloader:LowProfileImageLoader.UriSource="{Binding AvatarView}" />
-            </Border>
+        <Border Background="{StaticResource PhoneChromeBrush}"
+                Height="45"
+                Width="45"
+                Margin="10,10,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top">
+            <Image imgloader:LowProfileImageLoader.UriSource="{Binding AvatarView}"
+                   Stretch="UniformToFill" />
         </Border>
+        <Image Source="/Resources/Icons/plurk.like.png"
+               Visibility="{Binding IsFavoriteVisibilityView}"
+               Stretch="Fill"
+               Width="20" Height="20"
+               Margin="40,40,0,0"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Top"
+               CacheMode="BitmapCache" />
         <StackPanel Grid.Column="1">
             <StackPanel Orientation="Horizontal" Height="40">
-                <TextBlock
-        			Text="{Binding Username}"
-        			VerticalAlignment="Top"
-        			HorizontalAlignment="Left"
-        			TextWrapping="NoWrap"
-        			Style="{StaticResource PhoneTextTitle2Style}"
-        			Margin="0" MaxWidth="300"/>
+                <TextBlock Text="{Binding Username}"
+        			       VerticalAlignment="Top"
+        			       HorizontalAlignment="Left"
+        			       TextWrapping="NoWrap"
+        			       Style="{StaticResource PhoneTextTitle2Style}"
+        			       Margin="0"
+                           MaxWidth="300"/>
                 <Border VerticalAlignment="Bottom" Margin="5,0,0,3">
                     <Border.Background>
                         <SolidColorBrush x:Name="QualifierColorBrush" />
@@ -46,26 +54,26 @@
                     <TextBlock Text="{Binding Qualifier}" Foreground="White" TextWrapping="NoWrap" Margin="5,0,5,0" />
                 </Border>
             </StackPanel>
-            <TextBlock Text="{Binding ContentRaw}" TextWrapping="Wrap" Foreground="{StaticResource PhoneSubtleBrush}" />
-            <Grid
-                HorizontalAlignment="Right"
-                Width="350">
-                <Grid HorizontalAlignment="Right"
-                      Margin="0,0,130,0">
-                    <TextBlock Text="●" Foreground="{StaticResource PhoneAccentBrush}" Visibility="{Binding IsUnreadView}" />
-                    <TextBlock                        
-        			    VerticalAlignment="Bottom" HorizontalAlignment="Right"
-        			    Text="{Binding ResponseCountView}"
-                        Margin="12,0,0,0"
-               			Foreground="{StaticResource PhoneForegroundBrush}"
-            			FontSize="{StaticResource PhoneFontSizeSmall}" />
+            <TextBlock Text="{Binding ContentRaw}"
+                       TextWrapping="Wrap" />
+            <Grid HorizontalAlignment="Right" Width="350">
+                <Grid HorizontalAlignment="Right" Margin="0,0,130,0">
+                    <TextBlock Text="●"
+                               Foreground="{StaticResource PhoneAccentBrush}"
+                               Visibility="{Binding IsUnreadView}" />
+                    <TextBlock Text="{Binding ResponseCountView}"
+        			           VerticalAlignment="Bottom"
+                               HorizontalAlignment="Right"
+                               Margin="12,0,0,0"
+            			       FontSize="{StaticResource PhoneFontSizeSmall}"
+                               Foreground="{StaticResource PhoneSubtleBrush}" />
                 </Grid>
-                <TextBlock
-        				Text="{Binding TimeView}"
-                        VerticalAlignment="Bottom" HorizontalAlignment="Right"
-                        Margin="0,0,5,0"
-        				FontSize="{StaticResource PhoneFontSizeSmall}"
-        				Foreground="{StaticResource PhoneForegroundBrush}" />
+                <TextBlock Text="{Binding TimeView}"
+                           VerticalAlignment="Bottom"
+                           HorizontalAlignment="Right"
+                           Margin="0,0,5,0"
+        				   FontSize="{StaticResource PhoneFontSizeSmall}"
+        				   Foreground="{StaticResource PhoneSubtleBrush}" />
             </Grid>
         </StackPanel>
     </Grid>

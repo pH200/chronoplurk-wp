@@ -44,12 +44,10 @@ namespace ChronoPlurk.ViewModels
 
         public bool IsFavorite { get; set; }
 
-        public SolidColorBrush FavoriteColorView
+        [DependsOn("IsFavorite")]
+        public Visibility IsFavoriteVisibilityView
         {
-            get
-            {
-                return IsFavorite ? PlurkResources.PhoneAccentBrush : null;
-            }
+            get { return IsFavorite ? Visibility.Visible : Visibility.Collapsed; }
         }
 
         public int ResponseCount { get; set; }
