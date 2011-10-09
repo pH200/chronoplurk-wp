@@ -1,112 +1,56 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Navigation;
+using Autofac;
+using Caliburn.Micro;
 using ChronoPlurk.Core;
 using ChronoPlurk.Helpers;
 using ChronoPlurk.Services;
 using ChronoPlurk.ViewModels;
-using Microsoft.Phone.Controls;
-using Caliburn.Micro;
-using Ninject;
 
 namespace ChronoPlurk
 {
-    public class AppBootstrapper : PhoneBootstrapper
+    public class AppBootstrapper : AutofacPhoneBootstrapper
     {
-        private IKernel _kernel;
+        protected override Func<INavigationService> BuildFrameAdapter
+        {
+            get
+            {
+                return () => new SpecialFrameAdapter(RootFrame);
+            }
+        }
 
         protected override void Configure()
         {
             DefaultConfiguration.Initialize();
-
-            _kernel = new StandardKernel();
-     
-            _kernel.Bind(typeof(MainPageViewModel)).ToSelf().InSingletonScope();
-            _kernel.Bind(typeof(SearchResultViewModel)).ToSelf().InSingletonScope();
-            _kernel.Bind(typeof(SearchRecordsViewModel)).ToSelf().InSingletonScope();
-            _kernel.Bind(typeof(PlurkMainPageViewModel)).ToSelf().InSingletonScope();
-            _kernel.Bind(typeof(TimelineViewModel)).ToSelf().InSingletonScope();
-            _kernel.Bind(typeof(SearchPageViewModel)).ToSelf().InSingletonScope();
-            _kernel.Bind(typeof(PlurkDetailPageViewModel)).ToSelf().InSingletonScope();
-            _kernel.Bind(typeof(PlurkDetailViewModel)).ToSelf().InSingletonScope();
-            _kernel.Bind(typeof(PlurkDetailHeaderViewModel)).ToSelf().InSingletonScope();
-            _kernel.Bind(typeof(PlurkDetailFooterViewModel)).ToSelf().InSingletonScope();
-            _kernel.Bind(typeof(ComposePageViewModel)).ToSelf().InSingletonScope();
-
-            _kernel.Bind<IProgressService>().To<ProgressService>().InSingletonScope();
-            _kernel.Bind<IPlurkService>().To<PlurkService>().InSingletonScope();
-
-            _kernel.Bind<LoginViewModel>().ToSelf();
-
-            _kernel.Bind<INavigationService>().ToConstant(new SpecialFrameAdapter(RootFrame));
-            _kernel.Bind<IPhoneService>().ToConstant(new PhoneApplicationServiceAdapter(RootFrame));
-
-            //container.Activator.InstallChooser<PhoneNumberChooserTask, PhoneNumberResult>();
-            //container.Activator.InstallLauncher<EmailComposeTask>();
-
-            AddCustomConventions();
+            
+            base.Configure();
 
             AddPhoneResources();
 
             AddNavigatingControl();
         }
 
-        protected override object GetInstance(Type service, string key)
+        protected override void ConfigureContainer(ContainerBuilder builder)
         {
-            if (service != null)
-            {
-                return _kernel.Get(service, key);
-            }
+            base.ConfigureContainer(builder);
 
-            throw new ArgumentNullException("service");
-        }
+            builder.RegisterType(typeof(MainPageViewModel)).AsSelf().SingleInstance();
+            builder.RegisterType(typeof(SearchResultViewModel)).AsSelf().SingleInstance();
+            builder.RegisterType(typeof(SearchRecordsViewModel)).AsSelf().SingleInstance();
+            builder.RegisterType(typeof(PlurkMainPageViewModel)).AsSelf().SingleInstance();
+            builder.RegisterType(typeof(TimelineViewModel)).AsSelf().SingleInstance();
+            builder.RegisterType(typeof(SearchPageViewModel)).AsSelf().SingleInstance();
+            builder.RegisterType(typeof(PlurkDetailPageViewModel)).AsSelf().SingleInstance();
+            builder.RegisterType(typeof(PlurkDetailViewModel)).AsSelf().SingleInstance();
+            builder.RegisterType(typeof(PlurkDetailHeaderViewModel)).AsSelf().SingleInstance();
+            builder.RegisterType(typeof(PlurkDetailFooterViewModel)).AsSelf().SingleInstance();
+            builder.RegisterType(typeof(ComposePageViewModel)).AsSelf().SingleInstance();
 
-        protected override IEnumerable<object> GetAllInstances(Type service)
-        {
-            return _kernel.GetAll(service);
-        }
+            builder.Register(c => new ProgressService()).As(typeof(IProgressService)).SingleInstance();
+            builder.RegisterType(typeof(PlurkService)).As(typeof(IPlurkService)).SingleInstance();
 
-        protected override void BuildUp(object instance)
-        {
-            _kernel.Inject(instance);
-        }
-
-        static void AddCustomConventions()
-        {
-            ConventionManager.AddElementConvention<Pivot>(Pivot.ItemsSourceProperty, "SelectedItem", "SelectionChanged").ApplyBinding =
-                (viewModelType, path, property, element, convention) =>
-                {
-                    if (ConventionManager
-                        .GetElementConvention(typeof(ItemsControl))
-                        .ApplyBinding(viewModelType, path, property, element, convention))
-                    {
-                        ConventionManager
-                            .ConfigureSelectedItem(element, Pivot.SelectedItemProperty, viewModelType, path);
-                        ConventionManager
-                            .ApplyHeaderTemplate(element, Pivot.HeaderTemplateProperty, viewModelType);
-                        return true;
-                    }
-
-                    return false;
-                };
-            ConventionManager.AddElementConvention<Panorama>(Panorama.ItemsSourceProperty, "SelectedItem", "SelectionChanged").ApplyBinding =
-                (viewModelType, path, property, element, convention) =>
-                {
-                    if (ConventionManager
-                        .GetElementConvention(typeof(ItemsControl))
-                        .ApplyBinding(viewModelType, path, property, element, convention))
-                    {
-                        ConventionManager
-                            .ConfigureSelectedItem(element, Panorama.SelectedItemProperty, viewModelType, path);
-                        ConventionManager
-                            .ApplyHeaderTemplate(element, Panorama.HeaderTemplateProperty, viewModelType);
-                        return true;
-                    }
-
-                    return false;
-                };
+            builder.RegisterType<LoginViewModel>().AsSelf().InstancePerDependency();
         }
 
         private void AddPhoneResources()
@@ -127,7 +71,7 @@ namespace ChronoPlurk
                     return;
                 }
 
-                if (_kernel.Get<IPlurkService>().IsLoaded &&
+                if (Container.Resolve<IPlurkService>().IsLoaded &&
                     e.NavigationMode != NavigationMode.Back)
                 {
                     e.Cancel = true;
