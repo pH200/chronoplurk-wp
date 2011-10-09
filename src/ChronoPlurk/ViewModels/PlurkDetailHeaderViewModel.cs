@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Windows;
 using System.Windows.Media;
 using Caliburn.Micro;
 using ChronoPlurk.Helpers;
@@ -58,6 +59,12 @@ namespace ChronoPlurk.ViewModels
         public CommentMode NoComments { get { return (CommentMode)NoCommentsInt; } }
 
         public bool IsFavorite { get; set; }
+
+        [DependsOn("IsFavorite")]
+        public Visibility IsFavoriteVisibilityView
+        {
+            get { return IsFavorite ? Visibility.Visible : Visibility.Collapsed; }
+        }
 
         public int ResponseCount { get; set; }
 

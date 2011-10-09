@@ -78,6 +78,7 @@ namespace ChronoPlurk.ViewModels
             var getPlurks = ResponsesCommand.Get(DetailHeader.Id, 0).Client(PlurkService.Client).ToObservable();
 
             Request(getPlurks);
+            ScrollToTop();
         }
 
         public void LoadNewComments()

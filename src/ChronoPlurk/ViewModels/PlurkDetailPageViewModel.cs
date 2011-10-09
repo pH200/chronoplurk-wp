@@ -10,6 +10,9 @@ namespace ChronoPlurk.ViewModels
 {
     public class PlurkDetailPageViewModel : LoginAvailablePage, INavigationInjectionRedirect
     {
+        private IDisposable _favorite;
+        private IDisposable _unfavorite;
+
         private IPlurkService PlurkService { get; set; }
 
         private PlurkDetailHeaderViewModel PlurkHeaderViewModel { get { return PlurkDetailViewModel.DetailHeader; } }
@@ -85,20 +88,28 @@ namespace ChronoPlurk.ViewModels
             }
         }
 
-        // TODO: Unhandled IDisposables
         public void LikeAppBar()
         {
             var isLike = PlurkHeaderViewModel.IsFavorite;
             if (isLike)
             {
-                TimelineCommand.UnfavoritePlurks(PlurkHeaderViewModel.Id).Client(PlurkService.Client).ToObservable().Subscribe();
+                if (_unfavorite != null)
+                {
+                    _unfavorite.Dispose();
+                }
+                _unfavorite = TimelineCommand.UnfavoritePlurks(PlurkHeaderViewModel.Id).Client(PlurkService.Client).ToObservable().Subscribe();
             }
             else
             {
-                TimelineCommand.FavoritePlurks(PlurkHeaderViewModel.Id).Client(PlurkService.Client).ToObservable().Subscribe();
+                if (_favorite != null)
+                {
+                    _favorite.Dispose();
+                }
+                _favorite = TimelineCommand.FavoritePlurks(PlurkHeaderViewModel.Id).Client(PlurkService.Client).ToObservable().Subscribe();
             }
             PlurkHeaderViewModel.IsFavorite = !isLike;
 
+            PlurkDetailViewModel.ScrollToTop();
             ReloadAppBar();
         }
 
