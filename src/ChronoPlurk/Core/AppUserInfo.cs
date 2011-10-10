@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Collections.Generic;
+using System.Net;
 
 namespace ChronoPlurk.Core
 {
@@ -8,7 +9,12 @@ namespace ChronoPlurk.Core
 
         public string Password { get; set; }
 
-        public Cookie Cookie { get; set; }
+        public Cookie[] Cookies { get; set; }
+
+        public bool IsHasCookies
+        {
+            get { return (Cookies != null && Cookies.Length > 0); }
+        }
 
         public int UserId { get; set; }
     }

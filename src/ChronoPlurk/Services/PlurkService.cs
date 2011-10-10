@@ -50,7 +50,7 @@ namespace ChronoPlurk.Services
 
         public bool IsLoaded
         {
-            get { return (_appUserInfo != null && _appUserInfo.Cookie != null); }
+            get { return (_appUserInfo != null && _appUserInfo.IsHasCookies); }
         }
 
         public PlurkService(IProgressService progressService)
@@ -65,13 +65,13 @@ namespace ChronoPlurk.Services
             var login = UsersCommand.Login(username, password).Client(Client).ToObservable();
             return login.Do(profile =>
             {
-                var cookie = profile.Cookies;
-                _client.Cookies = cookie;
+                var cookies = profile.Cookies;
+                _client.Cookies = cookies;
                 _appUserInfo = new AppUserInfo()
                 {
                     Username = username,
                     Password = password,
-                    Cookie = cookie.OfType<Cookie>().FirstOrDefault(),
+                    Cookies = cookies.OfType<Cookie>().ToArray(),
                     UserId = profile.UserInfo.Id,
                 };
             }).Select(c => c != null);
@@ -99,7 +99,7 @@ namespace ChronoPlurk.Services
             if (appUserInfo != null)
             {
                 _appUserInfo = appUserInfo;
-                SetCookie(_client, _appUserInfo.Cookie);
+                SetCookie(_client, _appUserInfo.Cookies);
                 return true;
             }
             else
@@ -108,9 +108,14 @@ namespace ChronoPlurk.Services
             }
         }
 
-        private void SetCookie(LegacyClient client, Cookie cookie)
+        private static void SetCookie(LegacyClient client, IEnumerable<Cookie> cookies)
         {
-            client.Cookies = new CookieCollection() {cookie};
+            var cookieCollection = new CookieCollection();
+            foreach (var cookie in cookies)
+            {
+                cookieCollection.Add(cookie);
+            }
+            client.Cookies = cookieCollection;
         }
 
         public void ClearUserData()

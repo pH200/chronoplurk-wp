@@ -28,7 +28,7 @@ namespace ChronoPlurk.Helpers
                         ? appStorage.OpenFile(filename, FileMode.Truncate)
                         : appStorage.CreateFile(filename))
                     {
-                        var sharpSerializer = new SharpSerializer();
+                        var sharpSerializer = new SharpSerializer(true);
                         sharpSerializer.Serialize(data, file);
                     }
                 }
@@ -45,7 +45,7 @@ namespace ChronoPlurk.Helpers
                     {
                         using (var file = appStorage.OpenFile(filename, FileMode.Open, FileAccess.Read))
                         {
-                            var sharpSerializer = new SharpSerializer();
+                            var sharpSerializer = new SharpSerializer(true);
                             return sharpSerializer.Deserialize(file);
                         }
                     }
