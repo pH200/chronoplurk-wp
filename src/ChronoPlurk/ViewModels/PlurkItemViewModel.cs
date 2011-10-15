@@ -38,7 +38,7 @@ namespace ChronoPlurk.ViewModels
 
         public string ContentHtml { get; set; }
 
-        public string AvatarView { get; set; }
+        public Uri AvatarView { get; set; }
 
         public CommentMode NoComments { get; set; }
 

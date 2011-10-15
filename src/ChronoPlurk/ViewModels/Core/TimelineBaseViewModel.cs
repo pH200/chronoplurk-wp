@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Windows;
@@ -194,24 +195,7 @@ namespace ChronoPlurk.ViewModels
                     else
                     {
                         Execute.OnUIThread(() => ProgressService.Show("Updating Timeline"));
-                        Items.AddRange(result.Select(plurk => new PlurkItemViewModel()
-                        {
-                            Id = plurk.Plurk.Id,
-                            UserId = plurk.Plurk.UserId,
-                            Username = plurk.User.DisplayNameOrNickName,
-                            Qualifier = plurk.Plurk.QualifierTextView(),
-                            PostDate = plurk.Plurk.PostDate,
-                            PostTimeFromNow = _timeBase - plurk.Plurk.PostDate,
-                            ContentHtml = plurk.Plurk.Content,
-                            ContentRaw = plurk.Plurk.ContentRaw,
-                            AvatarView = plurk.User.AvatarBig,
-                            IsFavorite = plurk.Plurk.Favorite,
-                            QualifierEnum = plurk.Plurk.Qualifier,
-                            ResponseCount = plurk.Plurk.ResponseCount,
-                            IsUnread = plurk.Plurk.IsUnread,
-                            NoComments = plurk.Plurk.NoComments,
-                            ContextMenuEnabled = PlurkService.IsLoaded,
-                        }));
+                        Items.AddRange(MapUserPlurkToPlurkItemViewModel(result));
 
                         if (IsHasMoreHandler != null)
                         {
@@ -219,6 +203,40 @@ namespace ChronoPlurk.ViewModels
                         }
                     }
                 }, () => Execute.OnUIThread(() => ProgressService.Hide()));
+        }
+
+        private IEnumerable<PlurkItemViewModel> MapUserPlurkToPlurkItemViewModel(IEnumerable<UserPlurk> result)
+        {
+            return result.Select(plurk => new PlurkItemViewModel()
+            {
+                Id = plurk.Plurk.Id,
+                UserId = plurk.Plurk.UserId,
+                Username = plurk.User.DisplayNameOrNickName,
+                Qualifier = plurk.Plurk.QualifierTextView(),
+                PostDate = plurk.Plurk.PostDate,
+                PostTimeFromNow = _timeBase - plurk.Plurk.PostDate,
+                ContentHtml = plurk.Plurk.Content,
+                ContentRaw = plurk.Plurk.ContentRaw,
+                AvatarView = MapAvatarToUri(plurk.User.AvatarBig),
+                IsFavorite = plurk.Plurk.Favorite,
+                QualifierEnum = plurk.Plurk.Qualifier,
+                ResponseCount = plurk.Plurk.ResponseCount,
+                IsUnread = plurk.Plurk.IsUnread,
+                NoComments = plurk.Plurk.NoComments,
+                ContextMenuEnabled = PlurkService.IsLoaded,
+            });
+        }
+
+        private static Uri MapAvatarToUri(string avatar)
+        {
+            if (avatar.Contains("www.plurk.com/static/default_"))
+            {
+                return new Uri("Resources/Avatar/default_big.jpg", UriKind.Relative);
+            }
+            else
+            {
+                return new Uri(avatar, UriKind.Absolute);
+            }
         }
 
         public void CancelRequest()

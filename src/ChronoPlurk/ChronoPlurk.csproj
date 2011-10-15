@@ -249,6 +249,7 @@
     <Resource Include="Resources\Images\plurkicon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+    <Content Include="Resources\Avatar\default_big.jpg" />
     <Content Include="Resources\Icons\appbar.check.rest.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
