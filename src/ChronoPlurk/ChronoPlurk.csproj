@@ -271,13 +271,13 @@
     <Content Include="SplashScreenImage.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Caliburn.Micro\src\Caliburn.Micro.WP7.Extensions\Caliburn.Micro.WP7.Extensions.csproj">
-      <Project>{4C378193-CF03-4B85-8F2A-B1C00B1720DB}</Project>
-      <Name>Caliburn.Micro.WP7.Extensions</Name>
+    <ProjectReference Include="..\..\Caliburn.Micro\src\Caliburn.Micro.WP71.Extensions\Caliburn.Micro.WP71.Extensions.csproj">
+      <Project>{FDA153CE-6970-48AA-A720-293A4F91D134}</Project>
+      <Name>Caliburn.Micro.WP71.Extensions</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Caliburn.Micro\src\Caliburn.Micro.WP7\Caliburn.Micro.WP7.csproj">
-      <Project>{1AA45CEC-DF5D-49F7-B4E9-8CC32BCBD49C}</Project>
-      <Name>Caliburn.Micro.WP7</Name>
+    <ProjectReference Include="..\..\Caliburn.Micro\src\Caliburn.Micro.WP71\Caliburn.Micro.WP71.csproj">
+      <Project>{B3F474B3-85C7-482D-9382-097CF64BCBB0}</Project>
+      <Name>Caliburn.Micro.WP71</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Plurto\src\Plurto.WindowsPhone\Plurto.WindowsPhone.csproj">
       <Project>{EE6B1210-5D97-4232-84F6-BF2DD8060F65}</Project>
