@@ -56,7 +56,7 @@
                     </toolkit:ListPicker.FullModeItemTemplate>
                 </toolkit:ListPicker>
                 
-                <TextBox x:Name="Content"
+                <TextBox x:Name="PostContent"
                          VerticalAlignment="Top"
                          MinHeight="150"
                          TextWrapping="Wrap"

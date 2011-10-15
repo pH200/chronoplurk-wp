@@ -50,7 +50,7 @@ namespace ChronoPlurk.ViewModels
 
         public string ContentRaw { get; set; }
 
-        public string Content { get; set; }
+        public string ContentHtml { get; set; }
 
         public string AvatarView { get; set; }
 

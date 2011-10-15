@@ -20,7 +20,7 @@
                        Margin="0,0,15,0"
                        Foreground="{StaticResource PhoneAccentBrush}"/>
             </Grid>
-            <TextBox x:Name="Content"
+            <TextBox x:Name="PostContent"
                      VerticalAlignment="Top"
                      MinHeight="150"
                      TextWrapping="Wrap"

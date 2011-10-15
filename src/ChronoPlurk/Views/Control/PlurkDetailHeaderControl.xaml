@@ -23,7 +23,7 @@
                 </Border.Background>
                 <TextBlock Text="{Binding Qualifier}" Foreground="White" TextWrapping="NoWrap" Margin="5,0,5,0" />
             </Border>
-            <TextBlock Text="{Binding Content}" TextWrapping="Wrap" Foreground="{StaticResource PhoneSubtleBrush}" />
+            <TextBlock Text="{Binding ContentHtml}" TextWrapping="Wrap" Foreground="{StaticResource PhoneSubtleBrush}" />
             <TextBlock Text="{Binding ResponseCountView}"
                        VerticalAlignment="Bottom"
                		   Foreground="{StaticResource PhoneForegroundBrush}"

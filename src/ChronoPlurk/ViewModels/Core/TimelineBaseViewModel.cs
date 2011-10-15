@@ -202,7 +202,7 @@ namespace ChronoPlurk.ViewModels
                             Qualifier = plurk.Plurk.QualifierTextView(),
                             PostDate = plurk.Plurk.PostDate,
                             PostTimeFromNow = _timeBase - plurk.Plurk.PostDate,
-                            Content = plurk.Plurk.Content,
+                            ContentHtml = plurk.Plurk.Content,
                             ContentRaw = plurk.Plurk.ContentRaw,
                             AvatarView = plurk.User.AvatarBig,
                             IsFavorite = plurk.Plurk.Favorite,

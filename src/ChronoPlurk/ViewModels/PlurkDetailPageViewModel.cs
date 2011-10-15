@@ -78,7 +78,7 @@ namespace ChronoPlurk.ViewModels
 
         public void ReplyAppBar()
         {
-            if (String.IsNullOrWhiteSpace(PlurkDetailViewModel.DetailFooter.Content))
+            if (String.IsNullOrWhiteSpace(PlurkDetailViewModel.DetailFooter.PostContent))
             {
                 PlurkDetailViewModel.ScrollToEnd();
             }

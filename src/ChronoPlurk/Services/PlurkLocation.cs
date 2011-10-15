@@ -9,14 +9,14 @@ namespace ChronoPlurk.Services
             "/Views/PlurkDetailPage.xaml?" +
             "Id={0}&UserId={1}&Username={2}" +
             "&QualifierEnumInt={3}&Qualifier={4}" +
-            "&PostDateTicks={5}&Content={6}" +
+            "&PostDateTicks={5}&ContentHtml={6}" +
             "&AvatarView={7}&NoCommentsInt={8}&IsFavorite={9}"+
             "&ResponseCount={10}&IsUnreadInt={11}";
 
         public PlurkLocation(PlurkItemViewModel item)
         {
             Parsed = String.Format(PageUri, item.Id, item.UserId, item.Username, (int)item.QualifierEnum, item.Qualifier,
-                                   item.PostDate.ToLocalTime().Ticks, item.Content, item.AvatarView, (int)item.NoComments, item.IsFavorite,
+                                   item.PostDate.ToLocalTime().Ticks, item.ContentHtml, item.AvatarView, (int)item.NoComments, item.IsFavorite,
                                    item.ResponseCount, (int)item.IsUnread);
         }
 

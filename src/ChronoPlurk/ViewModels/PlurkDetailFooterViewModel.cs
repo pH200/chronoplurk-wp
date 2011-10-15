@@ -28,17 +28,17 @@ namespace ChronoPlurk.ViewModels
 
         private IDisposable _composeHandler;
 
-        public string Content { get; set; }
+        public string PostContent { get; set; }
         
-        [DependsOn("Content")]
+        [DependsOn("PostContent")]
         public string TextCountLeft
         {
             get
             {
                 var length = 0;
-                if (Content != null)
+                if (PostContent != null)
                 {
-                    length = Content.Length;
+                    length = PostContent.Length;
                 }
 
                 var count = 140 - length;
@@ -62,7 +62,7 @@ namespace ChronoPlurk.ViewModels
             {
                 _composeHandler.Dispose();
             }
-            if (String.IsNullOrWhiteSpace(Content))
+            if (String.IsNullOrWhiteSpace(PostContent))
             {
                 MessageBox.Show("Write something before you plurk!");
             }
@@ -75,7 +75,7 @@ namespace ChronoPlurk.ViewModels
                     LeaveFocus();
 
                     var command =
-                        ResponsesCommand.ResponseAdd(GetPlurkId(), Content, Qualifier.FreestyleColon).
+                        ResponsesCommand.ResponseAdd(GetPlurkId(), PostContent, Qualifier.FreestyleColon).
                             Client(PlurkService.Client).
                             ToObservable().
                             Timeout(TimeSpan.FromSeconds(20)).
@@ -83,7 +83,7 @@ namespace ChronoPlurk.ViewModels
 
                     _composeHandler = command.ObserveOnDispatcher().Subscribe(plurk =>
                     {
-                        Content = "";
+                        PostContent = "";
                         LoadNewComments();
                     }, () => _progressService.Hide());
                 }

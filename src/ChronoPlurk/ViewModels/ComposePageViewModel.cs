@@ -23,17 +23,17 @@ namespace ChronoPlurk.ViewModels
 
         public string Username { get { return PlurkService.Username; } }
 
-        public string Content { get; set; }
+        public string PostContent { get; set; }
 
-        [DependsOn("Content")]
+        [DependsOn("PostContent")]
         public string TextCountLeft
         {
             get
             {
                 var length = 0;
-                if (Content != null)
+                if (PostContent != null)
                 {
-                    length = Content.Length;
+                    length = PostContent.Length;
                 }
 
                 var count = 140 - length;
@@ -71,7 +71,7 @@ namespace ChronoPlurk.ViewModels
             {
                 _composeHandler.Dispose();
             }
-            if (String.IsNullOrWhiteSpace(Content))
+            if (String.IsNullOrWhiteSpace(PostContent))
             {
                 MessageBox.Show("Write something before you plurk!");
             }
@@ -80,7 +80,7 @@ namespace ChronoPlurk.ViewModels
                 _progressService.Show("Sending");
 
                 var command =
-                    TimelineCommand.PlurkAdd(Content, Qualifier.Qualifier).
+                    TimelineCommand.PlurkAdd(PostContent, Qualifier.Qualifier).
                         Client(PlurkService.Client).ToObservable().
                         Timeout(TimeSpan.FromSeconds(20)).
                         PlurkException(error => { });
@@ -93,7 +93,7 @@ namespace ChronoPlurk.ViewModels
                         {
                             page.NewPost = true;
                         }
-                        Content = "";
+                        PostContent = "";
                         _navigationService.GoBack();
                     }, () => _progressService.Hide());
             }
