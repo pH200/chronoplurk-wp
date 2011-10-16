@@ -148,6 +148,7 @@
     <Compile Include="Views\Control\TimelineControl.xaml.cs">
       <DependentUpon>TimelineControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Control\UrlRemapper.cs" />
     <Compile Include="Views\DesignTime\SearchResultDesignData.cs" />
     <Compile Include="Views\ImageLoader\LowProfileImageLoader.cs" />
     <Compile Include="Views\Control\PlurkItemControl.xaml.cs">

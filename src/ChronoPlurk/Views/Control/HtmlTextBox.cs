@@ -245,7 +245,7 @@ namespace ChronoPlurk.Views.PlurkControls
             var hyperlink = new Hyperlink() { TargetName = "_blank", Foreground = PlurkResources.PhoneAccentBrush };
             if (href != null)
             {
-                hyperlink.NavigateUri = new Uri(href.Value, UriKind.Absolute);
+                hyperlink.NavigateUri = UrlRemapper.RemapUrl(href.Value);
             }
             return new InlineNode(node, hyperlink);
         }
