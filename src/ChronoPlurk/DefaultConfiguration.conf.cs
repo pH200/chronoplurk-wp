@@ -40,7 +40,7 @@ namespace ChronoPlurk
             }
 #endif
 #if DEBUG
-            Plurto.Config.LoggingLevel = LoggingLevel.Verbose;
+            //Plurto.Config.LoggingLevel = LoggingLevel.Verbose;
             Plurto.Config.LoggingLinebreak = 80;
 #endif
         }
