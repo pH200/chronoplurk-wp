@@ -13,6 +13,8 @@ namespace ChronoPlurk.ViewModels
     [NotifyForAll]
     public class PlurkDetailHeaderViewModel : Screen
     {
+        private readonly IPlurkContentStorageService _plurkContentStorageService;
+
         #region Public Properties
 
         public int Id { get; set; }
@@ -118,5 +120,22 @@ namespace ChronoPlurk.ViewModels
         }
 
         #endregion
+
+        public PlurkDetailHeaderViewModel(IPlurkContentStorageService plurkContentStorageService)
+        {
+            _plurkContentStorageService = plurkContentStorageService;
+        }
+
+        protected override void OnActivate()
+        {
+            var content = _plurkContentStorageService.GetValueOrDefault(Id);
+            if (content != null)
+            {
+                ContentHtml = content;
+            }
+            _plurkContentStorageService.Remove(Id);
+
+            base.OnActivate();
+        }
     }
 }

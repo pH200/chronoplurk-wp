@@ -32,6 +32,7 @@ namespace ChronoPlurk.ViewModels
         protected override void OnActivate()
         {
             PlurkDetailViewModel.RefreshOnActivate = true;
+            ActivateItem(PlurkHeaderViewModel);
             ActivateItem(PlurkDetailViewModel);
 
             base.OnActivate();

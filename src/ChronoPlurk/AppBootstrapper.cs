@@ -47,6 +47,7 @@ namespace ChronoPlurk
             builder.RegisterType(typeof(PlurkDetailFooterViewModel)).AsSelf().SingleInstance();
             builder.RegisterType(typeof(ComposePageViewModel)).AsSelf().SingleInstance();
 
+            builder.RegisterInstance(new PlurkContentStorageService()).As(typeof(IPlurkContentStorageService)).SingleInstance();
             builder.Register(c => new ProgressService()).As(typeof(IProgressService)).SingleInstance();
             builder.RegisterType(typeof(PlurkService)).As(typeof(IPlurkService)).SingleInstance();
 

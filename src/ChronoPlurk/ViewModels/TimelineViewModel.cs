@@ -11,11 +11,12 @@ namespace ChronoPlurk.ViewModels
     {
         public bool RefreshOnActivate { get; set; }
 
-        public TimelineViewModel
-            (INavigationService navigationService,
+        public TimelineViewModel(
+            INavigationService navigationService,
             IProgressService progressService,
-            IPlurkService plurkService)
-            : base(navigationService, progressService, plurkService)
+            IPlurkService plurkService,
+            IPlurkContentStorageService plurkContentStorageService)
+            : base(navigationService, progressService, plurkService, plurkContentStorageService)
         {
             this.DisplayName = "timeline";
             IsHasMoreHandler = plurks => { return plurks.Plurks != null && plurks.Plurks.Count > 0; };

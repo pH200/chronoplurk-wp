@@ -11,11 +11,12 @@ namespace ChronoPlurk.ViewModels
     {
         private Type _lastParent;
 
-        public SearchResultViewModel
-            (INavigationService navigationService,
+        public SearchResultViewModel(
+            INavigationService navigationService,
             IProgressService progressService,
-            IPlurkService plurkService)
-            : base(navigationService, progressService, plurkService, "Searching")
+            IPlurkService plurkService,
+            IPlurkContentStorageService plurkContentStorageService)
+            : base(navigationService, progressService, plurkService, plurkContentStorageService, "Searching")
         {
             this.DisplayName = "search";
             IsHasMoreHandler = plurks => plurks.HasMore;

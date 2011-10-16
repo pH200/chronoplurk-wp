@@ -108,6 +108,7 @@
     <Compile Include="Services\INavigationInjectRedirect.cs" />
     <Compile Include="Services\NavigationExtensions.cs" />
     <Compile Include="Helpers\PlurkErrorHandling.cs" />
+    <Compile Include="Services\PlurkContentStorageService.cs" />
     <Compile Include="Services\PlurkLocation.cs" />
     <Compile Include="Helpers\PlurkResources.cs" />
     <Compile Include="Helpers\QualifierConverter.cs" />

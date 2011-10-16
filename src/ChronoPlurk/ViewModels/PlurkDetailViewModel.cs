@@ -43,13 +43,14 @@ namespace ChronoPlurk.ViewModels
 
         public bool RefreshOnActivate { get; set; }
 
-        public PlurkDetailViewModel
-            (INavigationService navigationService,
+        public PlurkDetailViewModel(
+            INavigationService navigationService,
             IProgressService progressService,
             IPlurkService plurkService,
+            IPlurkContentStorageService plurkContentStorageService,
             PlurkDetailHeaderViewModel plurkDetailHeaderViewModel,
             PlurkDetailFooterViewModel plurkDetailFooterViewModel)
-            : base(navigationService, progressService, plurkService)
+            : base(navigationService, progressService, plurkService, plurkContentStorageService)
         {
             plurkDetailHeaderViewModel.Parent = this;
             DetailHeader = plurkDetailHeaderViewModel;

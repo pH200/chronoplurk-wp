@@ -18,13 +18,17 @@ namespace ChronoPlurk.ViewModels
         where TSource : ITimeline
     {
         #region Fields
-        protected INavigationService NavigationService { get; set; }
-        protected IProgressService ProgressService { get; set; }
-        protected IPlurkService PlurkService { get; set; }
         private IDisposable _requestHandler;
         private DateTime _timeBase;
         private TSource _lastResult;
         private WeakReference _scrollCache;
+        #endregion
+
+        #region Services
+        protected INavigationService NavigationService { get; set; }
+        protected IProgressService ProgressService { get; set; }
+        protected IPlurkService PlurkService { get; set; }
+        protected IPlurkContentStorageService PlurkContentStorageService { get; set; }
         #endregion
 
         #region Empty Header and Footer
@@ -87,15 +91,17 @@ namespace ChronoPlurk.ViewModels
 
         #endregion
 
-        protected TimelineBaseViewModel
-            (INavigationService navigationService,
+        protected TimelineBaseViewModel(
+            INavigationService navigationService,
             IProgressService progressService,
             IPlurkService plurkService,
+            IPlurkContentStorageService plurkContentStorageService,
             string progressMessage = "Loading")
         {
             NavigationService = navigationService;
             ProgressService = progressService;
             PlurkService = plurkService;
+            PlurkContentStorageService = plurkContentStorageService;
 
             ProgressMessage = progressMessage;
 
@@ -115,6 +121,7 @@ namespace ChronoPlurk.ViewModels
             var item = Items[ListSelectedIndex];
             var location = new PlurkLocation(item);
             NavigationService.Navigate(location);
+            PlurkContentStorageService.AddOrReplace(item.Id, item.ContentHtml);
 
             ListSelectedIndex = -1;
         }
