@@ -4,6 +4,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:imgloader="clr-namespace:ChronoPlurk.Views.ImageLoader"
+    xmlns:PlurkControls="clr-namespace:ChronoPlurk.Views.PlurkControls"
     mc:Ignorable="d"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -48,9 +49,9 @@
                     </Border>
                 </StackPanel>
             </Grid>
-            <TextBlock Text="{Binding ContentHtml}"
-                       TextWrapping="Wrap"
-                       Margin="0,20,0,20" />
+            <PlurkControls:HtmlTextBox Html="{Binding ContentHtml}"
+                                       EnableHyperlink="True"
+                                       Margin="0,20,0,20" />
             <TextBlock Text="{Binding TimeView}"
         			   FontSize="{StaticResource PhoneFontSizeSmall}"
         			   Foreground="{StaticResource PhoneSubtleBrush}" />
