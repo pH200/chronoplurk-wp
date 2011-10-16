@@ -142,6 +142,10 @@ namespace ChronoPlurk.Views.PlurkControls
                                         addInlineOrQueue(image);
                                     }
                                 }
+                                else if (type == HtmlType.Newline)
+                                {
+                                    addInlineOrQueue(new LineBreak());
+                                }
                                 else
                                 {
                                     var nextNode = CreateInlineNode(childNode);
@@ -157,10 +161,33 @@ namespace ChronoPlurk.Views.PlurkControls
                 }
                 else
                 {
-                    addInlineOrQueue(new Run() { Text = node.Node.InnerText });
+                    var inline = CreateTextInline(node);
+                    if (inline != null)
+                    {
+                        addInlineOrQueue(inline);
+                    }
                 }
             }
             return queue;
+        }
+
+        private static Inline CreateTextInline(InlineNode node)
+        {
+            if (node.Node.NodeType == HtmlNodeType.Text)
+            {
+                return new Run() { Text = node.Node.InnerText };
+            }
+            else
+            {
+                if (node.Node.Name == "br")
+                {
+                    return new LineBreak();
+                }
+                else
+                {
+                    return null;
+                }
+            }
         }
 
         private void AddInlineOrQueue(Inline inline, InlineNode currentNode, Queue<Inline> inlineQueue)
@@ -258,6 +285,8 @@ namespace ChronoPlurk.Views.PlurkControls
                     return HtmlType.Hyperlink;
                 case "img":
                     return HtmlType.Image;
+                case "br":
+                    return HtmlType.Newline;
                 default:
                     return HtmlType.Text;
             }
@@ -277,7 +306,7 @@ namespace ChronoPlurk.Views.PlurkControls
 
         private enum HtmlType
         {
-            Text, Hyperlink, Image
+            Text, Hyperlink, Image, Newline,
         }
     }
 }
