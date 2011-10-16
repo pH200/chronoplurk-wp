@@ -140,9 +140,7 @@
     <Compile Include="ViewModels\TimelineViewModel.cs" />
     <Compile Include="Views\Control\EmptyView.cs" />
     <Compile Include="Views\Control\FocusBehavior.cs" />
-    <Compile Include="Views\Control\HtmlTextBox.xaml.cs">
-      <DependentUpon>HtmlTextBox.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="Views\Control\HtmlTextBox.cs" />
     <Compile Include="Views\Control\OrientationTrigger.cs" />
     <Compile Include="Views\Control\PlurkDetailHeaderControl.xaml.cs">
       <DependentUpon>PlurkDetailHeaderControl.xaml</DependentUpon>
@@ -169,10 +167,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ComposePage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Control\HtmlTextBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -11,7 +11,8 @@ using HtmlAgilityPack;
 
 namespace ChronoPlurk.Views.PlurkControls
 {
-    public partial class HtmlTextBox : UserControl
+    [TemplatePart(Name = "RichTextBoxElement", Type = typeof(RichTextBox))]
+    public class HtmlTextBox : Control
     {
         #region Html (DependencyProperty)
 
@@ -37,7 +38,10 @@ namespace ChronoPlurk.Views.PlurkControls
         {
             if (e.NewValue != e.OldValue)
             {
-                ConvertHtml(e.NewValue as string);
+                if (RichTextBox != null)
+                {
+                    ConvertHtml(e.NewValue as string);
+                }
             }
         }
 
@@ -61,15 +65,35 @@ namespace ChronoPlurk.Views.PlurkControls
 
         #endregion
 
+        private RichTextBox _richTextBox;
+        protected RichTextBox RichTextBox
+        {
+            get { return _richTextBox; }
+            set
+            {
+                _richTextBox = value;
+                if (_richTextBox != null)
+                {
+                    ConvertHtml(Html);
+                }
+            }
+        }
 
         public HtmlTextBox()
         {
-            InitializeComponent();
+            DefaultStyleKey = typeof(HtmlTextBox);
+        }
+
+        public override void OnApplyTemplate()
+        {
+            RichTextBox = GetTemplateChild("RichTextBoxElement") as RichTextBox;
+
+            base.OnApplyTemplate();
         }
 
         private void ConvertHtml(string html)
         {
-            RTB.Blocks.Clear();
+            RichTextBox.Blocks.Clear();
 
             if (!string.IsNullOrEmpty(html))
             {
@@ -82,7 +106,7 @@ namespace ChronoPlurk.Views.PlurkControls
                 {
                     paragraph.Inlines.Add(inline);
                 }
-                RTB.Blocks.Add(paragraph);
+                RichTextBox.Blocks.Add(paragraph);
             }
         }
 
@@ -91,11 +115,11 @@ namespace ChronoPlurk.Views.PlurkControls
             var queue = new Queue<Inline>();
             var stack = new Stack<InlineNode>();
             stack.Push(new InlineNode(htmlNode, null));
-            
-            while(stack.Count > 0)
+
+            while (stack.Count > 0)
             {
                 var node = stack.Pop();
-                
+
                 Action<Inline> addInlineOrQueue = inline => AddInlineOrQueue(inline, node, queue);
 
                 if (node.Node.HasChildNodes)
@@ -133,7 +157,7 @@ namespace ChronoPlurk.Views.PlurkControls
                 }
                 else
                 {
-                    addInlineOrQueue(new Run() {Text = node.Node.InnerText});
+                    addInlineOrQueue(new Run() { Text = node.Node.InnerText });
                 }
             }
             return queue;
@@ -191,7 +215,7 @@ namespace ChronoPlurk.Views.PlurkControls
         private static InlineNode CreateHyperlinkInlineNode(HtmlNode node)
         {
             var href = node.Attributes.FirstOrDefault(attr => attr.Name == "href");
-            var hyperlink = new Hyperlink() {TargetName = "_blank", Foreground = PlurkResources.PhoneAccentBrush};
+            var hyperlink = new Hyperlink() { TargetName = "_blank", Foreground = PlurkResources.PhoneAccentBrush };
             if (href != null)
             {
                 hyperlink.NavigateUri = new Uri(href.Value, UriKind.Absolute);
@@ -216,7 +240,7 @@ namespace ChronoPlurk.Views.PlurkControls
                     }
                 }
                 LowProfileImageLoader.SetUriSource(image, new Uri(src.Value, UriKind.Absolute));
-                var container = new InlineUIContainer {Child = image};
+                var container = new InlineUIContainer { Child = image };
                 return container;
             }
             else
@@ -243,7 +267,7 @@ namespace ChronoPlurk.Views.PlurkControls
         {
             public HtmlNode Node { get; private set; }
             public Span Span { get; set; }
-            
+
             public InlineNode(HtmlNode node, Span span)
             {
                 Node = node;
