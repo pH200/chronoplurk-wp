@@ -68,10 +68,31 @@
     <Reference Include="HtmlAgilityPack">
       <HintPath>..\Dependencies\HtmlAgilityPack\HtmlAgilityPack.dll</HintPath>
     </Reference>
+    <Reference Include="ImageTools">
+      <HintPath>..\Dependencies\ImageTools\ImageTools.dll</HintPath>
+    </Reference>
+    <Reference Include="ImageTools.Controls">
+      <HintPath>..\Dependencies\ImageTools\ImageTools.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="ImageTools.Filtering">
+      <HintPath>..\Dependencies\ImageTools\ImageTools.Filtering.dll</HintPath>
+    </Reference>
+    <Reference Include="ImageTools.IO.Gif">
+      <HintPath>..\Dependencies\ImageTools\ImageTools.IO.Gif.dll</HintPath>
+    </Reference>
+    <Reference Include="ImageTools.IO.Png">
+      <HintPath>..\Dependencies\ImageTools\ImageTools.IO.Png.dll</HintPath>
+    </Reference>
+    <Reference Include="ImageTools.Utils">
+      <HintPath>..\Dependencies\ImageTools\ImageTools.Utils.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Phone" />
     <Reference Include="Microsoft.Phone.Controls" />
     <Reference Include="Microsoft.Phone.Controls.Toolkit, Version=7.0.0.0, Culture=neutral, PublicKeyToken=b772ad94eb9ca604, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Phone.Interop" />
+    <Reference Include="PhoneCodeContractsAssemblies">
+      <HintPath>..\Dependencies\ImageTools\PhoneCodeContractsAssemblies.dll</HintPath>
+    </Reference>
     <Reference Include="Polenter.SharpSerializer.Silverlight">
       <HintPath>..\packages\SharpSerializer.2.13.1\lib\sl4-windowsphone71\Polenter.SharpSerializer.Silverlight.dll</HintPath>
     </Reference>
@@ -150,6 +171,7 @@
     </Compile>
     <Compile Include="Views\Control\UrlRemapper.cs" />
     <Compile Include="Views\DesignTime\SearchResultDesignData.cs" />
+    <Compile Include="Views\ImageLoader\GifLowProfileImageLoader.cs" />
     <Compile Include="Views\ImageLoader\LowProfileImageLoader.cs" />
     <Compile Include="Views\Control\PlurkItemControl.xaml.cs">
       <DependentUpon>PlurkItemControl.xaml</DependentUpon>
