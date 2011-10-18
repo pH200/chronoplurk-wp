@@ -14,6 +14,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using ImageTools;
+using ImageTools.Controls;
 using ImageTools.IO.Gif;
 
 namespace ChronoPlurk.Views.ImageLoader
@@ -37,7 +38,7 @@ namespace ChronoPlurk.Views.ImageLoader
         /// <param name="obj">Image needing its Source property set.</param>
         /// <returns>Uri to use for providing the contents of the Source property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "UriSource is applicable only to Image elements.")]
-        public static Uri GetUriSource(Image obj)
+        public static Uri GetUriSource(Border obj)
         {
             if (null == obj)
             {
@@ -52,7 +53,7 @@ namespace ChronoPlurk.Views.ImageLoader
         /// <param name="obj">Image needing its Source property set.</param>
         /// <param name="value">Uri to use for providing the contents of the Source property.</param>
         [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "UriSource is applicable only to Image elements.")]
-        public static void SetUriSource(Image obj, Uri value)
+        public static void SetUriSource(Border obj, Uri value)
         {
             if (null == obj)
             {
@@ -65,7 +66,7 @@ namespace ChronoPlurk.Views.ImageLoader
         /// Identifies the UriSource attached DependencyProperty.
         /// </summary>
         public static readonly DependencyProperty UriSourceProperty = DependencyProperty.RegisterAttached(
-            "UriSource", typeof(Uri), typeof(LowProfileImageLoader), new PropertyMetadata(OnUriSourceChanged));
+            "UriSource", typeof(Uri), typeof(GifLowProfileImageLoader), new PropertyMetadata(OnUriSourceChanged));
 
         /// <summary>
         /// Gets or sets a value indicating whether low-profile image loading is enabled.
@@ -183,22 +184,19 @@ namespace ChronoPlurk.Views.ImageLoader
                             {
                                 try
                                 {
-                                    ImageSource bitmap;
                                     if (pendingCompletion.Uri.AbsolutePath.ToLower().Contains(".gif"))
                                     {
                                         var decoder = new GifDecoder();
-                                        ExtendedImage image = new ExtendedImage();
-                                        decoder.Decode(image, pendingCompletion.Stream);
-                                        bitmap = image.ToBitmap();
-
+                                        var extendedImage = new ExtendedImage();
+                                        decoder.Decode(extendedImage, pendingCompletion.Stream);
+                                        pendingCompletion.Image.Child = new AnimatedImage() { Source = extendedImage };
                                     }
                                     else
                                     {
                                         var bitmapImage = new BitmapImage();
                                         bitmapImage.SetSource(pendingCompletion.Stream);
-                                        bitmap = bitmapImage;
+                                        pendingCompletion.Image.Child = new Image() { Source = bitmapImage };
                                     }
-                                    pendingCompletion.Image.Source = bitmap;
                                 }
                                 catch
                                 {
@@ -219,13 +217,17 @@ namespace ChronoPlurk.Views.ImageLoader
 
         private static void OnUriSourceChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
         {
-            var image = (Image)o;
+            var image = o as Border;
+            if (image == null)
+            {
+                return;
+            }
             var uri = (Uri)e.NewValue;
 
             if (!IsEnabled || DesignerProperties.IsInDesignTool)
             {
                 // Avoid handing off to the worker thread (can cause problems for design tools)
-                image.Source = new BitmapImage(uri);
+                image.Child = new Image() { Source = new BitmapImage(uri) };
             }
             else
             {
@@ -250,9 +252,9 @@ namespace ChronoPlurk.Views.ImageLoader
 
         private class PendingRequest
         {
-            public Image Image { get; private set; }
+            public Border Image { get; private set; }
             public Uri Uri { get; private set; }
-            public PendingRequest(Image image, Uri uri)
+            public PendingRequest(Border image, Uri uri)
             {
                 Image = image;
                 Uri = uri;
@@ -262,9 +264,9 @@ namespace ChronoPlurk.Views.ImageLoader
         private class ResponseState
         {
             public WebRequest WebRequest { get; private set; }
-            public Image Image { get; private set; }
+            public Border Image { get; private set; }
             public Uri Uri { get; private set; }
-            public ResponseState(WebRequest webRequest, Image image, Uri uri)
+            public ResponseState(WebRequest webRequest, Border image, Uri uri)
             {
                 WebRequest = webRequest;
                 Image = image;
@@ -274,10 +276,10 @@ namespace ChronoPlurk.Views.ImageLoader
 
         private class PendingCompletion
         {
-            public Image Image { get; private set; }
+            public Border Image { get; private set; }
             public Uri Uri { get; private set; }
             public Stream Stream { get; private set; }
-            public PendingCompletion(Image image, Uri uri, Stream stream)
+            public PendingCompletion(Border image, Uri uri, Stream stream)
             {
                 Image = image;
                 Uri = uri;

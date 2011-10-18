@@ -14,6 +14,8 @@ namespace ChronoPlurk.Views.PlurkControls
     [TemplatePart(Name = "RichTextBoxElement", Type = typeof(RichTextBox))]
     public class HtmlTextBox : Control
     {
+        private const double DefaultImageHeight = 20.0;
+
         #region Html (DependencyProperty)
 
         /// <summary>
@@ -255,19 +257,22 @@ namespace ChronoPlurk.Views.PlurkControls
             var src = node.Attributes.FirstOrDefault(attr => attr.Name == "src");
             if (src != null)
             {
-                var image = new Image();
+                var imageContainer = new Border();
                 var heightAttr = node.Attributes.FirstOrDefault(attr => attr.Name == "height");
                 if (heightAttr != null)
                 {
                     double height;
                     if (double.TryParse(heightAttr.Value, out height))
                     {
-                        image.Height = height;
-                        image.Stretch = Stretch.UniformToFill;
+                        imageContainer.Height = height;
                     }
                 }
-                LowProfileImageLoader.SetUriSource(image, new Uri(src.Value, UriKind.Absolute));
-                var container = new InlineUIContainer { Child = image };
+                else
+                {
+                    imageContainer.Height = DefaultImageHeight;
+                }
+                GifLowProfileImageLoader.SetUriSource(imageContainer, new Uri(src.Value, UriKind.Absolute));
+                var container = new InlineUIContainer { Child = imageContainer };
                 return container;
             }
             else
