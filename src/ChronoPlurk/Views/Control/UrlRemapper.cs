@@ -14,7 +14,7 @@ namespace ChronoPlurk.Views.PlurkControls
                     return u.StartsWith("http://www.youtube.com/");
                 }, mapper: u =>
                 {
-                    return new Uri(u.Replace("http://www.youtube.com/", "http://m.youtube.com/#/"), UriKind.Absolute);
+                    return UriFactory(u.Replace("http://www.youtube.com/", "http://m.youtube.com/#/"), UriKind.Absolute);
                 }),
             new PredicateMapper(
                 predicate: u =>
@@ -28,11 +28,11 @@ namespace ChronoPlurk.Views.PlurkControls
                     if (match.Success && match.Groups.Count > 1)
                     {
                         var newUrl = mobileUrl + match.Groups[1];
-                        return new Uri(newUrl, UriKind.Absolute);
+                        return UriFactory(newUrl, UriKind.Absolute);
                     }
                     else
                     {
-                        return new Uri(u, UriKind.Absolute);
+                        return UriFactory(u, UriKind.Absolute);
                     }
                 }),
         };
@@ -46,7 +46,26 @@ namespace ChronoPlurk.Views.PlurkControls
             }
             else
             {
-                return new Uri(url, UriKind.Absolute);
+                return UriFactory(url, UriKind.Absolute);
+            }
+        }
+
+        private static Uri UriFactory(string url, UriKind uriKind)
+        {
+            if (uriKind == UriKind.Relative)
+            {
+                return new Uri(url, uriKind);
+            }
+            else
+            {
+                if (Uri.IsWellFormedUriString(url, uriKind))
+                {
+                    return new Uri(url, uriKind);
+                }
+                else
+                {
+                    return new Uri("http://m.bing.com/search?q=" + Uri.EscapeDataString(url), UriKind.Absolute);
+                }
             }
         }
 
