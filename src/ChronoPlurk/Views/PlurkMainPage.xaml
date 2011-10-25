@@ -59,9 +59,8 @@
                                   Text="search"
                                   Message="SearchAppBar" />
             <shell:ApplicationBar.MenuItems>
-                <cal:AppBarMenuItem Text="settings" Message="SettingsAppBar" />
                 <cal:AppBarMenuItem Text="profile" Message="ProfileAppBar" />
-                <cal:AppBarMenuItem Text="sign out" Message="SignOutAppBar" />
+                <cal:AppBarMenuItem Text="settings" Message="SettingsAppBar" />
             </shell:ApplicationBar.MenuItems>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>

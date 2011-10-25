@@ -52,9 +52,6 @@
     </Grid>
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar BackgroundColor="#FFCF682F" IsVisible="True" IsMenuEnabled="True">
-            <cal:AppBarButton IconUri="/Resources/Icons/appbar.refresh.rest.png"
-                                  Text="refresh"
-                                  Message="RefreshAppBar" />
             <cal:AppBarButton IconUri="/Resources/Icons/appbar.edit.rest.png"
                                   Text="compose"
                                   Message="ComposeAppBar" />

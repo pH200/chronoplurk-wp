@@ -59,6 +59,8 @@ namespace ChronoPlurk.ViewModels
             _view = view as PlurkMainPage;
         }
 
+        #region AppBar
+        
         public void RefreshAppBar()
         {
             foreach (var screen in Items.OfType<IRefreshSync>())
@@ -74,10 +76,6 @@ namespace ChronoPlurk.ViewModels
             }
         }
 
-        public void SignOutAppBar()
-        {
-            PlurkService.ClearUserData();
-            ShowLoginPopup(true);
-        }
+        #endregion
     }
 }

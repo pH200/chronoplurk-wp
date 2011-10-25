@@ -80,6 +80,13 @@ namespace ChronoPlurk.Helpers
 
         public static void ClearAll()
         {
+            lock (Padlock)
+            {
+                using (var store = IsolatedStorageFile.GetUserStoreForApplication())
+                {
+                    store.Remove();
+                }
+            }
             Settings.Clear();
             Save();
         }
