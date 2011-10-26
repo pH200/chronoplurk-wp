@@ -13,7 +13,7 @@ namespace ChronoPlurk.Helpers
     public static class PlurkErrorHandling
     {
         public static IObservable<TSource> PlurkException<TSource>
-            (this IObservable<TSource> source, Action<PlurkError> onError, IProgressService progressService = null)
+            (this IObservable<TSource> source, Action<PlurkError> onError = null, IProgressService progressService = null)
         {
             return source.Catch<TSource, Exception>(ex =>
             {
@@ -42,7 +42,10 @@ namespace ChronoPlurk.Helpers
                     case MessageBoxResult.OK:
                         return source.PlurkException(onError, progressService);
                 }
-                onError(PlurkError.UnknownError);
+                if (onError != null)
+                {
+                    onError(PlurkError.UnknownError);
+                }
                 return Observable.Empty<TSource>();
             }, DispatcherScheduler.Instance).Merge();
         }
@@ -71,7 +74,10 @@ namespace ChronoPlurk.Helpers
             Execute.OnUIThread(() => 
             {
                 MessageBox.Show(errorMessage, "Error", MessageBoxButton.OK);
-                onError(error);
+                if (onError != null)
+                {
+                    onError(error);
+                }
             });
         }
 

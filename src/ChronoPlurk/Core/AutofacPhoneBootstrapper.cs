@@ -93,10 +93,10 @@ namespace ChronoPlurk.Core
         {
         }
 
-        private static void StartServices()
+        private void StartServices()
         {
             //Container.Resolve<StorageCoordinator>().Start();
-            //Container.Resolve<TaskController>().Start();
+            Container.Resolve<TaskController>().Start();
         }
 
         private static void AddCustomConventions()
