@@ -11,7 +11,7 @@
     Foreground="{StaticResource PhoneForegroundBrush}"
     d:DesignHeight="480" d:DesignWidth="480">
 
-    <Grid Background="Black">
+    <Grid Background="Transparent">
         <StackPanel Margin="10,0,10,0">
             <Grid>
                 <TextBlock Margin="12,0,0,0" Text="reply" />

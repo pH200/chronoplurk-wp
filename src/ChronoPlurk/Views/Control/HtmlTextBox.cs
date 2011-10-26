@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive.Disposables;
+using System.Reactive.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
-using System.Windows.Media;
+using System.Windows.Input;
 using ChronoPlurk.Helpers;
 using ChronoPlurk.Views.ImageLoader;
 using HtmlAgilityPack;
+using Microsoft.Phone.Tasks;
 
 namespace ChronoPlurk.Views.PlurkControls
 {
@@ -15,6 +18,8 @@ namespace ChronoPlurk.Views.PlurkControls
     public class HtmlTextBox : Control
     {
         private const double DefaultImageHeight = 20.0;
+
+        private readonly CompositeDisposable _imageClickEvents = new CompositeDisposable();
 
         #region Html (DependencyProperty)
 
@@ -67,6 +72,24 @@ namespace ChronoPlurk.Views.PlurkControls
 
         #endregion
 
+
+        #region EnableOrignialSizeImage (DependencyProperty)
+
+        /// <summary>
+        /// Gets or sets whether to use original size for images.
+        /// </summary>
+        public bool EnableOrignialSizeImage
+        {
+            get { return (bool)GetValue(EnableOrignialSizeImageProperty); }
+            set { SetValue(EnableOrignialSizeImageProperty, value); }
+        }
+        public static readonly DependencyProperty EnableOrignialSizeImageProperty =
+            DependencyProperty.Register("EnableOrignialSizeImage", typeof(bool), typeof(HtmlTextBox),
+              new PropertyMetadata(false));
+
+        #endregion
+        
+
         private RichTextBox _richTextBox;
         protected RichTextBox RichTextBox
         {
@@ -96,6 +119,7 @@ namespace ChronoPlurk.Views.PlurkControls
         private void ConvertHtml(string html)
         {
             RichTextBox.Blocks.Clear();
+            _imageClickEvents.Clear();
 
             if (!string.IsNullOrEmpty(html))
             {
@@ -209,6 +233,11 @@ namespace ChronoPlurk.Views.PlurkControls
                         currentNode.Span = nextSpan;
                         inlineQueue.Enqueue(nextSpan);
                     }
+                    var nextHyperlink = nextSpan as Hyperlink;
+                    if (nextHyperlink != null)
+                    {
+                        SubscribeImageClick(nextHyperlink, inlineUi);
+                    }
                     inlineQueue.Enqueue(inlineUi);
                 }
                 else
@@ -219,6 +248,29 @@ namespace ChronoPlurk.Views.PlurkControls
             else
             {
                 inlineQueue.Enqueue(inline);
+            }
+        }
+
+        private void SubscribeImageClick(Hyperlink nextHyperlink, InlineUIContainer inlineUi)
+        {
+            if (inlineUi.Child != null)
+            {
+                var mouseDownEvent =
+                Observable.FromEventPattern<GestureEventArgs>(
+                    handler => inlineUi.Child.Tap += handler,
+                    handler => inlineUi.Child.Tap -= handler);
+                var click = mouseDownEvent
+                    .Select(e => new { Args = e.EventArgs, Uri = nextHyperlink.NavigateUri })
+                    .Subscribe(e =>
+                    {
+                        e.Args.Handled = true;
+                        if (e.Uri.IsAbsoluteUri)
+                        {
+                            var webBrowserTask = new WebBrowserTask() { Uri = e.Uri };
+                            webBrowserTask.Show();
+                        }
+                    });
+                _imageClickEvents.Add(click);
             }
         }
 
@@ -252,7 +304,7 @@ namespace ChronoPlurk.Views.PlurkControls
             return new InlineNode(node, hyperlink);
         }
 
-        private static Inline CreateImageInline(HtmlNode node)
+        private Inline CreateImageInline(HtmlNode node)
         {
             var src = node.Attributes.FirstOrDefault(attr => attr.Name == "src");
             if (src != null)
@@ -264,7 +316,15 @@ namespace ChronoPlurk.Views.PlurkControls
                     double height;
                     if (double.TryParse(heightAttr.Value, out height))
                     {
-                        imageContainer.Height = height;
+                        // TODO: Fix this workaround
+                        if (EnableOrignialSizeImage && !(src.Value.Contains("statics.plurk.com/")))
+                        {
+                            imageContainer.Height = height * 2;
+                        }
+                        else
+                        {
+                            imageContainer.Height = height;
+                        }
                     }
                 }
                 else

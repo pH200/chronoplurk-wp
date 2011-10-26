@@ -51,6 +51,7 @@
             </Grid>
             <PlurkControls:HtmlTextBox Html="{Binding ContentHtml}"
                                        EnableHyperlink="True"
+                                       EnableOrignialSizeImage="True"
                                        Margin="0,20,0,20" />
             <TextBlock Text="{Binding TimeView}"
         			   FontSize="{StaticResource PhoneFontSizeSmall}"

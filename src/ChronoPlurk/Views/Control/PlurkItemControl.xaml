@@ -5,6 +5,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     xmlns:imgloader="clr-namespace:ChronoPlurk.Views.ImageLoader"
+    xmlns:PlurkControls="clr-namespace:ChronoPlurk.Views.PlurkControls"
     mc:Ignorable="d"
     x:Class="ChronoPlurk.Views.PlurkControls.PlurkItemControl"
     d:DesignWidth="400" d:DesignHeight="207">
@@ -54,8 +55,8 @@
                     <TextBlock Text="{Binding Qualifier}" Foreground="White" TextWrapping="NoWrap" Margin="5,0,5,0" />
                 </Border>
             </StackPanel>
-            <TextBlock Text="{Binding ContentRaw}"
-                       TextWrapping="Wrap" />
+            <PlurkControls:HtmlTextBox Html="{Binding ContentHtml}"
+                                       EnableHyperlink="False" />
             <Grid HorizontalAlignment="Right" Width="350">
                 <Grid HorizontalAlignment="Right" Margin="0,0,130,0">
                     <TextBlock Text="●"
