@@ -7,6 +7,7 @@ using ChronoPlurk.Core;
 using ChronoPlurk.Helpers;
 using ChronoPlurk.Services;
 using ChronoPlurk.ViewModels;
+using ChronoPlurk.ViewModels.Settings;
 
 namespace ChronoPlurk
 {
@@ -46,10 +47,13 @@ namespace ChronoPlurk
             builder.RegisterType(typeof(PlurkDetailHeaderViewModel)).AsSelf().SingleInstance();
             builder.RegisterType(typeof(PlurkDetailFooterViewModel)).AsSelf().SingleInstance();
             builder.RegisterType(typeof(ComposePageViewModel)).AsSelf().SingleInstance();
+            builder.RegisterType(typeof(SettingsPageViewModel)).AsSelf().SingleInstance();
 
             builder.RegisterInstance(new PlurkContentStorageService()).As(typeof(IPlurkContentStorageService)).SingleInstance();
             builder.Register(c => new ProgressService()).As(typeof(IProgressService)).SingleInstance();
             builder.RegisterType(typeof(PlurkService)).As(typeof(IPlurkService)).SingleInstance();
+
+            builder.RegisterType<SettingsOssCreditsPageViewModel>().AsSelf().InstancePerDependency();
 
             builder.RegisterType<LoginViewModel>().AsSelf().InstancePerDependency();
         }

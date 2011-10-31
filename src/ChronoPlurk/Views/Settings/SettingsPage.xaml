@@ -1,0 +1,74 @@
+﻿<phone:PhoneApplicationPage 
+    x:Class="ChronoPlurk.Views.Settings.SettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro"
+    xmlns:imgloader="clr-namespace:ChronoPlurk.Views.ImageLoader"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="{StaticResource PageOrientation}"  Orientation="Portrait"
+    shell:SystemTray.IsVisible="True">
+
+    <phone:PhoneApplicationPage.Resources>
+        <DataTemplate x:Key="FullTemplate">
+            <TextBlock Text="{Binding}" Style="{StaticResource PhoneTextLargeStyle}" Margin="12,12"/>
+        </DataTemplate>
+    </phone:PhoneApplicationPage.Resources>
+
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <controls:Pivot Title="SETTINGS">
+            <controls:PivotItem Header="accounts">
+                <Grid>
+                    <StackPanel>
+                        <TextBlock x:Name="LoginAccount" Style="{StaticResource PhoneTextLargeStyle}" />
+                        <Button x:Name="LogoutButton" Content="logout" Margin="0,20,0,0" HorizontalAlignment="Left" />
+                    </StackPanel>
+                </Grid>
+            </controls:PivotItem>
+
+            <controls:PivotItem Header="general">
+                <Grid>
+                    <StackPanel>
+                        <toolkit:ListPicker x:Name="AutoRotates"
+                                            ItemsSource="{Binding AutoRotates}"
+                                            Header="auto rotate"
+                                            FullModeHeader="auto rotate"
+                                            FullModeItemTemplate="{StaticResource FullTemplate}"
+                                            cal:Message.Attach="[Event SelectionChanged] = [Action OnAutoRotateSelectionChanged($eventArgs)]">
+                        </toolkit:ListPicker>
+                    </StackPanel>
+                </Grid>
+            </controls:PivotItem>
+
+            <controls:PivotItem Header="about">
+                <StackPanel>
+                    <TextBlock Text="ChronoPlurk" Style="{StaticResource PhoneTextTitle2Style}" />
+                    <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
+                        <TextBlock Text="Version:" Style="{StaticResource PhoneTextLargeStyle}" />
+                        <TextBlock x:Name="VersionText" Style="{StaticResource PhoneTextLargeStyle}" />
+                    </StackPanel>
+                    <Button x:Name="OssCreditsButton" Content="open source credits" Margin="0,20,0,0" HorizontalAlignment="Left" />
+                </StackPanel>
+            </controls:PivotItem>
+        </controls:Pivot>
+
+        <!-- login popup -->
+        <Popup
+               IsOpen="{Binding IsLoginPopupOpen}">
+            <ContentControl cal:View.Model="{Binding LoginViewModel}"
+                            HorizontalContentAlignment="Stretch"
+                            VerticalContentAlignment="Stretch"
+                            Width="{Binding PopupWidth}"
+                            Height="{Binding PopupHeight}" />
+        </Popup>
+    </Grid>
+</phone:PhoneApplicationPage>

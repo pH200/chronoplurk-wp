@@ -118,6 +118,7 @@
     <Compile Include="Core\AppUserInfo.cs" />
     <Compile Include="Core\AutofacPhoneBootstrapper.cs" />
     <Compile Include="Core\BindableCollectionEx.cs" />
+    <Compile Include="Core\Enums.cs" />
     <Compile Include="Core\SpecialFallback.cs" />
     <Compile Include="Core\SpecialFrameAdapter.cs" />
     <Compile Include="DefaultConfiguration.conf.cs" />
@@ -126,6 +127,7 @@
     <Compile Include="Helpers\LinqExtensions.cs" />
     <Compile Include="Core\NotifyPropertyWeaver.cs" />
     <Compile Include="Helpers\VisualTree.cs" />
+    <Compile Include="Services\AutoRotateService.cs" />
     <Compile Include="Services\INavigationInjectRedirect.cs" />
     <Compile Include="Services\NavigationExtensions.cs" />
     <Compile Include="Helpers\PlurkErrorHandling.cs" />
@@ -158,6 +160,8 @@
     <Compile Include="ViewModels\SearchRecordsViewModel.cs" />
     <Compile Include="ViewModels\SearchResultViewModel.cs" />
     <Compile Include="Helpers\TextBoxExtensions.cs" />
+    <Compile Include="ViewModels\Settings\SettingsOssCreditsPageViewModel.cs" />
+    <Compile Include="ViewModels\Settings\SettingsPageViewModel.cs" />
     <Compile Include="ViewModels\TimelineViewModel.cs" />
     <Compile Include="Views\Control\EmptyView.cs" />
     <Compile Include="Views\Control\FocusBehavior.cs" />
@@ -178,6 +182,9 @@
     </Compile>
     <Compile Include="Views\ProgressBar\ProgressView.xaml.cs">
       <DependentUpon>ProgressView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Settings\SettingsPage.xaml.cs">
+      <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -249,6 +256,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\Settings\SettingsOssCreditsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Settings\SettingsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\TimelineView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -275,6 +290,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Content Include="Resources\Avatar\default_big.jpg" />
+    <Resource Include="Resources\credit.html" />
     <Content Include="Resources\Icons\appbar.check.rest.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

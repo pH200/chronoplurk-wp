@@ -41,7 +41,7 @@ namespace ChronoPlurk.ViewModels
 
         public void SettingsAppBar()
         {
-            NavigationService.Navigate(new Uri("/Views/SettingsPage.xaml", UriKind.Relative));
+            NavigationService.Navigate(new Uri("/Views/Settings/SettingsPage.xaml", UriKind.Relative));
         }
 
         public void ProfileAppBar()
