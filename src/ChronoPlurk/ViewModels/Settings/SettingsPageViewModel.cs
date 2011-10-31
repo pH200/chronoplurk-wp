@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Controls;
 using Caliburn.Micro;
 using ChronoPlurk.Core;
@@ -13,6 +14,8 @@ namespace ChronoPlurk.ViewModels.Settings
     [NotifyForAll]
     public class SettingsPageViewModel : LoginAvailablePage
     {
+        protected SettingsService SettingsService { get; set; }
+
         protected IPlurkService PlurkService { get; set; }
 
         protected INavigationService NavigationService { get; set; }
@@ -21,14 +24,18 @@ namespace ChronoPlurk.ViewModels.Settings
 
         public IList<string> AutoRotates { get; set; }
 
+        public int AutoRotatesSelectedIndex { get; set; }
+
         public string VersionText { get; set; }
 
         public SettingsPageViewModel(
+            SettingsService settingsService,
             IPlurkService plurkService,
             INavigationService navigationService,
             LoginViewModel loginViewModel)
             : base(loginViewModel)
         {
+            SettingsService = settingsService;
             PlurkService = plurkService;
             NavigationService = navigationService;
 
@@ -38,6 +45,8 @@ namespace ChronoPlurk.ViewModels.Settings
                 "Always",
                 "Never",
             };
+            AutoRotatesSelectedIndex = SettingsService.GetCurrentAutoRotateIndex();
+
             VersionText = "1.1";
         }
 
@@ -58,12 +67,13 @@ namespace ChronoPlurk.ViewModels.Settings
             NavigationService.Navigate(new Uri("/Views/Settings/SettingsOssCreditsPage.xaml", UriKind.Relative));
         }
 
-        public void OnAutoRotateSelectionChanged(SelectionChangedEventArgs e)
+        public void OnAutoRotateSelectionChanged(FrameworkElement fe)
         {
-            var listPicker = e.OriginalSource as ListPicker;
+            var listPicker = fe as ListPicker;
             if (listPicker != null)
             {
-                
+                var mode = GetAutoRotateModeFromIndex(listPicker.SelectedIndex);
+                SettingsService.ChangeAutoRotateMode(mode, true);
             }
         }
 

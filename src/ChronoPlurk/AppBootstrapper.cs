@@ -30,6 +30,13 @@ namespace ChronoPlurk
             AddPhoneResources();
 
             AddNavigatingControl();
+
+            InitializeSettings();
+        }
+
+        private void InitializeSettings()
+        {
+            var settings = Container.Resolve<SettingsService>();
         }
 
         protected override void ConfigureContainer(ContainerBuilder builder)
@@ -49,9 +56,16 @@ namespace ChronoPlurk
             builder.RegisterType(typeof(ComposePageViewModel)).AsSelf().SingleInstance();
             builder.RegisterType(typeof(SettingsPageViewModel)).AsSelf().SingleInstance();
 
-            builder.RegisterInstance(new PlurkContentStorageService()).As(typeof(IPlurkContentStorageService)).SingleInstance();
+            #region Application Services
             builder.Register(c => new ProgressService()).As(typeof(IProgressService)).SingleInstance();
+            builder.Register(c => new AutoRotateService()).AsSelf().SingleInstance();
+            builder.RegisterType<SettingsService>().AsSelf().SingleInstance();
+            #endregion
+
+            #region Plurk Services
+            builder.RegisterInstance(new PlurkContentStorageService()).As(typeof(IPlurkContentStorageService)).SingleInstance();
             builder.RegisterType(typeof(PlurkService)).As(typeof(IPlurkService)).SingleInstance();
+            #endregion
 
             builder.RegisterType<SettingsOssCreditsPageViewModel>().AsSelf().InstancePerDependency();
 

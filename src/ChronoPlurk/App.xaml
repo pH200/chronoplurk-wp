@@ -9,8 +9,5 @@
     <!--Application Resources-->
     <Application.Resources>
         <local:AppBootstrapper x:Key="bootstrapper" />
-
-        <phone:SupportedPageOrientation x:Key="PageOrientation">Portrait</phone:SupportedPageOrientation>
-        <phone:SupportedPageOrientation x:Key="ComposePageOrientation">PortraitOrLandscape</phone:SupportedPageOrientation>
     </Application.Resources>
 </Application>

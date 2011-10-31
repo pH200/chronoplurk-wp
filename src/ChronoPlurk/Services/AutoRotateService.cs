@@ -1,12 +1,23 @@
-﻿using System.Windows;
-using ChronoPlurk.Core;
+﻿using ChronoPlurk.Core;
 using Microsoft.Phone.Controls;
 
 namespace ChronoPlurk.Services
 {
     public class AutoRotateService
     {
+        private const string PageOrientationKey = "PageOrientation";
+        private const string ComposeOrientationKey = "ComposePageOrientation";
+
         public AutoRotateMode AutoRotateMode { get; private set; }
+
+        public SupportedPageOrientation PageOrientation { get; private set; }
+        
+        public SupportedPageOrientation ComposePageOrientation { get; private set; }
+
+        public AutoRotateService()
+        {
+            SetAutoRotateMode(AutoRotateMode);
+        }
 
         public void SetAutoRotateMode(AutoRotateMode mode)
         {
@@ -15,18 +26,10 @@ namespace ChronoPlurk.Services
             SetAutoRotateModeInternal(mode);
         }
 
-        private static void SetAutoRotateModeInternal(AutoRotateMode mode)
+        private void SetAutoRotateModeInternal(AutoRotateMode mode)
         {
-            const string pageOrientationKey = "PageOrientation";
-            const string composeOrientationKey = "ComposePageOrientation";
-            var resourceDict = Application.Current.Resources;
-            if (resourceDict.Contains(pageOrientationKey) && resourceDict.Contains(composeOrientationKey))
-            {
-                var pageOrientation = ConvertPageOrientation(mode);
-                var composeOrientation = ConvertComposeOrientation(mode);
-                resourceDict[pageOrientationKey] = pageOrientation;
-                resourceDict[composeOrientationKey] = composeOrientation;
-            }
+            PageOrientation = ConvertPageOrientation(mode);
+            ComposePageOrientation = ConvertComposeOrientation(mode);
         }
 
         private static SupportedPageOrientation ConvertPageOrientation(AutoRotateMode mode)

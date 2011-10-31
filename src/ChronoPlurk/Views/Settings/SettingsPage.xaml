@@ -15,7 +15,7 @@
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
-    SupportedOrientations="{StaticResource PageOrientation}"  Orientation="Portrait"
+    Orientation="Portrait"
     shell:SystemTray.IsVisible="True">
 
     <phone:PhoneApplicationPage.Resources>
@@ -43,7 +43,8 @@
                                             Header="auto rotate"
                                             FullModeHeader="auto rotate"
                                             FullModeItemTemplate="{StaticResource FullTemplate}"
-                                            cal:Message.Attach="[Event SelectionChanged] = [Action OnAutoRotateSelectionChanged($eventArgs)]">
+                                            SelectedIndex="{Binding AutoRotatesSelectedIndex, Mode=TwoWay}"
+                                            cal:Message.Attach="[Event SelectionChanged] = [Action OnAutoRotateSelectionChanged($source)]">
                         </toolkit:ListPicker>
                     </StackPanel>
                 </Grid>

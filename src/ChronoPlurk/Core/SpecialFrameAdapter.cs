@@ -3,6 +3,7 @@ using System.Windows.Controls;
 using System.Windows.Navigation;
 using Caliburn.Micro;
 using ChronoPlurk.Services;
+using Microsoft.Phone.Controls;
 
 namespace ChronoPlurk.Core
 {
@@ -25,6 +26,37 @@ namespace ChronoPlurk.Core
             else
             {
                 base.TryInjectQueryString(viewModel, page);
+            }
+        }
+
+        protected override void OnNavigated(object sender, NavigationEventArgs e)
+        {
+            var page = e.Content as PhoneApplicationPage;
+            SetOrientationInternal(page);
+            base.OnNavigated(sender, e);
+        }
+
+        private void SetOrientationInternal(PhoneApplicationPage page)
+        {
+            if (page != null)
+            {
+                var autoRotateSerivce = IoC.Get<AutoRotateService>();
+                if (autoRotateSerivce != null)
+                {
+                    SetPageSupportedOrientation(autoRotateSerivce, page);
+                }
+            }
+        }
+
+        public static void SetPageSupportedOrientation(AutoRotateService autoRotateSerivce, PhoneApplicationPage page)
+        {
+            if (page.Name.Contains("ComposePage"))
+            {
+                page.SupportedOrientations = autoRotateSerivce.ComposePageOrientation;
+            }
+            else
+            {
+                page.SupportedOrientations = autoRotateSerivce.PageOrientation;
             }
         }
 
