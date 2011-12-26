@@ -42,6 +42,8 @@ namespace ChronoPlurk.ViewModels
 
         protected override void OnActivate()
         {
+            NavigationService.UseRemoveBackEntryFlag(); // Remove LoginPage entry.
+
             if (NewPost)
             {
                 _timeline.RefreshOnActivate = true;

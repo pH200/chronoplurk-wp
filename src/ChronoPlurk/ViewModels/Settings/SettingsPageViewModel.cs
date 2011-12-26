@@ -59,7 +59,7 @@ namespace ChronoPlurk.ViewModels.Settings
         public void LogoutButton()
         {
             PlurkService.ClearUserData();
-            ShowLoginPopup(true);
+            NavigationService.GotoLoginPage();
         }
 
         public void OssCreditsButton()

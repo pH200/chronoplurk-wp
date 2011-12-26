@@ -25,7 +25,7 @@ namespace ChronoPlurk.ViewModels
 
             if (!PlurkService.IsLoaded)
             {
-                ShowLoginPopup(true);
+                NavigationService.GotoLoginPage();
             }
         }
 

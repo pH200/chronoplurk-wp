@@ -56,6 +56,8 @@ namespace ChronoPlurk
             builder.RegisterType(typeof(ComposePageViewModel)).AsSelf().SingleInstance();
             builder.RegisterType(typeof(SettingsPageViewModel)).AsSelf().SingleInstance();
 
+            builder.RegisterType<LoginPageViewModel>().AsSelf();
+
             #region Application Services
             builder.Register(c => new ProgressService()).As(typeof(IProgressService)).SingleInstance();
             builder.Register(c => new AutoRotateService()).AsSelf().SingleInstance();

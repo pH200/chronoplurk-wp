@@ -111,7 +111,7 @@ namespace ChronoPlurk.ViewModels
             _searchResult.CancelRequest();
             if (!_plurkService.IsLoaded)
             {
-                ShowLoginPopup(false, new Uri("/Views/PlurkMainPage.xaml", UriKind.Relative));
+                _navigationService.GotoLoginPage(redirectMainPage:true);
             }
             else
             {

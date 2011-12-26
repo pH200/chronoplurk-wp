@@ -149,6 +149,7 @@
     <Compile Include="ViewModels\Core\PlurkAppBarPage.cs" />
     <Compile Include="ViewModels\Core\QualifierViewModel.cs" />
     <Compile Include="ViewModels\Core\TimelineBaseViewModel.cs" />
+    <Compile Include="ViewModels\LoginPageViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="ViewModels\PlurkDetailFooterViewModel.cs" />
@@ -182,6 +183,9 @@
     <Compile Include="Views\Control\PlurkItemControl.xaml.cs">
       <DependentUpon>PlurkItemControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\LoginPage.xaml.cs">
+      <DependentUpon>LoginPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ProgressBar\ProgressView.xaml.cs">
       <DependentUpon>ProgressView.xaml</DependentUpon>
     </Compile>
@@ -207,6 +211,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Control\TimelineControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LoginPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -298,6 +306,7 @@
     <Content Include="Resources\Icons\appbar.edit.rest.png" />
     <Content Include="Resources\Icons\appbar.refresh.rest.png" />
     <Content Include="Resources\Icons\plurk.like.png" />
+    <Content Include="Resources\Images\plurkmon.png" />
     <Content Include="SplashScreenImage.jpg" />
   </ItemGroup>
   <ItemGroup>
