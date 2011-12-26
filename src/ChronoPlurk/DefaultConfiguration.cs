@@ -1,18 +1,19 @@
-using System;
+﻿using System;
 using System.IO.IsolatedStorage;
 using ChronoPlurk.Helpers;
-using Plurto.Core;
 
 namespace ChronoPlurk
 {
-    public static class DefaultConfiguration
+    public static partial class DefaultConfiguration
     {
         /**
          * Replace these values with your own connection strings.
          */
+        public static string ApiKey = "";
 
-        public static string ApiKey =
-""; // %%omit apikey%%
+        public static string DebugUsername = "";
+
+        public static string DebugPassword = "";
 
         /// <summary>
         /// Initialize connection settings.
@@ -20,11 +21,8 @@ namespace ChronoPlurk
         public static void Initialize()
         {
 #if CLEAN_DEBUG
-            PlurkResources.Username =
-""; // %%omit username%%
-            PlurkResources.Password =
-""; // %%omit password%%
-
+            PlurkResources.Username = DebugUsername;
+            PlurkResources.Password = DebugPassword;
             // Clear settings for debugging
             try
             {

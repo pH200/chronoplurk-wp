@@ -123,6 +123,7 @@
     <Compile Include="Core\SpecialFallback.cs" />
     <Compile Include="Core\SpecialFrameAdapter.cs" />
     <Compile Include="DefaultConfiguration.conf.cs" />
+    <Compile Include="DefaultConfiguration.cs" />
     <Compile Include="Framework\PivotFix.cs" />
     <Compile Include="Helpers\IsoSettings.cs" />
     <Compile Include="Helpers\LinqExtensions.cs" />
