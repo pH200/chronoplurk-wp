@@ -120,6 +120,7 @@ namespace ChronoPlurk.Services
 
         public void ClearUserData()
         {
+            _appUserInfo = null;
             IsoSettings.ClearAll();
         }
     }

@@ -3,6 +3,7 @@ using System.Windows.Controls;
 using System.Windows.Navigation;
 using Caliburn.Micro;
 using ChronoPlurk.Services;
+using ChronoPlurk.Views;
 using Microsoft.Phone.Controls;
 
 namespace ChronoPlurk.Core
@@ -33,7 +34,16 @@ namespace ChronoPlurk.Core
         {
             var page = e.Content as PhoneApplicationPage;
             SetOrientationInternal(page);
+            ProcessMainPageBackEntryRemoval(page);
             base.OnNavigated(sender, e);
+        }
+
+        private void ProcessMainPageBackEntryRemoval(PhoneApplicationPage page)
+        {
+            if (page is MainPage)
+            {
+                this.UseRemoveAllBackEntriesFlag(page);
+            }
         }
 
         private void SetOrientationInternal(PhoneApplicationPage page)
