@@ -8,24 +8,14 @@ namespace ChronoPlurk.ViewModels.Settings
 {
     public class SettingsOssCreditsPageViewModel : Screen
     {
-        private static string HtmlString { get; set; }
-
-        public SettingsOssCreditsPageViewModel()
+        private static string GetCreditsHtmlString()
         {
-            if (HtmlString == null)
-            {
-                LoadCredtisHtmlString();
-            }
-        }
-
-        private static void LoadCredtisHtmlString()
-        {
-            var resourceStream = Application.GetResourceStream(new Uri("/ChronoPlurk;component/Resources/credit.html", UriKind.Relative));
+            var resourceStream = Application.GetResourceStream(new Uri("Resources/credit.html", UriKind.Relative));
             using (var stream = resourceStream.Stream)
             {
                 using (var streamReader = new StreamReader(stream))
                 {
-                    HtmlString = streamReader.ReadToEnd();
+                    return streamReader.ReadToEnd();
                 }
             }
         }
@@ -42,7 +32,8 @@ namespace ChronoPlurk.ViewModels.Settings
 
         private static void LoadCredits(SettingsOssCreditsPage settingsView)
         {
-            settingsView.CreditsBrowser.NavigateToString(HtmlString);
+            var html = GetCreditsHtmlString();
+            settingsView.CreditsBrowser.NavigateToString(html);
         }
     }
 }
