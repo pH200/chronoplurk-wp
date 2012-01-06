@@ -109,7 +109,7 @@ namespace ChronoPlurk.Core
                         (typeof(ItemsControl)).ApplyBinding(viewModelType, path, property, element, convention))
                     {
                         ConventionManager.ConfigureSelectedItem(element, Pivot.SelectedItemProperty, viewModelType, path);
-                        ConventionManager.ApplyHeaderTemplate(element, Pivot.HeaderTemplateProperty, viewModelType);
+                        ConventionManager.ApplyHeaderTemplate(element, Pivot.HeaderTemplateProperty, null, viewModelType);
                         return true;
                     }
                     return false;
@@ -123,7 +123,7 @@ namespace ChronoPlurk.Core
                         (typeof(ItemsControl)).ApplyBinding(viewModelType, path, property, element, convention))
                     {
                         ConventionManager.ConfigureSelectedItem(element, Panorama.SelectedItemProperty, viewModelType, path);
-                        ConventionManager.ApplyHeaderTemplate(element, Panorama.HeaderTemplateProperty, viewModelType);
+                        ConventionManager.ApplyHeaderTemplate(element, Panorama.HeaderTemplateProperty, null, viewModelType);
                         return true;
                     }
                     return false;
