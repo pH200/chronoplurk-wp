@@ -189,13 +189,13 @@ namespace ChronoPlurk.Views.ImageLoader
                                         var decoder = new GifDecoder();
                                         var extendedImage = new ExtendedImage();
                                         decoder.Decode(extendedImage, pendingCompletion.Stream);
-                                        pendingCompletion.Image.Child = new AnimatedImage() { Source = extendedImage };
+                                        pendingCompletion.Image.Child = new AnimatedImage() { Source = extendedImage, Stretch = Stretch.Uniform };
                                     }
                                     else
                                     {
                                         var bitmapImage = new BitmapImage();
                                         bitmapImage.SetSource(pendingCompletion.Stream);
-                                        pendingCompletion.Image.Child = new Image() { Source = bitmapImage };
+                                        pendingCompletion.Image.Child = new Image() { Source = bitmapImage, Stretch = Stretch.Uniform };
                                     }
                                 }
                                 catch

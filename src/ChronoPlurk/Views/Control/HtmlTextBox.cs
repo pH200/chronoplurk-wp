@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -313,23 +314,19 @@ namespace ChronoPlurk.Views.PlurkControls
                 var heightAttr = node.Attributes.FirstOrDefault(attr => attr.Name == "height");
                 if (heightAttr != null)
                 {
-                    double height;
-                    if (double.TryParse(heightAttr.Value, out height))
+                    // NOTE: Some imgs may have attributes like height="40px"
+                    var match = Regex.Match(heightAttr.Value, "[0-9]+");
+                    if (match.Success)
                     {
-                        // TODO: Fix this workaround
-                        if (EnableOrignialSizeImage && !(src.Value.Contains("statics.plurk.com/")))
+                        double height;
+                        if (double.TryParse(match.Value, out height))
                         {
-                            imageContainer.Height = height * 2;
-                        }
-                        else
-                        {
-                            imageContainer.Height = height;
+                            if (!EnableOrignialSizeImage)
+                            {
+                                imageContainer.Height = height;
+                            }
                         }
                     }
-                }
-                else
-                {
-                    imageContainer.Height = DefaultImageHeight;
                 }
                 GifLowProfileImageLoader.SetUriSource(imageContainer, new Uri(src.Value, UriKind.Absolute));
                 var container = new InlineUIContainer { Child = imageContainer };
