@@ -321,10 +321,8 @@ namespace ChronoPlurk.Views.PlurkControls
                         double height;
                         if (double.TryParse(match.Value, out height))
                         {
-                            if (!EnableOrignialSizeImage)
-                            {
-                                imageContainer.Height = height;
-                            }
+                            //TODO: Implement EnableOriginalImage
+                            imageContainer.Height = height;
                         }
                     }
                 }
