@@ -156,7 +156,7 @@ namespace ChronoPlurk.Views.PlurkControls
                         switch (childNode.NodeType)
                         {
                             case HtmlNodeType.Text:
-                                var run = new Run() { Text = childNode.InnerText };
+                                var run = new Run() { Text = HtmlDecode(childNode.InnerText) };
                                 addInlineOrQueue(run);
                                 break;
                             case HtmlNodeType.Element:
@@ -202,7 +202,7 @@ namespace ChronoPlurk.Views.PlurkControls
         {
             if (node.Node.NodeType == HtmlNodeType.Text)
             {
-                return new Run() { Text = node.Node.InnerText };
+                return new Run() { Text = HtmlDecode(node.Node.InnerText) };
             }
             else
             {
@@ -352,6 +352,11 @@ namespace ChronoPlurk.Views.PlurkControls
                 default:
                     return HtmlType.Text;
             }
+        }
+
+        private static string HtmlDecode(string value)
+        {
+            return Plurto.Converters.HtmlEntity.HtmlDecode(value);
         }
 
         private class InlineNode
