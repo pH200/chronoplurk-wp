@@ -15,6 +15,12 @@ namespace ChronoPlurk
 
         public static string DebugPassword = "";
 
+        public static TimeSpan TimeoutTimeline = TimeSpan.FromSeconds(15);
+
+        public static TimeSpan TimeoutCompose = TimeSpan.FromSeconds(20);
+
+        public static TimeSpan TimeoutUpload = TimeSpan.FromSeconds(60);
+
         /// <summary>
         /// Initialize connection settings.
         /// </summary>

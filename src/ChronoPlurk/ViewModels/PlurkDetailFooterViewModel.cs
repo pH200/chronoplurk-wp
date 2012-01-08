@@ -78,7 +78,7 @@ namespace ChronoPlurk.ViewModels
                         ResponsesCommand.ResponseAdd(GetPlurkId(), PostContent, Qualifier.FreestyleColon).
                             Client(PlurkService.Client).
                             ToObservable().
-                            Timeout(TimeSpan.FromSeconds(20)).
+                            Timeout(DefaultConfiguration.TimeoutCompose).
                             PlurkException(error => { });
 
                     _composeHandler = command.ObserveOnDispatcher().Subscribe(plurk =>

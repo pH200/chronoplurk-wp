@@ -97,7 +97,7 @@ namespace ChronoPlurk.ViewModels
                 var command =
                     TimelineCommand.PlurkAdd(PostContent, Qualifier.Qualifier).
                         Client(PlurkService.Client).ToObservable().
-                        Timeout(TimeSpan.FromSeconds(20)).
+                        Timeout(DefaultConfiguration.TimeoutCompose).
                         PlurkException(error => { });
 
                 _composeHandler = command.ObserveOnDispatcher().Subscribe(
@@ -155,7 +155,7 @@ namespace ChronoPlurk.ViewModels
                 var uploadCommand = TimelineCommand.UploadPicture(upload)
                     .Client(PlurkService.Client)
                     .ToObservable()
-                    .Timeout(TimeSpan.FromSeconds(20))
+                    .Timeout(DefaultConfiguration.TimeoutUpload)
                     .PlurkException();
 
                 _progressService.Show("Uploading Photo");

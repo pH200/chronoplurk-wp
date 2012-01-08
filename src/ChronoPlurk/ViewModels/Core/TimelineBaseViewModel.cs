@@ -173,8 +173,9 @@ namespace ChronoPlurk.ViewModels
                 Clear();
             }
 
-            _requestHandler = observable.
-                Timeout(TimeSpan.FromSeconds(15)).PlurkException(error =>
+            _requestHandler = observable
+                .Timeout(DefaultConfiguration.TimeoutTimeline)
+                .PlurkException(error =>
                 {
                     IsHasMore = tempIsHasMore;
                 }).Subscribe(plurks =>
