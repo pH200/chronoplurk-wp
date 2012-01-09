@@ -136,6 +136,7 @@
     <Compile Include="Services\NavigationExtensions.cs" />
     <Compile Include="Helpers\PlurkErrorHandling.cs" />
     <Compile Include="Services\PlurkContentStorageService.cs" />
+    <Compile Include="Services\PlurkHolderService.cs" />
     <Compile Include="Services\PlurkLocation.cs" />
     <Compile Include="Helpers\PlurkResources.cs" />
     <Compile Include="Helpers\QualifierConverter.cs" />
@@ -145,6 +146,7 @@
     <Compile Include="ViewModels\ComposePageViewModel.cs" />
     <Compile Include="ViewModels\Core\EmptyViewModel.cs" />
     <Compile Include="ViewModels\Core\IChidT.cs" />
+    <Compile Include="ViewModels\Core\IPlurkHolder.cs" />
     <Compile Include="ViewModels\Core\IRefreshSync.cs" />
     <Compile Include="ViewModels\Core\ISearchPage.cs" />
     <Compile Include="ViewModels\Core\LoginAvailablePage.cs" />

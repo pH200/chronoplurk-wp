@@ -56,7 +56,8 @@ namespace ChronoPlurk.ViewModels
             DetailHeader = plurkDetailHeaderViewModel;
             plurkDetailFooterViewModel.Parent = this;
             DetailFooter = plurkDetailFooterViewModel;
-            
+
+            DisableTimelinePlurkHolder = true;
             IgnoreSelection = true;
 
             ProgressMessage = "Loading Responses";

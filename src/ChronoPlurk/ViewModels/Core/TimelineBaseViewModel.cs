@@ -8,13 +8,15 @@ using Caliburn.Micro;
 using ChronoPlurk.Core;
 using ChronoPlurk.Services;
 using ChronoPlurk.Helpers;
+using ChronoPlurk.ViewModels.Core;
 using NotifyPropertyWeaver;
+using Plurto.Core;
 using Plurto.Entities;
 
 namespace ChronoPlurk.ViewModels
 {
     [NotifyForAll]
-    public abstract class TimelineBaseViewModel<TSource> : Screen
+    public abstract class TimelineBaseViewModel<TSource> : Screen, IPlurkHolder
         where TSource : ITimeline
     {
         #region Fields
@@ -72,6 +74,8 @@ namespace ChronoPlurk.ViewModels
 
         protected Func<TSource, IObservable<TSource>> RequestMoreHandler { get; set; }
 
+        protected bool DisableTimelinePlurkHolder { get; set; }
+
         #region ListSelectedIndex
         
         private int _listSelectedIndex = -1; // Must defualt as -1
@@ -106,6 +110,16 @@ namespace ChronoPlurk.ViewModels
             ProgressMessage = progressMessage;
 
             Items = new AdditiveBindableCollection<PlurkItemViewModel>();
+        }
+
+        protected override void OnViewLoaded(object view)
+        {
+            if (!DisableTimelinePlurkHolder)
+            {
+                var service = IoC.Get<PlurkHolderService>();
+                service.Add(this);
+            }
+            base.OnViewLoaded(view);
         }
 
         public void OnSelectionChanged(SelectionChangedEventArgs e)
@@ -299,6 +313,45 @@ namespace ChronoPlurk.ViewModels
             }
 
             return scroll;
+        }
+
+        public IEnumerable<int> PlurkIds
+        {
+            get { return Items.Select(item => item.Id); }
+        }
+
+        private void SearchAndAction(int id, Action<PlurkItemViewModel> action)
+        {
+            var item = Items.FirstOrDefault(p => id == p.Id);
+            if (item != null)
+            {
+                action(item);
+            }
+        }
+
+        public void Favorite(int id)
+        {
+            SearchAndAction(id, item => item.IsFavorite = true);
+        }
+
+        public void Unfavorite(int id)
+        {
+            SearchAndAction(id, item => item.IsFavorite = false);
+        }
+
+        public void Mute(int id)
+        {
+            SearchAndAction(id, item => item.IsUnread = UnreadStatus.Muted);
+        }
+
+        public void Unmute(int id)
+        {
+            SearchAndAction(id, item => item.IsUnread = UnreadStatus.Read);
+        }
+
+        public void SetAsRead(int id)
+        {
+            SearchAndAction(id, item => item.IsUnread = UnreadStatus.Read);
         }
     }
 }

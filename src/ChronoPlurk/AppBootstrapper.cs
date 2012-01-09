@@ -62,6 +62,7 @@ namespace ChronoPlurk
             builder.Register(c => new ProgressService()).As(typeof(IProgressService)).SingleInstance();
             builder.Register(c => new AutoRotateService()).AsSelf().SingleInstance();
             builder.RegisterType<SettingsService>().AsSelf().SingleInstance();
+            builder.Register(c => new PlurkHolderService()).AsSelf().SingleInstance();
             #endregion
 
             #region Plurk Services

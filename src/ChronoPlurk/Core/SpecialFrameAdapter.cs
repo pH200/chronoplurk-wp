@@ -3,6 +3,7 @@ using System.Windows.Controls;
 using System.Windows.Navigation;
 using Caliburn.Micro;
 using ChronoPlurk.Services;
+using ChronoPlurk.ViewModels.Core;
 using ChronoPlurk.Views;
 using Microsoft.Phone.Controls;
 
@@ -28,6 +29,20 @@ namespace ChronoPlurk.Core
             {
                 base.TryInjectQueryString(viewModel, page);
             }
+        }
+
+        protected override void OnNavigating(object sender, NavigatingCancelEventArgs e)
+        {
+            if (e.NavigationMode == NavigationMode.Back)
+            {
+                var page = CurrentContent as IPlurkHolder;
+                if (page != null)
+                {
+                    var service = IoC.Get<PlurkHolderService>();
+                    service.RemoveAll(page);
+                }
+            }
+            base.OnNavigating(sender, e);
         }
 
         protected override void OnNavigated(object sender, NavigationEventArgs e)

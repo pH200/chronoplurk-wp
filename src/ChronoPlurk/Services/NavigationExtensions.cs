@@ -67,6 +67,8 @@ namespace ChronoPlurk.Services
                         ns.RemoveBackEntry();
                     }
                 }
+                var service = IoC.Get<PlurkHolderService>();
+                service.Clear();
             }
         }
     }
