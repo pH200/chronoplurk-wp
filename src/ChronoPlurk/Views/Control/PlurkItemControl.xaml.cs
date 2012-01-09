@@ -10,34 +10,6 @@ namespace ChronoPlurk.Views.PlurkControls
         {
             // Required to initialize variables
             InitializeComponent();
-
-            MenuReply.Click += OnMenuReplyClick;
-            MenuLike.Click += OnMenuLikeClick;
-            MenuMute.Click += OnMenuMuteClick;
-        }
-
-        public event RoutedEventHandler MenuReplyClick;
-
-        protected void OnMenuReplyClick(object sender, RoutedEventArgs e)
-        {
-            RoutedEventHandler handler = MenuReplyClick;
-            if (handler != null) handler(this, e);
-        }
-
-        public event RoutedEventHandler MenuLikeClick;
-
-        public void OnMenuLikeClick(object sender, RoutedEventArgs e)
-        {
-            RoutedEventHandler handler = MenuLikeClick;
-            if (handler != null) handler(this, e);
-        }
-
-        public event RoutedEventHandler MenuMuteClick;
-
-        public void OnMenuMuteClick(object sender, RoutedEventArgs e)
-        {
-            RoutedEventHandler handler = MenuMuteClick;
-            if (handler != null) handler(this, e);
         }
 
         #region QualifierColor (DependencyProperty)
@@ -62,32 +34,6 @@ namespace ChronoPlurk.Views.PlurkControls
         protected virtual void OnQualifierColorChanged(DependencyPropertyChangedEventArgs e)
         {
             QualifierColorBrush.Color = (Color) e.NewValue;
-        }
-
-        #endregion
-
-        #region ContextMenuEnabled (DependencyProperty)
-
-        /// <summary>
-        /// Context menu availability.
-        /// </summary>
-        public bool ContextMenuEnabled
-        {
-            get { return (bool)GetValue(ContextMenuEnabledProperty); }
-            set { SetValue(ContextMenuEnabledProperty, value); }
-        }
-        public static readonly DependencyProperty ContextMenuEnabledProperty =
-            DependencyProperty.Register("ContextMenuEnabled", typeof(bool), typeof(PlurkItemControl),
-            new PropertyMetadata(true, new PropertyChangedCallback(OnContextMenuEnabledChanged)));
-
-        private static void OnContextMenuEnabledChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            ((PlurkItemControl)d).OnContextMenuEnabledChanged(e);
-        }
-
-        protected virtual void OnContextMenuEnabledChanged(DependencyPropertyChangedEventArgs e)
-        {
-            Menu.IsEnabled = (bool) e.NewValue;
         }
 
         #endregion

@@ -15,13 +15,6 @@
             <ColumnDefinition Width="65" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <controls:ContextMenuService.ContextMenu>
-            <controls:ContextMenu x:Name="Menu" Background="#FFCF682F">
-                <controls:MenuItem x:Name="MenuReply" Header="reply" IsEnabled="{Binding CanReply}" Foreground="{StaticResource PhoneForegroundBrush}" />
-                <controls:MenuItem x:Name="MenuMute" Header="{Binding MuteText}" Foreground="{StaticResource PhoneForegroundBrush}" />
-                <controls:MenuItem x:Name="MenuLike" Header="{Binding LikeText}" Foreground="{StaticResource PhoneForegroundBrush}" />
-            </controls:ContextMenu>
-        </controls:ContextMenuService.ContextMenu>
         <Border Background="{StaticResource PhoneChromeBrush}"
                 Height="45"
                 Width="45"

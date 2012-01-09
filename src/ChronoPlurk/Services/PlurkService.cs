@@ -22,6 +22,11 @@ namespace ChronoPlurk.Services
         void SaveUserData();
         bool LoadUserData();
         void ClearUserData();
+        void Favorite(int id);
+        void Unfavorite(int id);
+        void Mute(int id);
+        void Unmute(int id);
+        void SetAsRead(int id);
     }
 
     public class PlurkService : IPlurkService
@@ -122,6 +127,44 @@ namespace ChronoPlurk.Services
         {
             _appUserInfo = null;
             IsoSettings.ClearAll();
+        }
+
+        private void SimpleAction<T>(CommandBase<T> command, Action<PlurkHolderService> holderAction)
+        {
+            if (IsLoaded)
+            {
+                command.Client(Client).ToObservable().Subscribe();
+                var service = IoC.Get<PlurkHolderService>();
+                if (service != null)
+                {
+                    holderAction(service);
+                }
+            }
+        }
+
+        public void Favorite(int id)
+        {
+            SimpleAction(TimelineCommand.FavoritePlurks(id), service => service.Favorite(id));
+        }
+
+        public void Unfavorite(int id)
+        {
+            SimpleAction(TimelineCommand.UnfavoritePlurks(id), service => service.Unfavorite(id));
+        }
+
+        public void Mute(int id)
+        {
+            SimpleAction(TimelineCommand.MutePlurks(id), service => service.Mute(id));
+        }
+
+        public void Unmute(int id)
+        {
+            SimpleAction(TimelineCommand.UnmutePlurks(id), service => service.Unmute(id));
+        }
+
+        public void SetAsRead(int id)
+        {
+            SimpleAction(TimelineCommand.MarkAsRead(id), service => service.SetAsRead(id));
         }
     }
 }

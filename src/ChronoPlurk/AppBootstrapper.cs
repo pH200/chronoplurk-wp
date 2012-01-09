@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Navigation;
 using Autofac;
@@ -8,6 +9,7 @@ using ChronoPlurk.Helpers;
 using ChronoPlurk.Services;
 using ChronoPlurk.ViewModels;
 using ChronoPlurk.ViewModels.Settings;
+using Microsoft.Phone.Controls;
 
 namespace ChronoPlurk
 {
@@ -27,11 +29,18 @@ namespace ChronoPlurk
             
             base.Configure();
 
+            AddConventions();
+
             AddPhoneResources();
 
             AddNavigatingControl();
 
             InitializeSettings();
+        }
+
+        private static void AddConventions()
+        {
+            ConventionManager.AddElementConvention<MenuItem>(ItemsControl.ItemsSourceProperty, "DataContext", "Click");
         }
 
         private void InitializeSettings()

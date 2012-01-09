@@ -5,6 +5,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro"
     xmlns:pcontrols="clr-namespace:ChronoPlurk.Views.PlurkControls"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     mc:Ignorable="d"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -23,16 +24,31 @@
             <ContentControl cal:View.Model="{Binding ListHeader}"
                             HorizontalAlignment="Stretch"
                             HorizontalContentAlignment="Stretch" />
-            <ListBox ItemsSource="{Binding Items}"
+            <ListBox x:Name="Items"
+                     ItemsSource="{Binding Items}"
                      ItemContainerStyle="{StaticResource ListBoxItemStyle}"
                      ScrollViewer.VerticalScrollBarVisibility="Disabled"
                      SelectedIndex="{Binding ListSelectedIndex, Mode=TwoWay}"
                      cal:Message.Attach="[Event SelectionChanged] = [Action OnSelectionChanged($eventArgs)]">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <pcontrols:PlurkItemControl
-                            QualifierColor="{Binding QualifierColor}"
-                            ContextMenuEnabled="{Binding ContextMenuEnabled}" />
+                        <pcontrols:PlurkItemControl QualifierColor="{Binding QualifierColor}">
+                            <toolkit:ContextMenuService.ContextMenu>
+                                <toolkit:ContextMenu x:Name="Menu"
+                                                     Background="#FFCF682F"
+                                                     IsEnabled="{Binding ContextMenuEnabled}"
+                                                     cal:Action.TargetWithoutContext="{Binding DataContext, ElementName=Items}">
+                                    <toolkit:MenuItem x:Name="MenuMute"
+                                                      Header="{Binding MuteText}"
+                                                      Foreground="{StaticResource PhoneForegroundBrush}"
+                                                      cal:Message.Attach="MenuMute($dataContext)" />
+                                    <toolkit:MenuItem x:Name="MenuLike"
+                                                      Header="{Binding LikeText}"
+                                                      Foreground="{StaticResource PhoneForegroundBrush}"
+                                                      cal:Message.Attach="MenuLike($dataContext)" />
+                                </toolkit:ContextMenu>
+                            </toolkit:ContextMenuService.ContextMenu>
+                        </pcontrols:PlurkItemControl>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>

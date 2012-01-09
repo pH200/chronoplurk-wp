@@ -353,5 +353,43 @@ namespace ChronoPlurk.ViewModels
         {
             SearchAndAction(id, item => item.IsUnread = UnreadStatus.Read);
         }
+
+        #region Context Menu
+
+        public void MenuMute(object dataContext)
+        {
+            var item = dataContext as PlurkItemViewModel;
+            if (item != null)
+            {
+                var service = IoC.Get<IPlurkService>();
+                if (item.IsUnread == UnreadStatus.Muted)
+                {
+                    service.Unmute(item.Id);
+                }
+                else
+                {
+                    service.Mute(item.Id);
+                }
+            }
+        }
+
+        public void MenuLike(object dataContext)
+        {
+            var item = dataContext as PlurkItemViewModel;
+            if (item != null)
+            {
+                var service = IoC.Get<IPlurkService>();
+                if (item.IsFavorite)
+                {
+                    service.Unfavorite(item.Id);
+                }
+                else
+                {
+                    service.Favorite(item.Id);
+                }
+            }
+        }
+
+        #endregion
     }
 }
