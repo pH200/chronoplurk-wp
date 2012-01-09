@@ -5,6 +5,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:imgloader="clr-namespace:ChronoPlurk.Views.ImageLoader"
     xmlns:PlurkControls="clr-namespace:ChronoPlurk.Views.PlurkControls"
+    xmlns:cal="http://www.caliburnproject.org"
     mc:Ignorable="d"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -34,14 +35,16 @@
                        Margin="40,40,0,0"
                        HorizontalAlignment="Left"
                        VerticalAlignment="Top"
-                       CacheMode="BitmapCache" />
+                       CacheMode="BitmapCache"
+                       cal:Message.Attach="[Event Tap] = [Action OnUserTap()]" />
                 
                 <StackPanel Grid.Column="1">
                     <TextBlock Text="{Binding Username}"
                                VerticalAlignment="Top"
         		               TextWrapping="NoWrap"
                                Margin="0"
-        		               Style="{StaticResource PhoneTextTitle2Style}" />
+        		               Style="{StaticResource PhoneTextTitle2Style}"
+                               cal:Message.Attach="[Event Tap] = [Action OnUserTap()]" />
                     <Border Background="{Binding QualifierColorBrush}"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Bottom" >

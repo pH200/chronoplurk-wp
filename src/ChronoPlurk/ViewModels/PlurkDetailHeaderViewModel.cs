@@ -14,6 +14,8 @@ namespace ChronoPlurk.ViewModels
     public class PlurkDetailHeaderViewModel : Screen
     {
         private readonly IPlurkContentStorageService _plurkContentStorageService;
+        private readonly INavigationService _navigationService;
+        private readonly IPlurkService _plurkService;
 
         #region Public Properties
 
@@ -121,9 +123,14 @@ namespace ChronoPlurk.ViewModels
 
         #endregion
 
-        public PlurkDetailHeaderViewModel(IPlurkContentStorageService plurkContentStorageService)
+        public PlurkDetailHeaderViewModel(
+            IPlurkContentStorageService plurkContentStorageService,
+            INavigationService navigationService,
+            IPlurkService plurkService)
         {
             _plurkContentStorageService = plurkContentStorageService;
+            _navigationService = navigationService;
+            _plurkService = plurkService;
         }
 
         protected override void OnActivate()
@@ -136,6 +143,14 @@ namespace ChronoPlurk.ViewModels
             _plurkContentStorageService.Remove(Id);
 
             base.OnActivate();
+        }
+
+        public void OnUserTap()
+        {
+            if (_plurkService.IsLoaded)
+            {
+                _navigationService.GotoProfilePage(UserId, Username, AvatarView);
+            }
         }
     }
 }

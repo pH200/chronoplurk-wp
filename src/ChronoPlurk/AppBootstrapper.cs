@@ -8,6 +8,7 @@ using ChronoPlurk.Core;
 using ChronoPlurk.Helpers;
 using ChronoPlurk.Services;
 using ChronoPlurk.ViewModels;
+using ChronoPlurk.ViewModels.Profile;
 using ChronoPlurk.ViewModels.Settings;
 using Microsoft.Phone.Controls;
 
@@ -64,6 +65,9 @@ namespace ChronoPlurk
             builder.RegisterType(typeof(PlurkDetailFooterViewModel)).AsSelf().SingleInstance();
             builder.RegisterType(typeof(ComposePageViewModel)).AsSelf().SingleInstance();
             builder.RegisterType(typeof(SettingsPageViewModel)).AsSelf().SingleInstance();
+
+            builder.RegisterType<PlurkProfilePageViewModel>().AsSelf();
+            builder.RegisterType<ProfileTimelineViewModel>().AsSelf();
 
             builder.RegisterType<LoginPageViewModel>().AsSelf();
 

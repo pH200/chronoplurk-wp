@@ -232,7 +232,7 @@ namespace ChronoPlurk.ViewModels
             return result.Select(plurk => new PlurkItemViewModel()
             {
                 Id = plurk.Plurk.Id,
-                UserId = plurk.Plurk.UserId,
+                UserId = plurk.User.Id, // Plurk.UserId may return client's id if logged in.
                 Username = plurk.User.DisplayNameOrNickName,
                 Qualifier = plurk.Plurk.QualifierTextView(),
                 PostDate = plurk.Plurk.PostDate,

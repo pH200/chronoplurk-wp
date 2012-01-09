@@ -32,6 +32,14 @@ namespace ChronoPlurk.Services
             navigationService.Navigate(new Uri(pageUrl, UriKind.Relative));
         }
 
+        public static void GotoProfilePage(this INavigate navigationService, int userId, string username, string avatar)
+        {
+            const string pageUrl = "//Views/Profile/PlurkProfilePage.xaml";
+            var uriString = pageUrl + String.Format("?UserId={0}&Username={1}&UserAvatar={2}", userId, username, avatar);
+            var uri = new Uri(uriString, UriKind.Relative);
+            navigationService.Navigate(uri);
+        }
+
         public static void SetRemoveBackEntryFlag(this INavigationService navigationService)
         {
             RemoveBackEntryFlag = true;
