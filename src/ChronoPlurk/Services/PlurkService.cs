@@ -19,6 +19,7 @@ namespace ChronoPlurk.Services
         IEnumerable<int> FriendsId { get; set; }
         bool IsLoaded { get; }
         IObservable<bool> LoginAsnc(string username, string password);
+        void ClearUserCookie();
         void SaveUserData();
         bool LoadUserData();
         void ClearUserData();
@@ -82,6 +83,14 @@ namespace ChronoPlurk.Services
             }).Select(c => c != null);
         }
 
+        public void ClearUserCookie()
+        {
+            if (_appUserInfo != null)
+            {
+                _appUserInfo.Cookies = null;
+            }
+        }
+
         public void SaveUserData()
         {
             if (_appUserInfo != null)
@@ -133,12 +142,12 @@ namespace ChronoPlurk.Services
         {
             if (IsLoaded)
             {
-                command.Client(Client).ToObservable().Subscribe();
                 var service = IoC.Get<PlurkHolderService>();
                 if (service != null)
                 {
                     holderAction(service);
                 }
+                command.Client(Client).ToObservable().PlurkException().Subscribe();
             }
         }
 

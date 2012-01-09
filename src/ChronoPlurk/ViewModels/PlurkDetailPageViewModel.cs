@@ -5,16 +5,12 @@ using Caliburn.Micro;
 using ChronoPlurk.Services;
 using ChronoPlurk.ViewModels.Core;
 using ChronoPlurk.Views;
-using Plurto.Commands;
 using Plurto.Core;
 
 namespace ChronoPlurk.ViewModels
 {
     public class PlurkDetailPageViewModel : LoginAvailablePage, INavigationInjectionRedirect, IPlurkHolder
     {
-        private IDisposable _favorite;
-        private IDisposable _unfavorite;
-
         private IPlurkService PlurkService { get; set; }
 
         private PlurkDetailHeaderViewModel PlurkHeaderViewModel { get { return PlurkDetailViewModel.DetailHeader; } }
@@ -103,23 +99,12 @@ namespace ChronoPlurk.ViewModels
             var isLike = PlurkHeaderViewModel.IsFavorite;
             if (isLike)
             {
-                if (_unfavorite != null)
-                {
-                    _unfavorite.Dispose();
-                }
-                _unfavorite = TimelineCommand.UnfavoritePlurks(PlurkHeaderViewModel.Id).Client(PlurkService.Client).ToObservable().Subscribe();
-                PlurkHolderService.Unfavorite(PlurkHeaderViewModel.Id);
+                PlurkService.Unfavorite(PlurkHeaderViewModel.Id);
             }
             else
             {
-                if (_favorite != null)
-                {
-                    _favorite.Dispose();
-                }
-                _favorite = TimelineCommand.FavoritePlurks(PlurkHeaderViewModel.Id).Client(PlurkService.Client).ToObservable().Subscribe();
-                PlurkHolderService.Favorite(PlurkHeaderViewModel.Id);
+                PlurkService.Favorite(PlurkHeaderViewModel.Id);
             }
-            PlurkHeaderViewModel.IsFavorite = !isLike;
 
             PlurkDetailViewModel.ScrollToTop();
             ReloadAppBar();
@@ -130,16 +115,12 @@ namespace ChronoPlurk.ViewModels
             var isMute = PlurkHeaderViewModel.IsUnread == UnreadStatus.Muted;
             if (isMute)
             {
-                TimelineCommand.UnmutePlurks(PlurkHeaderViewModel.Id).Client(PlurkService.Client).ToObservable().Subscribe();
-                PlurkHolderService.Unmute(PlurkHeaderViewModel.Id);
+                PlurkService.Unmute(PlurkHeaderViewModel.Id);
             }
             else
             {
-                TimelineCommand.MutePlurks(PlurkHeaderViewModel.Id).Client(PlurkService.Client).ToObservable().Subscribe();
-                PlurkHolderService.Mute(PlurkHeaderViewModel.Id);
+                PlurkService.Mute(PlurkHeaderViewModel.Id);
             }
-            var unreadInt = (!isMute) ? (int)UnreadStatus.Muted : (int)UnreadStatus.Read;
-            PlurkHeaderViewModel.IsUnreadInt = unreadInt;
 
             ReloadAppBar();
         }

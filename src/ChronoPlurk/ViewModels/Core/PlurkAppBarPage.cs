@@ -19,16 +19,6 @@ namespace ChronoPlurk.ViewModels
             PlurkService = plurkService;
         }
 
-        protected override void OnActivate()
-        {
-            base.OnActivate();
-
-            if (!PlurkService.IsLoaded)
-            {
-                NavigationService.GotoLoginPage();
-            }
-        }
-
         public void ComposeAppBar()
         {
             NavigationService.Navigate(new Uri("/Views/ComposePage.xaml", UriKind.Relative));

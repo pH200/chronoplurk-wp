@@ -78,6 +78,16 @@ namespace ChronoPlurk.Helpers
                 {
                     onError(error);
                 }
+                if (error == PlurkError.RequiresLogin)
+                {
+                    var plurkService = IoC.Get<IPlurkService>();
+                    var navigationService = IoC.Get<INavigationService>();
+                    if (plurkService != null && navigationService != null)
+                    {
+                        plurkService.ClearUserCookie();
+                        navigationService.GotoLoginPage();
+                    }
+                }
             });
         }
 
