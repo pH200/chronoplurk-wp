@@ -52,6 +52,11 @@
                     BorderBrush="{StaticResource PlurkTextBrush}"
                     IsEnabled="{Binding IsLoginEnabled}"
                     Content="login" />
+            <HyperlinkButton NavigateUri="http://www.plurk.com/Users/showRegister"
+                             TargetName="_blank"
+                             Content="sign up"
+                             Foreground="{StaticResource PlurkTextBrush}"
+                             HorizontalAlignment="Right" />
         </StackPanel>
     </Grid>
 

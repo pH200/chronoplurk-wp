@@ -4,6 +4,7 @@ using System.Windows.Input;
 using Caliburn.Micro;
 using ChronoPlurk.Services;
 using ChronoPlurk.Views;
+using Microsoft.Phone.Tasks;
 using NotifyPropertyWeaver;
 
 namespace ChronoPlurk.ViewModels
@@ -117,6 +118,13 @@ namespace ChronoPlurk.ViewModels
             {
                 _navigationService.Navigate(new Uri("/Views/PlurkMainPage.xaml", UriKind.Relative));
             }
+        }
+
+        public void SignUp()
+        {
+            var uri = new Uri("http://www.plurk.com/Users/showRegister", UriKind.Absolute);
+            var webBrowserTask = new WebBrowserTask() { Uri = uri };
+            webBrowserTask.Show();
         }
     }
 }

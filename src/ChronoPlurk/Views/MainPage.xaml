@@ -46,11 +46,18 @@
                        Height="26" />
             </Border>
         </Grid>
-        <Button x:Name="Login" Grid.Row="2">
-            <Button.Content>
-                <TextBlock Text="{Binding LoginButtonText}" />
-            </Button.Content>
-        </Button>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.5*" />
+                <ColumnDefinition Width="0.5*" />
+            </Grid.ColumnDefinitions>
+            <Button x:Name="Login">
+                <Button.Content>
+                    <TextBlock Text="{Binding LoginButtonText}" />
+                </Button.Content>
+            </Button>
+            <Button x:Name="SignUp" Grid.Column="1" Content="sign up" />
+        </Grid>
         
         <!-- login popup -->
         <Popup Grid.RowSpan="3"
