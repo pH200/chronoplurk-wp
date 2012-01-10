@@ -13,6 +13,9 @@ namespace ChronoPlurk.ViewModels
     {
         private readonly TimelineViewModel _timeline;
         private readonly MyPlurksViewModel _myPlurksViewModel;
+        private readonly PrivatePlurksViewModel _privatePlurksViewModel;
+        private readonly RespondedPlurksViewModel _respondedPlurksViewModel;
+        private readonly LikedPlurksViewModel _likedPlurksViewModel;
 
         public string Username { get; set; }
 
@@ -25,11 +28,17 @@ namespace ChronoPlurk.ViewModels
             IPlurkService plurkService,
             LoginViewModel loginViewModel,
             TimelineViewModel timeline,
-            MyPlurksViewModel myPlurksViewModel)
+            MyPlurksViewModel myPlurksViewModel,
+            PrivatePlurksViewModel privatePlurksViewModel,
+            RespondedPlurksViewModel respondedPlurksViewModel,
+            LikedPlurksViewModel likedPlurksViewModel)
             : base(navigationService, plurkService, loginViewModel)
         {
             _timeline = timeline;
             _myPlurksViewModel = myPlurksViewModel;
+            _privatePlurksViewModel = privatePlurksViewModel;
+            _respondedPlurksViewModel = respondedPlurksViewModel;
+            _likedPlurksViewModel = likedPlurksViewModel;
         }
 
         protected override void OnInitialize()
@@ -38,6 +47,9 @@ namespace ChronoPlurk.ViewModels
 
             Items.Add(_timeline);
             Items.Add(_myPlurksViewModel);
+            Items.Add(_privatePlurksViewModel);
+            Items.Add(_respondedPlurksViewModel);
+            Items.Add(_likedPlurksViewModel);
             ActivateItem(_timeline);
         }
 

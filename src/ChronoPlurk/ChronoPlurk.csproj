@@ -157,7 +157,10 @@
     <Compile Include="ViewModels\LoginPageViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
+    <Compile Include="ViewModels\Main\LikedPlurksViewModel.cs" />
     <Compile Include="ViewModels\Main\MyPlurksViewModel.cs" />
+    <Compile Include="ViewModels\Main\PrivatePlurksViewModel.cs" />
+    <Compile Include="ViewModels\Main\RespondedPlurksViewModel.cs" />
     <Compile Include="ViewModels\Main\TimelineViewModel.cs" />
     <Compile Include="ViewModels\PlurkDetailFooterViewModel.cs" />
     <Compile Include="ViewModels\PlurkDetailHeaderViewModel.cs" />
@@ -240,7 +243,19 @@
       <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\Main\LikedPlurksView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\Main\MyPlurksView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Main\PrivatePlurksView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Main\RespondedPlurksView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

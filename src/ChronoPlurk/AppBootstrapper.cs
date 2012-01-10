@@ -58,7 +58,6 @@ namespace ChronoPlurk
             builder.RegisterType(typeof(SearchResultViewModel)).AsSelf().SingleInstance();
             builder.RegisterType(typeof(SearchRecordsViewModel)).AsSelf().SingleInstance();
             builder.RegisterType(typeof(PlurkMainPageViewModel)).AsSelf().SingleInstance();
-            builder.RegisterType(typeof(TimelineViewModel)).AsSelf().SingleInstance();
             builder.RegisterType(typeof(SearchPageViewModel)).AsSelf().SingleInstance();
             builder.RegisterType(typeof(PlurkDetailPageViewModel)).AsSelf().SingleInstance();
             builder.RegisterType(typeof(PlurkDetailViewModel)).AsSelf().SingleInstance();
@@ -66,8 +65,14 @@ namespace ChronoPlurk
             builder.RegisterType(typeof(PlurkDetailFooterViewModel)).AsSelf().SingleInstance();
             builder.RegisterType(typeof(ComposePageViewModel)).AsSelf().SingleInstance();
             builder.RegisterType(typeof(SettingsPageViewModel)).AsSelf().SingleInstance();
-
+            
+            #region Main VM
+            builder.RegisterType<TimelineViewModel>().AsSelf();
             builder.RegisterType<MyPlurksViewModel>().AsSelf();
+            builder.RegisterType<PrivatePlurksViewModel>().AsSelf();
+            builder.RegisterType<RespondedPlurksViewModel>().AsSelf();
+            builder.RegisterType<LikedPlurksViewModel>().AsSelf();
+            #endregion
 
             builder.RegisterType<PlurkProfilePageViewModel>().AsSelf();
             builder.RegisterType<ProfileTimelineViewModel>().AsSelf();
