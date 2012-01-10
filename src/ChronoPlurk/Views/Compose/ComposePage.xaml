@@ -70,6 +70,11 @@
                            HorizontalAlignment="Right"
                            Margin="0,0,15,0"
                            Foreground="{StaticResource PhoneAccentBrush}"/>
+                <toolkit:ToggleSwitch x:Name="PrivateSwitch"
+                                      Header="only my friends"
+                                      IsChecked="{Binding IsPrivateView, Mode=TwoWay}"
+                                      Visibility="{Binding LockVisibility}"
+                                      cal:Message.Attach="[Event Checked] = [Action OnPrivateChecked()];[Event Unchecked] = [Action OnPrivateUnchecked()]" />
             </StackPanel>
         </Grid>
     </Grid>
@@ -82,6 +87,9 @@
             <cal:AppBarButton IconUri="/Resources/Icons/appbar.feature.camera.rest.png"
                                   Text="photos"
                                   Message="PhotosAppBar" />
+            <cal:AppBarButton IconUri="/Resources/Icons/appbar.lock.png"
+                                  Text="private"
+                                  Message="PrivateAppBar" />
             <shell:ApplicationBar.MenuItems>
                 <cal:AppBarMenuItem Text="settings" Message="SettingsAppBar" />
             </shell:ApplicationBar.MenuItems>

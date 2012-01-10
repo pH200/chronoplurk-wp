@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using Caliburn.Micro;
 using ChronoPlurk.Services;
 using ChronoPlurk.Helpers;
+using ChronoPlurk.Views.Compose;
 using Microsoft.Phone.Tasks;
 using NotifyPropertyWeaver;
 using Plurto.Commands;
@@ -50,6 +51,10 @@ namespace ChronoPlurk.ViewModels.Compose
 
         public IList<QualifierViewModel> Qualifiers { get; private set; }
 
+        public bool IsPrivateView { get; set; }
+
+        public Visibility LockVisibility { get; set; }
+
         public ComposePageViewModel(
             IPlurkService plurkService,
             INavigationService navigationService,
@@ -63,6 +68,8 @@ namespace ChronoPlurk.ViewModels.Compose
             _progressService = progressService;
 
             _events = events;
+
+            LockVisibility = Visibility.Collapsed;
 
             Qualifiers = QualifierViewModel.AllQualifiers;
             Qualifier = QualifierViewModel.AllQualifiers.First(q => q.Qualifier == Plurto.Core.Qualifier.Says);
@@ -191,6 +198,20 @@ namespace ChronoPlurk.ViewModels.Compose
             }
         }
 
+        #region View Events
+
+        public void OnPrivateChecked()
+        {
+            
+        }
+
+        public void OnPrivateUnchecked()
+        {
+            
+        }
+
+        #endregion
+
         #region App Bar
 
         public void PlurkAppBar()
@@ -201,6 +222,16 @@ namespace ChronoPlurk.ViewModels.Compose
         public void PhotosAppBar()
         {
             InsertPhoto();
+        }
+
+        public void PrivateAppBar()
+        {
+            LockVisibility = Visibility.Visible;
+            var view = GetView() as ComposePage;
+            if (view != null)
+            {
+                view.Focus();
+            }
         }
 
         #endregion
