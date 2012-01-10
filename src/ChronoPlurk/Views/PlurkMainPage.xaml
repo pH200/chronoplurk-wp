@@ -55,6 +55,9 @@
             <cal:AppBarButton IconUri="/Resources/Icons/appbar.edit.rest.png"
                                   Text="compose"
                                   Message="ComposeAppBar" />
+            <cal:AppBarButton IconUri="/Resources/Icons/appbar.allplurks.png"
+                                  Text="all plurks"
+                                  Message="AllPlurksAppBar" />
             <cal:AppBarButton IconUri="/Resources/Icons/appbar.feature.search.rest.png"
                                   Text="search"
                                   Message="SearchAppBar" />

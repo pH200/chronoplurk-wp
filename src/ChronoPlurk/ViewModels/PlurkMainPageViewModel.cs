@@ -101,6 +101,11 @@ namespace ChronoPlurk.ViewModels
             RefreshAll();
         }
 
+        public void AllPlurksAppBar()
+        {
+            ActivateItem(_timeline);
+        }
+
         #endregion
     }
 }
