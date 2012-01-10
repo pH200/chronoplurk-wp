@@ -13,7 +13,7 @@ using NotifyPropertyWeaver;
 using Plurto.Commands;
 using Plurto.Core;
 
-namespace ChronoPlurk.ViewModels
+namespace ChronoPlurk.ViewModels.Compose
 {
     [NotifyForAll]
     public class ComposePageViewModel : LoginAvailablePage, IHandle<TaskCompleted<PhotoResult>>

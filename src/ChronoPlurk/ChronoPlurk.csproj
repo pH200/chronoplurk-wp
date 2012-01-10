@@ -143,7 +143,7 @@
     <Compile Include="Services\PlurkService.cs" />
     <Compile Include="Services\ProgressService.cs" />
     <Compile Include="Services\SettingsService.cs" />
-    <Compile Include="ViewModels\ComposePageViewModel.cs" />
+    <Compile Include="ViewModels\Compose\ComposePageViewModel.cs" />
     <Compile Include="ViewModels\Core\EmptyViewModel.cs" />
     <Compile Include="ViewModels\Core\IChidT.cs" />
     <Compile Include="ViewModels\Core\IPlurkHolder.cs" />
@@ -219,7 +219,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ComposePage.xaml">
+    <Page Include="Views\Compose\ComposePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -21,7 +21,7 @@ namespace ChronoPlurk.ViewModels
 
         public void ComposeAppBar()
         {
-            NavigationService.Navigate(new Uri("/Views/ComposePage.xaml", UriKind.Relative));
+            NavigationService.Navigate(new Uri("/Views/Compose/ComposePage.xaml", UriKind.Relative));
         }
 
         public void SearchAppBar()

@@ -8,6 +8,7 @@ using ChronoPlurk.Core;
 using ChronoPlurk.Helpers;
 using ChronoPlurk.Services;
 using ChronoPlurk.ViewModels;
+using ChronoPlurk.ViewModels.Compose;
 using ChronoPlurk.ViewModels.Main;
 using ChronoPlurk.ViewModels.Profile;
 using ChronoPlurk.ViewModels.Settings;
@@ -63,7 +64,6 @@ namespace ChronoPlurk
             builder.RegisterType(typeof(PlurkDetailViewModel)).AsSelf().SingleInstance();
             builder.RegisterType(typeof(PlurkDetailHeaderViewModel)).AsSelf().SingleInstance();
             builder.RegisterType(typeof(PlurkDetailFooterViewModel)).AsSelf().SingleInstance();
-            builder.RegisterType(typeof(ComposePageViewModel)).AsSelf().SingleInstance();
             builder.RegisterType(typeof(SettingsPageViewModel)).AsSelf().SingleInstance();
             
             #region Main VM
@@ -72,6 +72,10 @@ namespace ChronoPlurk
             builder.RegisterType<PrivatePlurksViewModel>().AsSelf();
             builder.RegisterType<RespondedPlurksViewModel>().AsSelf();
             builder.RegisterType<LikedPlurksViewModel>().AsSelf();
+            #endregion
+
+            #region Compose VM
+            builder.RegisterType<ComposePageViewModel>().AsSelf();
             #endregion
 
             builder.RegisterType<PlurkProfilePageViewModel>().AsSelf();
