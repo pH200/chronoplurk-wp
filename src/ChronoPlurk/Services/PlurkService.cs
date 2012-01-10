@@ -93,6 +93,10 @@ namespace ChronoPlurk.Services
                     UserId = profile.UserInfo.Id,
                     UserAvatar = profile.UserInfo.AvatarBig,
                 };
+                foreach (var cookie in AppUserInfo.Cookies)
+                {
+                    cookie.Expires = cookie.Expires.AddYears(20);
+                }
             }).Select(c => c != null);
         }
 
