@@ -20,16 +20,6 @@
         <ContentControl x:Name="PlurkDetailViewModel"
                         HorizontalContentAlignment="Stretch"
                         VerticalContentAlignment="Stretch" />
-
-        <!-- login popup -->
-        <Popup
-               IsOpen="{Binding IsLoginPopupOpen}">
-            <ContentControl cal:View.Model="{Binding LoginViewModel}"
-                            HorizontalContentAlignment="Stretch"
-                            VerticalContentAlignment="Stretch"
-                            Width="{Binding PopupWidth}"
-                            Height="{Binding PopupHeight}" />
-        </Popup>
     </Grid>
 
     <phone:PhoneApplicationPage.ApplicationBar>

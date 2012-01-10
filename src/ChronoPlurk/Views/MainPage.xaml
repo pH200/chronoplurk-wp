@@ -58,15 +58,5 @@
             </Button>
             <Button x:Name="SignUp" Grid.Column="1" Content="sign up" />
         </Grid>
-        
-        <!-- login popup -->
-        <Popup Grid.RowSpan="3"
-               IsOpen="{Binding IsLoginPopupOpen}">
-            <ContentControl cal:View.Model="{Binding LoginViewModel}"
-                            HorizontalContentAlignment="Stretch"
-                            VerticalContentAlignment="Stretch"
-                            Width="{Binding PopupWidth}"
-                            Height="{Binding PopupHeight}" />
-        </Popup>
     </Grid>
 </phone:PhoneApplicationPage>
