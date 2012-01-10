@@ -157,6 +157,7 @@
     <Compile Include="ViewModels\LoginPageViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
+    <Compile Include="ViewModels\Main\TimelineViewModel.cs" />
     <Compile Include="ViewModels\PlurkDetailFooterViewModel.cs" />
     <Compile Include="ViewModels\PlurkDetailHeaderViewModel.cs" />
     <Compile Include="ViewModels\PlurkDetailPageViewModel.cs" />
@@ -170,7 +171,6 @@
     <Compile Include="Helpers\TextBoxExtensions.cs" />
     <Compile Include="ViewModels\Settings\SettingsOssCreditsPageViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsPageViewModel.cs" />
-    <Compile Include="ViewModels\TimelineViewModel.cs" />
     <Compile Include="ViewModels\Profile\PlurkProfilePageViewModel.cs" />
     <Compile Include="ViewModels\Profile\ProfileTimelineViewModel.cs" />
     <Compile Include="Views\Control\EmptyView.cs" />
@@ -239,6 +239,10 @@
       <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\Main\TimelineView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\PlurkDetailFooterView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -292,10 +296,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Settings\SettingsPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\TimelineView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

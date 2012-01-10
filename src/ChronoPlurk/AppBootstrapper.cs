@@ -8,6 +8,7 @@ using ChronoPlurk.Core;
 using ChronoPlurk.Helpers;
 using ChronoPlurk.Services;
 using ChronoPlurk.ViewModels;
+using ChronoPlurk.ViewModels.Main;
 using ChronoPlurk.ViewModels.Profile;
 using ChronoPlurk.ViewModels.Settings;
 using Microsoft.Phone.Controls;

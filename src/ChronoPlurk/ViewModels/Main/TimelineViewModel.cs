@@ -5,7 +5,7 @@ using ChronoPlurk.Services;
 using Plurto.Commands;
 using Plurto.Entities;
 
-namespace ChronoPlurk.ViewModels
+namespace ChronoPlurk.ViewModels.Main
 {
     public sealed class TimelineViewModel : TimelineBaseViewModel<TimelineResult>, IRefreshSync
     {

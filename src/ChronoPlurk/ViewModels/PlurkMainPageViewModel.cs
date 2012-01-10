@@ -2,6 +2,7 @@
 using System.Linq;
 using Caliburn.Micro;
 using ChronoPlurk.Services;
+using ChronoPlurk.ViewModels.Main;
 using NotifyPropertyWeaver;
 
 namespace ChronoPlurk.ViewModels
