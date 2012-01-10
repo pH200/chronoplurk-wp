@@ -132,6 +132,7 @@
     <Compile Include="Core\NotifyPropertyWeaver.cs" />
     <Compile Include="Helpers\VisualTree.cs" />
     <Compile Include="Services\AutoRotateService.cs" />
+    <Compile Include="Services\FriendsFansCompletionService.cs" />
     <Compile Include="Services\INavigationInjectRedirect.cs" />
     <Compile Include="Services\NavigationExtensions.cs" />
     <Compile Include="Helpers\PlurkErrorHandling.cs" />
@@ -144,6 +145,7 @@
     <Compile Include="Services\ProgressService.cs" />
     <Compile Include="Services\SettingsService.cs" />
     <Compile Include="ViewModels\Compose\ComposePageViewModel.cs" />
+    <Compile Include="ViewModels\Compose\FriendsSelectionPageViewModel.cs" />
     <Compile Include="ViewModels\Core\EmptyViewModel.cs" />
     <Compile Include="ViewModels\Core\IChidT.cs" />
     <Compile Include="ViewModels\Core\IPlurkHolder.cs" />
@@ -177,6 +179,9 @@
     <Compile Include="ViewModels\Settings\SettingsPageViewModel.cs" />
     <Compile Include="ViewModels\Profile\PlurkProfilePageViewModel.cs" />
     <Compile Include="ViewModels\Profile\ProfileTimelineViewModel.cs" />
+    <Compile Include="Views\Compose\FriendsSelectionPage.xaml.cs">
+      <DependentUpon>FriendsSelectionPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Control\EmptyView.cs" />
     <Compile Include="Views\Control\FocusBehavior.cs" />
     <Compile Include="Views\Control\HtmlTextBox.cs" />
@@ -220,6 +225,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Compose\ComposePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Compose\FriendsSelectionPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -340,6 +349,8 @@
     <Content Include="Resources\Icons\appbar.allplurks.png" />
     <Content Include="Resources\Icons\appbar.lock.png" />
     <Content Include="Resources\Icons\appbar.download.rest.png" />
+    <Content Include="Resources\Icons\appbar.next.rest.png" />
+    <Content Include="Resources\Icons\appbar.stop.rest.png" />
     <Content Include="Resources\Icons\Search.png" />
     <Content Include="Resources\Images\plurkicon.png" />
     <Content Include="Resources\Avatar\default_big.jpg" />

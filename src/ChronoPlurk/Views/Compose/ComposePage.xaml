@@ -75,6 +75,31 @@
                                       IsChecked="{Binding IsPrivateView, Mode=TwoWay}"
                                       Visibility="{Binding LockVisibility}"
                                       cal:Message.Attach="[Event Checked] = [Action OnPrivateChecked()];[Event Unchecked] = [Action OnPrivateUnchecked()]" />
+                <Button x:Name="ChooseFriends"
+                        Content="choose friends"
+                        Visibility="{Binding LockVisibility}"
+                        HorizontalAlignment="Left" />
+                <ItemsControl x:Name="SelectedUsers"
+                              Opacity="{Binding SelectionOpacity}"
+                              Visibility="{Binding LockVisibility}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Background="{StaticResource PhoneForegroundBrush}"
+                                    Margin="12,0,0,0">
+                                <TextBlock Text="{Binding NickName}"
+                                           Margin="4"
+                                       Foreground="{StaticResource PhoneChromeBrush}"
+                                       FontSize="{StaticResource PhoneFontSizeNormal}"
+                                       FontFamily="{StaticResource PhoneFontFamilySemiBold}"/>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
             </StackPanel>
         </Grid>
     </Grid>

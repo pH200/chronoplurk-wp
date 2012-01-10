@@ -76,6 +76,7 @@ namespace ChronoPlurk
 
             #region Compose VM
             builder.RegisterType<ComposePageViewModel>().AsSelf();
+            builder.RegisterType<FriendsSelectionPageViewModel>().AsSelf();
             #endregion
 
             builder.RegisterType<PlurkProfilePageViewModel>().AsSelf();
@@ -88,6 +89,7 @@ namespace ChronoPlurk
             builder.Register(c => new AutoRotateService()).AsSelf().SingleInstance();
             builder.RegisterType<SettingsService>().AsSelf().SingleInstance();
             builder.Register(c => new PlurkHolderService()).AsSelf().SingleInstance();
+            builder.RegisterType<FriendsFansCompletionService>().AsSelf().SingleInstance();
             #endregion
 
             #region Plurk Services

@@ -13,6 +13,7 @@ using Microsoft.Phone.Tasks;
 using NotifyPropertyWeaver;
 using Plurto.Commands;
 using Plurto.Core;
+using Plurto.Entities;
 
 namespace ChronoPlurk.ViewModels.Compose
 {
@@ -23,6 +24,7 @@ namespace ChronoPlurk.ViewModels.Compose
         private readonly INavigationService _navigationService;
         private readonly IProgressService _progressService;
         private readonly IEventAggregator _events;
+        private readonly FriendsFansCompletionService _friendsFansCompletionService;
 
         private IDisposable _composeHandler;
         private IDisposable _uploadHandler;
@@ -55,17 +57,32 @@ namespace ChronoPlurk.ViewModels.Compose
 
         public Visibility LockVisibility { get; set; }
 
+        public BindableCollection<CompletionUser> SelectedUsers
+        {
+            get { return _friendsFansCompletionService.SelectedItems; }
+        }
+
+        public bool IsSelectionEnabled { get; set; }
+
+        [DependsOn("IsSelectionEnabled")]
+        public double SelectionOpacity
+        {
+            get { return IsSelectionEnabled ? 1.0 : 0.5; }
+        }
+
         public ComposePageViewModel(
             IPlurkService plurkService,
             INavigationService navigationService,
             IProgressService progressService,
             IEventAggregator events,
+            FriendsFansCompletionService friendsFansCompletionService,
             LoginViewModel loginViewModel)
             : base(loginViewModel)
         {
             PlurkService = plurkService;
             _navigationService = navigationService;
             _progressService = progressService;
+            _friendsFansCompletionService = friendsFansCompletionService;
 
             _events = events;
 
@@ -78,6 +95,14 @@ namespace ChronoPlurk.ViewModels.Compose
         protected override void OnActivate()
         {
             _events.Subscribe(this);
+
+            NotifyOfPropertyChange(() => SelectedUsers);
+            if (SelectedUsers.Count > 0)
+            {
+                IsPrivateView = true;
+                LockVisibility = Visibility.Visible;
+            }
+
             base.OnActivate();
         }
 
@@ -101,8 +126,21 @@ namespace ChronoPlurk.ViewModels.Compose
             {
                 _progressService.Show("Sending");
 
+                var limitedTo = null as IEnumerable<int>;
+                if (IsPrivateView)
+                {
+                    if (SelectedUsers.Count > 0)
+                    {
+                        limitedTo = SelectedUsers.Select(u => u.Id);
+                    }
+                    else
+                    {
+                        limitedTo = new int[] { 0 };
+                    }
+                }
+
                 var command =
-                    TimelineCommand.PlurkAdd(PostContent, Qualifier.Qualifier).
+                    TimelineCommand.PlurkAdd(PostContent, Qualifier.Qualifier, limitedTo).
                         Client(PlurkService.Client).ToObservable().
                         Timeout(DefaultConfiguration.TimeoutCompose).
                         PlurkException(error => { });
@@ -202,12 +240,17 @@ namespace ChronoPlurk.ViewModels.Compose
 
         public void OnPrivateChecked()
         {
-            
+            IsSelectionEnabled = true;
         }
 
         public void OnPrivateUnchecked()
         {
-            
+            IsSelectionEnabled = false;
+        }
+
+        public void ChooseFriends()
+        {
+            _navigationService.Navigate(new Uri("//Views/Compose/FriendsSelectionPage.xaml", UriKind.Relative));
         }
 
         #endregion
