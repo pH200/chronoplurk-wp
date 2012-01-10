@@ -90,9 +90,6 @@
             <cal:AppBarButton IconUri="/Resources/Icons/appbar.lock.png"
                                   Text="private"
                                   Message="PrivateAppBar" />
-            <shell:ApplicationBar.MenuItems>
-                <cal:AppBarMenuItem Text="settings" Message="SettingsAppBar" />
-            </shell:ApplicationBar.MenuItems>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
 </phone:PhoneApplicationPage>
