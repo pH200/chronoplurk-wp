@@ -17,7 +17,7 @@ namespace ChronoPlurk.ViewModels
 {
     [NotifyForAll]
     public abstract class TimelineBaseViewModel<TSource> : Screen, IPlurkHolder
-        where TSource : ITimeline
+        where TSource : class, ITimeline
     {
         #region Fields
         private IDisposable _requestHandler;
@@ -143,6 +143,7 @@ namespace ChronoPlurk.ViewModels
         public void Clear()
         {
             Items.Clear();
+            _lastResult = null;
             IsHasMore = false;
         }
 
@@ -194,8 +195,6 @@ namespace ChronoPlurk.ViewModels
                     IsHasMore = tempIsHasMore;
                 }).Subscribe(plurks =>
                 {
-                    _lastResult = plurks;
-
                     if (specialFallback != null)
                     {
                         if (specialFallback.Predicate(plurks))
@@ -205,7 +204,26 @@ namespace ChronoPlurk.ViewModels
                         }
                     }
 
+                    // Fix duplicate issue.
+                    var skipFirst = false;
+                    var duplicateState = CheckSingleDuplicatePlurk(plurks);
+                    switch (duplicateState)
+                    {
+                        case DuplicateState.FirstAndMore:
+                            skipFirst = true;
+                            break;
+                        case DuplicateState.FirstSingle:
+                            IsHasMore = false;
+                            return;
+                    }
+
+                    _lastResult = plurks;
+
                     var result = plurks.ToUserPlurks();
+                    if (skipFirst)
+                    {
+                        result = result.Skip(1);
+                    }
                     if (result.IsNullOrEmpty())
                     {
                         if (clear)
@@ -225,6 +243,43 @@ namespace ChronoPlurk.ViewModels
                         }
                     }
                 }, () => Execute.OnUIThread(() => ProgressService.Hide()));
+        }
+
+        enum DuplicateState
+        {
+            None, FirstAndMore, FirstSingle
+        }
+
+        /// <summary>
+        /// Fix duplicate plurk issue.
+        /// </summary>
+        /// <param name="plurks">Plurks from request handler.</param>
+        /// <returns>DuplicateState</returns>
+        private DuplicateState CheckSingleDuplicatePlurk(TSource plurks)
+        {
+            if (_lastResult != null)
+            {
+                var lastBottom = _lastResult.Plurks.LastOrDefault();
+                if (lastBottom != null)
+                {
+                    var currentTop = plurks.Plurks.FirstOrDefault();
+                    if (currentTop != null)
+                    {
+                        if (lastBottom.Id == currentTop.Id)
+                        {
+                            if (plurks.Plurks.Count == 1)
+                            {
+                                return DuplicateState.FirstSingle;
+                            }
+                            else
+                            {
+                                return DuplicateState.FirstAndMore;
+                            }
+                        }
+                    }
+                }
+            }
+            return DuplicateState.None;
         }
 
         private IEnumerable<PlurkItemViewModel> MapUserPlurkToPlurkItemViewModel(IEnumerable<UserPlurk> result)
