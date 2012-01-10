@@ -1,22 +1,20 @@
 ﻿using System;
 using System.Linq;
-using System.Reactive.Linq;
 using Caliburn.Micro;
 using ChronoPlurk.Services;
-using ChronoPlurk.Views;
-using ChronoPlurk.Helpers;
 using NotifyPropertyWeaver;
 
 namespace ChronoPlurk.ViewModels
 {
+    // Content may vary depending on user.
     [NotifyForAll]
     public sealed class PlurkMainPageViewModel : PlurkAppBarPage
     {
         private readonly TimelineViewModel _timeline;
-
-        private PlurkMainPage _view;
         
         public string Username { get; set; }
+
+        public string UserAvatar { get; set; }
 
         public bool NewPost { get; set; }
 
@@ -36,12 +34,22 @@ namespace ChronoPlurk.ViewModels
 
             Items.Add(_timeline);
             ActivateItem(_timeline);
-            Username = PlurkService.Username;
-            _timeline.RefreshSync();
         }
 
         protected override void OnActivate()
         {
+            if (PlurkService.IsUserChanged)
+            {
+                PlurkService.IsUserChanged = false;
+                var user = PlurkService.AppUserInfo;
+                if (user != null)
+                {
+                    Username = PlurkService.AppUserInfo.Username;
+                    UserAvatar = PlurkService.AppUserInfo.UserAvatar;
+                }
+                RefreshAll();
+            }
+
             NavigationService.UseRemoveBackEntryFlag(); // Remove LoginPage entry.
 
             if (NewPost)
@@ -53,17 +61,8 @@ namespace ChronoPlurk.ViewModels
 
             base.OnActivate();
         }
-        
-        protected override void OnViewLoaded(object view)
-        {
-            base.OnViewLoaded(view);
 
-            _view = view as PlurkMainPage;
-        }
-
-        #region AppBar
-        
-        public void RefreshAppBar()
+        private void RefreshAll()
         {
             foreach (var screen in Items.OfType<IRefreshSync>())
             {
@@ -76,6 +75,13 @@ namespace ChronoPlurk.ViewModels
                     screen.RefreshOnActivate = true;
                 }
             }
+        }
+
+        #region AppBar
+        
+        public void RefreshAppBar()
+        {
+            RefreshAll();
         }
 
         #endregion

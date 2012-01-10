@@ -16,8 +16,10 @@ namespace ChronoPlurk.Services
         IRequestClient Client { get; }
         string Username { get; }
         int UserId { get; }
+        AppUserInfo AppUserInfo { get; }
         IEnumerable<int> FriendsId { get; set; }
         bool IsLoaded { get; }
+        bool IsUserChanged { get; set; }
         IObservable<bool> LoginAsnc(string username, string password);
         void ClearUserCookie();
         void SaveUserData();
@@ -36,7 +38,7 @@ namespace ChronoPlurk.Services
 
         private readonly LegacyClient _client;
 
-        private AppUserInfo _appUserInfo;
+        public AppUserInfo AppUserInfo { get; private set; }
 
         private IDisposable _saveUserInfoDisposable;
 
@@ -44,20 +46,22 @@ namespace ChronoPlurk.Services
 
         public string Username 
         {
-            get { return (_appUserInfo == null ? null : _appUserInfo.Username); }
+            get { return (AppUserInfo == null ? null : AppUserInfo.Username); }
         }
 
         public int UserId
         {
-            get { return (_appUserInfo == null ? -1 : _appUserInfo.UserId); }
+            get { return (AppUserInfo == null ? -1 : AppUserInfo.UserId); }
         }
 
         public IEnumerable<int> FriendsId { get; set; }
 
         public bool IsLoaded
         {
-            get { return (_appUserInfo != null && _appUserInfo.IsHasCookies); }
+            get { return (AppUserInfo != null && AppUserInfo.IsHasCookies); }
         }
+
+        public bool IsUserChanged { get; set; }
 
         public PlurkService(IProgressService progressService)
         {
@@ -73,27 +77,32 @@ namespace ChronoPlurk.Services
             {
                 var cookies = profile.Cookies;
                 _client.Cookies = cookies;
-                _appUserInfo = new AppUserInfo()
+                if (Username != username)
+                {
+                    IsUserChanged = true;
+                }
+                AppUserInfo = new AppUserInfo()
                 {
                     Username = username,
                     Password = password,
                     Cookies = cookies.OfType<Cookie>().ToArray(),
                     UserId = profile.UserInfo.Id,
+                    UserAvatar = profile.UserInfo.AvatarBig,
                 };
             }).Select(c => c != null);
         }
 
         public void ClearUserCookie()
         {
-            if (_appUserInfo != null)
+            if (AppUserInfo != null)
             {
-                _appUserInfo.Cookies = null;
+                AppUserInfo.Cookies = null;
             }
         }
 
         public void SaveUserData()
         {
-            if (_appUserInfo != null)
+            if (AppUserInfo != null)
             {
                 _progressService.Show("Creating Profile");
                 if (_saveUserInfoDisposable != null)
@@ -101,7 +110,7 @@ namespace ChronoPlurk.Services
                     _saveUserInfoDisposable.Dispose();
                 }
                 _saveUserInfoDisposable =
-                    Observable.Start(() => IsoSettings.SerializeStore(_appUserInfo, "appUserInfo.bin"))
+                    Observable.Start(() => IsoSettings.SerializeStore(AppUserInfo, "appUserInfo.bin"))
                         .Subscribe(unit => { },
                                    () => Execute.OnUIThread(() => _progressService.Hide()));
             }
@@ -112,8 +121,8 @@ namespace ChronoPlurk.Services
             var appUserInfo = IsoSettings.DeserializeLoad("appUserInfo.bin") as AppUserInfo;
             if (appUserInfo != null)
             {
-                _appUserInfo = appUserInfo;
-                SetCookie(_client, _appUserInfo.Cookies);
+                AppUserInfo = appUserInfo;
+                SetCookie(_client, AppUserInfo.Cookies);
                 return true;
             }
             else
@@ -134,7 +143,7 @@ namespace ChronoPlurk.Services
 
         public void ClearUserData()
         {
-            _appUserInfo = null;
+            AppUserInfo = null;
             IsoSettings.ClearAll();
         }
 

@@ -17,5 +17,7 @@ namespace ChronoPlurk.Core
         }
 
         public int UserId { get; set; }
+
+        public string UserAvatar { get; set; }
     }
 }
