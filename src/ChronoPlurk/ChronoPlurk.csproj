@@ -157,6 +157,7 @@
     <Compile Include="ViewModels\LoginPageViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
+    <Compile Include="ViewModels\Main\MyPlurksViewModel.cs" />
     <Compile Include="ViewModels\Main\TimelineViewModel.cs" />
     <Compile Include="ViewModels\PlurkDetailFooterViewModel.cs" />
     <Compile Include="ViewModels\PlurkDetailHeaderViewModel.cs" />
@@ -237,6 +238,10 @@
     </Page>
     <Page Include="Views\Control\PlurkItemControl.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Main\MyPlurksView.xaml">
+      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Main\TimelineView.xaml">

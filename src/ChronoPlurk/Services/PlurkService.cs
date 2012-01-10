@@ -66,6 +66,10 @@ namespace ChronoPlurk.Services
         public PlurkService(IProgressService progressService)
         {
             _progressService = progressService;
+
+            // TODO: Change this when plurks caching implemented.
+            IsUserChanged = true; // Reload on startup.
+
             _client = new LegacyClient(DefaultConfiguration.ApiKey);
             LoadUserData();
         }

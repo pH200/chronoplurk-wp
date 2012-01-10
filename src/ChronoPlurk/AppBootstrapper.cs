@@ -67,6 +67,8 @@ namespace ChronoPlurk
             builder.RegisterType(typeof(ComposePageViewModel)).AsSelf().SingleInstance();
             builder.RegisterType(typeof(SettingsPageViewModel)).AsSelf().SingleInstance();
 
+            builder.RegisterType<MyPlurksViewModel>().AsSelf();
+
             builder.RegisterType<PlurkProfilePageViewModel>().AsSelf();
             builder.RegisterType<ProfileTimelineViewModel>().AsSelf();
 

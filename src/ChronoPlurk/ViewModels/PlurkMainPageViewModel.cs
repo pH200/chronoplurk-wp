@@ -12,7 +12,8 @@ namespace ChronoPlurk.ViewModels
     public sealed class PlurkMainPageViewModel : PlurkAppBarPage
     {
         private readonly TimelineViewModel _timeline;
-        
+        private readonly MyPlurksViewModel _myPlurksViewModel;
+
         public string Username { get; set; }
 
         public string UserAvatar { get; set; }
@@ -23,10 +24,12 @@ namespace ChronoPlurk.ViewModels
             INavigationService navigationService,
             IPlurkService plurkService,
             LoginViewModel loginViewModel,
-            TimelineViewModel timeline)
+            TimelineViewModel timeline,
+            MyPlurksViewModel myPlurksViewModel)
             : base(navigationService, plurkService, loginViewModel)
         {
             _timeline = timeline;
+            _myPlurksViewModel = myPlurksViewModel;
         }
 
         protected override void OnInitialize()
@@ -34,6 +37,7 @@ namespace ChronoPlurk.ViewModels
             base.OnInitialize();
 
             Items.Add(_timeline);
+            Items.Add(_myPlurksViewModel);
             ActivateItem(_timeline);
         }
 
