@@ -31,22 +31,18 @@
             </controls:Pivot.HeaderTemplate>
         </controls:Pivot>
         <Grid Margin="12,20,8,0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition Width="48" />
-            </Grid.ColumnDefinitions>
             <TextBox x:Name="SearchField"
-                     FontSize="{StaticResource PhoneFontSizeSmall}"
                      InputScope="Text"
-                     cal:Message.Attach="[Event KeyUp] = [Action SearchKey($eventArgs)]" />
-            <Border Background="{StaticResource PhoneTextBoxBrush}" Grid.Column="1" Width="48" Height="48" >
-            	<Button
-                    BorderThickness="0" BorderBrush="{x:Null}" Width="48" Height="48"
-                    cal:Message.Attach="[Event Click] = [Action Search()]">
-            		<Button.Background>
-            			<ImageBrush Stretch="None" ImageSource="/Resources/Icons/search.black.icon.png"/>
-            		</Button.Background>
-            	</Button>
+                     cal:Message.Attach="[Event KeyUp] = [Action SearchKey($eventArgs)]"/>
+            <Border HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom"
+                    Width="84"
+                    Height="72"
+                    Background="Transparent"
+                    cal:Message.Attach="[Event Tap] = [Action Search()]">
+                <Image Source="/Resources/Icons/Search.png"
+                       Width="26"
+                       Height="26" />
             </Border>
         </Grid>
     </Grid>
