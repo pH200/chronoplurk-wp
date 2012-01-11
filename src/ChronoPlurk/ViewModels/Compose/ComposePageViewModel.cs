@@ -70,6 +70,8 @@ namespace ChronoPlurk.ViewModels.Compose
             get { return IsSelectionEnabled ? 1.0 : 0.5; }
         }
 
+        public bool HasPostContentFocus { get; set; }
+
         public ComposePageViewModel(
             IPlurkService plurkService,
             INavigationService navigationService,
@@ -87,6 +89,7 @@ namespace ChronoPlurk.ViewModels.Compose
             _events = events;
 
             LockVisibility = Visibility.Collapsed;
+            HasPostContentFocus = true;
 
             Qualifiers = QualifierViewModel.AllQualifiers;
             Qualifier = QualifierViewModel.AllQualifiers.First(q => q.Qualifier == Plurto.Core.Qualifier.Says);
@@ -101,6 +104,7 @@ namespace ChronoPlurk.ViewModels.Compose
             {
                 IsPrivateView = true;
                 LockVisibility = Visibility.Visible;
+                HasPostContentFocus = false;
             }
 
             base.OnActivate();
@@ -154,6 +158,7 @@ namespace ChronoPlurk.ViewModels.Compose
                             page.NewPost = true;
                         }
                         PostContent = "";
+                        SelectedUsers.Clear();
                         _navigationService.GoBack();
                     }, () => _progressService.Hide());
             }

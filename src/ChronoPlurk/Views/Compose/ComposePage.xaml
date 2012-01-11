@@ -63,7 +63,7 @@
                          AcceptsReturn="True"
                          InputScope="Text">
                     <i:Interaction.Behaviors>
-                        <pcontrols:FocusBehavior HasInitialFocus="True" />
+                        <pcontrols:FocusBehavior HasInitialFocus="{Binding HasPostContentFocus}" />
                     </i:Interaction.Behaviors>
                 </TextBox>
                 <TextBlock x:Name="TextCountLeft"
