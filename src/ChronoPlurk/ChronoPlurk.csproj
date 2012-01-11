@@ -351,6 +351,7 @@
     <Content Include="Resources\Icons\appbar.download.rest.png" />
     <Content Include="Resources\Icons\appbar.next.rest.png" />
     <Content Include="Resources\Icons\appbar.stop.rest.png" />
+    <Content Include="Resources\Icons\icon.round.png" />
     <Content Include="Resources\Icons\Search.png" />
     <Content Include="Resources\Images\plurkicon.png" />
     <Content Include="Resources\Avatar\default_big.jpg" />

@@ -69,18 +69,8 @@
                     <ListBox x:Name="SelectedItems">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <StackPanel Height="80">
-                                    <toolkit:ContextMenuService.ContextMenu>
-                                        <toolkit:ContextMenu x:Name="Menu"
-                                                         Background="#FFCF682F"
-                                                         cal:Action.TargetWithoutContext="{Binding DataContext, ElementName=SelectedItems}">
-                                            <toolkit:MenuItem x:Name="MenuDelete"
-                                                          Header="delete"
-                                                          Foreground="{StaticResource PhoneForegroundBrush}"
-                                                          cal:Message.Attach="MenuDelete($dataContext)" />
-                                        </toolkit:ContextMenu>
-                                    </toolkit:ContextMenuService.ContextMenu>
-
+                                <StackPanel Height="80"
+                                            cal:Message.Attach="[Event Tap] = [OnSelectedItemTap($dataContext)]">
                                     <TextBlock Text="{Binding NickName}"
                                        Margin="0,8,0,-4"
                                        Foreground="{StaticResource PhoneAccentBrush}"
@@ -97,6 +87,13 @@
                         </ListBox.ItemTemplate>
                     </ListBox>
                 </Border>
+                <Rectangle Fill="{StaticResource PhoneForegroundBrush}"
+                           Height="48" Width="48"
+                           Grid.ColumnSpan="2">
+                    <Rectangle.OpacityMask>
+                        <ImageBrush ImageSource="/Resources/Icons/icon.round.png" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
                 <Rectangle Fill="{StaticResource PhoneAccentBrush}"
                            Height="48" Width="48"
                            Grid.ColumnSpan="2">
@@ -111,7 +108,7 @@
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar BackgroundColor="#FFCF682F" IsVisible="True" IsMenuEnabled="True">
             <cal:AppBarButton IconUri="/Resources/Icons/appbar.download.rest.png"
-                              Text="download friends list"
+                              Text="download"
                               Message="DownloadAppBar" />
             <cal:AppBarButton IconUri="/Resources/Icons/appbar.check.rest.png"
                               Text="complete"

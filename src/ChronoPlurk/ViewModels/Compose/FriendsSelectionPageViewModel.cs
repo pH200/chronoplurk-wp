@@ -112,7 +112,8 @@ namespace ChronoPlurk.ViewModels.Compose
 
         public void ShowHelpMessage()
         {
-            var message = "To update friends list, you have to click update button at menu bar manually";
+            var message = "Tap items on left column to select" + Environment.NewLine + Environment.NewLine +
+                          "To update friends list, you have to click download button at menu bar manually";
             MessageBox.Show(message);
         }
 
@@ -146,7 +147,7 @@ namespace ChronoPlurk.ViewModels.Compose
             }
         }
 
-        public void MenuDelete(object dataContext)
+        public void OnSelectedItemTap(object dataContext)
         {
             var item = (CompletionUser)dataContext;
             if (ResultItems != null)
@@ -177,6 +178,13 @@ namespace ChronoPlurk.ViewModels.Compose
             if (SelectedItems != null)
             {
                 SelectedItems.Clear();
+                if (ResultItems != null)
+                {
+                    foreach (var item in ResultItems)
+                    {
+                        item.IsSelected = false;
+                    }
+                }
             }
         }
 
