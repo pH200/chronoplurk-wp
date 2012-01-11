@@ -300,6 +300,7 @@ namespace ChronoPlurk.ViewModels
                 ResponseCount = plurk.Plurk.ResponseCount,
                 IsUnread = plurk.Plurk.IsUnread,
                 NoComments = plurk.Plurk.NoComments,
+                PlurkType = plurk.Plurk.PlurkType,
                 ContextMenuEnabled = PlurkService.IsLoaded,
             });
         }

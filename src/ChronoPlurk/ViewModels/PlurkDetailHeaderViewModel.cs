@@ -121,6 +121,22 @@ namespace ChronoPlurk.ViewModels
             get { return IsFavorite ? "unlike" : "like"; }
         }
 
+        public int PlurkTypeInt { get; set; }
+
+        [DependsOn("PlurkTypeInt")]
+        public PlurkType PlurkType { get { return (PlurkType)PlurkTypeInt; } }
+
+        [DependsOn("PlurkTypeInt")]
+        public Visibility IsPrivateVisibilityView
+        {
+            get
+            {
+                var isPrivate = (PlurkType == PlurkType.Private)
+                                || (PlurkType == PlurkType.PrivateResponded);
+                return isPrivate ? Visibility.Visible : Visibility.Collapsed;
+            }
+        }
+
         #endregion
 
         public PlurkDetailHeaderViewModel(

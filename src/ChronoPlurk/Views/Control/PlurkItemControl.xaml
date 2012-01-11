@@ -24,6 +24,14 @@
             <Image imgloader:LowProfileImageLoader.UriSource="{Binding AvatarView}"
                    Stretch="UniformToFill" />
         </Border>
+        <Image Source="/Resources/Icons/plurk.private.png"
+               Visibility="{Binding IsPrivateVisibilityView}"
+               Stretch="Fill"
+               Width="20" Height="20"
+               Margin="40,0,0,0"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Top"
+               CacheMode="BitmapCache" />
         <Image Source="/Resources/Icons/plurk.like.png"
                Visibility="{Binding IsFavoriteVisibilityView}"
                Stretch="Fill"

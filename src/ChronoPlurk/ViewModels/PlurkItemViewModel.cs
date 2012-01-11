@@ -75,6 +75,19 @@ namespace ChronoPlurk.ViewModels
             get { return IsUnread == UnreadStatus.Unread ? Visibility.Visible : Visibility.Collapsed; }
         }
 
+        public PlurkType PlurkType { get; set; }
+
+        [DependsOn("PlurkType")]
+        public Visibility IsPrivateVisibilityView
+        {
+            get
+            {
+                var isPrivate = (PlurkType == PlurkType.Private)
+                                || (PlurkType == PlurkType.PrivateResponded);
+                return isPrivate ? Visibility.Visible : Visibility.Collapsed;
+            }
+        }
+
         #region Context menu related properties
         public bool ContextMenuEnabled { get; set; }
 
@@ -103,6 +116,7 @@ namespace ChronoPlurk.ViewModels
         {
             get { return IsFavorite ? "unlike" : "like"; }
         }
+
         #endregion
         
         public static string ConvertTimeSpan(TimeSpan timeSpan, DateTime? postDate = null)

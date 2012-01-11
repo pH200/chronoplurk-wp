@@ -11,13 +11,14 @@ namespace ChronoPlurk.Services
             "&QualifierEnumInt={3}&Qualifier={4}" +
             "&PostDateTicks={5}&" +
             "&AvatarView={6}&NoCommentsInt={7}&IsFavorite={8}"+
-            "&ResponseCount={9}&IsUnreadInt={10}";
+            "&ResponseCount={9}&IsUnreadInt={10}" + 
+            "&PlurkTypeInt={11}";
 
         public PlurkLocation(PlurkItemViewModel item)
         {
             Parsed = String.Format(PageUri, item.Id, item.UserId, item.Username, (int)item.QualifierEnum, item.Qualifier,
                                    item.PostDate.ToLocalTime().Ticks, item.AvatarView, (int)item.NoComments, item.IsFavorite,
-                                   item.ResponseCount, (int)item.IsUnread);
+                                   item.ResponseCount, (int)item.IsUnread, (int)item.PlurkType);
         }
 
         public string Parsed { get; private set; }
