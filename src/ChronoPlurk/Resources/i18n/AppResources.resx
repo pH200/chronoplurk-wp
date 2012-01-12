@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="emptyTimeline" xml:space="preserve">
+    <value>This timeline is empty.</value>
+  </data>
   <data name="like" xml:space="preserve">
     <value>like</value>
   </data>
@@ -129,8 +132,23 @@
   <data name="loginPassword" xml:space="preserve">
     <value>Password</value>
   </data>
+  <data name="msgConnecting" xml:space="preserve">
+    <value>Connecting</value>
+  </data>
+  <data name="msgLoading" xml:space="preserve">
+    <value>Loading</value>
+  </data>
+  <data name="msgLoadingResponses" xml:space="preserve">
+    <value>Loading Responses</value>
+  </data>
   <data name="msgSearching" xml:space="preserve">
     <value>searching</value>
+  </data>
+  <data name="msgSending" xml:space="preserve">
+    <value>Sending</value>
+  </data>
+  <data name="msgUpdatingTimeline" xml:space="preserve">
+    <value>Updating Timeline</value>
   </data>
   <data name="mute" xml:space="preserve">
     <value>mute</value>
@@ -171,10 +189,16 @@
   <data name="toMainPage" xml:space="preserve">
     <value>to main page</value>
   </data>
+  <data name="tooManyCharacters" xml:space="preserve">
+    <value>Too many characters.</value>
+  </data>
   <data name="unlike" xml:space="preserve">
     <value>unlike</value>
   </data>
   <data name="unmute" xml:space="preserve">
     <value>unmute</value>
+  </data>
+  <data name="warnEmpty" xml:space="preserve">
+    <value>Write something before you plurk!</value>
   </data>
 </root>

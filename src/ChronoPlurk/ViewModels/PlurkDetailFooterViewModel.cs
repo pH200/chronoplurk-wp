@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Caliburn.Micro;
+using ChronoPlurk.Resources.i18n;
 using ChronoPlurk.Services;
 using ChronoPlurk.Helpers;
 using NotifyPropertyWeaver;
@@ -42,7 +43,7 @@ namespace ChronoPlurk.ViewModels
                 }
 
                 var count = 140 - length;
-                return count >= 0 ? count.ToString() : "Too many characters";
+                return count >= 0 ? count.ToString(AppResources.Culture) : AppResources.tooManyCharacters;
             }
         }
 
@@ -64,14 +65,14 @@ namespace ChronoPlurk.ViewModels
             }
             if (String.IsNullOrWhiteSpace(PostContent))
             {
-                MessageBox.Show("Write something before you plurk!");
+                MessageBox.Show(AppResources.warnEmpty);
             }
             else
             {
                 var plurkId = GetPlurkId();
                 if (plurkId != -1)
                 {
-                    _progressService.Show("Sending");
+                    _progressService.Show(AppResources.msgSending);
                     LeaveFocus();
 
                     var command =

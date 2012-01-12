@@ -17,10 +17,11 @@ namespace ChronoPlurk.ViewModels
             IProgressService progressService,
             IPlurkService plurkService,
             IPlurkContentStorageService plurkContentStorageService)
-            : base(navigationService, progressService, plurkService, plurkContentStorageService, AppResources.msgSearching)
+            : base(navigationService, progressService, plurkService, plurkContentStorageService)
         {
             this.DisplayName = AppResources.search;
             IsHasMoreHandler = plurks => plurks.HasMore;
+            ProgressMessage = AppResources.msgSearching;
         }
 
         protected override void OnActivate()

@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="emptyTimeline" xml:space="preserve">
+    <value>沒有任何訊息</value>
+  </data>
   <data name="like" xml:space="preserve">
     <value>讚</value>
   </data>
@@ -129,8 +132,23 @@
   <data name="loginPassword" xml:space="preserve">
     <value>密碼</value>
   </data>
+  <data name="msgConnecting" xml:space="preserve">
+    <value>連線中</value>
+  </data>
+  <data name="msgLoading" xml:space="preserve">
+    <value>讀取中</value>
+  </data>
+  <data name="msgLoadingResponses" xml:space="preserve">
+    <value>讀取回應中</value>
+  </data>
   <data name="msgSearching" xml:space="preserve">
     <value>搜尋中</value>
+  </data>
+  <data name="msgSending" xml:space="preserve">
+    <value>發噗中</value>
+  </data>
+  <data name="msgUpdatingTimeline" xml:space="preserve">
+    <value>更新河道中</value>
   </data>
   <data name="mute" xml:space="preserve">
     <value>消音</value>
@@ -171,10 +189,16 @@
   <data name="toMainPage" xml:space="preserve">
     <value>回首頁</value>
   </data>
+  <data name="tooManyCharacters" xml:space="preserve">
+    <value>字太多囉</value>
+  </data>
   <data name="unlike" xml:space="preserve">
     <value>收回讚</value>
   </data>
   <data name="unmute" xml:space="preserve">
     <value>解除消音</value>
+  </data>
+  <data name="warnEmpty" xml:space="preserve">
+    <value>發噗之前寫些內容吧！</value>
   </data>
 </root>

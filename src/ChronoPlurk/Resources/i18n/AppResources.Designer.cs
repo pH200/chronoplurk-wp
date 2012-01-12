@@ -61,6 +61,15 @@ namespace ChronoPlurk.Resources.i18n {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This timeline is empty..
+        /// </summary>
+        public static string emptyTimeline {
+            get {
+                return ResourceManager.GetString("emptyTimeline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to like.
         /// </summary>
         public static string like {
@@ -97,11 +106,56 @@ namespace ChronoPlurk.Resources.i18n {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Connecting.
+        /// </summary>
+        public static string msgConnecting {
+            get {
+                return ResourceManager.GetString("msgConnecting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loading.
+        /// </summary>
+        public static string msgLoading {
+            get {
+                return ResourceManager.GetString("msgLoading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loading Responses.
+        /// </summary>
+        public static string msgLoadingResponses {
+            get {
+                return ResourceManager.GetString("msgLoadingResponses", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to searching.
         /// </summary>
         public static string msgSearching {
             get {
                 return ResourceManager.GetString("msgSearching", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sending.
+        /// </summary>
+        public static string msgSending {
+            get {
+                return ResourceManager.GetString("msgSending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Updating Timeline.
+        /// </summary>
+        public static string msgUpdatingTimeline {
+            get {
+                return ResourceManager.GetString("msgUpdatingTimeline", resourceCulture);
             }
         }
         
@@ -223,6 +277,15 @@ namespace ChronoPlurk.Resources.i18n {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Too many characters..
+        /// </summary>
+        public static string tooManyCharacters {
+            get {
+                return ResourceManager.GetString("tooManyCharacters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to unlike.
         /// </summary>
         public static string unlike {
@@ -237,6 +300,15 @@ namespace ChronoPlurk.Resources.i18n {
         public static string unmute {
             get {
                 return ResourceManager.GetString("unmute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Write something before you plurk!.
+        /// </summary>
+        public static string warnEmpty {
+            get {
+                return ResourceManager.GetString("warnEmpty", resourceCulture);
             }
         }
     }

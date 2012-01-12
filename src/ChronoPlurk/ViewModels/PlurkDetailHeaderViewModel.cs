@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Media;
 using Caliburn.Micro;
 using ChronoPlurk.Helpers;
+using ChronoPlurk.Resources.i18n;
 using ChronoPlurk.Services;
 using NotifyPropertyWeaver;
 using Plurto.Core;
@@ -78,11 +79,11 @@ namespace ChronoPlurk.ViewModels
             {
                 if (ResponseCount == 1)
                 {
-                    return "1 response";
+                    return AppResources.responseSingle;
                 }
                 if (ResponseCount > 1)
                 {
-                    return ResponseCount + " responses";
+                    return ResponseCount + AppResources.responsesCount;
                 }
                 return string.Empty;
             }
@@ -112,13 +113,13 @@ namespace ChronoPlurk.ViewModels
         [DependsOn("IsUnread")]
         public string MuteText
         {
-            get { return IsUnread == UnreadStatus.Muted ? "unmute" : "mute"; }
+            get { return IsUnread == UnreadStatus.Muted ? AppResources.unmute : AppResources.mute; }
         }
 
         [DependsOn("IsFavorite")]
         public string LikeText
         {
-            get { return IsFavorite ? "unlike" : "like"; }
+            get { return IsFavorite ? AppResources.unlike : AppResources.like; }
         }
 
         public int PlurkTypeInt { get; set; }

@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using Caliburn.Micro;
 using ChronoPlurk.Core;
+using ChronoPlurk.Resources.i18n;
 using ChronoPlurk.Services;
 using ChronoPlurk.Helpers;
 using ChronoPlurk.ViewModels.Core;
@@ -99,15 +100,14 @@ namespace ChronoPlurk.ViewModels
             INavigationService navigationService,
             IProgressService progressService,
             IPlurkService plurkService,
-            IPlurkContentStorageService plurkContentStorageService,
-            string progressMessage = "Loading")
+            IPlurkContentStorageService plurkContentStorageService)
         {
             NavigationService = navigationService;
             ProgressService = progressService;
             PlurkService = plurkService;
             PlurkContentStorageService = plurkContentStorageService;
 
-            ProgressMessage = progressMessage;
+            ProgressMessage = AppResources.msgLoading;
 
             Items = new AdditiveBindableCollection<PlurkItemViewModel>();
         }
@@ -228,13 +228,13 @@ namespace ChronoPlurk.ViewModels
                     {
                         if (clear)
                         {
-                            Execute.OnUIThread(() => Message = "This timeline is empty.");
+                            Execute.OnUIThread(() => Message = AppResources.emptyTimeline);
                         }
                         IsHasMore = false;
                     }
                     else
                     {
-                        Execute.OnUIThread(() => ProgressService.Show("Updating Timeline"));
+                        Execute.OnUIThread(() => ProgressService.Show(AppResources.msgUpdatingTimeline));
                         Items.AddRange(MapUserPlurkToPlurkItemViewModel(result));
 
                         if (IsHasMoreHandler != null)

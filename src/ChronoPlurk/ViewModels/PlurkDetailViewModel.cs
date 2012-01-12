@@ -12,6 +12,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Caliburn.Micro;
 using ChronoPlurk.Core;
+using ChronoPlurk.Resources.i18n;
 using ChronoPlurk.Services;
 using NotifyPropertyWeaver;
 using Plurto.Commands;
@@ -60,7 +61,7 @@ namespace ChronoPlurk.ViewModels
             DisableTimelinePlurkHolder = true;
             IgnoreSelection = true;
 
-            ProgressMessage = "Loading Responses";
+            ProgressMessage = AppResources.msgLoadingResponses;
         }
 
         protected override void OnActivate()

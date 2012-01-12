@@ -2,6 +2,7 @@
 using System.Reactive.Linq;
 using System.Windows.Input;
 using Caliburn.Micro;
+using ChronoPlurk.Resources.i18n;
 using ChronoPlurk.Services;
 using ChronoPlurk.Views;
 using ChronoPlurk.Helpers;
@@ -79,7 +80,7 @@ namespace ChronoPlurk.ViewModels
                 _requestHandler.Dispose();
             }
             IsLoginEnabled = false;
-            _progressService.Show("Connecting");
+            _progressService.Show(AppResources.msgConnecting);
             _requestHandler = _plurkService.LoginAsnc(Username, Password)
                 .PlurkException(error => { }, _progressService)
                 .ObserveOnDispatcher()
