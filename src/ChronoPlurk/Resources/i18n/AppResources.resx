@@ -132,8 +132,89 @@
   <data name="emptyTimeline" xml:space="preserve">
     <value>This timeline is empty.</value>
   </data>
+  <data name="errAntiFloodSameContent" xml:space="preserve">
+    <value>You're plurking with same content too many times, try change your content.</value>
+  </data>
+  <data name="errAntiFloodTooManyNew" xml:space="preserve">
+    <value>You're plurking too many in a short time. Please try again later.</value>
+  </data>
+  <data name="errContentIsEmpty" xml:space="preserve">
+    <value>Content is empty</value>
+  </data>
+  <data name="errEmailAlreadyFound" xml:space="preserve">
+    <value>Email already found</value>
+  </data>
+  <data name="errEmailInvalid" xml:space="preserve">
+    <value>Email invalid</value>
+  </data>
+  <data name="errInternalServiceError" xml:space="preserve">
+    <value>Internal service error. Could not plurk. Try again in a minute.</value>
+  </data>
+  <data name="errInvalidData" xml:space="preserve">
+    <value>Invalid data</value>
+  </data>
+  <data name="errInvalidFile" xml:space="preserve">
+    <value>Invalid file</value>
+  </data>
+  <data name="errInvalidLogin" xml:space="preserve">
+    <value>Login failed. Invalid nickname or password.</value>
+  </data>
+  <data name="errInvalidPassword" xml:space="preserve">
+    <value>Invalid current passwords</value>
+  </data>
+  <data name="errInvalidUserId" xml:space="preserve">
+    <value>Invalid user_id</value>
+  </data>
+  <data name="errMustBeFriends" xml:space="preserve">
+    <value>Must be friends</value>
+  </data>
+  <data name="errNameTooLong" xml:space="preserve">
+    <value>Display name too long, should be less than 15 characters long</value>
+  </data>
+  <data name="errNicknameCharError" xml:space="preserve">
+    <value>Nick name can only contain letters, numbers and _</value>
+  </data>
+  <data name="errNicknameTooSmall" xml:space="preserve">
+    <value>Nick name must be at least 3 characters long</value>
+  </data>
+  <data name="errNoPermissions" xml:space="preserve">
+    <value>No permissions</value>
+  </data>
+  <data name="errNotSupportedImage" xml:space="preserve">
+    <value>Not supported image format or image too big</value>
+  </data>
   <data name="errorOccured" xml:space="preserve">
     <value>An error occured.</value>
+  </data>
+  <data name="errPasswordTooSmall" xml:space="preserve">
+    <value>Password too small</value>
+  </data>
+  <data name="errPlurkNotFound" xml:space="preserve">
+    <value>Plurk not found</value>
+  </data>
+  <data name="errPlurkOwnerNotFound" xml:space="preserve">
+    <value>Plurk owner not found</value>
+  </data>
+  <data name="errRequiresLogin" xml:space="preserve">
+    <value>Requires login to continue. Redirecting to login page.</value>
+  </data>
+  <data name="errTooManyLogins" xml:space="preserve">
+    <value>Too many logins</value>
+  </data>
+  <data name="errUnknown" xml:space="preserve">
+    <value>Unknown problems on Plurk service.</value>
+  </data>
+  <data name="errUserAlreadyBefriended" xml:space="preserve">
+    <value>User already befriended</value>
+  </data>
+  <data name="errUserAlreadyFound" xml:space="preserve">
+    <value>User already found</value>
+  </data>
+  <data name="errUserCantBefriended" xml:space="preserve">
+    <value>User can't be befriended</value>
+  </data>
+  <data name="errUserNotFound" xml:space="preserve">
+    <value>User not found</value>
   </data>
   <data name="filterLiked" xml:space="preserve">
     <value>liked</value>

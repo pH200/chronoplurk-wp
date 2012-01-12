@@ -106,11 +106,254 @@ namespace ChronoPlurk.Resources.i18n {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You&apos;re plurking with same content too many times, try change your content..
+        /// </summary>
+        public static string errAntiFloodSameContent {
+            get {
+                return ResourceManager.GetString("errAntiFloodSameContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You&apos;re plurking too many in a short time. Please try again later..
+        /// </summary>
+        public static string errAntiFloodTooManyNew {
+            get {
+                return ResourceManager.GetString("errAntiFloodTooManyNew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Content is empty.
+        /// </summary>
+        public static string errContentIsEmpty {
+            get {
+                return ResourceManager.GetString("errContentIsEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email already found.
+        /// </summary>
+        public static string errEmailAlreadyFound {
+            get {
+                return ResourceManager.GetString("errEmailAlreadyFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email invalid.
+        /// </summary>
+        public static string errEmailInvalid {
+            get {
+                return ResourceManager.GetString("errEmailInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Internal service error. Could not plurk. Try again in a minute..
+        /// </summary>
+        public static string errInternalServiceError {
+            get {
+                return ResourceManager.GetString("errInternalServiceError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid data.
+        /// </summary>
+        public static string errInvalidData {
+            get {
+                return ResourceManager.GetString("errInvalidData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid file.
+        /// </summary>
+        public static string errInvalidFile {
+            get {
+                return ResourceManager.GetString("errInvalidFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Login failed. Invalid nickname or password..
+        /// </summary>
+        public static string errInvalidLogin {
+            get {
+                return ResourceManager.GetString("errInvalidLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid current passwords.
+        /// </summary>
+        public static string errInvalidPassword {
+            get {
+                return ResourceManager.GetString("errInvalidPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid user_id.
+        /// </summary>
+        public static string errInvalidUserId {
+            get {
+                return ResourceManager.GetString("errInvalidUserId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Must be friends.
+        /// </summary>
+        public static string errMustBeFriends {
+            get {
+                return ResourceManager.GetString("errMustBeFriends", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Display name too long, should be less than 15 characters long.
+        /// </summary>
+        public static string errNameTooLong {
+            get {
+                return ResourceManager.GetString("errNameTooLong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nick name can only contain letters, numbers and _.
+        /// </summary>
+        public static string errNicknameCharError {
+            get {
+                return ResourceManager.GetString("errNicknameCharError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nick name must be at least 3 characters long.
+        /// </summary>
+        public static string errNicknameTooSmall {
+            get {
+                return ResourceManager.GetString("errNicknameTooSmall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No permissions.
+        /// </summary>
+        public static string errNoPermissions {
+            get {
+                return ResourceManager.GetString("errNoPermissions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not supported image format or image too big.
+        /// </summary>
+        public static string errNotSupportedImage {
+            get {
+                return ResourceManager.GetString("errNotSupportedImage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to An error occured..
         /// </summary>
         public static string errorOccured {
             get {
                 return ResourceManager.GetString("errorOccured", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password too small.
+        /// </summary>
+        public static string errPasswordTooSmall {
+            get {
+                return ResourceManager.GetString("errPasswordTooSmall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plurk not found.
+        /// </summary>
+        public static string errPlurkNotFound {
+            get {
+                return ResourceManager.GetString("errPlurkNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plurk owner not found.
+        /// </summary>
+        public static string errPlurkOwnerNotFound {
+            get {
+                return ResourceManager.GetString("errPlurkOwnerNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Requires login to continue. Redirecting to login page..
+        /// </summary>
+        public static string errRequiresLogin {
+            get {
+                return ResourceManager.GetString("errRequiresLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Too many logins.
+        /// </summary>
+        public static string errTooManyLogins {
+            get {
+                return ResourceManager.GetString("errTooManyLogins", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unknown problems on Plurk service..
+        /// </summary>
+        public static string errUnknown {
+            get {
+                return ResourceManager.GetString("errUnknown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User already befriended.
+        /// </summary>
+        public static string errUserAlreadyBefriended {
+            get {
+                return ResourceManager.GetString("errUserAlreadyBefriended", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User already found.
+        /// </summary>
+        public static string errUserAlreadyFound {
+            get {
+                return ResourceManager.GetString("errUserAlreadyFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User can&apos;t be befriended.
+        /// </summary>
+        public static string errUserCantBefriended {
+            get {
+                return ResourceManager.GetString("errUserCantBefriended", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User not found.
+        /// </summary>
+        public static string errUserNotFound {
+            get {
+                return ResourceManager.GetString("errUserNotFound", resourceCulture);
             }
         }
         

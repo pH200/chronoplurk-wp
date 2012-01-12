@@ -96,34 +96,60 @@ namespace ChronoPlurk.Helpers
             // TODO: Localizations.
             switch (plurkError)
             {
-                case PlurkError.EmailInvalid: return "Email invalid";
-                case PlurkError.UserAlreadyFound: return "User already found";
-                case PlurkError.EmailAlreadyFound: return "Email already found";
-                case PlurkError.PasswordTooSmall: return "Password too small";
-                case PlurkError.NicknameTooSmall: return "Nick name must be at least 3 characters long";
-                case PlurkError.NicknameCharError: return "Nick name can only contain letters, numbers and _";
-                case PlurkError.InternalServiceError: return "Internal service error. Please, try later";
-                case PlurkError.InvalidLogin: return "Invalid login";
-                case PlurkError.TooManyLogins: return "Too many logins";
-                case PlurkError.InvalidPassword: return "Invalid current password";
-                case PlurkError.NameTooLong: return "Display name too long, should be less than 15 characters long";
-                case PlurkError.RequiresLogin: return "Requires login";
-                case PlurkError.NotSupportedImage: return "Not supported image format or image too big";
-                case PlurkError.InvalidUserId: return "Invalid user_id";
-                case PlurkError.UserNotFound: return "User not found";
-                case PlurkError.PlurkOwnerNotFound: return "Plurk owner not found";
-                case PlurkError.PlurkNotFound: return "Plurk not found";
-                case PlurkError.NoPermissions: return "No permissions";
-                case PlurkError.InvalidData: return "Invalid data";
-                case PlurkError.MustBeFriends: return "Must be friends";
-                case PlurkError.ContentIsEmpty: return "Content is empty";
-                case PlurkError.AntiFloodSameContent: return "anti-flood-same-content";
-                case PlurkError.AntiFloodTooManyNew: return "anti-flood-too-many-new";
-                case PlurkError.InvalidFile: return "Invalid file";
-                case PlurkError.UserCantBefriended: return "User can't be befriended";
-                case PlurkError.UserAlreadyBefriended: return "User already befriended";
+                case PlurkError.EmailInvalid:
+                    return AppResources.errEmailInvalid;
+                case PlurkError.UserAlreadyFound:
+                    return AppResources.errUserAlreadyFound;
+                case PlurkError.EmailAlreadyFound:
+                    return AppResources.errEmailAlreadyFound;
+                case PlurkError.PasswordTooSmall:
+                    return AppResources.errPasswordTooSmall;
+                case PlurkError.NicknameTooSmall:
+                    return AppResources.errNicknameTooSmall;
+                case PlurkError.NicknameCharError:
+                    return AppResources.errNicknameCharError;
+                case PlurkError.InternalServiceError:
+                    return AppResources.errInternalServiceError;
+                case PlurkError.InvalidLogin:
+                    return AppResources.errInvalidLogin;
+                case PlurkError.TooManyLogins:
+                    return AppResources.errTooManyLogins;
+                case PlurkError.InvalidPassword:
+                    return AppResources.errInvalidPassword;
+                case PlurkError.NameTooLong:
+                    return AppResources.errNameTooLong;
+                case PlurkError.RequiresLogin:
+                    return AppResources.errRequiresLogin;
+                case PlurkError.NotSupportedImage:
+                    return AppResources.errNotSupportedImage;
+                case PlurkError.InvalidUserId:
+                    return AppResources.errInvalidUserId;
+                case PlurkError.UserNotFound:
+                    return AppResources.errUserNotFound;
+                case PlurkError.PlurkOwnerNotFound:
+                    return AppResources.errPlurkOwnerNotFound;
+                case PlurkError.PlurkNotFound:
+                    return AppResources.errPlurkNotFound;
+                case PlurkError.NoPermissions:
+                    return AppResources.errNoPermissions;
+                case PlurkError.InvalidData:
+                    return AppResources.errInvalidData;
+                case PlurkError.MustBeFriends:
+                    return AppResources.errMustBeFriends;
+                case PlurkError.ContentIsEmpty:
+                    return AppResources.errContentIsEmpty;
+                case PlurkError.AntiFloodSameContent:
+                    return AppResources.errAntiFloodSameContent;
+                case PlurkError.AntiFloodTooManyNew:
+                    return AppResources.errAntiFloodTooManyNew;
+                case PlurkError.InvalidFile:
+                    return AppResources.errInvalidFile;
+                case PlurkError.UserCantBefriended:
+                    return AppResources.errUserCantBefriended;
+                case PlurkError.UserAlreadyBefriended:
+                    return AppResources.errUserAlreadyBefriended;
             }
-            return "Unknown problems on Plurk service.";
+            return AppResources.errUnknown;
         }
     }
 }
