@@ -61,6 +61,15 @@ namespace ChronoPlurk.Resources.i18n {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to choose friends.
+        /// </summary>
+        public static string chooseFriends {
+            get {
+                return ResourceManager.GetString("chooseFriends", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This timeline is empty..
         /// </summary>
         public static string emptyTimeline {
@@ -75,6 +84,24 @@ namespace ChronoPlurk.Resources.i18n {
         public static string errorOccured {
             get {
                 return ResourceManager.GetString("errorOccured", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This is your first time using friends list.\nFriends list will download automatically..
+        /// </summary>
+        public static string friendsListFirst {
+            get {
+                return ResourceManager.GetString("friendsListFirst", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tap items on left column to select.\n\nIn order to update friends list manually, you have to click download button at the menu bar..
+        /// </summary>
+        public static string friendsListHelp {
+            get {
+                return ResourceManager.GetString("friendsListHelp", resourceCulture);
             }
         }
         
@@ -120,6 +147,15 @@ namespace ChronoPlurk.Resources.i18n {
         public static string msgConnecting {
             get {
                 return ResourceManager.GetString("msgConnecting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Downloading Friends List.
+        /// </summary>
+        public static string msgDownloadingFriendsList {
+            get {
+                return ResourceManager.GetString("msgDownloadingFriendsList", resourceCulture);
             }
         }
         
@@ -183,6 +219,15 @@ namespace ChronoPlurk.Resources.i18n {
         public static string mute {
             get {
                 return ResourceManager.GetString("mute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to only my friends.
+        /// </summary>
+        public static string onlyMyFriends {
+            get {
+                return ResourceManager.GetString("onlyMyFriends", resourceCulture);
             }
         }
         
@@ -327,6 +372,15 @@ namespace ChronoPlurk.Resources.i18n {
         public static string warnEmpty {
             get {
                 return ResourceManager.GetString("warnEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WHO CAN SEE THIS PLURK?.
+        /// </summary>
+        public static string whoCanSee {
+            get {
+                return ResourceManager.GetString("whoCanSee", resourceCulture);
             }
         }
     }

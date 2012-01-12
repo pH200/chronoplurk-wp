@@ -117,11 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="chooseFriends" xml:space="preserve">
+    <value>choose friends</value>
+  </data>
   <data name="emptyTimeline" xml:space="preserve">
     <value>This timeline is empty.</value>
   </data>
   <data name="errorOccured" xml:space="preserve">
     <value>An error occured.</value>
+  </data>
+  <data name="friendsListFirst" xml:space="preserve">
+    <value>This is your first time using friends list.\nFriends list will download automatically.</value>
+  </data>
+  <data name="friendsListHelp" xml:space="preserve">
+    <value>Tap items on left column to select.\n\nIn order to update friends list manually, you have to click download button at the menu bar.</value>
   </data>
   <data name="like" xml:space="preserve">
     <value>like</value>
@@ -137,6 +146,9 @@
   </data>
   <data name="msgConnecting" xml:space="preserve">
     <value>Connecting</value>
+  </data>
+  <data name="msgDownloadingFriendsList" xml:space="preserve">
+    <value>Downloading Friends List</value>
   </data>
   <data name="msgLoading" xml:space="preserve">
     <value>Loading</value>
@@ -158,6 +170,9 @@
   </data>
   <data name="mute" xml:space="preserve">
     <value>mute</value>
+  </data>
+  <data name="onlyMyFriends" xml:space="preserve">
+    <value>only my friends</value>
   </data>
   <data name="records" xml:space="preserve">
     <value>records</value>
@@ -206,5 +221,8 @@
   </data>
   <data name="warnEmpty" xml:space="preserve">
     <value>Write something before you plurk!</value>
+  </data>
+  <data name="whoCanSee" xml:space="preserve">
+    <value>WHO CAN SEE THIS PLURK?</value>
   </data>
 </root>

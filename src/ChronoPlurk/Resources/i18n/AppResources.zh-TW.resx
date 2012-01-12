@@ -117,11 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="chooseFriends" xml:space="preserve">
+    <value>選擇朋友</value>
+  </data>
   <data name="emptyTimeline" xml:space="preserve">
     <value>沒有任何訊息</value>
   </data>
   <data name="errorOccured" xml:space="preserve">
     <value>發生未知錯誤</value>
+  </data>
+  <data name="friendsListFirst" xml:space="preserve">
+    <value>這是您初次使用朋友列表\n列表下載將會自動開始</value>
+  </data>
+  <data name="friendsListHelp" xml:space="preserve">
+    <value>選擇朋友的方式為觸碰左欄的項目\n\n朋友列表必須手動更新，點選在選單欄的下載按鈕進行更新</value>
   </data>
   <data name="like" xml:space="preserve">
     <value>讚</value>
@@ -137,6 +146,9 @@
   </data>
   <data name="msgConnecting" xml:space="preserve">
     <value>連線中</value>
+  </data>
+  <data name="msgDownloadingFriendsList" xml:space="preserve">
+    <value>下載朋友列表中</value>
   </data>
   <data name="msgLoading" xml:space="preserve">
     <value>讀取中</value>
@@ -158,6 +170,9 @@
   </data>
   <data name="mute" xml:space="preserve">
     <value>消音</value>
+  </data>
+  <data name="onlyMyFriends" xml:space="preserve">
+    <value>只限我的朋友</value>
   </data>
   <data name="records" xml:space="preserve">
     <value>紀錄</value>
@@ -206,5 +221,8 @@
   </data>
   <data name="warnEmpty" xml:space="preserve">
     <value>發噗之前寫些內容吧！</value>
+  </data>
+  <data name="whoCanSee" xml:space="preserve">
+    <value>誰可以看到這則訊息？</value>
   </data>
 </root>

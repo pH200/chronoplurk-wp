@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Media;
 using Caliburn.Micro;
 using ChronoPlurk.Helpers;
+using ChronoPlurk.Resources.i18n;
 using ChronoPlurk.Services;
 using NotifyPropertyWeaver;
 using Plurto.Entities;
@@ -95,7 +96,7 @@ namespace ChronoPlurk.ViewModels.Compose
             {
                 _downloadDisposable.Dispose();
             }
-            ProgressService.Show("Downloading Friends List");
+            ProgressService.Show(AppResources.msgDownloadingFriendsList);
             var download = FriendsFansCompletionService.DownloadAsync();
             _downloadDisposable = download.Subscribe(
                 completion => Execute.OnUIThread(() => Search(completion, SearchTextBox)),
@@ -105,15 +106,13 @@ namespace ChronoPlurk.ViewModels.Compose
 
         public void ShowFirstTimeMessage()
         {
-            var message = "This is your first time using friends list." + Environment.NewLine +
-                          "Friends list will download automatically.";
+            var message = AppResources.friendsListFirst.Replace("\\n", Environment.NewLine);
             MessageBox.Show(message);
         }
 
         public void ShowHelpMessage()
         {
-            var message = "Tap items on left column to select" + Environment.NewLine + Environment.NewLine +
-                          "To update friends list, you have to click download button at menu bar manually";
+            var message = AppResources.friendsListHelp.Replace("\\n", Environment.NewLine);
             MessageBox.Show(message);
         }
 

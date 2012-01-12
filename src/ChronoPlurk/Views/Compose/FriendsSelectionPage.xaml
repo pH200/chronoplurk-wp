@@ -24,7 +24,7 @@
         </Grid.RowDefinitions>
         
         <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock Text="WHO CAN SEE THIS PLURK?" Style="{StaticResource PhoneTextNormalStyle}"/>
+            <TextBlock Text="{Binding Path=LocalizedResources.whoCanSee, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextNormalStyle}"/>
             <TextBox x:Name="SearchTextBox"
                      cal:Message.Attach="[Event TextChanged] = [Action OnTextChanged()]">
                 <i:Interaction.Behaviors>
