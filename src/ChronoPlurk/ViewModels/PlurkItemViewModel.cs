@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Media;
 using Caliburn.Micro;
 using ChronoPlurk.Helpers;
+using ChronoPlurk.Resources.i18n;
 using ChronoPlurk.Services;
 using NotifyPropertyWeaver;
 using Plurto.Core;
@@ -58,11 +59,11 @@ namespace ChronoPlurk.ViewModels
             {
                 if (ResponseCount == 1)
                 {
-                    return "1 response";
+                    return AppResources.responseSingle;
                 }
                 if (ResponseCount > 1)
                 {
-                    return ResponseCount + " responses";
+                    return ResponseCount + AppResources.responsesCount;
                 }
                 return string.Empty;
             }
@@ -109,12 +110,12 @@ namespace ChronoPlurk.ViewModels
 
         public string MuteText
         {
-            get { return IsUnread == UnreadStatus.Muted ? "unmute" : "mute"; }
+            get { return IsUnread == UnreadStatus.Muted ? AppResources.unmute : AppResources.mute; }
         }
 
         public string LikeText
         {
-            get { return IsFavorite ? "unlike" : "like"; }
+            get { return IsFavorite ? AppResources.unlike : AppResources.like; }
         }
 
         #endregion
@@ -123,25 +124,25 @@ namespace ChronoPlurk.ViewModels
         {
             if (timeSpan.TotalSeconds <= 1)
             {
-                return "moments ago";
+                return AppResources.timeMomentsAgo;
             }
             if (timeSpan.TotalSeconds < 120)
             {
-                return String.Format("{0} secs ago", (int)timeSpan.TotalSeconds);
+                return String.Format(AppResources.timeSecsAgo, (int)timeSpan.TotalSeconds);
             }
             if (timeSpan.TotalHours < 2)
             {
-                return String.Format("{0} mins ago", (int)timeSpan.TotalMinutes);
+                return String.Format(AppResources.timeMinsAgo, (int)timeSpan.TotalMinutes);
             }
             if (timeSpan.TotalDays < 2)
             {
-                return String.Format("{0} hours ago", (int)timeSpan.TotalHours);
+                return String.Format(AppResources.timeHoursAgo, (int)timeSpan.TotalHours);
             }
             if (postDate == null)
             {
                 postDate = DateTime.Now - timeSpan;
             }
-            return postDate.Value.ToString("MMM d");
+            return postDate.Value.ToString(AppResources.timeShort);
         }
     }
 }

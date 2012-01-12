@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="like" xml:space="preserve">
+    <value>讚</value>
+  </data>
   <data name="login" xml:space="preserve">
     <value>登入</value>
   </data>
@@ -129,8 +132,20 @@
   <data name="msgSearching" xml:space="preserve">
     <value>搜尋中</value>
   </data>
+  <data name="mute" xml:space="preserve">
+    <value>消音</value>
+  </data>
   <data name="records" xml:space="preserve">
     <value>紀錄</value>
+  </data>
+  <data name="reply" xml:space="preserve">
+    <value>回應</value>
+  </data>
+  <data name="responsesCount" xml:space="preserve">
+    <value> 則回應</value>
+  </data>
+  <data name="responseSingle" xml:space="preserve">
+    <value>1 則回應</value>
   </data>
   <data name="search" xml:space="preserve">
     <value>搜尋</value>
@@ -138,7 +153,28 @@
   <data name="signUp" xml:space="preserve">
     <value>註冊</value>
   </data>
+  <data name="timeHoursAgo" xml:space="preserve">
+    <value>{0} 小時之前</value>
+  </data>
+  <data name="timeMinsAgo" xml:space="preserve">
+    <value>{0} 分之前</value>
+  </data>
+  <data name="timeMomentsAgo" xml:space="preserve">
+    <value>不久之前</value>
+  </data>
+  <data name="timeSecsAgo" xml:space="preserve">
+    <value>{0} 秒之前</value>
+  </data>
+  <data name="timeShort" xml:space="preserve">
+    <value>MM/dd</value>
+  </data>
   <data name="toMainPage" xml:space="preserve">
     <value>回首頁</value>
+  </data>
+  <data name="unlike" xml:space="preserve">
+    <value>收回讚</value>
+  </data>
+  <data name="unmute" xml:space="preserve">
+    <value>解除消音</value>
   </data>
 </root>

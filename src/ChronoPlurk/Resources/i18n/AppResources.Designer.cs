@@ -61,6 +61,15 @@ namespace ChronoPlurk.Resources.i18n {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to like.
+        /// </summary>
+        public static string like {
+            get {
+                return ResourceManager.GetString("like", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to login.
         /// </summary>
         public static string login {
@@ -97,11 +106,47 @@ namespace ChronoPlurk.Resources.i18n {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to mute.
+        /// </summary>
+        public static string mute {
+            get {
+                return ResourceManager.GetString("mute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to records.
         /// </summary>
         public static string records {
             get {
                 return ResourceManager.GetString("records", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to reply.
+        /// </summary>
+        public static string reply {
+            get {
+                return ResourceManager.GetString("reply", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  responses.
+        /// </summary>
+        public static string responsesCount {
+            get {
+                return ResourceManager.GetString("responsesCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1 response.
+        /// </summary>
+        public static string responseSingle {
+            get {
+                return ResourceManager.GetString("responseSingle", resourceCulture);
             }
         }
         
@@ -124,11 +169,74 @@ namespace ChronoPlurk.Resources.i18n {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} hours ago.
+        /// </summary>
+        public static string timeHoursAgo {
+            get {
+                return ResourceManager.GetString("timeHoursAgo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} mins ago.
+        /// </summary>
+        public static string timeMinsAgo {
+            get {
+                return ResourceManager.GetString("timeMinsAgo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to moments ago.
+        /// </summary>
+        public static string timeMomentsAgo {
+            get {
+                return ResourceManager.GetString("timeMomentsAgo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} secs ago.
+        /// </summary>
+        public static string timeSecsAgo {
+            get {
+                return ResourceManager.GetString("timeSecsAgo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MMM dd.
+        /// </summary>
+        public static string timeShort {
+            get {
+                return ResourceManager.GetString("timeShort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to to main page.
         /// </summary>
         public static string toMainPage {
             get {
                 return ResourceManager.GetString("toMainPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to unlike.
+        /// </summary>
+        public static string unlike {
+            get {
+                return ResourceManager.GetString("unlike", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to unmute.
+        /// </summary>
+        public static string unmute {
+            get {
+                return ResourceManager.GetString("unmute", resourceCulture);
             }
         }
     }

@@ -14,7 +14,7 @@
     <Grid Background="Transparent">
         <StackPanel Margin="10,0,10,0">
             <Grid>
-                <TextBlock Margin="12,0,0,0" Text="reply" />
+                <TextBlock Margin="12,0,0,0" Text="{Binding Path=LocalizedResources.reply, Source={StaticResource LocalizedStrings}}" />
                 <TextBlock x:Name="TextCountLeft"
                        HorizontalAlignment="Right"
                        Margin="0,0,15,0"
@@ -30,7 +30,7 @@
                     <pcontrols:FocusBehavior x:Name="ResponseFocus" />
                 </i:Interaction.Behaviors>
             </TextBox>
-            <Button x:Name="Reply" Content="reply" Margin="0,0,0,8" />
+            <Button x:Name="Reply" Content="{Binding Path=LocalizedResources.reply, Source={StaticResource LocalizedStrings}}" Margin="0,0,0,8" />
         </StackPanel>
     </Grid>
 </UserControl>
