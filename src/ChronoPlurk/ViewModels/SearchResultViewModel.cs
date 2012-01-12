@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Caliburn.Micro;
+using ChronoPlurk.Resources.i18n;
 using ChronoPlurk.Services;
 using Plurto.Commands;
 using Plurto.Entities;
@@ -16,9 +17,9 @@ namespace ChronoPlurk.ViewModels
             IProgressService progressService,
             IPlurkService plurkService,
             IPlurkContentStorageService plurkContentStorageService)
-            : base(navigationService, progressService, plurkService, plurkContentStorageService, "Searching")
+            : base(navigationService, progressService, plurkService, plurkContentStorageService, AppResources.msgSearching)
         {
-            this.DisplayName = "search";
+            this.DisplayName = AppResources.search;
             IsHasMoreHandler = plurks => plurks.HasMore;
         }
 

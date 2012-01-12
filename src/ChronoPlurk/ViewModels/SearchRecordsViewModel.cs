@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows.Controls;
 using Caliburn.Micro;
 using ChronoPlurk.Helpers;
+using ChronoPlurk.Resources.i18n;
 
 namespace ChronoPlurk.ViewModels
 {
@@ -31,7 +32,7 @@ namespace ChronoPlurk.ViewModels
         {
             Items = new ObservableCollection<SearchRecord>();
 
-            this.DisplayName = "records";
+            this.DisplayName = AppResources.records;
         }
 
         protected override void OnInitialize()

@@ -56,7 +56,7 @@
                     <TextBlock Text="{Binding LoginButtonText}" />
                 </Button.Content>
             </Button>
-            <Button x:Name="SignUp" Grid.Column="1" Content="sign up" />
+            <Button x:Name="SignUp" Grid.Column="1" Content="{Binding Path=LocalizedResources.signUp, Source={StaticResource LocalizedStrings}}" />
         </Grid>
     </Grid>
 </phone:PhoneApplicationPage>

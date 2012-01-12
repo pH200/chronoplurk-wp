@@ -34,13 +34,13 @@
                        Foreground="{StaticResource PlurkOrange}"
                        Style="{StaticResource PhoneTextTitle2Style}" />
             <TextBlock Margin="12,0,0,0"
-                       Text="Nickname or email"
+                       Text="{Binding Path=LocalizedResources.loginNicknameOrEmail, Source={StaticResource LocalizedStrings}}"
                        Foreground="{StaticResource PlurkTextBrush}" />
             <TextBox x:Name="Username" Height="72"
                      InputScope="EmailUserName"
                      cal:Message.Attach="[Event KeyUp] = [Action UsernameKey($eventArgs)]" />
             <TextBlock Margin="12,0,0,0"
-                       Text="Password"
+                       Text="{Binding Path=LocalizedResources.loginPassword, Source={StaticResource LocalizedStrings}}"
                        Foreground="{StaticResource PlurkTextBrush}" />
             <PasswordBox x:Name="Password" Height="72"
                          cal:Message.Attach="[Event KeyUp] = [Action PasswordKey($eventArgs)]" />
@@ -51,10 +51,10 @@
                     Foreground="{StaticResource PlurkTextBrush}"
                     BorderBrush="{StaticResource PlurkTextBrush}"
                     IsEnabled="{Binding IsLoginEnabled}"
-                    Content="login" />
+                    Content="{Binding Path=LocalizedResources.login, Source={StaticResource LocalizedStrings}}" />
             <HyperlinkButton NavigateUri="http://www.plurk.com/Users/showRegister"
                              TargetName="_blank"
-                             Content="sign up"
+                             Content="{Binding Path=LocalizedResources.signUp, Source={StaticResource LocalizedStrings}}"
                              Foreground="{StaticResource PlurkTextBrush}"
                              HorizontalAlignment="Right" />
         </StackPanel>

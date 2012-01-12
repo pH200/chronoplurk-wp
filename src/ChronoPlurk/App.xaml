@@ -8,6 +8,7 @@
 
     <!--Application Resources-->
     <Application.Resources>
+        <r:LocalizedStrings xmlns:r="clr-namespace:ChronoPlurk" x:Key="LocalizedStrings" />
         <local:AppBootstrapper x:Key="bootstrapper" />
     </Application.Resources>
 </Application>

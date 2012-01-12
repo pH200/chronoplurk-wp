@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Windows.Input;
 using Caliburn.Micro;
+using ChronoPlurk.Resources.i18n;
 using ChronoPlurk.Services;
 using ChronoPlurk.Views;
 using Microsoft.Phone.Tasks;
@@ -70,7 +71,7 @@ namespace ChronoPlurk.ViewModels
 
         private void SetupLoginButton()
         {
-            LoginButtonText = _plurkService.IsLoaded ? "to main page" : "login";
+            LoginButtonText = _plurkService.IsLoaded ? AppResources.toMainPage : AppResources.login;
         }
 
         public void Search()
