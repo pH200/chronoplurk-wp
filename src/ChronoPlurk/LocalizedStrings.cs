@@ -1,4 +1,6 @@
-﻿using ChronoPlurk.Resources.i18n;
+﻿using System.Globalization;
+using System.Threading;
+using ChronoPlurk.Resources.i18n;
 
 namespace ChronoPlurk
 {
@@ -7,6 +9,16 @@ namespace ChronoPlurk
         public LocalizedStrings()
         {
         }
+
+        static LocalizedStrings()
+        {
+            Culture = Thread.CurrentThread.CurrentCulture;
+            UICulture = Thread.CurrentThread.CurrentUICulture;
+        }
+
+        public static CultureInfo Culture { get; set; }
+
+        public static CultureInfo UICulture { get; set; }
 
         private static AppResources _localizedResources = new AppResources();
 

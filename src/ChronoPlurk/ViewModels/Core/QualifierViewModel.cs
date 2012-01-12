@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using ChronoPlurk.Helpers;
+using ChronoPlurk.Resources.i18n;
 using NotifyPropertyWeaver;
 using Plurto.Core;
 
@@ -23,7 +24,14 @@ namespace ChronoPlurk.ViewModels
         public Qualifier Qualifier { get; set; }
 
         [DependsOn("Qualifier")]
-        public string Text { get { return Qualifier.ToKey(); } }
+        public string Text
+        {
+            get
+            {
+                var culture = LocalizedStrings.Culture;
+                return Qualifier.ToLocalized(culture);
+            }
+        }
 
         [DependsOn("Qualifier")]
         public SolidColorBrush Brush { get { return QualifierConverter.ConvertQualifierBrush(Qualifier); } }

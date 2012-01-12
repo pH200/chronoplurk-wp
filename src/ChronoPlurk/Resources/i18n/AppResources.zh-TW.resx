@@ -120,6 +120,9 @@
   <data name="emptyTimeline" xml:space="preserve">
     <value>沒有任何訊息</value>
   </data>
+  <data name="errorOccured" xml:space="preserve">
+    <value>發生未知錯誤</value>
+  </data>
   <data name="like" xml:space="preserve">
     <value>讚</value>
   </data>
@@ -149,6 +152,9 @@
   </data>
   <data name="msgUpdatingTimeline" xml:space="preserve">
     <value>更新河道中</value>
+  </data>
+  <data name="msgUploadingPhoto" xml:space="preserve">
+    <value>上傳照片中</value>
   </data>
   <data name="mute" xml:space="preserve">
     <value>消音</value>

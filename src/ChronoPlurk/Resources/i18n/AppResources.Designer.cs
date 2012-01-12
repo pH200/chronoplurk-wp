@@ -70,6 +70,15 @@ namespace ChronoPlurk.Resources.i18n {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to An error occured..
+        /// </summary>
+        public static string errorOccured {
+            get {
+                return ResourceManager.GetString("errorOccured", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to like.
         /// </summary>
         public static string like {
@@ -156,6 +165,15 @@ namespace ChronoPlurk.Resources.i18n {
         public static string msgUpdatingTimeline {
             get {
                 return ResourceManager.GetString("msgUpdatingTimeline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uploading Photo.
+        /// </summary>
+        public static string msgUploadingPhoto {
+            get {
+                return ResourceManager.GetString("msgUploadingPhoto", resourceCulture);
             }
         }
         

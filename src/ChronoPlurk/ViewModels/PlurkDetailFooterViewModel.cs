@@ -43,7 +43,7 @@ namespace ChronoPlurk.ViewModels
                 }
 
                 var count = 140 - length;
-                return count >= 0 ? count.ToString(AppResources.Culture) : AppResources.tooManyCharacters;
+                return count >= 0 ? count.ToString() : AppResources.tooManyCharacters;
             }
         }
 

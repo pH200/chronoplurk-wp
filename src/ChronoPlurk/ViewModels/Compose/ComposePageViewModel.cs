@@ -6,6 +6,7 @@ using System.Reactive.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using Caliburn.Micro;
+using ChronoPlurk.Resources.i18n;
 using ChronoPlurk.Services;
 using ChronoPlurk.Helpers;
 using ChronoPlurk.Views.Compose;
@@ -45,7 +46,7 @@ namespace ChronoPlurk.ViewModels.Compose
                 }
 
                 var count = 140 - length;
-                return count >= 0 ? count.ToString() : "Too many characters";
+                return count >= 0 ? count.ToString() : AppResources.warnEmpty;
             }
         }
 
@@ -124,11 +125,11 @@ namespace ChronoPlurk.ViewModels.Compose
             }
             if (String.IsNullOrWhiteSpace(PostContent))
             {
-                MessageBox.Show("Write something before you plurk!");
+                MessageBox.Show(AppResources.tooManyCharacters);
             }
             else
             {
-                _progressService.Show("Sending");
+                _progressService.Show(AppResources.msgSending);
 
                 var limitedTo = null as IEnumerable<int>;
                 if (IsPrivateView)
@@ -143,8 +144,10 @@ namespace ChronoPlurk.ViewModels.Compose
                     }
                 }
 
+                var lang = LanguageHelper.CultureInfoToPlurkLang(LocalizedStrings.Culture);
+
                 var command =
-                    TimelineCommand.PlurkAdd(PostContent, Qualifier.Qualifier, limitedTo).
+                    TimelineCommand.PlurkAdd(PostContent, Qualifier.Qualifier, limitedTo, lang:lang).
                         Client(PlurkService.Client).ToObservable().
                         Timeout(DefaultConfiguration.TimeoutCompose).
                         PlurkException(error => { });
@@ -175,7 +178,7 @@ namespace ChronoPlurk.ViewModels.Compose
             }
             catch (InvalidOperationException)
             {
-                MessageBox.Show("An error occured.");
+                MessageBox.Show(AppResources.errorOccured);
 #if DEBUG
                 throw;
 #endif
