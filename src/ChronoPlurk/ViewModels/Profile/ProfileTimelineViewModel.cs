@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Caliburn.Micro;
+using ChronoPlurk.Resources.i18n;
 using ChronoPlurk.Services;
 using Plurto.Commands;
 using Plurto.Entities;
@@ -20,7 +21,7 @@ namespace ChronoPlurk.ViewModels.Profile
             IPlurkContentStorageService plurkContentStorageService)
             : base(navigationService, progressService, plurkService, plurkContentStorageService)
         {
-            this.DisplayName = "timeline";
+            this.DisplayName = AppResources.filterTimeline;
             IsHasMoreHandler = plurks => { return plurks.Plurks != null && plurks.Plurks.Count > 0; };
         }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Caliburn.Micro;
+using ChronoPlurk.Resources.i18n;
 using ChronoPlurk.Services;
 using Plurto.Commands;
 using Plurto.Core;
@@ -19,7 +20,7 @@ namespace ChronoPlurk.ViewModels.Main
             IPlurkContentStorageService plurkContentStorageService)
             : base(navigationService, progressService, plurkService, plurkContentStorageService)
         {
-            this.DisplayName = "my";
+            this.DisplayName = AppResources.filterMy;
             IsHasMoreHandler = plurks => { return plurks.Plurks != null && plurks.Plurks.Count > 0; };
         }
 

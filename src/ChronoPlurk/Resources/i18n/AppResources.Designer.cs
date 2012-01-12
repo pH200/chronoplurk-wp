@@ -88,6 +88,51 @@ namespace ChronoPlurk.Resources.i18n {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to liked.
+        /// </summary>
+        public static string filterLiked {
+            get {
+                return ResourceManager.GetString("filterLiked", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to my.
+        /// </summary>
+        public static string filterMy {
+            get {
+                return ResourceManager.GetString("filterMy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to private.
+        /// </summary>
+        public static string filterPrivate {
+            get {
+                return ResourceManager.GetString("filterPrivate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to responded.
+        /// </summary>
+        public static string filterResponded {
+            get {
+                return ResourceManager.GetString("filterResponded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to timeline.
+        /// </summary>
+        public static string filterTimeline {
+            get {
+                return ResourceManager.GetString("filterTimeline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This is your first time using friends list.\nFriends list will download automatically..
         /// </summary>
         public static string friendsListFirst {

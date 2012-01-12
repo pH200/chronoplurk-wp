@@ -126,6 +126,21 @@
   <data name="errorOccured" xml:space="preserve">
     <value>發生未知錯誤</value>
   </data>
+  <data name="filterLiked" xml:space="preserve">
+    <value>說讚</value>
+  </data>
+  <data name="filterMy" xml:space="preserve">
+    <value>我的</value>
+  </data>
+  <data name="filterPrivate" xml:space="preserve">
+    <value>私人</value>
+  </data>
+  <data name="filterResponded" xml:space="preserve">
+    <value>回應過的</value>
+  </data>
+  <data name="filterTimeline" xml:space="preserve">
+    <value>河道</value>
+  </data>
   <data name="friendsListFirst" xml:space="preserve">
     <value>這是您初次使用朋友列表\n列表下載將會自動開始</value>
   </data>

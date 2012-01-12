@@ -126,6 +126,21 @@
   <data name="errorOccured" xml:space="preserve">
     <value>An error occured.</value>
   </data>
+  <data name="filterLiked" xml:space="preserve">
+    <value>liked</value>
+  </data>
+  <data name="filterMy" xml:space="preserve">
+    <value>my</value>
+  </data>
+  <data name="filterPrivate" xml:space="preserve">
+    <value>private</value>
+  </data>
+  <data name="filterResponded" xml:space="preserve">
+    <value>responded</value>
+  </data>
+  <data name="filterTimeline" xml:space="preserve">
+    <value>timeline</value>
+  </data>
   <data name="friendsListFirst" xml:space="preserve">
     <value>This is your first time using friends list.\nFriends list will download automatically.</value>
   </data>
