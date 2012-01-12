@@ -9,7 +9,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro"
-    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="696"
+    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
@@ -46,15 +46,6 @@
             </Border>
         </Grid>
     </Grid>
-    <phone:PhoneApplicationPage.ApplicationBar>
-        <shell:ApplicationBar BackgroundColor="#FFCF682F" IsVisible="True" IsMenuEnabled="True">
-            <cal:AppBarButton IconUri="/Resources/Icons/appbar.edit.rest.png"
-                                  Text="compose"
-                                  Message="ComposeAppBar" />
-            <shell:ApplicationBar.MenuItems>
-                <cal:AppBarMenuItem Text="settings" Message="SettingsAppBar" />
-                <cal:AppBarMenuItem Text="profile" Message="ProfileAppBar" />
-            </shell:ApplicationBar.MenuItems>
-        </shell:ApplicationBar>
-    </phone:PhoneApplicationPage.ApplicationBar>
+    
+    <!-- APP BAR -->
 </phone:PhoneApplicationPage>

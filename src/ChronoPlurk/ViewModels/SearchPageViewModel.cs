@@ -103,5 +103,10 @@ namespace ChronoPlurk.ViewModels
                 Search();
             }
         }
+
+        public void StartSearchAppBar()
+        {
+            Search();
+        }
     }
 }
