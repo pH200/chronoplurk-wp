@@ -61,6 +61,24 @@ namespace ChronoPlurk.Resources.i18n {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to all plurks.
+        /// </summary>
+        public static string appbarAllPlurks {
+            get {
+                return ResourceManager.GetString("appbarAllPlurks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to compose.
+        /// </summary>
+        public static string appbarCompose {
+            get {
+                return ResourceManager.GetString("appbarCompose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to photos.
         /// </summary>
         public static string appbarPhotos {
@@ -84,6 +102,42 @@ namespace ChronoPlurk.Resources.i18n {
         public static string appbarPrivate {
             get {
                 return ResourceManager.GetString("appbarPrivate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to profile.
+        /// </summary>
+        public static string appbarProfile {
+            get {
+                return ResourceManager.GetString("appbarProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to refresh.
+        /// </summary>
+        public static string appbarRefresh {
+            get {
+                return ResourceManager.GetString("appbarRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to search.
+        /// </summary>
+        public static string appbarSearch {
+            get {
+                return ResourceManager.GetString("appbarSearch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to settings.
+        /// </summary>
+        public static string appbarSettings {
+            get {
+                return ResourceManager.GetString("appbarSettings", resourceCulture);
             }
         }
         

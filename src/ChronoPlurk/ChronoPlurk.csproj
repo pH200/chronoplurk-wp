@@ -215,6 +215,9 @@
     <Compile Include="Views\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\PlurkMainPage.xaml.cs">
+      <DependentUpon>PlurkMainPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Profile\PlurkProfilePage.xaml.cs">
       <DependentUpon>PlurkProfilePage.xaml</DependentUpon>
     </Compile>

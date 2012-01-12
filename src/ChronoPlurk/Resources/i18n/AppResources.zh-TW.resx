@@ -363,6 +363,12 @@
   <data name="whoCanSee" xml:space="preserve">
     <value>誰可以看到這則訊息？</value>
   </data>
+  <data name="appbarAllPlurks" xml:space="preserve">
+    <value>所有訊息</value>
+  </data>
+  <data name="appbarCompose" xml:space="preserve">
+    <value>發噗</value>
+  </data>
   <data name="appbarPhotos" xml:space="preserve">
     <value>照片</value>
   </data>
@@ -371,5 +377,17 @@
   </data>
   <data name="appbarPrivate" xml:space="preserve">
     <value>私人</value>
+  </data>
+  <data name="appbarProfile" xml:space="preserve">
+    <value>個人檔案</value>
+  </data>
+  <data name="appbarRefresh" xml:space="preserve">
+    <value>更新</value>
+  </data>
+  <data name="appbarSearch" xml:space="preserve">
+    <value>搜尋</value>
+  </data>
+  <data name="appbarSettings" xml:space="preserve">
+    <value>設定</value>
   </data>
 </root>

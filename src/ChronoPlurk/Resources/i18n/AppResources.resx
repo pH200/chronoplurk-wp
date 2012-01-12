@@ -363,6 +363,12 @@
   <data name="whoCanSee" xml:space="preserve">
     <value>WHO CAN SEE THIS PLURK?</value>
   </data>
+  <data name="appbarAllPlurks" xml:space="preserve">
+    <value>all plurks</value>
+  </data>
+  <data name="appbarCompose" xml:space="preserve">
+    <value>compose</value>
+  </data>
   <data name="appbarPhotos" xml:space="preserve">
     <value>photos</value>
   </data>
@@ -371,5 +377,17 @@
   </data>
   <data name="appbarPrivate" xml:space="preserve">
     <value>private</value>
+  </data>
+  <data name="appbarProfile" xml:space="preserve">
+    <value>profile</value>
+  </data>
+  <data name="appbarRefresh" xml:space="preserve">
+    <value>refresh</value>
+  </data>
+  <data name="appbarSearch" xml:space="preserve">
+    <value>search</value>
+  </data>
+  <data name="appbarSettings" xml:space="preserve">
+    <value>settings</value>
   </data>
 </root>

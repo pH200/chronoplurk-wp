@@ -10,7 +10,7 @@
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro"
     xmlns:imgloader="clr-namespace:ChronoPlurk.Views.ImageLoader"
-    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="696"
+    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
@@ -37,24 +37,5 @@
         </controls:Pivot>
     </Grid>
     
-    <phone:PhoneApplicationPage.ApplicationBar>
-        <shell:ApplicationBar BackgroundColor="#FFCF682F" IsVisible="True" IsMenuEnabled="True">
-            <cal:AppBarButton IconUri="/Resources/Icons/appbar.refresh.rest.png"
-                                  Text="refresh"
-                                  Message="RefreshAppBar" />
-            <cal:AppBarButton IconUri="/Resources/Icons/appbar.edit.rest.png"
-                                  Text="compose"
-                                  Message="ComposeAppBar" />
-            <cal:AppBarButton IconUri="/Resources/Icons/appbar.allplurks.png"
-                                  Text="all plurks"
-                                  Message="AllPlurksAppBar" />
-            <cal:AppBarButton IconUri="/Resources/Icons/appbar.feature.search.rest.png"
-                                  Text="search"
-                                  Message="SearchAppBar" />
-            <shell:ApplicationBar.MenuItems>
-                <cal:AppBarMenuItem Text="profile" Message="ProfileAppBar" />
-                <cal:AppBarMenuItem Text="settings" Message="SettingsAppBar" />
-            </shell:ApplicationBar.MenuItems>
-        </shell:ApplicationBar>
-    </phone:PhoneApplicationPage.ApplicationBar>
+    <!-- APP BAR -->
 </phone:PhoneApplicationPage>
