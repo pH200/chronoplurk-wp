@@ -363,4 +363,13 @@
   <data name="whoCanSee" xml:space="preserve">
     <value>WHO CAN SEE THIS PLURK?</value>
   </data>
+  <data name="appbarPhotos" xml:space="preserve">
+    <value>photos</value>
+  </data>
+  <data name="appbarPlurk" xml:space="preserve">
+    <value>plurk</value>
+  </data>
+  <data name="appbarPrivate" xml:space="preserve">
+    <value>private</value>
+  </data>
 </root>

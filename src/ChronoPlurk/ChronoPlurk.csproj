@@ -189,6 +189,9 @@
     <Compile Include="ViewModels\Settings\SettingsPageViewModel.cs" />
     <Compile Include="ViewModels\Profile\PlurkProfilePageViewModel.cs" />
     <Compile Include="ViewModels\Profile\ProfileTimelineViewModel.cs" />
+    <Compile Include="Views\Compose\ComposePage.xaml.cs">
+      <DependentUpon>ComposePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Compose\FriendsSelectionPage.xaml.cs">
       <DependentUpon>FriendsSelectionPage.xaml</DependentUpon>
     </Compile>

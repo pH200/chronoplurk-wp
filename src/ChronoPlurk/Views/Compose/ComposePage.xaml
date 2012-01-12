@@ -104,17 +104,6 @@
         </Grid>
     </Grid>
 
-    <phone:PhoneApplicationPage.ApplicationBar>
-        <shell:ApplicationBar BackgroundColor="#FFCF682F" IsVisible="True" IsMenuEnabled="True">
-            <cal:AppBarButton IconUri="/Resources/Icons/appbar.check.rest.png"
-                                  Text="plurk"
-                                  Message="PlurkAppBar" />
-            <cal:AppBarButton IconUri="/Resources/Icons/appbar.feature.camera.rest.png"
-                                  Text="photos"
-                                  Message="PhotosAppBar" />
-            <cal:AppBarButton IconUri="/Resources/Icons/appbar.lock.png"
-                                  Text="private"
-                                  Message="PrivateAppBar" />
-        </shell:ApplicationBar>
-    </phone:PhoneApplicationPage.ApplicationBar>
+    <!-- APP BAR -->
+    
 </phone:PhoneApplicationPage>

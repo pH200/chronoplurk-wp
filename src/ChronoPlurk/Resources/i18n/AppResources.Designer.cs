@@ -61,6 +61,33 @@ namespace ChronoPlurk.Resources.i18n {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to photos.
+        /// </summary>
+        public static string appbarPhotos {
+            get {
+                return ResourceManager.GetString("appbarPhotos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to plurk.
+        /// </summary>
+        public static string appbarPlurk {
+            get {
+                return ResourceManager.GetString("appbarPlurk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to private.
+        /// </summary>
+        public static string appbarPrivate {
+            get {
+                return ResourceManager.GetString("appbarPrivate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Always.
         /// </summary>
         public static string autoRotateAlways {

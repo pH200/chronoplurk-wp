@@ -363,4 +363,13 @@
   <data name="whoCanSee" xml:space="preserve">
     <value>誰可以看到這則訊息？</value>
   </data>
+  <data name="appbarPhotos" xml:space="preserve">
+    <value>照片</value>
+  </data>
+  <data name="appbarPlurk" xml:space="preserve">
+    <value>plurk</value>
+  </data>
+  <data name="appbarPrivate" xml:space="preserve">
+    <value>私人</value>
+  </data>
 </root>
