@@ -61,6 +61,33 @@ namespace ChronoPlurk.Resources.i18n {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Always.
+        /// </summary>
+        public static string autoRotateAlways {
+            get {
+                return ResourceManager.GetString("autoRotateAlways", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Compose only.
+        /// </summary>
+        public static string autoRotateComposeOnly {
+            get {
+                return ResourceManager.GetString("autoRotateComposeOnly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Never.
+        /// </summary>
+        public static string autoRotateNever {
+            get {
+                return ResourceManager.GetString("autoRotateNever", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to choose friends.
         /// </summary>
         public static string chooseFriends {
@@ -183,6 +210,15 @@ namespace ChronoPlurk.Resources.i18n {
         public static string loginPassword {
             get {
                 return ResourceManager.GetString("loginPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to logout.
+        /// </summary>
+        public static string logout {
+            get {
+                return ResourceManager.GetString("logout", resourceCulture);
             }
         }
         
@@ -318,6 +354,60 @@ namespace ChronoPlurk.Resources.i18n {
         public static string search {
             get {
                 return ResourceManager.GetString("search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to about.
+        /// </summary>
+        public static string settingsAbout {
+            get {
+                return ResourceManager.GetString("settingsAbout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to accounts.
+        /// </summary>
+        public static string settingsAccounts {
+            get {
+                return ResourceManager.GetString("settingsAccounts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to auto rotate.
+        /// </summary>
+        public static string settingsAutoRotate {
+            get {
+                return ResourceManager.GetString("settingsAutoRotate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to general.
+        /// </summary>
+        public static string settingsGeneral {
+            get {
+                return ResourceManager.GetString("settingsGeneral", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to open source credits.
+        /// </summary>
+        public static string settingsOss {
+            get {
+                return ResourceManager.GetString("settingsOss", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SETTINGS.
+        /// </summary>
+        public static string settingsTitle {
+            get {
+                return ResourceManager.GetString("settingsTitle", resourceCulture);
             }
         }
         

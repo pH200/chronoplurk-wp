@@ -117,6 +117,15 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="autoRotateAlways" xml:space="preserve">
+    <value>Always</value>
+  </data>
+  <data name="autoRotateComposeOnly" xml:space="preserve">
+    <value>Compose only</value>
+  </data>
+  <data name="autoRotateNever" xml:space="preserve">
+    <value>Never</value>
+  </data>
   <data name="chooseFriends" xml:space="preserve">
     <value>choose friends</value>
   </data>
@@ -158,6 +167,9 @@
   </data>
   <data name="loginPassword" xml:space="preserve">
     <value>Password</value>
+  </data>
+  <data name="logout" xml:space="preserve">
+    <value>logout</value>
   </data>
   <data name="msgConnecting" xml:space="preserve">
     <value>Connecting</value>
@@ -203,6 +215,24 @@
   </data>
   <data name="search" xml:space="preserve">
     <value>search</value>
+  </data>
+  <data name="settingsAbout" xml:space="preserve">
+    <value>about</value>
+  </data>
+  <data name="settingsAccounts" xml:space="preserve">
+    <value>accounts</value>
+  </data>
+  <data name="settingsAutoRotate" xml:space="preserve">
+    <value>auto rotate</value>
+  </data>
+  <data name="settingsGeneral" xml:space="preserve">
+    <value>general</value>
+  </data>
+  <data name="settingsOss" xml:space="preserve">
+    <value>open source credits</value>
+  </data>
+  <data name="settingsTitle" xml:space="preserve">
+    <value>SETTINGS</value>
   </data>
   <data name="signUp" xml:space="preserve">
     <value>sign up</value>

@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using Caliburn.Micro;
 using ChronoPlurk.Core;
+using ChronoPlurk.Resources.i18n;
 using ChronoPlurk.Services;
 using Microsoft.Phone.Controls;
 using NotifyPropertyWeaver;
@@ -41,9 +42,9 @@ namespace ChronoPlurk.ViewModels.Settings
 
             AutoRotates = new ObservableCollection<string>()
             {
-                "Compose only",
-                "Always",
-                "Never",
+                AppResources.autoRotateComposeOnly,
+                AppResources.autoRotateAlways,
+                AppResources.autoRotateNever,
             };
             AutoRotatesSelectedIndex = SettingsService.GetCurrentAutoRotateIndex();
 

@@ -25,23 +25,23 @@
     </phone:PhoneApplicationPage.Resources>
 
     <Grid x:Name="LayoutRoot" Background="Transparent">
-        <controls:Pivot Title="SETTINGS">
-            <controls:PivotItem Header="accounts">
+        <controls:Pivot Title="{Binding Path=LocalizedResources.settingsTitle, Source={StaticResource LocalizedStrings}}">
+            <controls:PivotItem Header="{Binding Path=LocalizedResources.settingsAccounts, Source={StaticResource LocalizedStrings}}">
                 <Grid>
                     <StackPanel>
                         <TextBlock x:Name="LoginAccount" Style="{StaticResource PhoneTextLargeStyle}" />
-                        <Button x:Name="LogoutButton" Content="logout" Margin="0,20,0,0" HorizontalAlignment="Left" />
+                        <Button x:Name="LogoutButton" Content="{Binding Path=LocalizedResources.logout, Source={StaticResource LocalizedStrings}}" Margin="0,20,0,0" HorizontalAlignment="Left" />
                     </StackPanel>
                 </Grid>
             </controls:PivotItem>
 
-            <controls:PivotItem Header="general">
+            <controls:PivotItem Header="{Binding Path=LocalizedResources.settingsGeneral, Source={StaticResource LocalizedStrings}}">
                 <Grid>
                     <StackPanel>
                         <toolkit:ListPicker x:Name="AutoRotates"
                                             ItemsSource="{Binding AutoRotates}"
-                                            Header="auto rotate"
-                                            FullModeHeader="auto rotate"
+                                            Header="{Binding Path=LocalizedResources.settingsAutoRotate, Source={StaticResource LocalizedStrings}}"
+                                            FullModeHeader="{Binding Path=LocalizedResources.settingsAutoRotate, Source={StaticResource LocalizedStrings}}"
                                             FullModeItemTemplate="{StaticResource FullTemplate}"
                                             SelectedIndex="{Binding AutoRotatesSelectedIndex, Mode=TwoWay}"
                                             cal:Message.Attach="[Event SelectionChanged] = [Action OnAutoRotateSelectionChanged($source)]">
@@ -50,14 +50,14 @@
                 </Grid>
             </controls:PivotItem>
 
-            <controls:PivotItem Header="about">
+            <controls:PivotItem Header="{Binding Path=LocalizedResources.settingsAbout, Source={StaticResource LocalizedStrings}}">
                 <StackPanel>
                     <TextBlock Text="ChronoPlurk" Style="{StaticResource PhoneTextTitle2Style}" />
                     <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
                         <TextBlock Text="Version:" Style="{StaticResource PhoneTextLargeStyle}" />
                         <TextBlock x:Name="VersionText" Style="{StaticResource PhoneTextLargeStyle}" />
                     </StackPanel>
-                    <Button x:Name="OssCreditsButton" Content="open source credits" Margin="0,20,0,0" HorizontalAlignment="Left" />
+                    <Button x:Name="OssCreditsButton" Content="{Binding Path=LocalizedResources.settingsOss, Source={StaticResource LocalizedStrings}}" Margin="0,20,0,0" HorizontalAlignment="Left" />
                 </StackPanel>
             </controls:PivotItem>
         </controls:Pivot>
