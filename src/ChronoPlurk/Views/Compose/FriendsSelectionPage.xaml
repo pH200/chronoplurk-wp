@@ -14,7 +14,7 @@
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     Orientation="Portrait"
-    mc:Ignorable="d" d:DesignHeight="696" d:DesignWidth="480"
+    mc:Ignorable="d" d:DesignHeight="768" d:DesignWidth="480"
     shell:SystemTray.IsVisible="True">
     
     <Grid x:Name="LayoutRoot" Background="Transparent">
@@ -105,19 +105,5 @@
         </Grid>
     </Grid>
 
-    <phone:PhoneApplicationPage.ApplicationBar>
-        <shell:ApplicationBar BackgroundColor="#FFCF682F" IsVisible="True" IsMenuEnabled="True">
-            <cal:AppBarButton IconUri="/Resources/Icons/appbar.download.rest.png"
-                              Text="download"
-                              Message="DownloadAppBar" />
-            <cal:AppBarButton IconUri="/Resources/Icons/appbar.check.rest.png"
-                              Text="complete"
-                              Message="CompleteAppBar" />
-            <shell:ApplicationBar.MenuItems>
-                <cal:AppBarMenuItem Text="clear selection" Message="ClearAppBar" />
-                <cal:AppBarMenuItem Text="help" Message="HelpAppBar" />
-            </shell:ApplicationBar.MenuItems>
-        </shell:ApplicationBar>
-    </phone:PhoneApplicationPage.ApplicationBar>
-
+    <!-- APP BAR -->
 </phone:PhoneApplicationPage>

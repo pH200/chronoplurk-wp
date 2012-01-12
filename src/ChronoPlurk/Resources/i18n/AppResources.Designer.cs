@@ -70,11 +70,47 @@ namespace ChronoPlurk.Resources.i18n {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to clear selection.
+        /// </summary>
+        public static string appbarClearSelection {
+            get {
+                return ResourceManager.GetString("appbarClearSelection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to complete.
+        /// </summary>
+        public static string appbarComplete {
+            get {
+                return ResourceManager.GetString("appbarComplete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to compose.
         /// </summary>
         public static string appbarCompose {
             get {
                 return ResourceManager.GetString("appbarCompose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to download.
+        /// </summary>
+        public static string appbarDownloadFriendList {
+            get {
+                return ResourceManager.GetString("appbarDownloadFriendList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to help.
+        /// </summary>
+        public static string appbarHelp {
+            get {
+                return ResourceManager.GetString("appbarHelp", resourceCulture);
             }
         }
         

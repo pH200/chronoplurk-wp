@@ -366,8 +366,20 @@
   <data name="appbarAllPlurks" xml:space="preserve">
     <value>所有訊息</value>
   </data>
+  <data name="appbarClearSelection" xml:space="preserve">
+    <value>清除所有選取</value>
+  </data>
+  <data name="appbarComplete" xml:space="preserve">
+    <value>完成</value>
+  </data>
   <data name="appbarCompose" xml:space="preserve">
     <value>發噗</value>
+  </data>
+  <data name="appbarDownloadFriendList" xml:space="preserve">
+    <value>下載</value>
+  </data>
+  <data name="appbarHelp" xml:space="preserve">
+    <value>說明</value>
   </data>
   <data name="appbarPhotos" xml:space="preserve">
     <value>照片</value>
