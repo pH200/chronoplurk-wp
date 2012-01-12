@@ -232,6 +232,15 @@ namespace ChronoPlurk.Resources.i18n {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Creating Profile.
+        /// </summary>
+        public static string msgCreatingProfile {
+            get {
+                return ResourceManager.GetString("msgCreatingProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Downloading Friends List.
         /// </summary>
         public static string msgDownloadingFriendsList {
@@ -327,6 +336,15 @@ namespace ChronoPlurk.Resources.i18n {
         public static string reply {
             get {
                 return ResourceManager.GetString("reply", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Request failed.\nCheck your internet connection..
+        /// </summary>
+        public static string requestFailedMessage {
+            get {
+                return ResourceManager.GetString("requestFailedMessage", resourceCulture);
             }
         }
         
@@ -448,6 +466,15 @@ namespace ChronoPlurk.Resources.i18n {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Request timeout.\n\nPlurk service might be busy now.\nPress OK to retry.\nPress cancel to stop..
+        /// </summary>
+        public static string timeoutMessage {
+            get {
+                return ResourceManager.GetString("timeoutMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} secs ago.
         /// </summary>
         public static string timeSecsAgo {
@@ -480,6 +507,15 @@ namespace ChronoPlurk.Resources.i18n {
         public static string tooManyCharacters {
             get {
                 return ResourceManager.GetString("tooManyCharacters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Oops. Unknown error on this application. Leave a note to us..
+        /// </summary>
+        public static string unhandledErrorMessage {
+            get {
+                return ResourceManager.GetString("unhandledErrorMessage", resourceCulture);
             }
         }
         

@@ -174,6 +174,9 @@
   <data name="msgConnecting" xml:space="preserve">
     <value>Connecting</value>
   </data>
+  <data name="msgCreatingProfile" xml:space="preserve">
+    <value>Creating Profile</value>
+  </data>
   <data name="msgDownloadingFriendsList" xml:space="preserve">
     <value>Downloading Friends List</value>
   </data>
@@ -206,6 +209,9 @@
   </data>
   <data name="reply" xml:space="preserve">
     <value>reply</value>
+  </data>
+  <data name="requestFailedMessage" xml:space="preserve">
+    <value>Request failed.\nCheck your internet connection.</value>
   </data>
   <data name="responsesCount" xml:space="preserve">
     <value> responses</value>
@@ -246,6 +252,9 @@
   <data name="timeMomentsAgo" xml:space="preserve">
     <value>moments ago</value>
   </data>
+  <data name="timeoutMessage" xml:space="preserve">
+    <value>Request timeout.\n\nPlurk service might be busy now.\nPress OK to retry.\nPress cancel to stop.</value>
+  </data>
   <data name="timeSecsAgo" xml:space="preserve">
     <value>{0} secs ago</value>
   </data>
@@ -257,6 +266,9 @@
   </data>
   <data name="tooManyCharacters" xml:space="preserve">
     <value>Too many characters.</value>
+  </data>
+  <data name="unhandledErrorMessage" xml:space="preserve">
+    <value>Oops. Unknown error on this application. Leave a note to us.</value>
   </data>
   <data name="unlike" xml:space="preserve">
     <value>unlike</value>

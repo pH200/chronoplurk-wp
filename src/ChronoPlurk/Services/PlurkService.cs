@@ -6,6 +6,7 @@ using System.Reactive.Linq;
 using Caliburn.Micro;
 using ChronoPlurk.Core;
 using ChronoPlurk.Helpers;
+using ChronoPlurk.Resources.i18n;
 using Plurto.Commands;
 using Plurto.Core;
 
@@ -112,7 +113,7 @@ namespace ChronoPlurk.Services
         {
             if (AppUserInfo != null)
             {
-                _progressService.Show("Creating Profile");
+                _progressService.Show(AppResources.msgCreatingProfile);
                 if (_saveUserInfoDisposable != null)
                 {
                     _saveUserInfoDisposable.Dispose();

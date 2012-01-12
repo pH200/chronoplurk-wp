@@ -4,6 +4,7 @@ using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using System.Windows;
 using Caliburn.Micro;
+using ChronoPlurk.Resources.i18n;
 using ChronoPlurk.Services;
 using Plurto.Core;
 using Plurto.Exceptions;
@@ -33,8 +34,7 @@ namespace ChronoPlurk.Helpers
         private static IObservable<TSource> TimeoutHandling<TSource>
             (IObservable<TSource> source, Action<PlurkError> onError, IProgressService progressService)
         {
-            const string timeoutErrorMessage =
-                    "Request timeout.\nPlurk service might be busy now.\nPress OK to retry.\nPress cancel to stop.";
+            var timeoutErrorMessage = AppResources.timeoutMessage.Replace("\\n", Environment.NewLine);
             return Observable.Start(() =>
             {
                 switch (MessageBox.Show(timeoutErrorMessage, "Timeout", MessageBoxButton.OKCancel))
@@ -61,11 +61,11 @@ namespace ChronoPlurk.Helpers
             }
             else if (ex is RequestFailException)
             {
-                errorMessage = "Request failed. Check your internet connection.";
+                errorMessage = AppResources.requestFailedMessage.Replace("\\n", Environment.NewLine);
             }
             else
             {
-                errorMessage = "Oops. Unknown error on this application. Leave a note to us.";
+                errorMessage = AppResources.unhandledErrorMessage.Replace("\\n", Environment.NewLine);
 #if DEBUG
                 throw ex;
 #endif
