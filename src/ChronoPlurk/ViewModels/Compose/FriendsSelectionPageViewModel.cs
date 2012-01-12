@@ -26,6 +26,8 @@ namespace ChronoPlurk.ViewModels.Compose
 
         protected IProgressService ProgressService { get; set; }
 
+        protected IPlurkService PlurkService { get; set; }
+
         protected FriendsFansCompletionService FriendsFansCompletionService { get; set; }
 
         public string SearchTextBox { get; set; }
@@ -36,16 +38,36 @@ namespace ChronoPlurk.ViewModels.Compose
         {
             get { return FriendsFansCompletionService.SelectedItems; }
         }
+        
+        private BindableCollection<FriendResultItemViewModel> AllItems { get; set; }
 
         public FriendsSelectionPageViewModel(
             INavigationService navigationService,
             IProgressService progressService,
+            IPlurkService plurkService,
             FriendsFansCompletionService friendsFansCompletionService)
         {
             NavigationService = navigationService;
             ProgressService = progressService;
+            PlurkService = plurkService;
             FriendsFansCompletionService = friendsFansCompletionService;
             FriendsFansCompletionService.Load();
+        }
+
+        protected override void OnActivate()
+        {
+            if (FriendsFansCompletionService.LoadedUserId != 0)
+            {
+                if (PlurkService.UserId != FriendsFansCompletionService.LoadedUserId)
+                {
+                    Download();
+                }
+                else if (AllItems == null)
+                {
+                    InitializeAllItems(FriendsFansCompletionService.Completion);
+                }
+            }
+            base.OnActivate();
         }
 
         protected override void OnViewLoaded(object view)
@@ -55,6 +77,10 @@ namespace ChronoPlurk.ViewModels.Compose
                 ShowFirstTimeMessage();
                 Download();
                 ShowHelpMessage();
+            }
+            else
+            {
+                Search(SearchTextBox);
             }
             base.OnViewLoaded(view);
         }
@@ -73,7 +99,7 @@ namespace ChronoPlurk.ViewModels.Compose
             }
             if (string.IsNullOrWhiteSpace(query))
             {
-                ResultItems = null;
+                ResultItems = AllItems;
                 return;
             }
             if (_searchDisposable != null)
@@ -99,9 +125,24 @@ namespace ChronoPlurk.ViewModels.Compose
             ProgressService.Show(AppResources.msgDownloadingFriendsList);
             var download = FriendsFansCompletionService.DownloadAsync();
             _downloadDisposable = download.Subscribe(
-                completion => Execute.OnUIThread(() => Search(completion, SearchTextBox)),
+                completion =>
+                {
+                    InitializeAllItems(completion);
+                    Execute.OnUIThread(() => Search(completion, SearchTextBox));
+                },
                 () => Execute.OnUIThread(ProgressService.Hide));
             download.Connect();
+        }
+
+        private void InitializeAllItems(FriendsFansCompletion completion)
+        {
+            if (completion != null)
+            {
+                var items = from item in completion.Lookup.Values
+                            let selected = (SelectedItems.FirstOrDefault(u => u.Id == item.Id).Id != 0)
+                            select new FriendResultItemViewModel(item, selected);
+                AllItems = new BindableCollection<FriendResultItemViewModel>(items);
+            }
         }
 
         public void ShowFirstTimeMessage()

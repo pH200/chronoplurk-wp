@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using Caliburn.Micro;
 using ChronoPlurk.Core;
 using ChronoPlurk.Helpers;
+using ChronoPlurk.ViewModels.Compose;
 using Plurto.Commands;
 using Plurto.Entities;
 
@@ -33,6 +34,8 @@ namespace ChronoPlurk.Services
 
         public BindableCollection<CompletionUser> SelectedItems { get; set; }
 
+        public int LoadedUserId { get; set; }
+
         public FriendsFansCompletionService(IPlurkService plurkService)
         {
             PlurkService = plurkService;
@@ -43,6 +46,10 @@ namespace ChronoPlurk.Services
         {
             var filename = GetBinaryFileName();
             Completion = IsoSettings.DeserializeLoad(filename) as FriendsFansCompletion;
+            if (Completion != null)
+            {
+                LoadedUserId = PlurkService.UserId;
+            }
             IsLoaded = true;
         }
 
@@ -52,6 +59,7 @@ namespace ChronoPlurk.Services
             var connectable = observable.Publish();
             connectable.Subscribe(completion =>
             {
+                LoadedUserId = PlurkService.UserId;
                 Completion = completion;
                 SaveCompletion();
             });
