@@ -396,6 +396,9 @@
   <data name="appbarRefresh" xml:space="preserve">
     <value>refresh</value>
   </data>
+  <data name="appbarReply" xml:space="preserve">
+    <value>reply</value>
+  </data>
   <data name="appbarSearch" xml:space="preserve">
     <value>search</value>
   </data>

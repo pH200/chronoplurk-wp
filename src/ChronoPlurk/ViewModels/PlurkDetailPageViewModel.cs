@@ -59,15 +59,53 @@ namespace ChronoPlurk.ViewModels
                 return;
             }
 
-            foreach (AppBarMenuItem menuItem in view.ApplicationBar.MenuItems)
+            UpdateReplyButton(view);
+
+            view.LikeButton.Text = PlurkHeaderViewModel.LikeText;
+            view.MuteButton.Text = PlurkHeaderViewModel.MuteText;
+        }
+
+        public void UpdateLikeButton(string text)
+        {
+            var view = GetView() as PlurkDetailPage;
+            if (view != null)
             {
-                if (menuItem.Message == "LikeAppBar")
+                view.LikeButton.Text = text;
+            }
+        }
+
+        public void UpdateMuteButton(string text)
+        {
+            var view = GetView() as PlurkDetailPage;
+            if (view != null)
+            {
+                view.MuteButton.Text = text;
+            }
+        }
+
+        public void UpdateReplyButton()
+        {
+            UpdateReplyButton(GetView() as PlurkDetailPage);
+        }
+
+        public void UpdateReplyButton(PlurkDetailPage view)
+        {
+            if (view == null)
+            {
+                return;
+            }
+            if (String.IsNullOrWhiteSpace(PlurkDetailViewModel.DetailFooter.PostContent))
+            {
+                if (view.ReplyButton.IconUri != PlurkDetailPage.ReplyIconUri)
                 {
-                    menuItem.Text = PlurkHeaderViewModel.LikeText;
+                    view.ReplyButton.IconUri = PlurkDetailPage.ReplyIconUri;
                 }
-                if (menuItem.Message == "MuteAppBar")
+            }
+            else
+            {
+                if (view.ReplyButton.IconUri != PlurkDetailPage.CheckIconUri)
                 {
-                    menuItem.Text = PlurkHeaderViewModel.MuteText;
+                    view.ReplyButton.IconUri = PlurkDetailPage.CheckIconUri;
                 }
             }
         }
@@ -166,27 +204,32 @@ namespace ChronoPlurk.ViewModels
         public void Favorite(int id)
         {
             PlurkHeaderViewModel.IsFavorite = true;
+            UpdateLikeButton(PlurkHeaderViewModel.LikeText);
         }
 
         public void Unfavorite(int id)
         {
             PlurkHeaderViewModel.IsFavorite = false;
+            UpdateLikeButton(PlurkHeaderViewModel.LikeText);
         }
 
         public void Mute(int id)
         {
             PlurkHeaderViewModel.IsUnreadInt = (int)UnreadStatus.Muted;
+            UpdateMuteButton(PlurkHeaderViewModel.MuteText);
         }
 
         public void Unmute(int id)
         {
             // Read and Unmute
             PlurkHeaderViewModel.IsUnreadInt = (int)UnreadStatus.Read;
+            UpdateMuteButton(PlurkHeaderViewModel.MuteText);
         }
 
         public void SetAsRead(int id)
         {
             PlurkHeaderViewModel.IsUnreadInt = (int)UnreadStatus.Read;
+            UpdateMuteButton(PlurkHeaderViewModel.MuteText);
         }
 
         #endregion

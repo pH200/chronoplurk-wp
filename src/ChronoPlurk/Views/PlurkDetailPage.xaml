@@ -9,7 +9,7 @@
     xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro"
     xmlns:pcontrols="clr-namespace:ChronoPlurk.Views.PlurkControls"
     mc:Ignorable="d"
-    d:DesignWidth="480" d:DesignHeight="696"
+    d:DesignWidth="480" d:DesignHeight="768"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
@@ -22,18 +22,5 @@
                         VerticalContentAlignment="Stretch" />
     </Grid>
 
-    <phone:PhoneApplicationPage.ApplicationBar>
-        <shell:ApplicationBar BackgroundColor="#FFCF682F" IsVisible="True" IsMenuEnabled="True">
-            <cal:AppBarButton IconUri="/Resources/Icons/appbar.refresh.rest.png"
-                                  Text="refresh"
-                                  Message="RefreshAppBar" />
-            <cal:AppBarButton IconUri="/Resources/Icons/appbar.edit.rest.png"
-                                  Text="reply"
-                                  Message="ReplyAppBar" />
-            <shell:ApplicationBar.MenuItems>
-                <cal:AppBarMenuItem Text="like" Message="LikeAppBar" />
-                <cal:AppBarMenuItem Text="mute" Message="MuteAppBar" />
-            </shell:ApplicationBar.MenuItems>
-        </shell:ApplicationBar>
-    </phone:PhoneApplicationPage.ApplicationBar>
+    <!-- APP BAR -->
 </phone:PhoneApplicationPage>

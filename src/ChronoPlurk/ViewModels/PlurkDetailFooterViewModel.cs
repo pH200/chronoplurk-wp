@@ -29,6 +29,8 @@ namespace ChronoPlurk.ViewModels
 
         private IDisposable _composeHandler;
 
+        private string _textBoxDistinctKey;
+
         public string PostContent { get; set; }
         
         [DependsOn("PostContent")]
@@ -112,6 +114,27 @@ namespace ChronoPlurk.ViewModels
             if (parent != null)
             {
                 parent.LoadNewComments();
+            }
+        }
+
+        public void OnTextChanged()
+        {
+            if (PostContent == _textBoxDistinctKey)
+            {
+                return;
+            }
+            else
+            {
+                _textBoxDistinctKey = PostContent;
+                var dv = this.GetParent();
+                if (dv != null)
+                {
+                    var dp = dv.GetParent();
+                    if (dp != null)
+                    {
+                        dp.UpdateReplyButton();
+                    }
+                }
             }
         }
     }

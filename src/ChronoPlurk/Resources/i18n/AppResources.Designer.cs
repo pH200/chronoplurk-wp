@@ -160,6 +160,15 @@ namespace ChronoPlurk.Resources.i18n {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to reply.
+        /// </summary>
+        public static string appbarReply {
+            get {
+                return ResourceManager.GetString("appbarReply", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to search.
         /// </summary>
         public static string appbarSearch {

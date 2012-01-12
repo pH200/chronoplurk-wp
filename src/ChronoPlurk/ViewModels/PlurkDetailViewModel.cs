@@ -21,7 +21,7 @@ using Plurto.Entities;
 namespace ChronoPlurk.ViewModels
 {
     [NotifyForAll]
-    public class PlurkDetailViewModel : TimelineBaseViewModel<ResponsesResult>, IRefreshSync
+    public class PlurkDetailViewModel : TimelineBaseViewModel<ResponsesResult>, IRefreshSync, IChildT<PlurkDetailPageViewModel>
     {
         [DependsOn("DetailHeader")]
         public override sealed object ListHeader { get { return DetailHeader; } }

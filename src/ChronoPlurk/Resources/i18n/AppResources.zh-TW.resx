@@ -396,6 +396,9 @@
   <data name="appbarRefresh" xml:space="preserve">
     <value>更新</value>
   </data>
+  <data name="appbarReply" xml:space="preserve">
+    <value>回應</value>
+  </data>
   <data name="appbarSearch" xml:space="preserve">
     <value>搜尋</value>
   </data>

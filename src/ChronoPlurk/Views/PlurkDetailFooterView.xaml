@@ -5,6 +5,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     xmlns:pcontrols="clr-namespace:ChronoPlurk.Views.PlurkControls"
+    xmlns:cal="http://www.caliburnproject.org"
     mc:Ignorable="d"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -25,12 +26,15 @@
                      MinHeight="150"
                      TextWrapping="Wrap"
                      AcceptsReturn="True"
-                     InputScope="Text">
+                     InputScope="Text"
+                     cal:Message.Attach="[Event TextChanged] = [Action OnTextChanged()]">
                 <i:Interaction.Behaviors>
                     <pcontrols:FocusBehavior x:Name="ResponseFocus" />
                 </i:Interaction.Behaviors>
             </TextBox>
-            <Button x:Name="Reply" Content="{Binding Path=LocalizedResources.reply, Source={StaticResource LocalizedStrings}}" Margin="0,0,0,8" />
+            <Button x:Name="Reply"
+                    Content="{Binding Path=LocalizedResources.reply, Source={StaticResource LocalizedStrings}}"
+                    Margin="0,0,0,8" />
         </StackPanel>
     </Grid>
 </UserControl>
