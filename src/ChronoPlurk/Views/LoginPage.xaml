@@ -44,14 +44,21 @@
                        Foreground="{StaticResource PlurkTextBrush}" />
             <PasswordBox x:Name="Password" Height="72"
                          cal:Message.Attach="[Event KeyUp] = [Action PasswordKey($eventArgs)]" />
-            <TextBlock x:Name="Message" Height="30" />
-            <Button x:Name="Login"
-                    Height="72" Width="200"
-                    HorizontalAlignment="Left"
-                    Foreground="{StaticResource PlurkTextBrush}"
-                    BorderBrush="{StaticResource PlurkTextBrush}"
-                    IsEnabled="{Binding IsLoginEnabled}"
-                    Content="{Binding Path=LocalizedResources.login, Source={StaticResource LocalizedStrings}}" />
+            <Grid>
+                <Button x:Name="Login"
+                        Height="72" Width="200"
+                        HorizontalAlignment="Left"
+                        Foreground="{StaticResource PlurkTextBrush}"
+                        BorderBrush="{StaticResource PlurkTextBrush}"
+                        IsEnabled="{Binding IsLoginEnabled}"
+                        Content="{Binding Path=LocalizedResources.login, Source={StaticResource LocalizedStrings}}" />
+                <TextBlock x:Name="Message"
+                           Height="30"
+                           Width="250"
+                           HorizontalAlignment="Left"
+                           Margin="212,0,0,0" />
+            </Grid>
+            
             <HyperlinkButton NavigateUri="http://www.plurk.com/Users/showRegister"
                              TargetName="_blank"
                              Content="{Binding Path=LocalizedResources.signUp, Source={StaticResource LocalizedStrings}}"

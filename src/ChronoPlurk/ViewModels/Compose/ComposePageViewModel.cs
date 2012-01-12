@@ -211,7 +211,7 @@ namespace ChronoPlurk.ViewModels.Compose
                     .Timeout(DefaultConfiguration.TimeoutUpload)
                     .PlurkException();
 
-                _progressService.Show("Uploading Photo");
+                _progressService.Show(AppResources.msgUploadingPhoto);
 
                 System.Action complete = () =>
                 {
@@ -226,7 +226,7 @@ namespace ChronoPlurk.ViewModels.Compose
                     uploadCommand.ObserveOnDispatcher().Subscribe(
                         picture =>
                         {
-                            PostContent += Environment.NewLine + picture.Full;
+                            PostContent += picture.Full;
                         }, complete);
             }
         }
