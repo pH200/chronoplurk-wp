@@ -77,6 +77,8 @@ namespace ChronoPlurk.ViewModels
 
         protected bool DisableTimelinePlurkHolder { get; set; }
 
+        protected bool DisableDuplicationCheck { get; set; }
+
         #region ListSelectedIndex
         
         private int _listSelectedIndex = -1; // Must defualt as -1
@@ -206,7 +208,7 @@ namespace ChronoPlurk.ViewModels
 
                     // Fix duplicate issue.
                     var skipFirst = false;
-                    var duplicateState = CheckSingleDuplicatePlurk(plurks);
+                    var duplicateState = CheckSingleDuplicationPlurk(plurks);
                     switch (duplicateState)
                     {
                         case DuplicateState.FirstAndMore:
@@ -255,8 +257,12 @@ namespace ChronoPlurk.ViewModels
         /// </summary>
         /// <param name="plurks">Plurks from request handler.</param>
         /// <returns>DuplicateState</returns>
-        private DuplicateState CheckSingleDuplicatePlurk(TSource plurks)
+        private DuplicateState CheckSingleDuplicationPlurk(TSource plurks)
         {
+            if (DisableDuplicationCheck)
+            {
+                return DuplicateState.None;
+            }
             if (_lastResult != null)
             {
                 var lastBottom = _lastResult.Plurks.LastOrDefault();

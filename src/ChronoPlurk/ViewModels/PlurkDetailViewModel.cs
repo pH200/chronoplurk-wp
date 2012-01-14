@@ -58,6 +58,7 @@ namespace ChronoPlurk.ViewModels
             plurkDetailFooterViewModel.Parent = this;
             DetailFooter = plurkDetailFooterViewModel;
 
+            DisableDuplicationCheck = true; // All replies' ids are the same.
             DisableTimelinePlurkHolder = true;
             IgnoreSelection = true;
 

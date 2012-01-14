@@ -88,7 +88,7 @@ namespace ChronoPlurk.ViewModels
                     {
                         PostContent = "";
                         LoadNewComments();
-                    }, () => _progressService.Hide());
+                    }, error => _progressService.Hide());
                 }
             }
         }
