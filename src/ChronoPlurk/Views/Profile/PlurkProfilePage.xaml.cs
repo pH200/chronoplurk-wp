@@ -14,15 +14,29 @@ using ChronoPlurk.Helpers;
 using ChronoPlurk.Resources.i18n;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
+using WP7Contrib.View.Transitions.Animation;
 
 namespace ChronoPlurk.Views.Profile
 {
-    public partial class PlurkProfilePage : PhoneApplicationPage
+    public partial class PlurkProfilePage
     {
         public PlurkProfilePage()
         {
             InitializeComponent();
+            AnimationContext = LayoutRoot;
             BuildAppBar();
+        }
+
+        protected override AnimatorHelperBase GetAnimation(AnimationType animationType, Uri toOrFrom)
+        {
+            switch (animationType)
+            {
+                case AnimationType.NavigateForwardOut:
+                    return new DefaultPageAnimator() { RootElement = LayoutRoot };
+                case AnimationType.NavigateBackwardIn:
+                    return new DefaultPageAnimator() { RootElement = LayoutRoot };
+            }
+            return base.GetAnimation(animationType, toOrFrom);
         }
 
         private void BuildAppBar()

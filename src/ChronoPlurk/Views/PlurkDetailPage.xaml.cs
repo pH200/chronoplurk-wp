@@ -12,6 +12,7 @@ using Caliburn.Micro;
 using ChronoPlurk.Helpers;
 using ChronoPlurk.Resources.i18n;
 using Microsoft.Phone.Shell;
+using WP7Contrib.View.Transitions.Animation;
 
 namespace ChronoPlurk.Views
 {
@@ -20,7 +21,21 @@ namespace ChronoPlurk.Views
         public PlurkDetailPage()
         {
             InitializeComponent();
+            AnimationContext = LayoutRoot;
             BuildAppBar();
+        }
+
+        protected override AnimatorHelperBase GetAnimation(AnimationType animationType, Uri toOrFrom)
+        {
+            switch (animationType)
+            {
+                case AnimationType.NavigateForwardOut:
+                case AnimationType.NavigateBackwardOut:
+                    return new SlideDownAnimator() { RootElement = LayoutRoot };
+                case AnimationType.NavigateForwardIn:
+                    return new SlideUpAnimator() { RootElement = LayoutRoot };
+            }
+            return base.GetAnimation(animationType, toOrFrom);
         }
 
         public AppBarMenuItem MuteButton { get; private set; }

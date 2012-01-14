@@ -14,15 +14,30 @@ using ChronoPlurk.Helpers;
 using ChronoPlurk.Resources.i18n;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
+using WP7Contrib.View.Transitions.Animation;
 
 namespace ChronoPlurk.Views.Compose
 {
-    public partial class FriendsSelectionPage : PhoneApplicationPage
+    public partial class FriendsSelectionPage
     {
         public FriendsSelectionPage()
         {
             InitializeComponent();
+            AnimationContext = LayoutRoot;
             BuildAppBar();
+        }
+        
+        protected override AnimatorHelperBase GetAnimation(AnimationType animationType, Uri toOrFrom)
+        {
+            switch (animationType)
+            {
+                case AnimationType.NavigateForwardOut:
+                case AnimationType.NavigateBackwardOut:
+                    return new SlideDownAnimator() { RootElement = LayoutRoot };
+                case AnimationType.NavigateForwardIn:
+                    return new SlideUpAnimator() { RootElement = LayoutRoot };
+            }
+            return base.GetAnimation(animationType, toOrFrom);
         }
 
         private void BuildAppBar()

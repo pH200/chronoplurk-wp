@@ -8,6 +8,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using WP7Contrib.View.Transitions.Animation;
 
 namespace ChronoPlurk.Views
 {
@@ -17,6 +18,18 @@ namespace ChronoPlurk.Views
         {
             InitializeComponent();
             AnimationContext = LayoutRoot;
+        }
+
+        protected override AnimatorHelperBase GetAnimation(AnimationType animationType, Uri toOrFrom)
+        {
+            switch (animationType)
+            {
+                case AnimationType.NavigateForwardOut:
+                    return new DefaultPageAnimator() { RootElement = LayoutRoot };
+                case AnimationType.NavigateBackwardIn:
+                    return new DefaultPageAnimator() { RootElement = LayoutRoot };
+            }
+            return base.GetAnimation(animationType, toOrFrom);
         }
     }
 }

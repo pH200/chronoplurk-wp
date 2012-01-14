@@ -12,6 +12,7 @@ using Caliburn.Micro;
 using ChronoPlurk.Helpers;
 using ChronoPlurk.Resources.i18n;
 using Microsoft.Phone.Shell;
+using WP7Contrib.View.Transitions.Animation;
 
 namespace ChronoPlurk.Views
 {
@@ -20,7 +21,20 @@ namespace ChronoPlurk.Views
         public SearchPage()
         {
             InitializeComponent();
+            AnimationContext = LayoutRoot;
             BuildAppBar();
+        }
+
+        protected override AnimatorHelperBase GetAnimation(AnimationType animationType, Uri toOrFrom)
+        {
+            switch (animationType)
+            {
+                case AnimationType.NavigateForwardOut:
+                    return new DefaultPageAnimator() { RootElement = LayoutRoot };
+                case AnimationType.NavigateBackwardIn:
+                    return new DefaultPageAnimator() { RootElement = LayoutRoot };
+            }
+            return base.GetAnimation(animationType, toOrFrom);
         }
 
         private void BuildAppBar()
