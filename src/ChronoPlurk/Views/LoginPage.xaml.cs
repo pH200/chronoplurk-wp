@@ -10,14 +10,29 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
+using WP7Contrib.View.Transitions.Animation;
 
 namespace ChronoPlurk.Views
 {
-    public partial class LoginPage : PhoneApplicationPage
+    public partial class LoginPage
     {
         public LoginPage()
         {
             InitializeComponent();
+            AnimationContext = LayoutRoot;
+        }
+
+        protected override AnimatorHelperBase GetAnimation(AnimationType animationType, Uri toOrFrom)
+        {
+            switch (animationType)
+            {
+                case AnimationType.NavigateForwardOut:
+                case AnimationType.NavigateBackwardOut:
+                    return new SlideDownAnimator() { RootElement = LayoutRoot };
+                case AnimationType.NavigateForwardIn:
+                    return new SlideUpAnimator() { RootElement = LayoutRoot };
+            }
+            return base.GetAnimation(animationType, toOrFrom);
         }
     }
 }
