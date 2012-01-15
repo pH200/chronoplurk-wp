@@ -79,24 +79,7 @@ namespace ChronoPlurk.ViewModels
 
         protected bool DisableDuplicationCheck { get; set; }
 
-        #region ListSelectedIndex
-        
-        private int _listSelectedIndex = -1; // Must defualt as -1
-
-        public int ListSelectedIndex
-        {
-            get { return _listSelectedIndex; }
-            set
-            {
-                if (_listSelectedIndex == value) return;
-                _listSelectedIndex = value;
-                NotifyOfPropertyChange(() => ListSelectedIndex);
-            }
-        }
-
         public bool IgnoreSelection { get; set; }
-
-        #endregion
 
         protected TimelineBaseViewModel(
             INavigationService navigationService,
@@ -124,22 +107,18 @@ namespace ChronoPlurk.ViewModels
             base.OnViewLoaded(view);
         }
 
-        public void OnSelectionChanged(SelectionChangedEventArgs e)
+        public void OnItemTap(object dataContext)
         {
-            if (IgnoreSelection)
+            if (!IgnoreSelection)
             {
-                return;
+                var item = dataContext as PlurkItemViewModel;
+                if (item != null)
+                {
+                    var location = new PlurkLocation(item);
+                    NavigationService.Navigate(location);
+                    PlurkContentStorageService.AddOrReplace(item.Id, item.ContentHtml);
+                }
             }
-            if (ListSelectedIndex == -1)
-            {
-                return;
-            }
-            var item = Items[ListSelectedIndex];
-            var location = new PlurkLocation(item);
-            NavigationService.Navigate(location);
-            PlurkContentStorageService.AddOrReplace(item.Id, item.ContentHtml);
-
-            ListSelectedIndex = -1;
         }
 
         public void Clear()
@@ -363,7 +342,7 @@ namespace ChronoPlurk.ViewModels
             {
                 return null;
             }
-            var scroll = view.FindVisualChildByName<ScrollViewer>("ListScroll");
+            var scroll = view.FindChildOfType<ScrollViewer>();
             
             if (_scrollCache == null)
             {
