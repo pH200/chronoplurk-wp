@@ -125,6 +125,7 @@ namespace ChronoPlurk.ViewModels
             if (String.IsNullOrWhiteSpace(PlurkDetailViewModel.DetailFooter.PostContent))
             {
                 PlurkDetailViewModel.ScrollToEnd();
+                PlurkDetailViewModel.DetailFooter.ResponseFocus = true;
             }
             else
             {

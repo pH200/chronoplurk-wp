@@ -73,6 +73,7 @@ namespace ChronoPlurk.ViewModels
             {
                 _timeline.RefreshOnActivate = true;
                 ActivateItem(_timeline);
+                _timeline.ScrollToTop();
                 NewPost = false;
             }
 

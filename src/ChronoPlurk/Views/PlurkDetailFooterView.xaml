@@ -29,7 +29,7 @@
                      InputScope="Text"
                      cal:Message.Attach="[Event TextChanged] = [Action OnTextChanged()]">
                 <i:Interaction.Behaviors>
-                    <pcontrols:FocusBehavior x:Name="ResponseFocus" />
+                    <pcontrols:FocusBehavior x:Name="ResponseFocus" IsFocused="{Binding ResponseFocus, Mode=TwoWay}" />
                 </i:Interaction.Behaviors>
             </TextBox>
             <Button x:Name="Reply"
