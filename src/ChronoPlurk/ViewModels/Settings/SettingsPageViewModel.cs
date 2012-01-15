@@ -48,7 +48,7 @@ namespace ChronoPlurk.ViewModels.Settings
             };
             AutoRotatesSelectedIndex = SettingsService.GetCurrentAutoRotateIndex();
 
-            VersionText = "1.1";
+            VersionText = DefaultConfiguration.VersionText;
         }
 
         protected override void OnActivate()
@@ -88,6 +88,11 @@ namespace ChronoPlurk.ViewModels.Settings
             {
                 return default(AutoRotateMode);
             }
+        }
+
+        public void OnPlurkLink()
+        {
+            NavigationService.GotoProfilePage(8397265, "ChronoPlurk", "http://avatars.plurk.com/8397265-big2.jpg");
         }
     }
 }
