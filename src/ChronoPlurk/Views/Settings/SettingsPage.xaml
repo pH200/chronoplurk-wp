@@ -62,10 +62,15 @@
                              FontSize="{StaticResource PhoneFontSizeMedium}"
                              Foreground="{StaticResource PhoneSubtleBrush}" />
                     </TextBlock>
-                    <Image Margin="0,24,0,0" Source="/Resources/Images/cytisan_logo.jpg" Stretch="None" />
+                    <Image Margin="0,24,0,0"
+                           Source="/Resources/Images/cytisan_logo.jpg"
+                           cal:Message.Attach="[Event Tap] = [Action OnCytisanLink()]"
+                           Stretch="None" />
                     <TextBlock Margin="12,12,0,0" Text="Copyright © 2012 Cytisan. All rights reserved." />
-                    <HyperlinkButton Content="http://cytisan.com" TargetName="_blank" HorizontalAlignment="Left" />
-                    
+                    <HyperlinkButton Content="http://cytisan.com"
+                                     NavigateUri="http://cytisan.com"
+                                     TargetName="_blank"
+                                     HorizontalAlignment="Left" />
                     <TextBlock Text="Follow us on Plurk!"
                                Margin="12,20,0,0"
                                Style="{StaticResource PhoneTextLargeStyle}" />

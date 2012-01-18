@@ -8,6 +8,7 @@ using ChronoPlurk.Core;
 using ChronoPlurk.Resources.i18n;
 using ChronoPlurk.Services;
 using Microsoft.Phone.Controls;
+using Microsoft.Phone.Tasks;
 using NotifyPropertyWeaver;
 
 namespace ChronoPlurk.ViewModels.Settings
@@ -93,6 +94,12 @@ namespace ChronoPlurk.ViewModels.Settings
         public void OnPlurkLink()
         {
             NavigationService.GotoProfilePage(8397265, "ChronoPlurk", "http://avatars.plurk.com/8397265-big2.jpg");
+        }
+
+        public void OnCytisanLink()
+        {
+            var webBrowserTask = new WebBrowserTask() { Uri = new Uri("http://cytisan.com/", UriKind.Absolute) };
+            webBrowserTask.Show();
         }
     }
 }
