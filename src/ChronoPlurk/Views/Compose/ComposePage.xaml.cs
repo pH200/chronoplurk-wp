@@ -21,7 +21,7 @@ namespace ChronoPlurk.Views.Compose
         public ComposePage()
         {
             InitializeComponent();
-            AnimationContext = LayoutRoot;
+            //AnimationContext = LayoutRoot;
             BuildAppBar();
         }
 
