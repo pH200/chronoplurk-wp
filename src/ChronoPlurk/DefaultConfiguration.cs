@@ -21,7 +21,7 @@ namespace ChronoPlurk
 
         public static TimeSpan TimeoutUpload = TimeSpan.FromSeconds(60);
 
-        public const string VersionText = "1.1";
+        public const string VersionText = "1.1.0";
 
         /// <summary>
         /// Initialize connection settings.

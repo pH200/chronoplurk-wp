@@ -62,7 +62,8 @@
                              FontSize="{StaticResource PhoneFontSizeMedium}"
                              Foreground="{StaticResource PhoneSubtleBrush}" />
                     </TextBlock>
-                    <TextBlock Margin="12,24,0,0" Text="Copyright © 2012 Cytisan. All rights reserved." />
+                    <Image Margin="0,24,0,0" Source="/Resources/Images/cytisan_logo.jpg" Stretch="None" />
+                    <TextBlock Margin="12,12,0,0" Text="Copyright © 2012 Cytisan. All rights reserved." />
                     <HyperlinkButton Content="http://cytisan.com" TargetName="_blank" HorizontalAlignment="Left" />
                     
                     <TextBlock Text="Follow us on Plurk!"
