@@ -52,8 +52,10 @@
             </controls:PivotItem>
 
             <controls:PivotItem Header="{Binding Path=LocalizedResources.settingsAbout, Source={StaticResource LocalizedStrings}}">
-                <StackPanel>
-                    <TextBlock Margin="12,0,0,0">
+                <ScrollViewer HorizontalScrollBarVisibility="Disabled"
+                              VerticalScrollBarVisibility="Auto">
+                    <StackPanel>
+                        <TextBlock Margin="12,0,0,0">
                         <Run Text="ChronoPlurk" FontSize="{StaticResource PhoneFontSizeLarge}" />
                         <Run Text=" Version "
                              FontSize="{StaticResource PhoneFontSizeMedium}"
@@ -61,27 +63,28 @@
                         <Run Text="{Binding VersionText}"
                              FontSize="{StaticResource PhoneFontSizeMedium}"
                              Foreground="{StaticResource PhoneSubtleBrush}" />
-                    </TextBlock>
-                    <Image Margin="0,24,0,0"
+                        </TextBlock>
+                        <Image Margin="0,24,0,0"
                            Source="/Resources/Images/cytisan_logo.jpg"
                            cal:Message.Attach="[Event Tap] = [Action OnCytisanLink()]"
                            Stretch="None" />
-                    <TextBlock Margin="12,12,0,0" Text="Copyright © 2012 Cytisan. All rights reserved." />
-                    <HyperlinkButton Content="http://cytisan.com"
+                        <TextBlock Margin="12,12,0,0" Text="Copyright © 2012 Cytisan. All rights reserved." />
+                        <HyperlinkButton Content="http://cytisan.com"
                                      NavigateUri="http://cytisan.com"
                                      TargetName="_blank"
                                      HorizontalAlignment="Left" />
-                    <TextBlock Text="Follow us on Plurk!"
+                        <TextBlock Text="Follow us on Plurk!"
                                Margin="12,20,0,0"
                                Style="{StaticResource PhoneTextLargeStyle}" />
-                    <HyperlinkButton Content="@ChronoPlurk"
+                        <HyperlinkButton Content="@ChronoPlurk"
                                      HorizontalAlignment="Left"
                                      FontSize="{StaticResource PhoneFontSizeMediumLarge}"
                                      cal:Message.Attach="[Event Click] = [Action OnPlurkLink()]"/>
-                    <Button x:Name="OssCreditsButton"
+                        <Button x:Name="OssCreditsButton"
                             Content="{Binding Path=LocalizedResources.settingsOss, Source={StaticResource LocalizedStrings}}"
                             Margin="0,20,0,0" HorizontalAlignment="Left" />
-                </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
             </controls:PivotItem>
         </controls:Pivot>
     </Grid>
