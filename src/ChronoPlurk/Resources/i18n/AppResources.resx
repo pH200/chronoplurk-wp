@@ -268,7 +268,7 @@
     <value>Loading Responses</value>
   </data>
   <data name="msgSearching" xml:space="preserve">
-    <value>searching</value>
+    <value>Searching</value>
   </data>
   <data name="msgSending" xml:space="preserve">
     <value>Sending</value>
