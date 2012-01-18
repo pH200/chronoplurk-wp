@@ -56,15 +56,16 @@ namespace ChronoPlurk
             base.ConfigureContainer(builder);
 
             builder.RegisterType(typeof(MainPageViewModel)).AsSelf().SingleInstance();
-            builder.RegisterType(typeof(SearchResultViewModel)).AsSelf().SingleInstance();
-            builder.RegisterType(typeof(SearchRecordsViewModel)).AsSelf().SingleInstance();
             builder.RegisterType(typeof(PlurkMainPageViewModel)).AsSelf().SingleInstance();
-            builder.RegisterType(typeof(SearchPageViewModel)).AsSelf().SingleInstance();
-            builder.RegisterType(typeof(PlurkDetailPageViewModel)).AsSelf().SingleInstance();
-            builder.RegisterType(typeof(PlurkDetailViewModel)).AsSelf().SingleInstance();
-            builder.RegisterType(typeof(PlurkDetailHeaderViewModel)).AsSelf().SingleInstance();
-            builder.RegisterType(typeof(PlurkDetailFooterViewModel)).AsSelf().SingleInstance();
-            builder.RegisterType(typeof(SettingsPageViewModel)).AsSelf().SingleInstance();
+            
+            builder.RegisterType<SearchResultViewModel>().AsSelf();
+            builder.RegisterType<SearchRecordsViewModel>().AsSelf();
+            builder.RegisterType<SearchPageViewModel>().AsSelf();
+            builder.RegisterType<PlurkDetailPageViewModel>().AsSelf();
+            builder.RegisterType<PlurkDetailViewModel>().AsSelf();
+            builder.RegisterType<PlurkDetailHeaderViewModel>().AsSelf();
+            builder.RegisterType<PlurkDetailFooterViewModel>().AsSelf();
+            builder.RegisterType<SettingsPageViewModel>().AsSelf();
             
             #region Main VM
             builder.RegisterType<TimelineViewModel>().AsSelf();
