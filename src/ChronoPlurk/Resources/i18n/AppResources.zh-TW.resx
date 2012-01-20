@@ -414,4 +414,7 @@
   <data name="settingsFilters" xml:space="preserve">
     <value>主畫面的河道顯示列表</value>
   </data>
+  <data name="delete" xml:space="preserve">
+    <value>刪除</value>
+  </data>
 </root>

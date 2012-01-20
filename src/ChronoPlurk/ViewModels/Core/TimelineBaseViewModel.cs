@@ -431,6 +431,19 @@ namespace ChronoPlurk.ViewModels
             }
         }
 
+        public void MenuDelete(object dataContext)
+        {
+            var item = dataContext as PlurkItemViewModel;
+            if (item != null)
+            {
+                if (Items.Remove(item))
+                {
+                    var service = IoC.Get<IPlurkService>();
+                    service.Delete(item.Id);
+                }
+            }
+        }
+
         #endregion
     }
 }
