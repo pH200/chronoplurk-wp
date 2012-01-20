@@ -88,6 +88,10 @@
                                      NavigateUri="http://cytisan.com"
                                      TargetName="_blank"
                                      HorizontalAlignment="Left" />
+                        <HyperlinkButton Content="http://cytisan.com/chronoplurk/"
+                                     NavigateUri="http://cytisan.com/chronoplurk/"
+                                     TargetName="_blank"
+                                     HorizontalAlignment="Left" />
                         <TextBlock Text="Follow us on Plurk!"
                                Margin="12,20,0,0"
                                Style="{StaticResource PhoneTextLargeStyle}" />
