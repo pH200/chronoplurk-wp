@@ -405,4 +405,7 @@
   <data name="appbarSettings" xml:space="preserve">
     <value>設定</value>
   </data>
+  <data name="msgDisconnectPC" xml:space="preserve">
+    <value>開啟照片之前必須先解除手機與電腦的連接</value>
+  </data>
 </root>

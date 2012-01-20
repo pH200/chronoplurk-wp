@@ -19,16 +19,16 @@ using Plurto.Entities;
 namespace ChronoPlurk.ViewModels.Compose
 {
     [NotifyForAll]
-    public class ComposePageViewModel : LoginAvailablePage, IHandle<TaskCompleted<PhotoResult>>
+    public class ComposePageViewModel : LoginAvailablePage
     {
         private IPlurkService PlurkService { get; set; }
         private readonly INavigationService _navigationService;
         private readonly IProgressService _progressService;
-        private readonly IEventAggregator _events;
         private readonly FriendsFansCompletionService _friendsFansCompletionService;
 
         private IDisposable _composeHandler;
         private IDisposable _uploadHandler;
+        private IDisposable _photoChooserDisposable;
 
         public string Username { get { return PlurkService.Username; } }
 
@@ -77,7 +77,6 @@ namespace ChronoPlurk.ViewModels.Compose
             IPlurkService plurkService,
             INavigationService navigationService,
             IProgressService progressService,
-            IEventAggregator events,
             FriendsFansCompletionService friendsFansCompletionService,
             LoginViewModel loginViewModel)
             : base(loginViewModel)
@@ -86,8 +85,6 @@ namespace ChronoPlurk.ViewModels.Compose
             _navigationService = navigationService;
             _progressService = progressService;
             _friendsFansCompletionService = friendsFansCompletionService;
-
-            _events = events;
 
             LockVisibility = Visibility.Collapsed;
             HasPostContentFocus = true;
@@ -98,8 +95,6 @@ namespace ChronoPlurk.ViewModels.Compose
 
         protected override void OnActivate()
         {
-            _events.Subscribe(this);
-
             NotifyOfPropertyChange(() => SelectedUsers);
             if (SelectedUsers.Count > 0)
             {
@@ -109,12 +104,6 @@ namespace ChronoPlurk.ViewModels.Compose
             }
 
             base.OnActivate();
-        }
-
-        protected override void OnDeactivate(bool close)
-        {
-            _events.Unsubscribe(this);
-            base.OnDeactivate(close);
         }
 
         public void Compose()
@@ -171,10 +160,30 @@ namespace ChronoPlurk.ViewModels.Compose
         {
             try
             {
-                _events.RequestTask<PhotoChooserTask>(task =>
+                if (_photoChooserDisposable != null)
                 {
-                    task.ShowCamera = true;
+                    _photoChooserDisposable.Dispose();
+                }
+                var photoChooser = new PhotoChooserTask() { ShowCamera = true };
+                var pattern = Observable.FromEventPattern<PhotoResult>(handler => photoChooser.Completed += handler,
+                                                                       handler => photoChooser.Completed -= handler);
+                _photoChooserDisposable = pattern.Take(1).TimeInterval().Subscribe(result =>
+                {
+                    var photoResult = result.Value.EventArgs;
+                    switch (photoResult.TaskResult)
+                    {
+                        case TaskResult.OK:
+                            UploadPicture(photoResult.ChosenPhoto, photoResult.OriginalFileName);
+                            break;
+                        case TaskResult.Cancel:
+                            if (result.Interval < TimeSpan.FromSeconds(1.5))
+                            {
+                                Execute.OnUIThread(() => MessageBox.Show(AppResources.msgDisconnectPC));
+                            }
+                            break;
+                    }
                 });
+                photoChooser.Show();
             }
             catch (InvalidOperationException)
             {
@@ -182,14 +191,6 @@ namespace ChronoPlurk.ViewModels.Compose
 #if DEBUG
                 throw;
 #endif
-            }
-        }
-
-        public void Handle(TaskCompleted<PhotoResult> message)
-        {
-            if (message.Result.TaskResult == TaskResult.OK)
-            {
-                UploadPicture(message.Result.ChosenPhoto, message.Result.OriginalFileName);
             }
         }
 

@@ -25,18 +25,18 @@ namespace ChronoPlurk.Views.Compose
             BuildAppBar();
         }
 
-        protected override AnimatorHelperBase GetAnimation(AnimationType animationType, Uri toOrFrom)
-        {
-            switch (animationType)
-            {
-                case AnimationType.NavigateForwardOut:
-                case AnimationType.NavigateBackwardOut:
-                    return new SlideDownAnimator() { RootElement = LayoutRoot };
-                case AnimationType.NavigateForwardIn:
-                    return new SlideUpAnimator() { RootElement = LayoutRoot };
-            }
-            return base.GetAnimation(animationType, toOrFrom);
-        }
+        //protected override AnimatorHelperBase GetAnimation(AnimationType animationType, Uri toOrFrom)
+        //{
+        //    switch (animationType)
+        //    {
+        //        case AnimationType.NavigateForwardOut:
+        //        case AnimationType.NavigateBackwardOut:
+        //            return new SlideDownAnimator() { RootElement = LayoutRoot };
+        //        case AnimationType.NavigateForwardIn:
+        //            return new SlideUpAnimator() { RootElement = LayoutRoot };
+        //    }
+        //    return base.GetAnimation(animationType, toOrFrom);
+        //}
 
         private void BuildAppBar()
         {

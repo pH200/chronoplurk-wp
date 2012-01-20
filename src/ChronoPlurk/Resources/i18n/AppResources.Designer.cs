@@ -610,6 +610,15 @@ namespace ChronoPlurk.Resources.i18n {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to To view photos, disconnect your phone from the computer..
+        /// </summary>
+        public static string msgDisconnectPC {
+            get {
+                return ResourceManager.GetString("msgDisconnectPC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Downloading Friends List.
         /// </summary>
         public static string msgDownloadingFriendsList {

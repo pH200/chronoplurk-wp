@@ -405,4 +405,7 @@
   <data name="appbarSettings" xml:space="preserve">
     <value>settings</value>
   </data>
+  <data name="msgDisconnectPC" xml:space="preserve">
+    <value>To view photos, disconnect your phone from the computer.</value>
+  </data>
 </root>
