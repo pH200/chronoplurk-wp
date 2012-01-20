@@ -30,7 +30,9 @@ namespace ChronoPlurk.ViewModels.Compose
         private IDisposable _uploadHandler;
         private IDisposable _photoChooserDisposable;
 
-        public string Username { get { return PlurkService.Username; } }
+        public string Username { get; set; }
+
+        public string UserAvatar { get; set; }
 
         public string PostContent { get; set; }
 
@@ -91,6 +93,17 @@ namespace ChronoPlurk.ViewModels.Compose
 
             Qualifiers = QualifierViewModel.AllQualifiers;
             Qualifier = QualifierViewModel.AllQualifiers.First(q => q.Qualifier == Plurto.Core.Qualifier.Says);
+        }
+
+        protected override void OnInitialize()
+        {
+            Username = PlurkService.Username;
+            if (PlurkService.AppUserInfo != null)
+            {
+                UserAvatar = PlurkService.AppUserInfo.UserAvatar;
+            }
+
+            base.OnInitialize();
         }
 
         protected override void OnActivate()

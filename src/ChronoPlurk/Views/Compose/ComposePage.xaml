@@ -25,11 +25,11 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         
-        <StackPanel Grid.Row="0" Margin="12,17,0,28">
+        <StackPanel Grid.Row="0" Margin="24,17,0,28">
             <StackPanel Orientation="Horizontal">
                 <Image imgloader:LowProfileImageLoader.UriSource="{Binding UserAvatar}"
                        Width="18" Height="18" />
-                <TextBlock x:Name="Username" Style="{StaticResource PhoneTextNormalStyle}"/>
+                <TextBlock x:Name="Username" />
             </StackPanel>
         </StackPanel>
         
