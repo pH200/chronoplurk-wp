@@ -60,6 +60,7 @@ namespace ChronoPlurk.ViewModels
 
             DisableDuplicationCheck = true; // All replies' ids are the same.
             DisableTimelinePlurkHolder = true;
+            EnableHyperlink = true;
             IgnoreSelection = true;
 
             ProgressMessage = AppResources.msgLoadingResponses;

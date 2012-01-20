@@ -58,7 +58,7 @@
             </StackPanel>
             <PlurkControls:HtmlTextBox Html="{Binding ContentHtml}"
                                        Margin="-12,0,0,0"
-                                       EnableHyperlink="False" />
+                                       EnableHyperlink="{Binding EnableHyperlink}" />
             <Grid HorizontalAlignment="Right" Width="350">
                 <Grid HorizontalAlignment="Right" Margin="0,0,130,0">
                     <TextBlock Text="●"

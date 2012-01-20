@@ -14,6 +14,12 @@ namespace ChronoPlurk.ViewModels
     [NotifyForAll]
     public sealed class PlurkItemViewModel : PropertyChangedBase
     {
+        #region View Properties
+
+        public bool EnableHyperlink { get; set; }
+
+        #endregion
+
         public int Id { get; set; }
 
         public int UserId { get; set; }

@@ -79,6 +79,8 @@ namespace ChronoPlurk.ViewModels
 
         protected bool DisableDuplicationCheck { get; set; }
 
+        protected bool EnableHyperlink { get; set; }
+
         public bool IgnoreSelection { get; set; }
 
         protected TimelineBaseViewModel(
@@ -287,6 +289,7 @@ namespace ChronoPlurk.ViewModels
                 NoComments = plurk.Plurk.NoComments,
                 PlurkType = plurk.Plurk.PlurkType,
                 ContextMenuEnabled = PlurkService.IsLoaded,
+                EnableHyperlink = this.EnableHyperlink,
             });
         }
 
