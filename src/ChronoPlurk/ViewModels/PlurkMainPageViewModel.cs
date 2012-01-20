@@ -14,6 +14,7 @@ namespace ChronoPlurk.ViewModels
     public sealed class PlurkMainPageViewModel : PlurkAppBarPage
     {
         private readonly TimelineViewModel _timeline;
+        private readonly UnreadPlurksViewModel _unreadPlurksViewModel;
         private readonly MyPlurksViewModel _myPlurksViewModel;
         private readonly PrivatePlurksViewModel _privatePlurksViewModel;
         private readonly RespondedPlurksViewModel _respondedPlurksViewModel;
@@ -35,6 +36,7 @@ namespace ChronoPlurk.ViewModels
             SettingsService settingsService,
             LoginViewModel loginViewModel,
             TimelineViewModel timeline,
+            UnreadPlurksViewModel unreadPlurksViewModel,
             MyPlurksViewModel myPlurksViewModel,
             PrivatePlurksViewModel privatePlurksViewModel,
             RespondedPlurksViewModel respondedPlurksViewModel,
@@ -44,6 +46,7 @@ namespace ChronoPlurk.ViewModels
             SettingsService = settingsService;
 
             _timeline = timeline;
+            _unreadPlurksViewModel = unreadPlurksViewModel;
             _myPlurksViewModel = myPlurksViewModel;
             _privatePlurksViewModel = privatePlurksViewModel;
             _respondedPlurksViewModel = respondedPlurksViewModel;
@@ -66,6 +69,10 @@ namespace ChronoPlurk.ViewModels
             while (Items.Count > 1)
             {
                 Items.RemoveAt(1);
+            }
+            if (_filters.Unread)
+            {
+                Items.Add(_unreadPlurksViewModel);
             }
             if (_filters.My)
             {

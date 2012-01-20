@@ -69,6 +69,7 @@ namespace ChronoPlurk
             
             #region Main VM
             builder.RegisterType<TimelineViewModel>().AsSelf();
+            builder.RegisterType<UnreadPlurksViewModel>().AsSelf();
             builder.RegisterType<MyPlurksViewModel>().AsSelf();
             builder.RegisterType<PrivatePlurksViewModel>().AsSelf();
             builder.RegisterType<RespondedPlurksViewModel>().AsSelf();

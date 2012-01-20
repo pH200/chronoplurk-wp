@@ -181,6 +181,7 @@
     <Compile Include="ViewModels\Main\PrivatePlurksViewModel.cs" />
     <Compile Include="ViewModels\Main\RespondedPlurksViewModel.cs" />
     <Compile Include="ViewModels\Main\TimelineViewModel.cs" />
+    <Compile Include="ViewModels\Main\UnreadPlurksViewModel.cs" />
     <Compile Include="ViewModels\PlurkDetailFooterViewModel.cs" />
     <Compile Include="ViewModels\PlurkDetailHeaderViewModel.cs" />
     <Compile Include="ViewModels\PlurkDetailPageViewModel.cs" />
@@ -224,6 +225,9 @@
     </Compile>
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Main\UnreadPlurksView.xaml.cs">
+      <DependentUpon>UnreadPlurksView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PlurkDetailPage.xaml.cs">
       <DependentUpon>PlurkDetailPage.xaml</DependentUpon>
@@ -306,6 +310,10 @@
     <Page Include="Views\Main\TimelineView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Main\UnreadPlurksView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\PlurkDetailFooterView.xaml">
       <SubType>Designer</SubType>
