@@ -38,16 +38,31 @@
 
             <controls:PivotItem Header="{Binding Path=LocalizedResources.settingsGeneral, Source={StaticResource LocalizedStrings}}">
                 <Grid>
-                    <StackPanel>
-                        <toolkit:ListPicker x:Name="AutoRotates"
+                    <ScrollViewer HorizontalScrollBarVisibility="Disabled"
+                                  VerticalScrollBarVisibility="Auto">
+                        <StackPanel>
+                            <toolkit:ListPicker x:Name="AutoRotates"
                                             ItemsSource="{Binding AutoRotates}"
                                             Header="{Binding Path=LocalizedResources.settingsAutoRotate, Source={StaticResource LocalizedStrings}}"
                                             FullModeHeader="{Binding Path=LocalizedResources.settingsAutoRotate, Source={StaticResource LocalizedStrings}}"
                                             FullModeItemTemplate="{StaticResource FullTemplate}"
                                             SelectedIndex="{Binding AutoRotatesSelectedIndex, Mode=TwoWay}"
                                             cal:Message.Attach="[Event SelectionChanged] = [Action OnAutoRotateSelectionChanged($source)]">
-                        </toolkit:ListPicker>
-                    </StackPanel>
+                            </toolkit:ListPicker>
+                            <TextBlock Text="{Binding Path=LocalizedResources.settingsFilters, Source={StaticResource LocalizedStrings}}"
+                                       Style="{StaticResource PhoneTextSmallStyle}" />
+                            <CheckBox x:Name="UnreadChk"
+                                      Content="{Binding Path=LocalizedResources.filterUnread, Source={StaticResource LocalizedStrings}}" />
+                            <CheckBox x:Name="MyChk"
+                                      Content="{Binding Path=LocalizedResources.filterMy, Source={StaticResource LocalizedStrings}}" />
+                            <CheckBox x:Name="PrivateChk"
+                                      Content="{Binding Path=LocalizedResources.filterPrivate, Source={StaticResource LocalizedStrings}}" />
+                            <CheckBox x:Name="RespondedChk"
+                                      Content="{Binding Path=LocalizedResources.filterResponded, Source={StaticResource LocalizedStrings}}" />
+                            <CheckBox x:Name="LikedChk"
+                                      Content="{Binding Path=LocalizedResources.filterLiked, Source={StaticResource LocalizedStrings}}" />
+                        </StackPanel>
+                    </ScrollViewer>
                 </Grid>
             </controls:PivotItem>
 

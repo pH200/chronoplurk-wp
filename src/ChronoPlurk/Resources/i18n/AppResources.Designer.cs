@@ -529,6 +529,15 @@ namespace ChronoPlurk.Resources.i18n {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to unread.
+        /// </summary>
+        public static string filterUnread {
+            get {
+                return ResourceManager.GetString("filterUnread", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This is your first time using friends list.\nFriends list will download automatically..
         /// </summary>
         public static string friendsListFirst {
@@ -777,6 +786,15 @@ namespace ChronoPlurk.Resources.i18n {
         public static string settingsAutoRotate {
             get {
                 return ResourceManager.GetString("settingsAutoRotate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to filters on main page.
+        /// </summary>
+        public static string settingsFilters {
+            get {
+                return ResourceManager.GetString("settingsFilters", resourceCulture);
             }
         }
         

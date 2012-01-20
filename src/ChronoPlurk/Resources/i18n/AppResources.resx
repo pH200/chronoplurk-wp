@@ -408,4 +408,10 @@
   <data name="msgDisconnectPC" xml:space="preserve">
     <value>To view photos, disconnect your phone from the computer.</value>
   </data>
+  <data name="filterUnread" xml:space="preserve">
+    <value>unread</value>
+  </data>
+  <data name="settingsFilters" xml:space="preserve">
+    <value>filters on main page</value>
+  </data>
 </root>

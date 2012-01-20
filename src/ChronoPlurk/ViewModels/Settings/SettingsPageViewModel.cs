@@ -7,6 +7,7 @@ using Caliburn.Micro;
 using ChronoPlurk.Core;
 using ChronoPlurk.Resources.i18n;
 using ChronoPlurk.Services;
+using ChronoPlurk.ViewModels.Core;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Tasks;
 using NotifyPropertyWeaver;
@@ -30,6 +31,17 @@ namespace ChronoPlurk.ViewModels.Settings
 
         public string VersionText { get; set; }
 
+        #region FiltersOnOff
+
+        public bool UnreadChk { get; set; }
+        public bool MyChk { get; set; }
+        public bool PrivateChk { get; set; }
+        public bool RespondedChk { get; set; }
+        public bool Responded { get; set; }
+        public bool LikedChk { get; set; }
+
+        #endregion
+
         public SettingsPageViewModel(
             SettingsService settingsService,
             IPlurkService plurkService,
@@ -48,6 +60,9 @@ namespace ChronoPlurk.ViewModels.Settings
                 AppResources.autoRotateNever,
             };
             AutoRotatesSelectedIndex = SettingsService.GetCurrentAutoRotateIndex();
+            
+            var pack = SettingsService.GetFiltersPack();
+            SetFiltersValue(pack);
 
             VersionText = DefaultConfiguration.VersionText;
         }
@@ -56,6 +71,14 @@ namespace ChronoPlurk.ViewModels.Settings
         {
             LoginAccount = PlurkService.Username;
             base.OnActivate();
+        }
+
+        protected override void OnDeactivate(bool close)
+        {
+            var pack = CreateFiltersOnOffPack();
+            SettingsService.SetFiltersPack(pack);
+
+            base.OnDeactivate(close);
         }
 
         public void LogoutButton()
@@ -67,6 +90,21 @@ namespace ChronoPlurk.ViewModels.Settings
         public void OssCreditsButton()
         {
             NavigationService.Navigate(new Uri("/Views/Settings/SettingsOssCreditsPage.xaml", UriKind.Relative));
+        }
+
+        private FiltersOnOffPack CreateFiltersOnOffPack()
+        {
+            var pack = new FiltersOnOffPack(true, UnreadChk, MyChk, PrivateChk, RespondedChk, LikedChk);
+            return pack;
+        }
+
+        private void SetFiltersValue(FiltersOnOffPack pack)
+        {
+            UnreadChk = pack.Unread;
+            MyChk = pack.My;
+            PrivateChk = pack.Private;
+            RespondedChk = pack.Responded;
+            LikedChk = pack.Liked;
         }
 
         public void OnAutoRotateSelectionChanged(FrameworkElement fe)

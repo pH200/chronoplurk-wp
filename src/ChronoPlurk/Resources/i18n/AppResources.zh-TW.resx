@@ -408,4 +408,10 @@
   <data name="msgDisconnectPC" xml:space="preserve">
     <value>開啟照片之前必須先解除手機與電腦的連接</value>
   </data>
+  <data name="filterUnread" xml:space="preserve">
+    <value>未讀</value>
+  </data>
+  <data name="settingsFilters" xml:space="preserve">
+    <value>主畫面的河道顯示列表</value>
+  </data>
 </root>

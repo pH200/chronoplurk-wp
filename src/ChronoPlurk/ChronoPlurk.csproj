@@ -163,6 +163,7 @@
     <Compile Include="ViewModels\Compose\ComposePageViewModel.cs" />
     <Compile Include="ViewModels\Compose\FriendsSelectionPageViewModel.cs" />
     <Compile Include="ViewModels\Core\EmptyViewModel.cs" />
+    <Compile Include="ViewModels\Core\FiltersOnOffPack.cs" />
     <Compile Include="ViewModels\Core\IChidT.cs" />
     <Compile Include="ViewModels\Core\IPlurkHolder.cs" />
     <Compile Include="ViewModels\Core\IRefreshSync.cs" />

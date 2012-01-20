@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Caliburn.Micro;
 using ChronoPlurk.Services;
+using ChronoPlurk.ViewModels.Core;
 using ChronoPlurk.ViewModels.Main;
 using NotifyPropertyWeaver;
 
@@ -17,6 +19,10 @@ namespace ChronoPlurk.ViewModels
         private readonly RespondedPlurksViewModel _respondedPlurksViewModel;
         private readonly LikedPlurksViewModel _likedPlurksViewModel;
 
+        private SettingsService SettingsService { get; set; }
+
+        private FiltersOnOffPack _filters;
+
         public string Username { get; set; }
 
         public string UserAvatar { get; set; }
@@ -26,6 +32,7 @@ namespace ChronoPlurk.ViewModels
         public PlurkMainPageViewModel(
             INavigationService navigationService,
             IPlurkService plurkService,
+            SettingsService settingsService,
             LoginViewModel loginViewModel,
             TimelineViewModel timeline,
             MyPlurksViewModel myPlurksViewModel,
@@ -34,11 +41,15 @@ namespace ChronoPlurk.ViewModels
             LikedPlurksViewModel likedPlurksViewModel)
             : base(navigationService, plurkService, loginViewModel)
         {
+            SettingsService = settingsService;
+
             _timeline = timeline;
             _myPlurksViewModel = myPlurksViewModel;
             _privatePlurksViewModel = privatePlurksViewModel;
             _respondedPlurksViewModel = respondedPlurksViewModel;
             _likedPlurksViewModel = likedPlurksViewModel;
+
+            _filters = SettingsService.GetFiltersPack();
         }
 
         protected override void OnInitialize()
@@ -46,15 +57,43 @@ namespace ChronoPlurk.ViewModels
             base.OnInitialize();
 
             Items.Add(_timeline);
-            Items.Add(_myPlurksViewModel);
-            Items.Add(_privatePlurksViewModel);
-            Items.Add(_respondedPlurksViewModel);
-            Items.Add(_likedPlurksViewModel);
+            ResetFilters();
             ActivateItem(_timeline);
+        }
+
+        private void ResetFilters()
+        {
+            while (Items.Count > 1)
+            {
+                Items.RemoveAt(1);
+            }
+            if (_filters.My)
+            {
+                Items.Add(_myPlurksViewModel);
+            }
+            if (_filters.Private)
+            {
+                Items.Add(_privatePlurksViewModel);
+            }
+            if (_filters.Responded)
+            {
+                Items.Add(_respondedPlurksViewModel);
+            }
+            if (_filters.Liked)
+            {
+                Items.Add(_likedPlurksViewModel);
+            }
         }
 
         protected override void OnActivate()
         {
+            var newFilters = SettingsService.GetFiltersPack();
+            if (newFilters != _filters)
+            {
+                _filters = newFilters;
+                ResetFilters();
+                RefreshAll(Items.Where(item => item != _timeline));
+            }
             if (PlurkService.IsUserChanged)
             {
                 PlurkService.IsUserChanged = false;
@@ -80,9 +119,9 @@ namespace ChronoPlurk.ViewModels
             base.OnActivate();
         }
 
-        private void RefreshAll()
+        private void RefreshAll<T>(IEnumerable<T> collection)
         {
-            foreach (var screen in Items.OfType<IRefreshSync>())
+            foreach (var screen in collection.OfType<IRefreshSync>())
             {
                 if (screen == ActiveItem)
                 {
@@ -93,6 +132,11 @@ namespace ChronoPlurk.ViewModels
                     screen.RefreshOnActivate = true;
                 }
             }
+        }
+
+        private void RefreshAll()
+        {
+            RefreshAll(Items);
         }
 
         #region AppBar
