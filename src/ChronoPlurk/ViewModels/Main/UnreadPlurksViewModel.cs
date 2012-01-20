@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Reactive.Linq;
 using Caliburn.Micro;
 using ChronoPlurk.Resources.i18n;
 using ChronoPlurk.Services;
@@ -11,6 +12,8 @@ namespace ChronoPlurk.ViewModels.Main
 {
     public sealed class UnreadPlurksViewModel : TimelineBaseViewModel<TimelineResult>, IRefreshSync
     {
+        private IDisposable _getUnreadCountDisposable;
+
         public bool RefreshOnActivate { get; set; }
 
         public UnreadPlurksViewModel(
@@ -37,6 +40,17 @@ namespace ChronoPlurk.ViewModels.Main
 
         public void RefreshSync()
         {
+            if (_getUnreadCountDisposable != null)
+            {
+                _getUnreadCountDisposable.Dispose();
+            }
+            this.DisplayName = AppResources.filterUnread;
+            var getUnreadCount = PollingCommand.GetUnreadCount().Client(PlurkService.Client).ToObservable();
+            _getUnreadCountDisposable = getUnreadCount.ObserveOnDispatcher().Subscribe(count =>
+            {
+                this.DisplayName = AppResources.filterUnread + string.Format("({0})", count.All);
+            });
+
             var getPlurks = TimelineCommand.GetUnreadPlurks().Client(PlurkService.Client).ToObservable();
             RequestMoreHandler = plurks =>
             {
