@@ -44,6 +44,8 @@ namespace ChronoPlurk.Views
 
         public AppBarButton ReplyButton { get; private set; }
 
+        public AppBarButton PhotosButton { get; private set; }
+
         public static readonly Uri ReplyIconUri = new Uri("Resources/Icons/appbar.edit.rest.png", UriKind.Relative);
         public static readonly Uri CheckIconUri = new Uri("Resources/Icons/appbar.check.rest.png", UriKind.Relative);
 
@@ -66,6 +68,14 @@ namespace ChronoPlurk.Views
                 Message = "ReplyAppBar"
             };
             ReplyButton = replyButton;
+            var photosButton = new AppBarButton()
+            {
+                IconUri = new Uri("Resources/Icons/appbar.feature.camera.rest.png", UriKind.Relative),
+                Text = AppResources.appbarPhotos,
+                IsEnabled = false,
+                Message = "PhotosAppBar"
+            };
+            PhotosButton = photosButton;
             var likeButton = new AppBarMenuItem()
             {
                 Text = AppResources.like,
@@ -81,6 +91,7 @@ namespace ChronoPlurk.Views
 
             ApplicationBar.Buttons.Add(refreshButton);
             ApplicationBar.Buttons.Add(replyButton);
+            ApplicationBar.Buttons.Add(photosButton);
             ApplicationBar.MenuItems.Add(likeButton);
             ApplicationBar.MenuItems.Add(muteButton);
         }

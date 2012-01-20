@@ -33,11 +33,20 @@ namespace ChronoPlurk.ViewModels
 
         protected override void OnActivate()
         {
-            PlurkDetailViewModel.RefreshOnActivate = true;
-            ActivateItem(PlurkHeaderViewModel);
-            ActivateItem(PlurkDetailViewModel);
-            // Read Plurk
-            PlurkHolderService.SetAsRead(PlurkHeaderViewModel.Id);
+            if (!PlurkDetailViewModel.DetailFooter.OpeningPhotoChooser)
+            {
+                PlurkDetailViewModel.RefreshOnActivate = true;
+                ActivateItem(PlurkHeaderViewModel);
+                ActivateItem(PlurkDetailViewModel);
+                // Read Plurk
+                PlurkHolderService.SetAsRead(PlurkHeaderViewModel.Id);
+            }
+            else
+            {
+                PlurkDetailViewModel.DetailFooter.OpeningPhotoChooser = false;
+                PlurkDetailViewModel.ScrollToEnd();
+                PlurkDetailViewModel.DetailFooter.ResponseFocus = true;
+            }
 
             base.OnActivate();
         }
@@ -110,6 +119,24 @@ namespace ChronoPlurk.ViewModels
             }
         }
 
+        public void ShowPhotosAppBar()
+        {
+            var view = GetView() as PlurkDetailPage;
+            if (view != null)
+            {
+                view.PhotosButton.IsEnabled = true;
+            }
+        }
+
+        public void HidePhotosAppBar()
+        {
+            var view = GetView() as PlurkDetailPage;
+            if (view != null)
+            {
+                view.PhotosButton.IsEnabled = false;
+            }
+        }
+
         private void ReloadAppBar()
         {
             ReloadAppBar(GetView(null) as PlurkDetailPage);
@@ -131,6 +158,11 @@ namespace ChronoPlurk.ViewModels
             {
                 PlurkDetailViewModel.DetailFooter.Reply();
             }
+        }
+
+        public void PhotosAppBar()
+        {
+            PlurkDetailViewModel.DetailFooter.InsertPhoto();
         }
 
         public void LikeAppBar()
@@ -234,5 +266,6 @@ namespace ChronoPlurk.ViewModels
         }
 
         #endregion
+
     }
 }

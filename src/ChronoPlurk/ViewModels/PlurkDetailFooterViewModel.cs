@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Reactive.Linq;
@@ -14,6 +15,7 @@ using Caliburn.Micro;
 using ChronoPlurk.Resources.i18n;
 using ChronoPlurk.Services;
 using ChronoPlurk.Helpers;
+using Microsoft.Phone.Tasks;
 using NotifyPropertyWeaver;
 using Plurto.Commands;
 using Plurto.Core;
@@ -28,6 +30,8 @@ namespace ChronoPlurk.ViewModels
         private IPlurkService PlurkService { get; set; }
 
         private IDisposable _composeHandler;
+        private IDisposable _uploadHandler;
+        private IDisposable _photoChooserDisposable;
 
         private string _textBoxDistinctKey;
 
@@ -50,6 +54,8 @@ namespace ChronoPlurk.ViewModels
         }
 
         public bool ResponseFocus { get; set; }
+
+        public bool OpeningPhotoChooser { get; set; }
 
         public PlurkDetailFooterViewModel
             (IPlurkService plurkService,
@@ -126,15 +132,129 @@ namespace ChronoPlurk.ViewModels
             else
             {
                 _textBoxDistinctKey = PostContent;
-                var dv = this.GetParent();
-                if (dv != null)
+                var page = GetPageViewModel();
+                if (page != null)
                 {
-                    var dp = dv.GetParent();
-                    if (dp != null)
-                    {
-                        dp.UpdateReplyButton();
-                    }
+                    page.UpdateReplyButton();
                 }
+            }
+        }
+
+        public void OnGotFocus()
+        {
+            var page = GetPageViewModel();
+            if (page != null)
+            {
+                page.ShowPhotosAppBar();
+            }
+        }
+
+        public void OnLostFocus()
+        {
+            var page = GetPageViewModel();
+            if (page != null)
+            {
+                page.HidePhotosAppBar();
+            }
+        }
+
+        private PlurkDetailPageViewModel GetPageViewModel()
+        {
+            var dv = this.GetParent();
+            if (dv != null)
+            {
+                return dv.GetParent();
+            }
+            return null;
+        }
+
+        public void InsertPhoto()
+        {
+            try
+            {
+                if (_photoChooserDisposable != null)
+                {
+                    _photoChooserDisposable.Dispose();
+                }
+                var photoChooser = new PhotoChooserTask() { ShowCamera = true };
+                var pattern = Observable.FromEventPattern<PhotoResult>(handler => photoChooser.Completed += handler,
+                                                                       handler => photoChooser.Completed -= handler);
+                _photoChooserDisposable = pattern.Take(1).TimeInterval().Subscribe(result =>
+                {
+                    var photoResult = result.Value.EventArgs;
+                    switch (photoResult.TaskResult)
+                    {
+                        case TaskResult.OK:
+                            UploadPicture(photoResult.ChosenPhoto, photoResult.OriginalFileName);
+                            break;
+                        case TaskResult.Cancel:
+                            if (result.Interval < TimeSpan.FromSeconds(1.5))
+                            {
+                                Execute.OnUIThread(() => MessageBox.Show(AppResources.msgDisconnectPC));
+                            }
+                            break;
+                    }
+                });
+                OpeningPhotoChooser = true;
+                photoChooser.Show();
+            }
+            catch (InvalidOperationException)
+            {
+                MessageBox.Show(AppResources.errorOccured);
+#if DEBUG
+                throw;
+#endif
+            }
+        }
+
+        private void UploadPicture(Stream pictureStream, string filename)
+        {
+            if (_uploadHandler != null)
+            {
+                _uploadHandler.Dispose();
+            }
+            var photoStream = pictureStream;
+            var shortFileName = filename.Split(new[] { '\\', '/' }).LastOrDefault();
+            if (shortFileName != null)
+            {
+                var upload = new UploadFile(photoStream, shortFileName);
+                SetUploadFileContentType(upload, shortFileName);
+                var uploadCommand = TimelineCommand.UploadPicture(upload)
+                    .Client(PlurkService.Client)
+                    .ToObservable()
+                    .Timeout(DefaultConfiguration.TimeoutUpload)
+                    .PlurkException();
+
+                _progressService.Show(AppResources.msgUploadingPhoto);
+
+                System.Action complete = () =>
+                {
+                    _progressService.Hide();
+                    if (photoStream != null)
+                    {
+                        photoStream.Dispose();
+                    }
+                };
+
+                _uploadHandler =
+                    uploadCommand.ObserveOnDispatcher().Subscribe(
+                        picture =>
+                        {
+                            PostContent += picture.Full;
+                        }, complete);
+            }
+        }
+
+        private static void SetUploadFileContentType(UploadFile upload, string fileName)
+        {
+            if (fileName.EndsWith(".jpg", StringComparison.InvariantCultureIgnoreCase) ||
+                fileName.EndsWith(".jpeg", StringComparison.InvariantCultureIgnoreCase))
+            {
+                upload.ContentType = "image/jpeg";
+            }
+            else if (fileName.EndsWith(".png", StringComparison.InvariantCultureIgnoreCase))
+            {
+                upload.ContentType = "image/png";
             }
         }
     }

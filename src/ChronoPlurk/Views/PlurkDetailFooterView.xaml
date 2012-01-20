@@ -27,7 +27,7 @@
                      TextWrapping="Wrap"
                      AcceptsReturn="True"
                      InputScope="Text"
-                     cal:Message.Attach="[Event TextChanged] = [Action OnTextChanged()]">
+                     cal:Message.Attach="[Event TextChanged] = [Action OnTextChanged()];[Event GotFocus] = [Action OnGotFocus()];[Event LostFocus] = [Action OnLostFocus()]">
                 <i:Interaction.Behaviors>
                     <pcontrols:FocusBehavior x:Name="ResponseFocus" IsFocused="{Binding ResponseFocus, Mode=TwoWay}" />
                 </i:Interaction.Behaviors>
