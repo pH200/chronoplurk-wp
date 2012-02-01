@@ -26,12 +26,12 @@ namespace ChronoPlurk.Services
         void SaveUserData();
         bool LoadUserData();
         void ClearUserData();
-        void Favorite(int id);
-        void Unfavorite(int id);
-        void Mute(int id);
-        void Unmute(int id);
-        void SetAsRead(int id);
-        void Delete(int id);
+        void Favorite(long plurkId);
+        void Unfavorite(long plurkId);
+        void Mute(long plurkId);
+        void Unmute(long plurkId);
+        void SetAsRead(long plurkId);
+        void Delete(long plurkId);
     }
 
     public class PlurkService : IPlurkService
@@ -170,34 +170,34 @@ namespace ChronoPlurk.Services
             }
         }
 
-        public void Favorite(int id)
+        public void Favorite(long plurkId)
         {
-            SimpleAction(TimelineCommand.FavoritePlurks(id), service => service.Favorite(id));
+            SimpleAction(TimelineCommand.FavoritePlurks(plurkId), service => service.Favorite(plurkId));
         }
 
-        public void Unfavorite(int id)
+        public void Unfavorite(long plurkId)
         {
-            SimpleAction(TimelineCommand.UnfavoritePlurks(id), service => service.Unfavorite(id));
+            SimpleAction(TimelineCommand.UnfavoritePlurks(plurkId), service => service.Unfavorite(plurkId));
         }
 
-        public void Mute(int id)
+        public void Mute(long plurkId)
         {
-            SimpleAction(TimelineCommand.MutePlurks(id), service => service.Mute(id));
+            SimpleAction(TimelineCommand.MutePlurks(plurkId), service => service.Mute(plurkId));
         }
 
-        public void Unmute(int id)
+        public void Unmute(long plurkId)
         {
-            SimpleAction(TimelineCommand.UnmutePlurks(id), service => service.Unmute(id));
+            SimpleAction(TimelineCommand.UnmutePlurks(plurkId), service => service.Unmute(plurkId));
         }
 
-        public void SetAsRead(int id)
+        public void SetAsRead(long plurkId)
         {
-            SimpleAction(TimelineCommand.MarkAsRead(id), service => service.SetAsRead(id));
+            SimpleAction(TimelineCommand.MarkAsRead(plurkId), service => service.SetAsRead(plurkId));
         }
 
-        public void Delete(int id)
+        public void Delete(long plurkId)
         {
-            SimpleAction(TimelineCommand.PlurkDelete(id), service => { });
+            SimpleAction(TimelineCommand.PlurkDelete(plurkId), service => { });
         }
     }
 }

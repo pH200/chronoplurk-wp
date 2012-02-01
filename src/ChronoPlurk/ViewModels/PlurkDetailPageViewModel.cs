@@ -229,37 +229,37 @@ namespace ChronoPlurk.ViewModels
         
         // Ignore id.
 
-        public IEnumerable<int> PlurkIds
+        public IEnumerable<long> PlurkIds
         {
             get { return new[] { PlurkHeaderViewModel.Id }; }
         }
 
-        public void Favorite(int id)
+        public void Favorite(long plurkId)
         {
             PlurkHeaderViewModel.IsFavorite = true;
             UpdateLikeButton(PlurkHeaderViewModel.LikeText);
         }
 
-        public void Unfavorite(int id)
+        public void Unfavorite(long plurkId)
         {
             PlurkHeaderViewModel.IsFavorite = false;
             UpdateLikeButton(PlurkHeaderViewModel.LikeText);
         }
 
-        public void Mute(int id)
+        public void Mute(long plurkId)
         {
             PlurkHeaderViewModel.IsUnreadInt = (int)UnreadStatus.Muted;
             UpdateMuteButton(PlurkHeaderViewModel.MuteText);
         }
 
-        public void Unmute(int id)
+        public void Unmute(long plurkId)
         {
             // Read and Unmute
             PlurkHeaderViewModel.IsUnreadInt = (int)UnreadStatus.Read;
             UpdateMuteButton(PlurkHeaderViewModel.MuteText);
         }
 
-        public void SetAsRead(int id)
+        public void SetAsRead(long plurkId)
         {
             PlurkHeaderViewModel.IsUnreadInt = (int)UnreadStatus.Read;
             UpdateMuteButton(PlurkHeaderViewModel.MuteText);

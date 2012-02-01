@@ -4,16 +4,16 @@ namespace ChronoPlurk.Services
 {
     public interface IPlurkContentStorageService
     {
-        void AddOrReplace(int key, string value);
-        string GetValueOrDefault(int key);
-        bool Remove(int key);
+        void AddOrReplace(long key, string value);
+        string GetValueOrDefault(long key);
+        bool Remove(long key);
     }
 
     public class PlurkContentStorageService : IPlurkContentStorageService
     {
-        private readonly Dictionary<int, string> _dictionary = new Dictionary<int, string>();
+        private readonly Dictionary<long, string> _dictionary = new Dictionary<long, string>();
 
-        public void AddOrReplace(int key, string value)
+        public void AddOrReplace(long key, string value)
         {
             if (_dictionary.ContainsKey(key))
             {
@@ -25,7 +25,7 @@ namespace ChronoPlurk.Services
             }
         }
 
-        public string GetValueOrDefault(int key)
+        public string GetValueOrDefault(long key)
         {
             string value;
             if (_dictionary.TryGetValue(key, out value))
@@ -38,7 +38,7 @@ namespace ChronoPlurk.Services
             }
         }
 
-        public bool Remove(int key)
+        public bool Remove(long key)
         {
             return _dictionary.Remove(key);
         }

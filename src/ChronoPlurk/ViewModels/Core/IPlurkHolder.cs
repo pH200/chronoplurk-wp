@@ -4,11 +4,11 @@ namespace ChronoPlurk.ViewModels.Core
 {
     public interface IPlurkHolder
     {
-        IEnumerable<int> PlurkIds { get; }
-        void Favorite(int id);
-        void Unfavorite(int id);
-        void Mute(int id);
-        void Unmute(int id);
-        void SetAsRead(int id);
+        IEnumerable<long> PlurkIds { get; }
+        void Favorite(long plurkId);
+        void Unfavorite(long plurkId);
+        void Mute(long plurkId);
+        void Unmute(long plurkId);
+        void SetAsRead(long plurkId);
     }
 }

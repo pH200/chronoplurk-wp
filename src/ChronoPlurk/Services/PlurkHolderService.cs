@@ -10,46 +10,46 @@ namespace ChronoPlurk.Services
     {
         private readonly List<IPlurkHolder> _plurkHolders = new List<IPlurkHolder>();
 
-        public IEnumerable<IPlurkHolder> Search(int id)
+        public IEnumerable<IPlurkHolder> Search(long plurkId)
         {
             return from plurkHolder in _plurkHolders
-                   from plurkId in plurkHolder.PlurkIds
-                   where id == plurkId
+                   from holderPlurkId in plurkHolder.PlurkIds
+                   where plurkId == holderPlurkId
                    select plurkHolder;
         }
 
-        private void SearchAndAction(int id, Action<IPlurkHolder> action)
+        private void SearchAndAction(long plurkId, Action<IPlurkHolder> action)
         {
-            var holders = Search(id);
+            var holders = Search(plurkId);
             foreach (var plurkHolder in holders)
             {
                 action(plurkHolder);
             }
         }
         
-        public void Favorite(int id)
+        public void Favorite(long plurkId)
         {
-            SearchAndAction(id, holder => holder.Favorite(id));
+            SearchAndAction(plurkId, holder => holder.Favorite(plurkId));
         }
 
-        public void Unfavorite(int id)
+        public void Unfavorite(long plurkId)
         {
-            SearchAndAction(id, holder => holder.Unfavorite(id));
+            SearchAndAction(plurkId, holder => holder.Unfavorite(plurkId));
         }
         
-        public void Mute(int id)
+        public void Mute(long plurkId)
         {
-            SearchAndAction(id, holder => holder.Mute(id));
+            SearchAndAction(plurkId, holder => holder.Mute(plurkId));
         }
         
-        public void Unmute(int id)
+        public void Unmute(long plurkId)
         {
-            SearchAndAction(id, holder => holder.Unmute(id));
+            SearchAndAction(plurkId, holder => holder.Unmute(plurkId));
         }
 
-        public void SetAsRead(int id)
+        public void SetAsRead(long plurkId)
         {
-            SearchAndAction(id, holder => holder.SetAsRead(id));
+            SearchAndAction(plurkId, holder => holder.SetAsRead(plurkId));
         }
 
 

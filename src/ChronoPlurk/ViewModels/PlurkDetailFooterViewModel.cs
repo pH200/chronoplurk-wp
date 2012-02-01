@@ -99,7 +99,7 @@ namespace ChronoPlurk.ViewModels
             }
         }
 
-        private int GetPlurkId()
+        private long GetPlurkId()
         {
             var parent = this.GetParent();
             return parent != null ? parent.DetailHeader.Id : -1;

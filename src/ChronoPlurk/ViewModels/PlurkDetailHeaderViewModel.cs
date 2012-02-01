@@ -20,7 +20,7 @@ namespace ChronoPlurk.ViewModels
 
         #region Public Properties
 
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         public int UserId { get; set; }
 

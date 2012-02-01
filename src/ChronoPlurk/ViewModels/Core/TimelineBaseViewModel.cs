@@ -77,7 +77,7 @@ namespace ChronoPlurk.ViewModels
 
         protected bool DisableTimelinePlurkHolder { get; set; }
 
-        protected bool DisableDuplicationCheck { get; set; }
+        protected bool IsCompareIdInsteadOfPlurkId { get; set; }
 
         protected bool EnableHyperlink { get; set; }
 
@@ -187,26 +187,17 @@ namespace ChronoPlurk.ViewModels
                         }
                     }
 
-                    // Fix duplicate issue.
-                    var skipFirst = false;
-                    var duplicateState = CheckSingleDuplicationPlurk(plurks);
-                    switch (duplicateState)
-                    {
-                        case DuplicateState.FirstAndMore:
-                            skipFirst = true;
-                            break;
-                        case DuplicateState.FirstSingle:
-                            IsHasMore = false;
-                            return;
-                    }
-
                     _lastResult = plurks;
 
                     var result = plurks.ToUserPlurks();
-                    if (skipFirst)
+                    result = result.Where(p => Items.All(lastPlurk =>
                     {
-                        result = result.Skip(1);
-                    }
+                        var compareId = IsCompareIdInsteadOfPlurkId
+                                            ? p.Plurk.Id
+                                            : p.Plurk.PlurkId;
+                        return lastPlurk.Id != compareId;
+                    }));
+
                     if (result.IsNullOrEmpty())
                     {
                         if (clear)
@@ -228,52 +219,11 @@ namespace ChronoPlurk.ViewModels
                 }, () => Execute.OnUIThread(() => ProgressService.Hide()));
         }
 
-        enum DuplicateState
-        {
-            None, FirstAndMore, FirstSingle
-        }
-
-        /// <summary>
-        /// Fix duplicate plurk issue.
-        /// </summary>
-        /// <param name="plurks">Plurks from request handler.</param>
-        /// <returns>DuplicateState</returns>
-        private DuplicateState CheckSingleDuplicationPlurk(TSource plurks)
-        {
-            if (DisableDuplicationCheck)
-            {
-                return DuplicateState.None;
-            }
-            if (_lastResult != null)
-            {
-                var lastBottom = _lastResult.Plurks.LastOrDefault();
-                if (lastBottom != null)
-                {
-                    var currentTop = plurks.Plurks.FirstOrDefault();
-                    if (currentTop != null)
-                    {
-                        if (lastBottom.Id == currentTop.Id)
-                        {
-                            if (plurks.Plurks.Count == 1)
-                            {
-                                return DuplicateState.FirstSingle;
-                            }
-                            else
-                            {
-                                return DuplicateState.FirstAndMore;
-                            }
-                        }
-                    }
-                }
-            }
-            return DuplicateState.None;
-        }
-
         private IEnumerable<PlurkItemViewModel> MapUserPlurkToPlurkItemViewModel(IEnumerable<UserPlurk> result)
         {
             return result.Select(plurk => new PlurkItemViewModel()
             {
-                Id = plurk.Plurk.Id,
+                Id = plurk.Plurk.PlurkId,
                 UserId = plurk.User.Id, // Plurk.UserId may return client's id if logged in.
                 Username = plurk.User.DisplayNameOrNickName,
                 Qualifier = plurk.Plurk.QualifierTextView(),
@@ -359,43 +309,43 @@ namespace ChronoPlurk.ViewModels
             return scroll;
         }
 
-        public IEnumerable<int> PlurkIds
+        public IEnumerable<long> PlurkIds
         {
             get { return Items.Select(item => item.Id); }
         }
 
-        private void SearchAndAction(int id, Action<PlurkItemViewModel> action)
+        private void SearchAndAction(long plurkId, Action<PlurkItemViewModel> action)
         {
-            var item = Items.FirstOrDefault(p => id == p.Id);
+            var item = Items.FirstOrDefault(p => plurkId == p.Id);
             if (item != null)
             {
                 action(item);
             }
         }
 
-        public void Favorite(int id)
+        public void Favorite(long plurkId)
         {
-            SearchAndAction(id, item => item.IsFavorite = true);
+            SearchAndAction(plurkId, item => item.IsFavorite = true);
         }
 
-        public void Unfavorite(int id)
+        public void Unfavorite(long plurkId)
         {
-            SearchAndAction(id, item => item.IsFavorite = false);
+            SearchAndAction(plurkId, item => item.IsFavorite = false);
         }
 
-        public void Mute(int id)
+        public void Mute(long plurkId)
         {
-            SearchAndAction(id, item => item.IsUnread = UnreadStatus.Muted);
+            SearchAndAction(plurkId, item => item.IsUnread = UnreadStatus.Muted);
         }
 
-        public void Unmute(int id)
+        public void Unmute(long plurkId)
         {
-            SearchAndAction(id, item => item.IsUnread = UnreadStatus.Read);
+            SearchAndAction(plurkId, item => item.IsUnread = UnreadStatus.Read);
         }
 
-        public void SetAsRead(int id)
+        public void SetAsRead(long plurkId)
         {
-            SearchAndAction(id, item => item.IsUnread = UnreadStatus.Read);
+            SearchAndAction(plurkId, item => item.IsUnread = UnreadStatus.Read);
         }
 
         #region Context Menu
