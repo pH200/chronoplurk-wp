@@ -99,7 +99,7 @@ namespace ChronoPlurk.Helpers
         {
             if (plurk.Qualifier == Qualifier.Freestyle || plurk.Qualifier == Qualifier.FreestyleColon)
             {
-                return "";
+                return null;
             }
             return !String.IsNullOrEmpty(plurk.QualifierTranslated) ? plurk.QualifierTranslated : plurk.Qualifier.ToKey();
         }

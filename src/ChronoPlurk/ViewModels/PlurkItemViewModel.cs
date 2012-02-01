@@ -30,15 +30,23 @@ namespace ChronoPlurk.ViewModels
 
         public string Qualifier { get; set; }
 
+        [DependsOn("Qualifier")]
         public Color QualifierColor
         {
             get { return QualifierConverter.ConvertQualifierColor(QualifierEnum); }
+        }
+
+        [DependsOn("Qualifier")]
+        public Visibility QualifierVisibility
+        {
+            get { return Qualifier == null ? Visibility.Collapsed : Visibility.Visible; }
         }
 
         public TimeSpan PostTimeFromNow { get; set; }
 
         public DateTime PostDate { get; set; }
 
+        [DependsOn("PostTimeFromNow", "PostDate")]
         public string TimeView { get { return ConvertTimeSpan(PostTimeFromNow, PostDate); } }
 
         public string ContentRaw { get; set; }
@@ -59,6 +67,7 @@ namespace ChronoPlurk.ViewModels
 
         public int ResponseCount { get; set; }
 
+        [DependsOn("ResponseCount")]
         public string ResponseCountView
         {
             get
@@ -77,6 +86,7 @@ namespace ChronoPlurk.ViewModels
 
         public UnreadStatus IsUnread { get; set; }
 
+        [DependsOn("IsUnread")]
         public Visibility IsUnreadView
         {
             get { return IsUnread == UnreadStatus.Unread ? Visibility.Visible : Visibility.Collapsed; }
