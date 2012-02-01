@@ -49,7 +49,7 @@
         			       Style="{StaticResource PhoneTextTitle2Style}"
         			       Margin="0"
                            MaxWidth="300"/>
-                <Border VerticalAlignment="Bottom" Margin="5,0,0,3">
+                <Border VerticalAlignment="Bottom" Visibility="{Binding QualifierVisibility}" Margin="5,0,0,3">
                     <Border.Background>
                         <SolidColorBrush x:Name="QualifierColorBrush" />
                     </Border.Background>
