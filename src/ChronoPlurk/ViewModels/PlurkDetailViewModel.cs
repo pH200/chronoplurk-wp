@@ -80,7 +80,7 @@ namespace ChronoPlurk.ViewModels
 
         public void RefreshSync()
         {
-            var getPlurks = ResponsesCommand.Get(DetailHeader.Id, 0).Client(PlurkService.Client).ToObservable();
+            var getPlurks = ResponsesCommand.Get(DetailHeader.PlurkId, 0).Client(PlurkService.Client).ToObservable();
 
             Request(getPlurks);
             ScrollToTop();
@@ -89,7 +89,7 @@ namespace ChronoPlurk.ViewModels
         public void LoadNewComments()
         {
             var newResponseOffset = Items.Count;
-            var getPlurks = ResponsesCommand.Get(DetailHeader.Id, newResponseOffset).Client(PlurkService.Client).ToObservable();
+            var getPlurks = ResponsesCommand.Get(DetailHeader.PlurkId, newResponseOffset).Client(PlurkService.Client).ToObservable();
 
             var specialFallback = new SpecialFallback<ResponsesResult>(
                 predicate: result =>

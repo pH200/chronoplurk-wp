@@ -7,7 +7,7 @@ namespace ChronoPlurk.Services
     {
         private const string PageUri =
             "/Views/PlurkDetailPage.xaml?" +
-            "Id={0}&UserId={1}&Username={2}" +
+            "PlurkId={0}&UserId={1}&Username={2}" +
             "&QualifierEnumInt={3}&Qualifier={4}" +
             "&PostDateTicks={5}&" +
             "&AvatarView={6}&NoCommentsInt={7}&IsFavorite={8}"+
@@ -16,7 +16,7 @@ namespace ChronoPlurk.Services
 
         public PlurkLocation(PlurkItemViewModel item)
         {
-            Parsed = String.Format(PageUri, item.Id, item.UserId, item.Username, (int)item.QualifierEnum, item.Qualifier,
+            Parsed = String.Format(PageUri, item.PlurkId, item.UserId, item.Username, (int)item.QualifierEnum, item.Qualifier,
                                    item.PostDate.ToLocalTime().Ticks, item.AvatarView, (int)item.NoComments, item.IsFavorite,
                                    item.ResponseCount, (int)item.IsUnread, (int)item.PlurkType);
         }

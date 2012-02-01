@@ -118,7 +118,7 @@ namespace ChronoPlurk.ViewModels
                 {
                     var location = new PlurkLocation(item);
                     NavigationService.Navigate(location);
-                    PlurkContentStorageService.AddOrReplace(item.Id, item.ContentHtml);
+                    PlurkContentStorageService.AddOrReplace(item.PlurkId, item.ContentHtml);
                 }
             }
         }
@@ -195,7 +195,7 @@ namespace ChronoPlurk.ViewModels
                         var compareId = IsCompareIdInsteadOfPlurkId
                                             ? p.Plurk.Id
                                             : p.Plurk.PlurkId;
-                        return lastPlurk.Id != compareId;
+                        return lastPlurk.PlurkId != compareId;
                     }));
 
                     if (result.IsNullOrEmpty())
@@ -223,7 +223,7 @@ namespace ChronoPlurk.ViewModels
         {
             return result.Select(plurk => new PlurkItemViewModel()
             {
-                Id = plurk.Plurk.PlurkId,
+                PlurkId = plurk.Plurk.PlurkId,
                 UserId = plurk.User.Id, // Plurk.UserId may return client's id if logged in.
                 Username = plurk.User.DisplayNameOrNickName,
                 Qualifier = plurk.Plurk.QualifierTextView(),
@@ -311,12 +311,12 @@ namespace ChronoPlurk.ViewModels
 
         public IEnumerable<long> PlurkIds
         {
-            get { return Items.Select(item => item.Id); }
+            get { return Items.Select(item => item.PlurkId); }
         }
 
         private void SearchAndAction(long plurkId, Action<PlurkItemViewModel> action)
         {
-            var item = Items.FirstOrDefault(p => plurkId == p.Id);
+            var item = Items.FirstOrDefault(p => plurkId == p.PlurkId);
             if (item != null)
             {
                 action(item);
@@ -358,11 +358,11 @@ namespace ChronoPlurk.ViewModels
                 var service = IoC.Get<IPlurkService>();
                 if (item.IsUnread == UnreadStatus.Muted)
                 {
-                    service.Unmute(item.Id);
+                    service.Unmute(item.PlurkId);
                 }
                 else
                 {
-                    service.Mute(item.Id);
+                    service.Mute(item.PlurkId);
                 }
             }
         }
@@ -375,11 +375,11 @@ namespace ChronoPlurk.ViewModels
                 var service = IoC.Get<IPlurkService>();
                 if (item.IsFavorite)
                 {
-                    service.Unfavorite(item.Id);
+                    service.Unfavorite(item.PlurkId);
                 }
                 else
                 {
-                    service.Favorite(item.Id);
+                    service.Favorite(item.PlurkId);
                 }
             }
         }
@@ -392,7 +392,7 @@ namespace ChronoPlurk.ViewModels
                 if (Items.Remove(item))
                 {
                     var service = IoC.Get<IPlurkService>();
-                    service.Delete(item.Id);
+                    service.Delete(item.PlurkId);
                 }
             }
         }

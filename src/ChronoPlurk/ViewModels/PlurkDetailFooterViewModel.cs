@@ -102,7 +102,7 @@ namespace ChronoPlurk.ViewModels
         private long GetPlurkId()
         {
             var parent = this.GetParent();
-            return parent != null ? parent.DetailHeader.Id : -1;
+            return parent != null ? parent.DetailHeader.PlurkId : -1;
         }
 
         private void LeaveFocus()

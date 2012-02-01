@@ -20,7 +20,7 @@ namespace ChronoPlurk.ViewModels
 
         #endregion
 
-        public long Id { get; set; }
+        public long PlurkId { get; set; }
 
         public int UserId { get; set; }
 

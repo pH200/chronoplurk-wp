@@ -39,7 +39,7 @@ namespace ChronoPlurk.ViewModels
                 ActivateItem(PlurkHeaderViewModel);
                 ActivateItem(PlurkDetailViewModel);
                 // Read Plurk
-                PlurkHolderService.SetAsRead(PlurkHeaderViewModel.Id);
+                PlurkHolderService.SetAsRead(PlurkHeaderViewModel.PlurkId);
             }
             else
             {
@@ -170,11 +170,11 @@ namespace ChronoPlurk.ViewModels
             var isLike = PlurkHeaderViewModel.IsFavorite;
             if (isLike)
             {
-                PlurkService.Unfavorite(PlurkHeaderViewModel.Id);
+                PlurkService.Unfavorite(PlurkHeaderViewModel.PlurkId);
             }
             else
             {
-                PlurkService.Favorite(PlurkHeaderViewModel.Id);
+                PlurkService.Favorite(PlurkHeaderViewModel.PlurkId);
             }
 
             PlurkDetailViewModel.ScrollToTop();
@@ -186,11 +186,11 @@ namespace ChronoPlurk.ViewModels
             var isMute = PlurkHeaderViewModel.IsUnread == UnreadStatus.Muted;
             if (isMute)
             {
-                PlurkService.Unmute(PlurkHeaderViewModel.Id);
+                PlurkService.Unmute(PlurkHeaderViewModel.PlurkId);
             }
             else
             {
-                PlurkService.Mute(PlurkHeaderViewModel.Id);
+                PlurkService.Mute(PlurkHeaderViewModel.PlurkId);
             }
 
             ReloadAppBar();
@@ -231,7 +231,7 @@ namespace ChronoPlurk.ViewModels
 
         public IEnumerable<long> PlurkIds
         {
-            get { return new[] { PlurkHeaderViewModel.Id }; }
+            get { return new[] { PlurkHeaderViewModel.PlurkId }; }
         }
 
         public void Favorite(long plurkId)

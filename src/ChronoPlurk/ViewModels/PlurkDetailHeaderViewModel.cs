@@ -20,7 +20,7 @@ namespace ChronoPlurk.ViewModels
 
         #region Public Properties
 
-        public long Id { get; set; }
+        public long PlurkId { get; set; }
 
         public int UserId { get; set; }
 
@@ -152,12 +152,12 @@ namespace ChronoPlurk.ViewModels
 
         protected override void OnActivate()
         {
-            var content = _plurkContentStorageService.GetValueOrDefault(Id);
+            var content = _plurkContentStorageService.GetValueOrDefault(PlurkId);
             if (content != null)
             {
                 ContentHtml = content;
             }
-            _plurkContentStorageService.Remove(Id);
+            _plurkContentStorageService.Remove(PlurkId);
 
             base.OnActivate();
         }
