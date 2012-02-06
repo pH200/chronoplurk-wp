@@ -192,6 +192,10 @@ namespace ChronoPlurk.ViewModels
                     var result = plurks.ToUserPlurks();
                     result = result.Where(p => Items.All(lastPlurk =>
                     {
+                        if (IsCompareIdInsteadOfPlurkId && p.Plurk.Id == 0)
+                        {
+                            return true;
+                        }
                         var compareId = IsCompareIdInsteadOfPlurkId
                                             ? p.Plurk.Id
                                             : p.Plurk.PlurkId;
