@@ -190,17 +190,20 @@ namespace ChronoPlurk.ViewModels
                     _lastResult = plurks;
 
                     var result = plurks.ToUserPlurks();
-                    result = result.Where(p => Items.All(lastPlurk =>
+                    if (result != null)
                     {
-                        if (IsCompareIdInsteadOfPlurkId && p.Plurk.Id == 0)
+                        result = result.Where(p => Items.All(lastPlurk =>
                         {
-                            return true;
-                        }
-                        var compareId = IsCompareIdInsteadOfPlurkId
-                                            ? p.Plurk.Id
-                                            : p.Plurk.PlurkId;
-                        return lastPlurk.PlurkId != compareId;
-                    }));
+                            if (IsCompareIdInsteadOfPlurkId && p.Plurk.Id == 0)
+                            {
+                                return true;
+                            }
+                            var compareId = IsCompareIdInsteadOfPlurkId
+                                                ? p.Plurk.Id
+                                                : p.Plurk.PlurkId;
+                            return lastPlurk.PlurkId != compareId;
+                        }));
+                    }
 
                     if (result.IsNullOrEmpty())
                     {
