@@ -23,7 +23,7 @@ using Plurto.Core;
 namespace ChronoPlurk.ViewModels
 {
     [NotifyForAll]
-    public class PlurkDetailReplyViewModel : Screen, IChildT<PlurkDetailViewModel>
+    public class PlurkDetailReplyViewModel : Screen, IChildT<PlurkDetailPageViewModel>
     {
         private readonly IProgressService _progressService;
 
@@ -92,6 +92,11 @@ namespace ChronoPlurk.ViewModels
 
                     _composeHandler = command.ObserveOnDispatcher().Subscribe(plurk =>
                     {
+                        var parent = this.GetParent();
+                        if (parent != null)
+                        {
+                            parent.BlurReplyFocus();
+                        }
                         PostContent = "";
                         LoadNewComments();
                     }, error => _progressService.Hide());
@@ -102,15 +107,15 @@ namespace ChronoPlurk.ViewModels
         private long GetPlurkId()
         {
             var parent = this.GetParent();
-            return parent != null ? parent.DetailHeader.PlurkId : -1;
+            return parent != null ? parent.GetPlurkId() : -1;
         }
 
         private void LeaveFocus()
         {
-            var parent = this.GetParent();
-            if (parent != null)
+            var view = GetView() as Control;
+            if (view != null)
             {
-                parent.FocusThis();
+                view.Focus();
             }
         }
 
@@ -160,12 +165,7 @@ namespace ChronoPlurk.ViewModels
 
         private PlurkDetailPageViewModel GetPageViewModel()
         {
-            var dv = this.GetParent();
-            if (dv != null)
-            {
-                return dv.GetParent();
-            }
-            return null;
+            return this.GetParent();
         }
 
         public void InsertPhoto()

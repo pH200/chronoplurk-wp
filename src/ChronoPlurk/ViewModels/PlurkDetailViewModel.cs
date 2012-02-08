@@ -40,7 +40,7 @@ namespace ChronoPlurk.ViewModels
 
         public PlurkDetailHeaderViewModel DetailHeader { get; private set; }
         
-        public PlurkDetailReplyViewModel DetailFooter { get; private set; }
+        public PlurkDetailFooterViewModel DetailFooter { get; private set; }
 
         public bool RefreshOnActivate { get; set; }
 
@@ -50,13 +50,13 @@ namespace ChronoPlurk.ViewModels
             IPlurkService plurkService,
             IPlurkContentStorageService plurkContentStorageService,
             PlurkDetailHeaderViewModel plurkDetailHeaderViewModel,
-            PlurkDetailReplyViewModel plurkDetailFooterViewModel)
+            PlurkDetailFooterViewModel plurkDetailFooterViewModel)
             : base(navigationService, progressService, plurkService, plurkContentStorageService)
         {
             plurkDetailHeaderViewModel.Parent = this;
             DetailHeader = plurkDetailHeaderViewModel;
             plurkDetailFooterViewModel.Parent = this;
-            //DetailFooter = plurkDetailFooterViewModel;
+            DetailFooter = plurkDetailFooterViewModel;
 
             IsCompareIdInsteadOfPlurkId = true; // Replies' plurk_id are thread id.
             DisableTimelinePlurkHolder = true;
@@ -101,15 +101,6 @@ namespace ChronoPlurk.ViewModels
                 fallback: () => Execute.OnUIThread(this.RefreshSync));
 
             AppendRequest(getPlurks, specialFallback);
-        }
-
-        public void FocusThis()
-        {
-            var view = GetView(null) as Control;
-            if (view != null)
-            {
-                view.Focus();
-            }
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using Caliburn.Micro;
@@ -37,6 +38,7 @@ namespace ChronoPlurk.ViewModels
             PlurkHolderService = plurkHolderService;
             PlurkService = plurkService;
             PlurkDetailViewModel = plurkDetailViewModel;
+            replyViewModel.Parent = this;
             ReplyViewModel = replyViewModel;
             ReplyVisibility = Visibility.Collapsed;
         }
@@ -64,8 +66,52 @@ namespace ChronoPlurk.ViewModels
         {
             ReloadAppBar(view as PlurkDetailPage);
             PlurkHolderService.Add(this);
+            SetBackKeyPress(view as PlurkDetailPage);
 
             base.OnViewLoaded(view);
+        }
+
+        private void SetBackKeyPress(PlurkDetailPage view)
+        {
+            if (view != null)
+            {
+                view.OnViewBackKeyPress = () =>
+                {
+                    if (ReplyVisibility == Visibility.Visible)
+                    {
+                        ReplyVisibility = Visibility.Collapsed;
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                };
+            }
+        }
+
+        public void OnBackKeyPress(CancelEventArgs e)
+        {
+            if (ReplyVisibility == Visibility.Visible)
+            {
+                ReplyVisibility = Visibility.Collapsed;
+                e.Cancel = true;
+            }
+        }
+
+        public void BlurReplyFocus()
+        {
+            ReplyVisibility = Visibility.Collapsed;
+        }
+
+        public long GetPlurkId()
+        {
+            return PlurkDetailViewModel.DetailHeader.PlurkId;
+        }
+
+        public void LoadNewComments()
+        {
+            PlurkDetailViewModel.LoadNewComments();
         }
 
         #region AppBar
@@ -112,7 +158,7 @@ namespace ChronoPlurk.ViewModels
             {
                 return;
             }
-            if (String.IsNullOrWhiteSpace(ReplyViewModel.PostContent))
+            if (ReplyVisibility == Visibility.Collapsed)
             {
                 if (view.ReplyButton.IconUri != PlurkDetailPage.ReplyIconUri)
                 {
@@ -121,9 +167,19 @@ namespace ChronoPlurk.ViewModels
             }
             else
             {
-                if (view.ReplyButton.IconUri != PlurkDetailPage.CheckIconUri)
+                if (String.IsNullOrWhiteSpace(ReplyViewModel.PostContent))
                 {
-                    view.ReplyButton.IconUri = PlurkDetailPage.CheckIconUri;
+                    if (view.ReplyButton.IconUri != PlurkDetailPage.ReplyIconUri)
+                    {
+                        view.ReplyButton.IconUri = PlurkDetailPage.ReplyIconUri;
+                    }
+                }
+                else
+                {
+                    if (view.ReplyButton.IconUri != PlurkDetailPage.CheckIconUri)
+                    {
+                        view.ReplyButton.IconUri = PlurkDetailPage.CheckIconUri;
+                    }
                 }
             }
         }
@@ -158,7 +214,7 @@ namespace ChronoPlurk.ViewModels
 
         public void ReplyAppBar()
         {
-            if (String.IsNullOrWhiteSpace(ReplyViewModel.PostContent))
+            if (ReplyVisibility == Visibility.Collapsed)
             {
                 ReplyVisibility = Visibility.Visible;
                 ReplyViewModel.ResponseFocus = true;
@@ -275,6 +331,5 @@ namespace ChronoPlurk.ViewModels
         }
 
         #endregion
-
     }
 }

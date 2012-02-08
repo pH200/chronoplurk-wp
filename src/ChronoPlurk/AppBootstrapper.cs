@@ -64,6 +64,7 @@ namespace ChronoPlurk
             builder.RegisterType<PlurkDetailPageViewModel>().AsSelf();
             builder.RegisterType<PlurkDetailViewModel>().AsSelf();
             builder.RegisterType<PlurkDetailHeaderViewModel>().AsSelf();
+            builder.RegisterType<PlurkDetailFooterViewModel>().AsSelf();
             builder.RegisterType<PlurkDetailReplyViewModel>().AsSelf();
             builder.RegisterType<SettingsPageViewModel>().AsSelf();
             

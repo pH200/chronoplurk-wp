@@ -7,6 +7,7 @@ using System.Windows.Ink;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Caliburn.Micro;
 using ChronoPlurk.Helpers;
@@ -25,6 +26,8 @@ namespace ChronoPlurk.Views
             BuildAppBar();
         }
 
+        public Func<bool> OnViewBackKeyPress { get; set; }
+
         protected override AnimatorHelperBase GetAnimation(AnimationType animationType, Uri toOrFrom)
         {
             switch (animationType)
@@ -36,6 +39,27 @@ namespace ChronoPlurk.Views
                     return new SlideUpAnimator() { RootElement = LayoutRoot };
             }
             return base.GetAnimation(animationType, toOrFrom);
+        }
+
+        protected override void OnBackKeyPress(System.ComponentModel.CancelEventArgs e)
+        {
+            if (OnViewBackKeyPress != null)
+            {
+                e.Cancel = OnViewBackKeyPress();
+            }
+            if (!e.Cancel)
+            {
+                base.OnBackKeyPress(e);
+            }
+        }
+
+        protected override void OnNavigatedFrom(System.Windows.Navigation.NavigationEventArgs e)
+        {
+            if (e.NavigationMode == NavigationMode.Back)
+            {
+                OnViewBackKeyPress = null; // Dispose when page is released.
+            }
+            base.OnNavigatedFrom(e);
         }
 
         public AppBarMenuItem MuteButton { get; private set; }
