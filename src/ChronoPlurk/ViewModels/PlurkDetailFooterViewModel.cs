@@ -23,7 +23,7 @@ using Plurto.Core;
 namespace ChronoPlurk.ViewModels
 {
     [NotifyForAll]
-    public class PlurkDetailFooterViewModel : Screen, IChildT<PlurkDetailViewModel>
+    public class PlurkDetailReplyViewModel : Screen, IChildT<PlurkDetailViewModel>
     {
         private readonly IProgressService _progressService;
 
@@ -57,7 +57,7 @@ namespace ChronoPlurk.ViewModels
 
         public bool OpeningPhotoChooser { get; set; }
 
-        public PlurkDetailFooterViewModel
+        public PlurkDetailReplyViewModel
             (IPlurkService plurkService,
             IProgressService progressService)
         {

@@ -22,7 +22,7 @@ namespace ChronoPlurk.ViewModels
         
         public PlurkDetailViewModel PlurkDetailViewModel { get; private set; }
 
-        public PlurkDetailFooterViewModel ReplyViewModel { get; private set; }
+        public PlurkDetailReplyViewModel ReplyViewModel { get; private set; }
 
         public Visibility ReplyVisibility { get; set; }
         
@@ -30,7 +30,7 @@ namespace ChronoPlurk.ViewModels
             (IPlurkService plurkService,
             PlurkHolderService plurkHolderService,
             PlurkDetailViewModel plurkDetailViewModel,
-            PlurkDetailFooterViewModel replyViewModel,
+            PlurkDetailReplyViewModel replyViewModel,
             LoginViewModel loginViewModel)
             : base(loginViewModel)
         {

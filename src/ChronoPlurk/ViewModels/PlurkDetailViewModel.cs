@@ -40,7 +40,7 @@ namespace ChronoPlurk.ViewModels
 
         public PlurkDetailHeaderViewModel DetailHeader { get; private set; }
         
-        public PlurkDetailFooterViewModel DetailFooter { get; private set; }
+        public PlurkDetailReplyViewModel DetailFooter { get; private set; }
 
         public bool RefreshOnActivate { get; set; }
 
@@ -50,7 +50,7 @@ namespace ChronoPlurk.ViewModels
             IPlurkService plurkService,
             IPlurkContentStorageService plurkContentStorageService,
             PlurkDetailHeaderViewModel plurkDetailHeaderViewModel,
-            PlurkDetailFooterViewModel plurkDetailFooterViewModel)
+            PlurkDetailReplyViewModel plurkDetailFooterViewModel)
             : base(navigationService, progressService, plurkService, plurkContentStorageService)
         {
             plurkDetailHeaderViewModel.Parent = this;
