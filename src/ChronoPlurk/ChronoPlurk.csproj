@@ -182,7 +182,7 @@
     <Compile Include="ViewModels\Main\RespondedPlurksViewModel.cs" />
     <Compile Include="ViewModels\Main\TimelineViewModel.cs" />
     <Compile Include="ViewModels\Main\UnreadPlurksViewModel.cs" />
-    <Compile Include="ViewModels\PlurkDetailFooterViewModel.cs" />
+    <Compile Include="ViewModels\PlurkDetailReplyViewModel.cs" />
     <Compile Include="ViewModels\PlurkDetailHeaderViewModel.cs" />
     <Compile Include="ViewModels\PlurkDetailPageViewModel.cs" />
     <Compile Include="ViewModels\PlurkDetailViewModel.cs" />
@@ -315,7 +315,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\PlurkDetailFooterView.xaml">
+    <Page Include="Views\PlurkDetailReplyView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
