@@ -5,6 +5,7 @@ using Caliburn.Micro;
 using ChronoPlurk.Services;
 using ChronoPlurk.ViewModels.Core;
 using ChronoPlurk.Views;
+using ChronoPlurk.Views.Compose;
 using Microsoft.Phone.Controls;
 
 namespace ChronoPlurk.Core
@@ -75,7 +76,7 @@ namespace ChronoPlurk.Core
 
         public static void SetPageSupportedOrientation(AutoRotateService autoRotateSerivce, PhoneApplicationPage page)
         {
-            if (page.Name.Contains("ComposePage"))
+            if (page is ComposePage || page is ListPickerPage)
             {
                 page.SupportedOrientations = autoRotateSerivce.ComposePageOrientation;
             }
