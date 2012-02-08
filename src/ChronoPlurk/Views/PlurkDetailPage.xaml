@@ -18,10 +18,19 @@
     shell:SystemTray.IsVisible="True">
 
     <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
         <ContentControl x:Name="PlurkDetailViewModel"
                         HorizontalContentAlignment="Stretch"
-                        VerticalContentAlignment="Stretch" />
+                        VerticalContentAlignment="Stretch"
+                        Grid.Row="1"/>
+        <ContentControl x:Name="ReplyViewModel"
+                        HorizontalContentAlignment="Stretch"
+                        VerticalContentAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        Visibility="{Binding ReplyVisibility}"
+                        MinHeight="150" />
     </Grid>
-
-    <!-- APP BAR -->
 </animation:AnimatedBasePage>

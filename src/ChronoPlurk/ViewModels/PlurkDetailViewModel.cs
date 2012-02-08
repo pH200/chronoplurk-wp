@@ -56,7 +56,7 @@ namespace ChronoPlurk.ViewModels
             plurkDetailHeaderViewModel.Parent = this;
             DetailHeader = plurkDetailHeaderViewModel;
             plurkDetailFooterViewModel.Parent = this;
-            DetailFooter = plurkDetailFooterViewModel;
+            //DetailFooter = plurkDetailFooterViewModel;
 
             IsCompareIdInsteadOfPlurkId = true; // Replies' plurk_id are thread id.
             DisableTimelinePlurkHolder = true;

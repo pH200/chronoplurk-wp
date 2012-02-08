@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
 using Caliburn.Micro;
 using ChronoPlurk.Services;
 using ChronoPlurk.ViewModels.Core;
 using ChronoPlurk.Views;
+using NotifyPropertyWeaver;
 using Plurto.Core;
 
 namespace ChronoPlurk.ViewModels
 {
+    [NotifyForAll]
     public class PlurkDetailPageViewModel : LoginAvailablePage, INavigationInjectionRedirect, IPlurkHolder
     {
         private IPlurkService PlurkService { get; set; }
@@ -18,22 +21,29 @@ namespace ChronoPlurk.ViewModels
         protected PlurkHolderService PlurkHolderService { get; set; }
         
         public PlurkDetailViewModel PlurkDetailViewModel { get; private set; }
+
+        public PlurkDetailFooterViewModel ReplyViewModel { get; private set; }
+
+        public Visibility ReplyVisibility { get; set; }
         
         public PlurkDetailPageViewModel
             (IPlurkService plurkService,
             PlurkHolderService plurkHolderService,
             PlurkDetailViewModel plurkDetailViewModel,
+            PlurkDetailFooterViewModel replyViewModel,
             LoginViewModel loginViewModel)
             : base(loginViewModel)
         {
             PlurkHolderService = plurkHolderService;
             PlurkService = plurkService;
             PlurkDetailViewModel = plurkDetailViewModel;
+            ReplyViewModel = replyViewModel;
+            ReplyVisibility = Visibility.Collapsed;
         }
 
         protected override void OnActivate()
         {
-            if (!PlurkDetailViewModel.DetailFooter.OpeningPhotoChooser)
+            if (!ReplyViewModel.OpeningPhotoChooser)
             {
                 PlurkDetailViewModel.RefreshOnActivate = true;
                 ActivateItem(PlurkHeaderViewModel);
@@ -43,9 +53,8 @@ namespace ChronoPlurk.ViewModels
             }
             else
             {
-                PlurkDetailViewModel.DetailFooter.OpeningPhotoChooser = false;
-                PlurkDetailViewModel.ScrollToEnd();
-                PlurkDetailViewModel.DetailFooter.ResponseFocus = true;
+                ReplyViewModel.OpeningPhotoChooser = false;
+                ReplyViewModel.ResponseFocus = true;
             }
 
             base.OnActivate();
@@ -103,7 +112,7 @@ namespace ChronoPlurk.ViewModels
             {
                 return;
             }
-            if (String.IsNullOrWhiteSpace(PlurkDetailViewModel.DetailFooter.PostContent))
+            if (String.IsNullOrWhiteSpace(ReplyViewModel.PostContent))
             {
                 if (view.ReplyButton.IconUri != PlurkDetailPage.ReplyIconUri)
                 {
@@ -149,20 +158,20 @@ namespace ChronoPlurk.ViewModels
 
         public void ReplyAppBar()
         {
-            if (String.IsNullOrWhiteSpace(PlurkDetailViewModel.DetailFooter.PostContent))
+            if (String.IsNullOrWhiteSpace(ReplyViewModel.PostContent))
             {
-                PlurkDetailViewModel.ScrollToEnd();
-                PlurkDetailViewModel.DetailFooter.ResponseFocus = true;
+                ReplyVisibility = Visibility.Visible;
+                ReplyViewModel.ResponseFocus = true;
             }
             else
             {
-                PlurkDetailViewModel.DetailFooter.Reply();
+                ReplyViewModel.Reply();
             }
         }
 
         public void PhotosAppBar()
         {
-            PlurkDetailViewModel.DetailFooter.InsertPhoto();
+            ReplyViewModel.InsertPhoto();
         }
 
         public void LikeAppBar()
