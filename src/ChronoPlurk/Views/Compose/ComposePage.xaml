@@ -21,7 +21,11 @@
     
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <ScrollViewer>
-            <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+            <Grid Margin="12,0,12,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
                 <StackPanel>
                     <toolkit:ListPicker ItemsSource="{Binding Qualifiers}"
                                         SelectedItem="{Binding Qualifier, Mode=TwoWay}"
@@ -71,18 +75,18 @@
                                    Margin="0,0,12,0"
                                    Foreground="{StaticResource PhoneAccentBrush}"/>
                     </Grid>
+                </StackPanel>
+                <StackPanel Grid.Row="1"
+                            Visibility="{Binding LockVisibility}">
                     <toolkit:ToggleSwitch x:Name="PrivateSwitch"
                                       Header="{Binding Path=LocalizedResources.onlyMyFriends, Source={StaticResource LocalizedStrings}}"
                                       IsChecked="{Binding IsPrivateView, Mode=TwoWay}"
-                                      Visibility="{Binding LockVisibility}"
                                       cal:Message.Attach="[Event Checked] = [Action OnPrivateChecked()];[Event Unchecked] = [Action OnPrivateUnchecked()]" />
                     <Button x:Name="ChooseFriends"
                             Content="{Binding Path=LocalizedResources.chooseFriends, Source={StaticResource LocalizedStrings}}"
-                            Visibility="{Binding LockVisibility}"
                             HorizontalAlignment="Left" />
                     <ItemsControl x:Name="SelectedUsers"
-                                  Opacity="{Binding SelectionOpacity}"
-                                  Visibility="{Binding LockVisibility}">
+                                  Opacity="{Binding SelectionOpacity}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <Border Background="{StaticResource PhoneForegroundBrush}"
