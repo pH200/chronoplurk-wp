@@ -51,7 +51,7 @@ namespace ChronoPlurk.Helpers
                             {
                                 return sharpSerializer.Deserialize(file);
                             }
-                            catch (DeserializingException e)
+                            catch (DeserializingException)
                             {
 #if DEBUG
                                 throw;
