@@ -45,6 +45,7 @@ namespace ChronoPlurk.Views.Compose
         {
             ApplicationBar = new ApplicationBar()
             {
+                ForegroundColor = Colors.White,
                 BackgroundColor = PlurkResources.PlurkColor
             };
             var completeButton = new AppBarButton()

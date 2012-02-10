@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows;
 using System.Windows.Media;
 
 namespace ChronoPlurk.Helpers
@@ -40,6 +41,15 @@ namespace ChronoPlurk.Helpers
             get
             {
                 return PhoneHeightGetter != null ? PhoneHeightGetter() : 0;
+            }
+        }
+
+        public static bool IsLightTheme
+        {
+            get
+            {
+                var v = (Visibility)Application.Current.Resources["PhoneLightThemeVisibility"];
+                return v == Visibility.Visible;
             }
         }
 

@@ -78,6 +78,7 @@ namespace ChronoPlurk.Views
         {
             ApplicationBar = new ApplicationBar()
             {
+                ForegroundColor = Colors.White,
                 BackgroundColor = PlurkResources.PlurkColor
             };
             var refreshButton = new AppBarButton()

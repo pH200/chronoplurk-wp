@@ -47,21 +47,21 @@
                                             cal:Message.Attach="[Event Tap] = [Action OnItemTap($dataContext)]">
                     <toolkit:ContextMenuService.ContextMenu>
                         <toolkit:ContextMenu x:Name="Menu"
-                                                     Background="#FFCF682F"
-                                                     IsEnabled="{Binding ContextMenuEnabled}"
-                                                     cal:Action.TargetWithoutContext="{Binding DataContext, ElementName=Items}">
+                                             Background="#FFCF682F"
+                                             IsEnabled="{Binding ContextMenuEnabled}"
+                                             cal:Action.TargetWithoutContext="{Binding DataContext, ElementName=Items}">
                             <toolkit:MenuItem x:Name="MenuMute"
-                                                      Header="{Binding MuteText}"
-                                                      Foreground="{StaticResource PhoneForegroundBrush}"
-                                                      cal:Message.Attach="MenuMute($dataContext)" />
+                                              Header="{Binding MuteText}"
+                                              Foreground="White"
+                                              cal:Message.Attach="MenuMute($dataContext)" />
                             <toolkit:MenuItem x:Name="MenuLike"
-                                                      Header="{Binding LikeText}"
-                                                      Foreground="{StaticResource PhoneForegroundBrush}"
-                                                      cal:Message.Attach="MenuLike($dataContext)" />
+                                              Header="{Binding LikeText}"
+                                              Foreground="White"
+                                              cal:Message.Attach="MenuLike($dataContext)" />
                             <toolkit:MenuItem x:Name="MenuDelete"
-                                                      Header="{Binding Path=LocalizedResources.delete, Source={StaticResource LocalizedStrings}}"
-                                                      Foreground="{StaticResource PhoneForegroundBrush}"
-                                                      cal:Message.Attach="MenuDelete($dataContext)" />
+                                              Header="{Binding Path=LocalizedResources.delete, Source={StaticResource LocalizedStrings}}"
+                                              Foreground="White"
+                                              cal:Message.Attach="MenuDelete($dataContext)" />
                         </toolkit:ContextMenu>
                     </toolkit:ContextMenuService.ContextMenu>
                 </pcontrols:PlurkItemControl>
