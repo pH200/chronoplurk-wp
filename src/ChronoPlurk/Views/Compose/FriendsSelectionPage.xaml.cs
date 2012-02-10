@@ -46,17 +46,17 @@ namespace ChronoPlurk.Views.Compose
             {
                 BackgroundColor = PlurkResources.PlurkColor
             };
-            var downloadButton = new AppBarButton()
-            {
-                IconUri = new Uri("Resources/Icons/appbar.download.rest.png", UriKind.Relative),
-                Text = AppResources.appbarDownloadFriendList,
-                Message = "DownloadAppBar"
-            };
             var completeButton = new AppBarButton()
             {
                 IconUri = new Uri("Resources/Icons/appbar.check.rest.png", UriKind.Relative),
                 Text = AppResources.appbarComplete,
                 Message = "CompleteAppBar"
+            };
+            var downloadButton = new AppBarButton()
+            {
+                IconUri = new Uri("Resources/Icons/appbar.download.rest.png", UriKind.Relative),
+                Text = AppResources.appbarDownloadFriendList,
+                Message = "DownloadAppBar"
             };
             var clearButton = new AppBarMenuItem()
             {
@@ -69,8 +69,8 @@ namespace ChronoPlurk.Views.Compose
                 Message = "HelpAppBar"
             };
 
-            ApplicationBar.Buttons.Add(downloadButton);
             ApplicationBar.Buttons.Add(completeButton);
+            ApplicationBar.Buttons.Add(downloadButton);
             ApplicationBar.MenuItems.Add(clearButton);
             ApplicationBar.MenuItems.Add(helpButton);
         }
