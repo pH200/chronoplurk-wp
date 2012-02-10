@@ -7,17 +7,17 @@ namespace ChronoPlurk.Core
     {
         public string Username { get; set; }
 
-        public string Password { get; set; }
-
-        public Cookie[] Cookies { get; set; }
-
-        public bool IsHasCookies
-        {
-            get { return (Cookies != null && Cookies.Length > 0); }
-        }
-
         public int UserId { get; set; }
 
         public string UserAvatar { get; set; }
+
+        public string AccessToken { get; set; }
+
+        public string AccessTokenSecret { get; set; }
+
+        public bool HasAccessToken
+        {
+            get { return AccessToken != null && AccessTokenSecret != null; }
+        }
     }
 }

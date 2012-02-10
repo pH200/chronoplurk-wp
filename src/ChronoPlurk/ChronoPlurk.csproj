@@ -168,13 +168,11 @@
     <Compile Include="ViewModels\Core\IPlurkHolder.cs" />
     <Compile Include="ViewModels\Core\IRefreshSync.cs" />
     <Compile Include="ViewModels\Core\ISearchPage.cs" />
-    <Compile Include="ViewModels\Core\LoginAvailablePage.cs" />
     <Compile Include="ViewModels\Core\PivotViewModel.cs" />
     <Compile Include="ViewModels\Core\PlurkAppBarPage.cs" />
     <Compile Include="ViewModels\Core\QualifierViewModel.cs" />
     <Compile Include="ViewModels\Core\TimelineBaseViewModel.cs" />
     <Compile Include="ViewModels\LoginPageViewModel.cs" />
-    <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="ViewModels\Main\LikedPlurksViewModel.cs" />
     <Compile Include="ViewModels\Main\MyPlurksViewModel.cs" />
@@ -220,6 +218,9 @@
     <Compile Include="Views\ImageLoader\LowProfileImageLoader.cs" />
     <Compile Include="Views\Control\PlurkItemControl.xaml.cs">
       <DependentUpon>PlurkItemControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LoginBrowserPage.xaml.cs">
+      <DependentUpon>LoginBrowserPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
@@ -280,6 +281,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Control\TimelineControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LoginBrowserPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -367,10 +372,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\LoginView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Views\Settings\SettingsOssCreditsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -438,6 +439,7 @@
     <EmbeddedResource Include="Resources\i18n\AppResources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>AppResources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\i18n\AppResources.zh-TW.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

@@ -583,6 +583,15 @@ namespace ChronoPlurk.Resources.i18n {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Connect your account to ChronoPlurk..
+        /// </summary>
+        public static string loginGrantMessage {
+            get {
+                return ResourceManager.GetString("loginGrantMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nickname or email.
         /// </summary>
         public static string loginNicknameOrEmail {

@@ -6,6 +6,7 @@ using System.Windows;
 using Caliburn.Micro;
 using ChronoPlurk.Resources.i18n;
 using ChronoPlurk.Services;
+using ChronoPlurk.Views;
 using Plurto.Core;
 using Plurto.Exceptions;
 
@@ -56,12 +57,22 @@ namespace ChronoPlurk.Helpers
             var error = PlurkError.UnknownError;
             if (ex is PlurkErrorException)
             {
-                error = ((PlurkErrorException) ex).Error;
+                var plurkException = (PlurkErrorException)ex;
+                error = plurkException.Error;
+                if (error == PlurkError.UnknownError && plurkException.RawError.Contains("invalid access token"))
+                {
+                    error = PlurkError.RequiresLogin;
+                }
                 errorMessage = ConvertPlurkErrorMessage(error);
             }
             else if (ex is RequestFailException)
             {
                 errorMessage = AppResources.requestFailedMessage.Replace("\\n", Environment.NewLine);
+            }
+            else if (ex is UnauthorizedException)
+            {
+                error = PlurkError.RequiresLogin;
+                errorMessage = AppResources.errRequiresLogin;
             }
             else
             {
@@ -93,7 +104,7 @@ namespace ChronoPlurk.Helpers
                     var navigationService = IoC.Get<INavigationService>();
                     if (plurkService != null && navigationService != null)
                     {
-                        plurkService.ClearUserCookie();
+                        plurkService.FlushConnection();
                         navigationService.GotoLoginPage();
                     }
                 }

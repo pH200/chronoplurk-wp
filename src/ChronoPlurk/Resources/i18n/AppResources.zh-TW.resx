@@ -417,4 +417,7 @@
   <data name="delete" xml:space="preserve">
     <value>刪除</value>
   </data>
+  <data name="loginGrantMessage" xml:space="preserve">
+    <value>將您的帳號連接到 ChronoPlurk</value>
+  </data>
 </root>

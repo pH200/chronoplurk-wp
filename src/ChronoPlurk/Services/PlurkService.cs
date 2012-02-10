@@ -9,20 +9,24 @@ using ChronoPlurk.Helpers;
 using ChronoPlurk.Resources.i18n;
 using Plurto.Commands;
 using Plurto.Core;
+using Plurto.Core.OAuth;
+using Plurto.Entities;
 
 namespace ChronoPlurk.Services
 {
     public interface IPlurkService
     {
+        string VerifierTemp { get; set; }
         IRequestClient Client { get; }
         string Username { get; }
         int UserId { get; }
         AppUserInfo AppUserInfo { get; }
-        IEnumerable<int> FriendsId { get; set; }
         bool IsLoaded { get; }
         bool IsUserChanged { get; set; }
-        IObservable<bool> LoginAsnc(string username, string password);
-        void ClearUserCookie();
+        void FlushConnection();
+        IObservable<Uri> GetRequestToken();
+        IObservable<OAuthClient> GetAccessToken(string verifier);
+        IObservable<AppUserInfo> CreateUserData(OAuthClient client);
         void SaveUserData();
         bool LoadUserData();
         void ClearUserData();
@@ -38,11 +42,13 @@ namespace ChronoPlurk.Services
     {
         private readonly IProgressService _progressService;
 
-        private readonly LegacyClient _client;
-
-        public AppUserInfo AppUserInfo { get; private set; }
+        private readonly OAuthClient _client;
 
         private IDisposable _saveUserInfoDisposable;
+
+        public AppUserInfo AppUserInfo { get; private set; }
+        
+        public string VerifierTemp { get; set; }
 
         public IRequestClient Client { get { return _client; } }
 
@@ -56,11 +62,9 @@ namespace ChronoPlurk.Services
             get { return (AppUserInfo == null ? -1 : AppUserInfo.UserId); }
         }
 
-        public IEnumerable<int> FriendsId { get; set; }
-
         public bool IsLoaded
         {
-            get { return (AppUserInfo != null && AppUserInfo.IsHasCookies); }
+            get { return (AppUserInfo != null && AppUserInfo.HasAccessToken); }
         }
 
         public bool IsUserChanged { get; set; }
@@ -72,42 +76,45 @@ namespace ChronoPlurk.Services
             // TODO: Change this when plurks caching implemented.
             IsUserChanged = true; // Reload on startup.
 
-            _client = new LegacyClient(DefaultConfiguration.ApiKey);
+            _client = new OAuthClient(DefaultConfiguration.OAuthConsumerKey, DefaultConfiguration.OAuthConsumerSecret);
             LoadUserData();
         }
 
-        public IObservable<bool> LoginAsnc(string username, string password)
+        public IObservable<Uri> GetRequestToken()
         {
-            var login = UsersCommand.Login(username, password).Client(Client).ToObservable();
-            return login.Do(profile =>
-            {
-                var cookies = profile.Cookies;
-                _client.Cookies = cookies;
-                if (Username != username)
-                {
-                    IsUserChanged = true;
-                }
-                AppUserInfo = new AppUserInfo()
-                {
-                    Username = username,
-                    Password = password,
-                    Cookies = cookies.OfType<Cookie>().ToArray(),
-                    UserId = profile.UserInfo.Id,
-                    UserAvatar = profile.UserInfo.AvatarBig,
-                };
-                foreach (var cookie in AppUserInfo.Cookies)
-                {
-                    cookie.Expires = cookie.Expires.AddYears(20);
-                }
-            }).Select(c => c != null);
+            return _client.ObtainRequestToken()
+                .Do(token => _client.SetToken(token))
+                .Select(token => _client.GetAuthorizationUri(true));
         }
 
-        public void ClearUserCookie()
+        public IObservable<OAuthClient> GetAccessToken(string verifier)
         {
+            return _client.ObtainAccessToken(verifier).Do(token => _client.SetToken(token)).Select(token => _client);
+        }
+
+        public void FlushConnection()
+        {
+            _client.FlushToken();
             if (AppUserInfo != null)
             {
-                AppUserInfo.Cookies = null;
+                AppUserInfo.AccessToken = null;
+                AppUserInfo.AccessTokenSecret = null;
             }
+        }
+
+        public IObservable<AppUserInfo> CreateUserData(OAuthClient client)
+        {
+            return ProfileCommand.GetOwnProfile().Client(client).ToObservable().Do(profile =>
+            {
+                AppUserInfo = new AppUserInfo()
+                {
+                    Username = profile.UserInfo.NickName,
+                    UserId = profile.UserInfo.Id,
+                    UserAvatar = profile.UserInfo.AvatarBig,
+                    AccessToken = _client.Token,
+                    AccessTokenSecret = client.TokenSecret,
+                };
+            }).Select(profile => AppUserInfo);
         }
 
         public void SaveUserData()
@@ -132,23 +139,14 @@ namespace ChronoPlurk.Services
             if (appUserInfo != null)
             {
                 AppUserInfo = appUserInfo;
-                SetCookie(_client, AppUserInfo.Cookies);
+                _client.Token = appUserInfo.AccessToken;
+                _client.TokenSecret = appUserInfo.AccessTokenSecret;
                 return true;
             }
             else
             {
                 return false;
             }
-        }
-
-        private static void SetCookie(LegacyClient client, IEnumerable<Cookie> cookies)
-        {
-            var cookieCollection = new CookieCollection();
-            foreach (var cookie in cookies)
-            {
-                cookieCollection.Add(cookie);
-            }
-            client.Cookies = cookieCollection;
         }
 
         public void ClearUserData()

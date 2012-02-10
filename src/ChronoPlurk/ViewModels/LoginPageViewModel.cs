@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reactive;
 using System.Reactive.Linq;
 using System.Windows.Input;
 using Caliburn.Micro;
@@ -16,8 +17,7 @@ namespace ChronoPlurk.ViewModels
         private readonly IPlurkService _plurkService;
         private readonly IProgressService _progressService;
         private readonly INavigationService _navigationService;
-
-        private IDisposable _requestHandler;
+        private IDisposable _createDisposable;
 
         public string Username { get; set; }
 
@@ -38,79 +38,79 @@ namespace ChronoPlurk.ViewModels
             _navigationService = navigationService;
             _progressService = progressService;
             _plurkService = plurkService;
-
-            IsLoginEnabled = true;
         }
 
         protected override void OnActivate()
         {
-#if CLEAN_DEBUG
-            Username = PlurkResources.Username;
-            Password = PlurkResources.Password;
-#else
-            Username = _plurkService.Username;
-#endif
+            if (_plurkService.VerifierTemp != null)
+            {
+                ProcessLogin();
+            }
+            else
+            {
+                IsLoginEnabled = true;
+            }
             base.OnActivate();
         }
 
-        public void UsernameKey(KeyEventArgs e)
+        private void ProcessLogin()
         {
-            if (e != null && e.Key == Key.Enter)
+            if (_createDisposable != null)
             {
-                var view = GetView() as LoginPage;
-                if (view != null)
-                {
-                    view.Password.Focus();
-                }
+                _createDisposable.Dispose();
             }
-        }
+            IsLoginEnabled = false;
+            _progressService.Show(AppResources.msgConnecting);
 
-        public void PasswordKey(KeyEventArgs e)
+            var verifier = _plurkService.VerifierTemp;
+            _plurkService.VerifierTemp = null;
+
+            var getAccessToken = _plurkService
+                .GetAccessToken(verifier)
+                .Select(client => _plurkService.CreateUserData(client))
+                .Merge();
+
+            _createDisposable = getAccessToken
+                .PlurkException(progressService: _progressService)
+                .ObserveOnDispatcher()
+                .Subscribe(unit => OnLoggedIn(), () =>
+                {
+                    _progressService.Hide();
+                    IsLoginEnabled = true;
+                });
+        }
+        
+        private void OnLoggedIn()
         {
-            if (e != null && e.Key == Key.Enter)
+            _plurkService.SaveUserData();
+            if (RedirectMainPage)
             {
-                Login();
+                var mainPageUri = new Uri("/Views/PlurkMainPage.xaml", UriKind.Relative);
+                if (_navigationService.CanGoBack)
+                {
+                    // Remove entry for MainPage.xaml
+                    _navigationService.RemoveBackEntry();
+                }
+                _navigationService.SetRemoveBackEntryFlag();
+                _navigationService.Navigate(mainPageUri);
+            }
+            else
+            {
+                if (_navigationService.CanGoBack)
+                {
+                    _navigationService.GoBack();
+                }
+                else
+                {
+                    throw new InvalidOperationException("Login page must be navigated from other pages.");
+                }
             }
         }
 
         public void Login()
         {
-            if (_requestHandler != null)
-            {
-                _requestHandler.Dispose();
-            }
             IsLoginEnabled = false;
-            _progressService.Show(AppResources.msgConnecting);
-            _requestHandler = _plurkService.LoginAsnc(Username, Password)
-                .PlurkException(error => { }, _progressService)
-                .ObserveOnDispatcher()
-                .Subscribe(message =>
-                {
-                    _plurkService.SaveUserData();
-                    _progressService.Hide();
-                    if (RedirectMainPage)
-                    {
-                        var mainPageUri = new Uri("/Views/PlurkMainPage.xaml", UriKind.Relative);
-                        if (_navigationService.CanGoBack)
-                        {
-                            // Remove entry for MainPage.xaml
-                            _navigationService.RemoveBackEntry();
-                        }
-                        _navigationService.SetRemoveBackEntryFlag();
-                        _navigationService.Navigate(mainPageUri);
-                    }
-                    else
-                    {
-                        if (_navigationService.CanGoBack)
-                        {
-                            _navigationService.GoBack();
-                        }
-                        else
-                        {
-                            throw new InvalidOperationException("Login page must be navigated from other pages.");
-                        }
-                    }
-                }, () => IsLoginEnabled = true);
+            _navigationService.Navigate(new Uri("/Views/LoginBrowserPage.xaml", UriKind.Relative));
         }
     }
 }

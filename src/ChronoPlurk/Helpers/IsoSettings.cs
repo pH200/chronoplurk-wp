@@ -4,6 +4,7 @@ using System.IO.IsolatedStorage;
 using System.Linq;
 using System.Reactive.Linq;
 using Polenter.Serialization;
+using Polenter.Serialization.Core;
 
 namespace ChronoPlurk.Helpers
 {
@@ -46,7 +47,18 @@ namespace ChronoPlurk.Helpers
                         using (var file = appStorage.OpenFile(filename, FileMode.Open, FileAccess.Read))
                         {
                             var sharpSerializer = new SharpSerializer(true);
-                            return sharpSerializer.Deserialize(file);
+                            try
+                            {
+                                return sharpSerializer.Deserialize(file);
+                            }
+                            catch (DeserializingException e)
+                            {
+#if DEBUG
+                                throw;
+#else
+                                return null;
+#endif
+                            }
                         }
                     }
                     else

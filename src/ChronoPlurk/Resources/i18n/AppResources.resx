@@ -417,4 +417,7 @@
   <data name="delete" xml:space="preserve">
     <value>delete</value>
   </data>
+  <data name="loginGrantMessage" xml:space="preserve">
+    <value>Connect your account to ChronoPlurk.</value>
+  </data>
 </root>

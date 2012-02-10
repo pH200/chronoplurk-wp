@@ -9,11 +9,9 @@ namespace ChronoPlurk
         /**
          * Replace these values with your own connection strings.
          */
-        public static string ApiKey = "";
+        public static string OAuthConsumerKey;
 
-        public static string DebugUsername = "";
-
-        public static string DebugPassword = "";
+        public static string OAuthConsumerSecret;
 
         public static TimeSpan TimeoutTimeline = TimeSpan.FromSeconds(15);
 

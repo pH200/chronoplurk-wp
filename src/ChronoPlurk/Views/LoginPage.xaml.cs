@@ -30,6 +30,7 @@ namespace ChronoPlurk.Views
                 case AnimationType.NavigateBackwardOut:
                     return new SlideDownAnimator() { RootElement = LayoutRoot };
                 case AnimationType.NavigateForwardIn:
+                case AnimationType.NavigateBackwardIn:
                     return new SlideUpAnimator() { RootElement = LayoutRoot };
             }
             return base.GetAnimation(animationType, toOrFrom);

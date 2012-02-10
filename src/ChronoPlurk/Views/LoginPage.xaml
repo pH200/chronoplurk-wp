@@ -6,7 +6,7 @@
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:cal="http://www.caliburnproject.org"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
@@ -34,30 +34,18 @@
                        HorizontalAlignment="Center"
                        Foreground="{StaticResource PlurkOrange}"
                        Style="{StaticResource PhoneTextTitle2Style}" />
-            <TextBlock Margin="12,0,0,0"
-                       Text="{Binding Path=LocalizedResources.loginNicknameOrEmail, Source={StaticResource LocalizedStrings}}"
+            <TextBlock Text="{Binding Path=LocalizedResources.loginGrantMessage, Source={StaticResource LocalizedStrings}}"
+                       HorizontalAlignment="Center"
+                       TextWrapping="Wrap"
+                       Margin="12"
                        Foreground="{StaticResource PlurkTextBrush}" />
-            <TextBox x:Name="Username" Height="72"
-                     InputScope="EmailUserName"
-                     cal:Message.Attach="[Event KeyUp] = [Action UsernameKey($eventArgs)]" />
-            <TextBlock Margin="12,0,0,0"
-                       Text="{Binding Path=LocalizedResources.loginPassword, Source={StaticResource LocalizedStrings}}"
-                       Foreground="{StaticResource PlurkTextBrush}" />
-            <PasswordBox x:Name="Password" Height="72"
-                         cal:Message.Attach="[Event KeyUp] = [Action PasswordKey($eventArgs)]" />
             <Grid>
                 <Button x:Name="Login"
                         Height="72" Width="200"
-                        HorizontalAlignment="Left"
                         Foreground="{StaticResource PlurkTextBrush}"
                         BorderBrush="{StaticResource PlurkTextBrush}"
                         IsEnabled="{Binding IsLoginEnabled}"
                         Content="{Binding Path=LocalizedResources.login, Source={StaticResource LocalizedStrings}}" />
-                <TextBlock x:Name="Message"
-                           Height="30"
-                           Width="250"
-                           HorizontalAlignment="Left"
-                           Margin="212,0,0,0" />
             </Grid>
             
             <HyperlinkButton NavigateUri="http://www.plurk.com/Users/showRegister"

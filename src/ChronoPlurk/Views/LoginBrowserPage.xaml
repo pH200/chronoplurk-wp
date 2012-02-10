@@ -1,0 +1,42 @@
+﻿<animation:AnimatedBasePage 
+    x:Class="ChronoPlurk.Views.LoginBrowserPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:animation="clr-namespace:WP7Contrib.View.Transitions.Animation;assembly=WP7Contrib.View.Transitions"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    Orientation="Portrait"
+    mc:Ignorable="d" d:DesignHeight="768" d:DesignWidth="480"
+    shell:SystemTray.IsVisible="True">
+    
+    <animation:AnimatedBasePage.Resources>
+        <Storyboard x:Name="loadedStoryboard"
+                    Completed="loadedStoryboard_Completed">
+            <DoubleAnimation From="1.0" To="0.0" Duration="0:0:0.5"
+                             Storyboard.TargetName="LoadingGrid"
+                             Storyboard.TargetProperty="Opacity"/>
+        </Storyboard>
+    </animation:AnimatedBasePage.Resources>
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <phone:WebBrowser x:Name="Browser"
+                          IsScriptEnabled="True"
+                          VerticalContentAlignment="Stretch"
+                          HorizontalContentAlignment="Stretch"
+                          Navigated="Browser_Navigated" />
+        <Grid Background="{StaticResource PhoneBackgroundBrush}"
+              x:Name="LoadingGrid">
+            <TextBlock Text="Connecting to plurk.com"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Margin="0,48,0,0"/>
+            <toolkit:PerformanceProgressBar IsIndeterminate="True" />
+        </Grid>
+    </Grid>
+
+</animation:AnimatedBasePage>
