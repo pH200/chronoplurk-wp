@@ -22,16 +22,6 @@
             <RowDefinition />
             <RowDefinition Height="70" />
         </Grid.RowDefinitions>
-        <controls:Pivot Grid.Row="1"
-                        x:Name="Items"
-                        SelectedItem="{Binding ActiveItem, Mode=TwoWay}"
-                        Margin="0,-40,0,0">
-            <controls:Pivot.HeaderTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding DisplayName}" />
-                </DataTemplate>
-            </controls:Pivot.HeaderTemplate>
-        </controls:Pivot>
         <Grid Margin="12,20,8,0">
             <TextBox x:Name="SearchField"
                      InputScope="Text"
@@ -47,6 +37,18 @@
                        Height="26" />
             </Border>
         </Grid>
+        
+        <controls:Pivot Grid.Row="1"
+                        x:Name="Items"
+                        SelectedItem="{Binding ActiveItem, Mode=TwoWay}"
+                        Margin="0,-40,0,0">
+            <controls:Pivot.HeaderTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding DisplayName}" />
+                </DataTemplate>
+            </controls:Pivot.HeaderTemplate>
+        </controls:Pivot>
+        
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="0.5*" />
