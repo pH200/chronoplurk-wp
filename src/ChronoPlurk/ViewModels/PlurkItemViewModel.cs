@@ -22,6 +22,8 @@ namespace ChronoPlurk.ViewModels
 
         public long PlurkId { get; set; }
 
+        public long Id { get; set; }
+
         public int UserId { get; set; }
 
         public string Username { get; set; }
@@ -66,6 +68,12 @@ namespace ChronoPlurk.ViewModels
         }
 
         public int ResponseCount { get; set; }
+
+        [DependsOn("Id")]
+        public Visibility ResponseCountVisibility
+        {
+            get { return Id == 0 ? Visibility.Visible : Visibility.Collapsed; }
+        }
 
         [DependsOn("ResponseCount")]
         public string ResponseCountView
@@ -132,6 +140,16 @@ namespace ChronoPlurk.ViewModels
         public string LikeText
         {
             get { return IsFavorite ? AppResources.unlike : AppResources.like; }
+        }
+
+        public bool? Replurked { get; set; }
+
+        public string ReplurkerName { get; set; }
+
+        [DependsOn("ReplurkerName")]
+        public Visibility ReplurkVisibility
+        {
+            get { return ReplurkerName != null ? Visibility.Visible : Visibility.Collapsed; }
         }
 
         #endregion

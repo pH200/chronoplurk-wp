@@ -405,6 +405,7 @@
     <Content Include="Resources\Icons\appbar.stop.rest.png" />
     <Content Include="Resources\Icons\icon.round.png" />
     <Content Include="Resources\Icons\plurk.private.png" />
+    <Content Include="Resources\Icons\plurk.replurk.png" />
     <Content Include="Resources\Icons\Search.png" />
     <Content Include="Resources\Images\cytisan_logo.jpg" />
     <Content Include="Resources\Images\plurkicon.png" />

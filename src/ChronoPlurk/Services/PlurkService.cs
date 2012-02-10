@@ -36,6 +36,7 @@ namespace ChronoPlurk.Services
         void Unmute(long plurkId);
         void SetAsRead(long plurkId);
         void Delete(long plurkId);
+        void DeleteResponse(long id, long plurkId);
     }
 
     public class PlurkService : IPlurkService
@@ -196,6 +197,11 @@ namespace ChronoPlurk.Services
         public void Delete(long plurkId)
         {
             SimpleAction(TimelineCommand.PlurkDelete(plurkId), service => { });
+        }
+
+        public void DeleteResponse(long id, long plurkId)
+        {
+            SimpleAction(ResponsesCommand.ResponseDelete(id, plurkId), service => { });
         }
     }
 }

@@ -216,7 +216,7 @@ namespace ChronoPlurk.ViewModels
                     else
                     {
                         Execute.OnUIThread(() => ProgressService.Show(AppResources.msgUpdatingTimeline));
-                        Items.AddRange(MapUserPlurkToPlurkItemViewModel(result));
+                        Items.AddRange(MapUserPlurkToPlurkItemViewModel(result, plurks));
 
                         if (IsHasMoreHandler != null)
                         {
@@ -226,11 +226,24 @@ namespace ChronoPlurk.ViewModels
                 }, () => Execute.OnUIThread(() => ProgressService.Hide()));
         }
 
-        private IEnumerable<PlurkItemViewModel> MapUserPlurkToPlurkItemViewModel(IEnumerable<UserPlurk> result)
+        private IEnumerable<PlurkItemViewModel> MapUserPlurkToPlurkItemViewModel(IEnumerable<UserPlurk> result, TSource plurks)
         {
+            Func<UserPlurk, string> getReplurkerName = plurk =>
+            {
+                if (plurk.Plurk.ReplurkerId.HasValue)
+                {
+                    User user;
+                    if (plurks.Users.TryGetValue(plurk.Plurk.ReplurkerId.Value, out user))
+                    {
+                        return user.DisplayNameOrNickName;
+                    }
+                }
+                return null;
+            };
             return result.Select(plurk => new PlurkItemViewModel()
             {
                 PlurkId = plurk.Plurk.PlurkId,
+                Id = plurk.Plurk.Id,
                 UserId = plurk.User.Id, // Plurk.UserId may return client's id if logged in.
                 Username = plurk.User.DisplayNameOrNickName,
                 Qualifier = plurk.Plurk.QualifierTextView(),
@@ -247,6 +260,8 @@ namespace ChronoPlurk.ViewModels
                 PlurkType = plurk.Plurk.PlurkType,
                 ContextMenuEnabled = PlurkService.IsLoaded,
                 EnableHyperlink = this.EnableHyperlink,
+                Replurked = plurk.Plurk.Replurked,
+                ReplurkerName = getReplurkerName(plurk),
             });
         }
 
@@ -402,6 +417,10 @@ namespace ChronoPlurk.ViewModels
                     if (!IsCompareIdInsteadOfPlurkId)
                     {
                         service.Delete(item.PlurkId); // delete plurk
+                    }
+                    else
+                    {
+                        service.DeleteResponse(item.Id, item.PlurkId);
                     }
                 }
             }

@@ -59,24 +59,39 @@
             <PlurkControls:HtmlTextBox Html="{Binding ContentHtml}"
                                        Margin="-12,0,0,0"
                                        EnableHyperlink="{Binding EnableHyperlink}" />
-            <Grid HorizontalAlignment="Right" Width="350">
-                <Grid HorizontalAlignment="Right" Margin="0,0,130,0">
-                    <TextBlock Text="●"
-                               Foreground="{StaticResource PhoneAccentBrush}"
-                               Visibility="{Binding IsUnreadView}" />
-                    <TextBlock Text="{Binding ResponseCountView}"
-        			           VerticalAlignment="Bottom"
-                               HorizontalAlignment="Right"
-                               Margin="12,0,0,0"
-            			       FontSize="{StaticResource PhoneFontSizeSmall}"
-                               Foreground="{StaticResource PhoneSubtleBrush}" />
-                </Grid>
-                <TextBlock Text="{Binding TimeView}"
-                           VerticalAlignment="Bottom"
+            <Grid Margin="0,4,12,12">
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Visibility="{Binding ReplurkVisibility}"
+                            Margin="0,0,12,0"
+                            Background="#3B8610">
+                    <Image Source="/Resources/Icons/plurk.replurk.png" Stretch="None"
+                           Margin="4,0"/>
+                    <TextBlock Text="{Binding ReplurkerName}"
+                               VerticalAlignment="Center"
+                               Margin="4,0"
+                               FontSize="{StaticResource PhoneFontSizeSmall}"
+                               Foreground="White" />
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Right"
+                            Orientation="Horizontal">
+                    <TextBlock Text="{Binding TimeView}"
                            HorizontalAlignment="Right"
-                           Margin="0,0,5,0"
+                           Margin="0,4,12,4"
         				   FontSize="{StaticResource PhoneFontSizeSmall}"
         				   Foreground="{StaticResource PhoneSubtleBrush}" />
+                    <Grid Visibility="{Binding ResponseCountVisibility}"
+                          HorizontalAlignment="Right"
+                          Background="{StaticResource PhoneChromeBrush}">
+                        <Rectangle Fill="{StaticResource PhoneAccentBrush}"
+                                   Visibility="{Binding IsUnreadView}" />
+                        <TextBlock Text="{Binding ResponseCount}"
+                                   Margin="4"
+                                   FontSize="{StaticResource PhoneFontSizeSmall}"
+                                   Foreground="White" />
+                    </Grid>
+                </StackPanel>
             </Grid>
         </StackPanel>
     </Grid>
