@@ -12,6 +12,7 @@
     xmlns:imgloader="clr-namespace:ChronoPlurk.Views.ImageLoader"
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
@@ -76,6 +77,42 @@
                                    Foreground="{StaticResource PhoneAccentBrush}"/>
                     </Grid>
                 </StackPanel>
+                
+                <Grid Grid.Row="1"
+                      Visibility="{Binding EmoticonVisibility}">
+                    <TextBlock Text="emoticons"
+                               Grid.Row="1"
+                               Foreground="{StaticResource PhoneSubtleBrush}"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Top"
+                               Margin="12,4"/>
+                    <controls:Pivot x:Name="Emoticons"
+                                    Grid.Row="1"
+                                    SelectedItem="{Binding ActiveEmoticon, Mode=TwoWay}">
+                        <controls:Pivot.ItemTemplate>
+                            <DataTemplate>
+                                <ItemsControl ItemsSource="{Binding}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border imgloader:GifLowProfileImageLoader.UriSource="{Binding Value}"
+                                                Width="50"
+                                                Height="50"
+                                                Background="{StaticResource PhoneChromeBrush}"
+                                                cal:Message.Attach="[Event Tap] = [Action OnEmoticonTapped($dataContext)]"
+                                                Margin="0,0,12,12"/>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <toolkit:WrapPanel Orientation="Horizontal" />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                </ItemsControl>
+                            </DataTemplate>
+                        </controls:Pivot.ItemTemplate>
+                    </controls:Pivot>
+                </Grid>
+                
                 <StackPanel Grid.Row="1"
                             Visibility="{Binding LockVisibility}">
                     <toolkit:ToggleSwitch x:Name="PrivateSwitch"

@@ -75,6 +75,10 @@ namespace ChronoPlurk.ViewModels.Compose
 
         public bool HasPostContentFocus { get; set; }
 
+        public IEnumerable<IDictionary<string, string>> Emoticons { get; set; }
+
+        public Visibility EmoticonVisibility { get; set; }
+
         public ComposePageViewModel(
             IPlurkService plurkService,
             INavigationService navigationService,
@@ -93,6 +97,27 @@ namespace ChronoPlurk.ViewModels.Compose
 
             Qualifiers = QualifierViewModel.AllQualifiers;
             Qualifier = QualifierViewModel.AllQualifiers.First(q => q.Qualifier == Plurto.Core.Qualifier.Says);
+
+            LoadEmoticons();
+        }
+        
+        private void LoadEmoticons()
+        {
+            var emoticonsCmd = EmoticonsCommand.Get().Client(PlurkService.Client)
+                .ToObservable()
+                .Catch<Emoticons, Exception>(e =>
+                {
+                    Execute.OnUIThread(() => MessageBox.Show("Cannot load emoticons"));
+                    return Observable.Empty<Emoticons>();
+                });
+            emoticonsCmd.Subscribe(emoticons =>
+            {
+                Emoticons = new[]
+                {
+                    emoticons.GetKarmaEmoticons(),
+                    emoticons.GetRecuitedEmoticons()
+                };
+            });
         }
 
         protected override void OnInitialize()
@@ -117,6 +142,15 @@ namespace ChronoPlurk.ViewModels.Compose
             }
 
             base.OnActivate();
+        }
+
+        public void OnEmoticonTapped(object dataContext)
+        {
+            var emoticon = (KeyValuePair<string, string>)dataContext;
+            if (emoticon.Key != null)
+            {
+                PostContent += emoticon.Key;
+            }
         }
 
         public void Compose()
@@ -291,7 +325,16 @@ namespace ChronoPlurk.ViewModels.Compose
 
         public void PrivateAppBar()
         {
-            LockVisibility = Visibility.Visible;
+            if (LockVisibility == Visibility.Visible)
+            {
+                LockVisibility = Visibility.Collapsed;
+                EmoticonVisibility = Visibility.Visible;
+            }
+            else
+            {
+                EmoticonVisibility = Visibility.Collapsed;
+                LockVisibility = Visibility.Visible;
+            }
             var view = GetView() as ComposePage;
             if (view != null)
             {
