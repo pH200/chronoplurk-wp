@@ -38,14 +38,16 @@ namespace ChronoPlurk.ViewModels
             PlurkDetailViewModel = plurkDetailViewModel;
             replyViewModel.Parent = this;
             ReplyViewModel = replyViewModel;
+            
             ReplyVisibility = Visibility.Collapsed;
+
+            PlurkDetailViewModel.RefreshOnActivate = true;
         }
 
         protected override void OnActivate()
         {
             if (!ReplyViewModel.OpeningPhotoChooser)
             {
-                PlurkDetailViewModel.RefreshOnActivate = true;
                 ActivateItem(PlurkHeaderViewModel);
                 ActivateItem(PlurkDetailViewModel);
                 // Read Plurk
