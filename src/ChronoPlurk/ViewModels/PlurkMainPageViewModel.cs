@@ -34,14 +34,13 @@ namespace ChronoPlurk.ViewModels
             INavigationService navigationService,
             IPlurkService plurkService,
             SettingsService settingsService,
-            LoginViewModel loginViewModel,
             TimelineViewModel timeline,
             UnreadPlurksViewModel unreadPlurksViewModel,
             MyPlurksViewModel myPlurksViewModel,
             PrivatePlurksViewModel privatePlurksViewModel,
             RespondedPlurksViewModel respondedPlurksViewModel,
             LikedPlurksViewModel likedPlurksViewModel)
-            : base(navigationService, plurkService, loginViewModel)
+            : base(navigationService, plurkService)
         {
             SettingsService = settingsService;
 

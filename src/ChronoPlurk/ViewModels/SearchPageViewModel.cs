@@ -21,11 +21,10 @@ namespace ChronoPlurk.ViewModels
         public SearchPageViewModel(
             INavigationService navigationService,
             IPlurkService plurkService,
-            LoginViewModel loginViewModel,
             IProgressService progressService,
             SearchResultViewModel searchResult,
             SearchRecordsViewModel searchRecords)
-            : base(navigationService, plurkService, loginViewModel)
+            : base(navigationService, plurkService)
         {
             _progressService = progressService;
             _searchResult = searchResult;

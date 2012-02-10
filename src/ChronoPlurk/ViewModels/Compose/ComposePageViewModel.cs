@@ -19,7 +19,7 @@ using Plurto.Entities;
 namespace ChronoPlurk.ViewModels.Compose
 {
     [NotifyForAll]
-    public class ComposePageViewModel : LoginAvailablePage
+    public class ComposePageViewModel : Conductor<IScreen>.Collection.OneActive
     {
         private IPlurkService PlurkService { get; set; }
         private readonly INavigationService _navigationService;
@@ -83,9 +83,7 @@ namespace ChronoPlurk.ViewModels.Compose
             IPlurkService plurkService,
             INavigationService navigationService,
             IProgressService progressService,
-            FriendsFansCompletionService friendsFansCompletionService,
-            LoginViewModel loginViewModel)
-            : base(loginViewModel)
+            FriendsFansCompletionService friendsFansCompletionService)
         {
             PlurkService = plurkService;
             _navigationService = navigationService;

@@ -15,7 +15,7 @@ using NotifyPropertyWeaver;
 namespace ChronoPlurk.ViewModels.Settings
 {
     [NotifyForAll]
-    public class SettingsPageViewModel : LoginAvailablePage
+    public class SettingsPageViewModel : Conductor<IScreen>.Collection.OneActive
     {
         protected SettingsService SettingsService { get; set; }
 
@@ -45,9 +45,7 @@ namespace ChronoPlurk.ViewModels.Settings
         public SettingsPageViewModel(
             SettingsService settingsService,
             IPlurkService plurkService,
-            INavigationService navigationService,
-            LoginViewModel loginViewModel)
-            : base(loginViewModel)
+            INavigationService navigationService)
         {
             SettingsService = settingsService;
             PlurkService = plurkService;

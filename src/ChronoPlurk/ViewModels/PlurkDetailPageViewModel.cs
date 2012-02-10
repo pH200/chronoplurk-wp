@@ -13,7 +13,7 @@ using Plurto.Core;
 namespace ChronoPlurk.ViewModels
 {
     [NotifyForAll]
-    public class PlurkDetailPageViewModel : LoginAvailablePage, INavigationInjectionRedirect, IPlurkHolder
+    public class PlurkDetailPageViewModel : Conductor<IScreen>.Collection.OneActive, INavigationInjectionRedirect, IPlurkHolder
     {
         private IPlurkService PlurkService { get; set; }
 
@@ -31,9 +31,7 @@ namespace ChronoPlurk.ViewModels
             (IPlurkService plurkService,
             PlurkHolderService plurkHolderService,
             PlurkDetailViewModel plurkDetailViewModel,
-            PlurkDetailReplyViewModel replyViewModel,
-            LoginViewModel loginViewModel)
-            : base(loginViewModel)
+            PlurkDetailReplyViewModel replyViewModel)
         {
             PlurkHolderService = plurkHolderService;
             PlurkService = plurkService;

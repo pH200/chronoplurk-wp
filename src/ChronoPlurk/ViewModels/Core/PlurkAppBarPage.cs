@@ -4,16 +4,14 @@ using ChronoPlurk.Services;
 
 namespace ChronoPlurk.ViewModels
 {
-    public class PlurkAppBarPage : LoginPivotViewModel
+    public class PlurkAppBarPage : PivotViewModel
     {
         protected readonly INavigationService NavigationService;
         protected readonly IPlurkService PlurkService;
 
         public PlurkAppBarPage(
             INavigationService navigationService,
-            IPlurkService plurkService,
-            LoginViewModel loginViewModel)
-            : base(loginViewModel)
+            IPlurkService plurkService)
         {
             NavigationService = navigationService;
             PlurkService = plurkService;

@@ -101,8 +101,6 @@ namespace ChronoPlurk
             #endregion
 
             builder.RegisterType<SettingsOssCreditsPageViewModel>().AsSelf().InstancePerDependency();
-
-            builder.RegisterType<LoginViewModel>().AsSelf().InstancePerDependency();
         }
 
         private void AddPhoneResources()

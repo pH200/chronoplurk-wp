@@ -19,9 +19,8 @@ namespace ChronoPlurk.ViewModels.Profile
         public PlurkProfilePageViewModel(
             INavigationService navigationService,
             IPlurkService plurkService,
-            LoginViewModel loginViewModel,
             ProfileTimelineViewModel timeline)
-            : base(navigationService, plurkService, loginViewModel)
+            : base(navigationService, plurkService)
         {
             _timeline = timeline;
         }

@@ -11,7 +11,7 @@ using NotifyPropertyWeaver;
 namespace ChronoPlurk.ViewModels
 {
     [NotifyForAll]
-    public sealed class MainPageViewModel : LoginPivotViewModel, ISearchPage
+    public sealed class MainPageViewModel : PivotViewModel, ISearchPage
     {
         private readonly INavigationService _navigationService;
         private readonly IPlurkService _plurkService;
@@ -27,9 +27,7 @@ namespace ChronoPlurk.ViewModels
             INavigationService navigationService,
             IPlurkService plurkService,
             SearchResultViewModel searchResult,
-            SearchRecordsViewModel searchRecords,
-            LoginViewModel loginViewModel)
-            : base(loginViewModel)
+            SearchRecordsViewModel searchRecords)
         {
             _navigationService = navigationService;
             _plurkService = plurkService;
