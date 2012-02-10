@@ -399,7 +399,10 @@ namespace ChronoPlurk.ViewModels
                 if (Items.Remove(item))
                 {
                     var service = IoC.Get<IPlurkService>();
-                    service.Delete(item.PlurkId);
+                    if (!IsCompareIdInsteadOfPlurkId)
+                    {
+                        service.Delete(item.PlurkId); // delete plurk
+                    }
                 }
             }
         }
