@@ -27,8 +27,8 @@ namespace ChronoPlurk
         public static void Initialize()
         {
 #if CLEAN_DEBUG
-            PlurkResources.Username = DebugUsername;
-            PlurkResources.Password = DebugPassword;
+            //PlurkResources.Username = DebugUsername;
+            //PlurkResources.Password = DebugPassword;
             // Clear settings for debugging
             try
             {
