@@ -66,7 +66,16 @@ namespace ChronoPlurk.Helpers
             else
             {
                 errorMessage = AppResources.unhandledErrorMessage.Replace("\\n", Environment.NewLine);
+                var jsonException = ex as PlurtoJsonSerializationException;
+                if (jsonException != null)
+                {
+                    if (jsonException.Response != null && jsonException.Response.ResponseUri != null)
+                    {
+                        errorMessage += "\n\n" + jsonException.Response.ResponseUri;
+                    }
+                }
 #if DEBUG
+                System.Diagnostics.Debug.WriteLine(ex.ToString());
                 throw ex;
 #endif
             }
