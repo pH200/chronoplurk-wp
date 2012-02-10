@@ -56,10 +56,13 @@ namespace ChronoPlurk.Views
             var document = new HtmlDocument();
             document.LoadHtml(Browser.SaveToString());
             var element = document.GetElementbyId("oauth_verifier");
-            var verifier = element.InnerText.Trim();
+            if(element.InnerText != null)
+            {
+                var verifier = element.InnerText.Trim();
 
-            var plurkService = IoC.Get<IPlurkService>();
-            plurkService.VerifierTemp = verifier;
+                var plurkService = IoC.Get<IPlurkService>();
+                plurkService.VerifierTemp = verifier;
+            }
         }
 
         private void loadedStoryboard_Completed(object sender, EventArgs e)
