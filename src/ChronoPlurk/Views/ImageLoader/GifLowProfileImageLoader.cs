@@ -226,7 +226,7 @@ namespace ChronoPlurk.Views.ImageLoader
                             {
                                 try
                                 {
-                                    if (pendingCompletion.Uri.AbsolutePath.ToLower().Contains(".gif"))
+                                    if (pendingCompletion.Uri.OriginalString.EndsWith(".gif", StringComparison.InvariantCultureIgnoreCase))
                                     {
                                         var decoder = new GifDecoder();
                                         var extendedImage = new ExtendedImage();
