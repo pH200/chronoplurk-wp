@@ -68,6 +68,48 @@ namespace ChronoPlurk.Views.ImageLoader
         public static readonly DependencyProperty UriSourceProperty = DependencyProperty.RegisterAttached(
             "UriSource", typeof(Uri), typeof(GifLowProfileImageLoader), new PropertyMetadata(OnUriSourceChanged));
 
+
+        #region StretchProperty (Attached DependencyProperty)
+
+        public static readonly DependencyProperty StretchProperty = DependencyProperty.RegisterAttached(
+            "Stretch", typeof(Stretch), typeof(GifLowProfileImageLoader),
+            new PropertyMetadata(Stretch.Uniform, OnStretchChanged));
+
+        public static void SetStretch(DependencyObject o, Stretch value)
+        {
+            o.SetValue(StretchProperty, value);
+        }
+
+        public static Stretch GetStretch(DependencyObject o)
+        {
+            return (Stretch)o.GetValue(StretchProperty);
+        }
+
+        private static void OnStretchChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var border = d as Border;
+            if (border == null)
+            {
+                return;
+            }
+            var image = border.Child as Image;
+            if (image != null)
+            {
+                image.Stretch = (Stretch)e.NewValue;
+            }
+            else
+            {
+                var animatedImage = border.Child as AnimatedImage;
+                if (animatedImage != null)
+                {
+                    animatedImage.Stretch = (Stretch)e.NewValue;
+                }
+            }
+        }
+
+        #endregion
+
+
         /// <summary>
         /// Gets or sets a value indicating whether low-profile image loading is enabled.
         /// </summary>
@@ -189,13 +231,17 @@ namespace ChronoPlurk.Views.ImageLoader
                                         var decoder = new GifDecoder();
                                         var extendedImage = new ExtendedImage();
                                         decoder.Decode(extendedImage, pendingCompletion.Stream);
-                                        pendingCompletion.Image.Child = new AnimatedImage() { Source = extendedImage, Stretch = Stretch.None };
+                                        var image = new AnimatedImage() { Source = extendedImage };
+                                        image.Stretch = (Stretch)pendingCompletion.Image.GetValue(StretchProperty);
+                                        pendingCompletion.Image.Child = image;
                                     }
                                     else
                                     {
                                         var bitmapImage = new BitmapImage();
                                         bitmapImage.SetSource(pendingCompletion.Stream);
-                                        pendingCompletion.Image.Child = new Image() { Source = bitmapImage, Stretch = Stretch.Uniform };
+                                        var image = new Image() { Source = bitmapImage };
+                                        image.Stretch = (Stretch)pendingCompletion.Image.GetValue(StretchProperty);
+                                        pendingCompletion.Image.Child = image;
                                     }
                                 }
                                 catch

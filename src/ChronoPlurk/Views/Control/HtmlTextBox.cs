@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Media;
 using ChronoPlurk.Helpers;
 using ChronoPlurk.Views.ImageLoader;
 using HtmlAgilityPack;
@@ -311,18 +312,24 @@ namespace ChronoPlurk.Views.PlurkControls
             if (src != null)
             {
                 var imageContainer = new Border();
-                var heightAttr = node.Attributes.FirstOrDefault(attr => attr.Name == "height");
-                if (heightAttr != null)
+                if (EnableOrignialSizeImage)
                 {
-                    // NOTE: Some imgs may have attributes like height="40px"
-                    var match = Regex.Match(heightAttr.Value, "[0-9]+");
-                    if (match.Success)
+                    GifLowProfileImageLoader.SetStretch(imageContainer, Stretch.None);
+                }
+                else
+                {
+                    var heightAttr = node.Attributes.FirstOrDefault(attr => attr.Name == "height");
+                    if (heightAttr != null)
                     {
-                        double height;
-                        if (double.TryParse(match.Value, out height))
+                        // NOTE: Some imgs may have attributes like height="40px"
+                        var match = Regex.Match(heightAttr.Value, "[0-9]+");
+                        if (match.Success)
                         {
-                            //TODO: Implement EnableOriginalImage
-                            imageContainer.Height = height;
+                            double height;
+                            if (double.TryParse(match.Value, out height))
+                            {
+                                imageContainer.Height = height;
+                            }
                         }
                     }
                 }
