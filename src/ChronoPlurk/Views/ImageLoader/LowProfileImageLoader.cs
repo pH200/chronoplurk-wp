@@ -73,9 +73,9 @@ namespace ChronoPlurk.Views.ImageLoader
         static LowProfileImageLoader()
         {
             // Start worker thread
-            _thread.Start();
-            Application.Current.Exit += new EventHandler(HandleApplicationExit);
-            IsEnabled = true;
+            // _thread.Start();
+            // Application.Current.Exit += new EventHandler(HandleApplicationExit);
+            // IsEnabled = true;
         }
 
         private static void HandleApplicationExit(object sender, EventArgs e)

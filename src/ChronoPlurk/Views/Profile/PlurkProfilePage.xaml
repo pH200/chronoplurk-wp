@@ -23,9 +23,8 @@
                 SelectedItem="{Binding ActiveItem, Mode=TwoWay}">
             <controls:Pivot.Title>
                 <StackPanel Height="26" Orientation="Horizontal">
-                    <Image
-                        imgloader:LowProfileImageLoader.UriSource="{Binding UserAvatar}"
-                        Width="18" Height="18" />
+                    <Border imgloader:GifLowProfileImageLoader.UriSource="{Binding UserAvatar}"
+                            Width="18" Height="18" />
                     <TextBlock x:Name="Username" Text="{Binding Username}" />
                 </StackPanel>
             </controls:Pivot.Title>

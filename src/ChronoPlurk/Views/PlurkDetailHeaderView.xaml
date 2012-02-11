@@ -26,8 +26,8 @@
                             Margin="10,10,0,0"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Top">
-                        <Image imgloader:LowProfileImageLoader.UriSource="{Binding AvatarView}"
-                               Stretch="UniformToFill" />
+                        <Border imgloader:GifLowProfileImageLoader.UriSource="{Binding AvatarView}"
+                                imgloader:GifLowProfileImageLoader.Stretch="UniformToFill" />
                     </Border>
                     <Image Source="/Resources/Icons/plurk.private.png"
                            Visibility="{Binding IsPrivateVisibilityView}"
