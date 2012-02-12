@@ -25,10 +25,12 @@ namespace ChronoPlurk.ViewModels.Compose
         private readonly INavigationService _navigationService;
         private readonly IProgressService _progressService;
         private readonly FriendsFansCompletionService _friendsFansCompletionService;
+        private readonly RecentEmoticonsService _recentEmoticonsService;
 
         private IDisposable _composeHandler;
         private IDisposable _uploadHandler;
         private IDisposable _photoChooserDisposable;
+        private IDisposable _emoticonsDisposable;
 
         public string Username { get; set; }
 
@@ -75,7 +77,11 @@ namespace ChronoPlurk.ViewModels.Compose
 
         public bool HasPostContentFocus { get; set; }
 
-        public IEnumerable<IDictionary<string, string>> Emoticons { get; set; }
+        public BindableCollection<EmoticonListViewModel> Emoticons { get; set; }
+
+        private EmoticonListViewModel RecentEmoticons { get; set; }
+
+        public EmoticonListViewModel ActiveEmoticon { get; set; }
 
         public Visibility EmoticonVisibility { get; set; }
 
@@ -83,12 +89,14 @@ namespace ChronoPlurk.ViewModels.Compose
             IPlurkService plurkService,
             INavigationService navigationService,
             IProgressService progressService,
-            FriendsFansCompletionService friendsFansCompletionService)
+            FriendsFansCompletionService friendsFansCompletionService,
+            RecentEmoticonsService recentEmoticonsService)
         {
             PlurkService = plurkService;
             _navigationService = navigationService;
             _progressService = progressService;
             _friendsFansCompletionService = friendsFansCompletionService;
+            _recentEmoticonsService = recentEmoticonsService;
 
             LockVisibility = Visibility.Collapsed;
             EmoticonVisibility = Visibility.Collapsed;
@@ -102,6 +110,21 @@ namespace ChronoPlurk.ViewModels.Compose
         {
             if (Emoticons == null)
             {
+                RecentEmoticons = new EmoticonListViewModel(_recentEmoticonsService.List)
+                {
+                    DisplayName = AppResources.emoticonsRecent
+                };
+                Emoticons = new BindableCollection<EmoticonListViewModel>()
+                {
+                    RecentEmoticons
+                };
+            }
+            if (Emoticons.Count < 2)
+            {
+                if (_emoticonsDisposable != null)
+                {
+                    _emoticonsDisposable.Dispose();
+                }
                 _progressService.Show(AppResources.msgLoadingEmoticons);
                 var emoticonsCmd = EmoticonsCommand.Get().Client(PlurkService.Client)
                     .ToObservable()
@@ -110,13 +133,39 @@ namespace ChronoPlurk.ViewModels.Compose
                         Execute.OnUIThread(() => MessageBox.Show("Cannot load emoticons"));
                         return Observable.Empty<Emoticons>();
                     });
-                emoticonsCmd.Subscribe(emoticons =>
+                _emoticonsDisposable = emoticonsCmd.Subscribe(emoticons =>
                 {
-                    Emoticons = new[]
+                    var karmaValue = PlurkService.AppUserInfo.User.Karma;
+                    IEnumerable<KeyValuePair<string, string>> karmaEmoticons =
+                        emoticons.GetKarmaEmoticons(karmaValue);
+                    if (PlurkService.AppUserInfo.User.Recruited >= 10)
                     {
-                        emoticons.GetKarmaEmoticons(),
-                        emoticons.GetRecuitedEmoticons()
+                        karmaEmoticons = karmaEmoticons.Concat(emoticons.GetRecuitedEmoticons());
+                    }
+
+                    var custom = new EmoticonListViewModel(emoticons.GetCustomBracktedEmoticons())
+                    {
+                        DisplayName = AppResources.emoticonsCustom
                     };
+                    var karma = new EmoticonListViewModel(karmaEmoticons)
+                    {
+                        DisplayName = AppResources.emoticonsKarma
+                    };
+                    Emoticons.Add(custom);
+                    Emoticons.Add(karma);
+
+                    if (RecentEmoticons.Items.Count == 0)
+                    {
+                        if (custom.Items.Count != 0)
+                        {
+                            ActiveEmoticon = custom;
+                        }
+                        else
+                        {
+                            ActiveEmoticon = karma;
+                        }
+                    }
+
                 }, () => Execute.OnUIThread(() => _progressService.Hide()));
             }
         }
@@ -145,12 +194,25 @@ namespace ChronoPlurk.ViewModels.Compose
             base.OnActivate();
         }
 
+        protected override void OnDeactivate(bool close)
+        {
+            _recentEmoticonsService.Replace(RecentEmoticons.Items);
+            _recentEmoticonsService.Save(PlurkService.UserId);
+
+            base.OnDeactivate(close);
+        }
+
         public void OnEmoticonTapped(object dataContext)
         {
             var emoticon = (KeyValuePair<string, string>)dataContext;
             if (emoticon.Key != null)
             {
                 PostContent += emoticon.Key;
+                if (RecentEmoticons != null)
+                {
+                    RecentEmoticonsService.Insert(RecentEmoticons.Items, emoticon);
+                    //NotifyOfPropertyChange(() => Emoticons);
+                }
             }
         }
 

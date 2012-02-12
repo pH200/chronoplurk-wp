@@ -131,6 +131,7 @@
     <Compile Include="Core\SpecialFrameAdapter.cs" />
     <Compile Include="DefaultConfiguration.conf.cs" />
     <Compile Include="DefaultConfiguration.cs" />
+    <Compile Include="ViewModels\EmoticonListViewModel.cs" />
     <Compile Include="Framework\PivotFix.cs" />
     <Compile Include="Helpers\IsoSettings.cs" />
     <Compile Include="Helpers\LinqExtensions.cs" />
@@ -159,6 +160,7 @@
     <Compile Include="Helpers\QualifierConverter.cs" />
     <Compile Include="Services\PlurkService.cs" />
     <Compile Include="Services\ProgressService.cs" />
+    <Compile Include="Services\RecentEmoticonsService.cs" />
     <Compile Include="Services\SettingsService.cs" />
     <Compile Include="ViewModels\Compose\ComposePageViewModel.cs" />
     <Compile Include="ViewModels\Compose\FriendsSelectionPageViewModel.cs" />

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Net;
+using Plurto.Entities;
 
 namespace ChronoPlurk.Core
 {
@@ -14,6 +15,8 @@ namespace ChronoPlurk.Core
         public string AccessToken { get; set; }
 
         public string AccessTokenSecret { get; set; }
+
+        public User User { get; set; }
 
         public bool HasAccessToken
         {

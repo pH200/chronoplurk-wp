@@ -241,6 +241,42 @@ namespace ChronoPlurk.Resources.i18n {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to emoticon.
+        /// </summary>
+        public static string emoticon {
+            get {
+                return ResourceManager.GetString("emoticon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to custom.
+        /// </summary>
+        public static string emoticonsCustom {
+            get {
+                return ResourceManager.GetString("emoticonsCustom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to karma.
+        /// </summary>
+        public static string emoticonsKarma {
+            get {
+                return ResourceManager.GetString("emoticonsKarma", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to recent.
+        /// </summary>
+        public static string emoticonsRecent {
+            get {
+                return ResourceManager.GetString("emoticonsRecent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This timeline is empty..
         /// </summary>
         public static string emptyTimeline {

@@ -78,7 +78,6 @@ namespace ChronoPlurk.Services
             IsUserChanged = true; // Reload on startup.
 
             _client = new OAuthClient(DefaultConfiguration.OAuthConsumerKey, DefaultConfiguration.OAuthConsumerSecret);
-            LoadUserData();
         }
 
         public IObservable<Uri> GetRequestToken()
@@ -105,17 +104,22 @@ namespace ChronoPlurk.Services
 
         public IObservable<AppUserInfo> CreateUserData(OAuthClient client)
         {
-            return ProfileCommand.GetOwnProfile().Client(client).ToObservable().Do(profile =>
+            var profileObs = ProfileCommand.GetOwnProfile().Client(client).ToObservable();
+            var userObs = UsersCommand.CurrentUser().Client(client).ToObservable();
+            var zipObs = profileObs.Zip(userObs, (profile, user) => new { profile, user });
+            var result = zipObs.Do(zip =>
             {
                 AppUserInfo = new AppUserInfo()
                 {
-                    Username = profile.UserInfo.NickName,
-                    UserId = profile.UserInfo.Id,
-                    UserAvatar = profile.UserInfo.AvatarBig,
+                    Username = zip.profile.UserInfo.NickName,
+                    UserId = zip.profile.UserInfo.Id,
+                    UserAvatar = zip.profile.UserInfo.AvatarBig,
+                    User = zip.user,
                     AccessToken = _client.Token,
                     AccessTokenSecret = client.TokenSecret,
                 };
-            }).Select(profile => AppUserInfo);
+            }).Select(zip => AppUserInfo);
+            return result;
         }
 
         public void SaveUserData()

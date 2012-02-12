@@ -34,6 +34,13 @@ namespace ChronoPlurk
             
             base.Configure();
 
+            var plurkService = Container.Resolve<IPlurkService>();
+            if (plurkService.LoadUserData())
+            {
+                var emoticonService = Container.Resolve<RecentEmoticonsService>();
+                emoticonService.Load(plurkService.UserId);
+            }
+
             AddConventions();
 
             AddPhoneResources();
@@ -95,6 +102,7 @@ namespace ChronoPlurk
             builder.RegisterType<SettingsService>().AsSelf().SingleInstance();
             builder.Register(c => new PlurkHolderService()).AsSelf().SingleInstance();
             builder.RegisterType<FriendsFansCompletionService>().AsSelf().SingleInstance();
+            builder.Register(c => new RecentEmoticonsService()).AsSelf().SingleInstance();
             #endregion
 
             #region Plurk Services

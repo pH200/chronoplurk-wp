@@ -423,6 +423,18 @@
   <data name="appbarEmoticon" xml:space="preserve">
     <value>emoticon</value>
   </data>
+  <data name="emoticon" xml:space="preserve">
+    <value>emoticon</value>
+  </data>
+  <data name="emoticonsCustom" xml:space="preserve">
+    <value>custom</value>
+  </data>
+  <data name="emoticonsKarma" xml:space="preserve">
+    <value>karma</value>
+  </data>
+  <data name="emoticonsRecent" xml:space="preserve">
+    <value>recent</value>
+  </data>
   <data name="msgLoadingEmoticons" xml:space="preserve">
     <value>Loading Emoticons</value>
   </data>
