@@ -28,6 +28,11 @@ namespace ChronoPlurk.ViewModels
         {
         }
 
+        protected override void OnEmoticonsLoaded()
+        {
+            LeaveFocus();
+        }
+
         public override void Compose()
         {
             if (_composeHandler != null)

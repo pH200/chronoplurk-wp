@@ -6,6 +6,9 @@
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     xmlns:pcontrols="clr-namespace:ChronoPlurk.Views.PlurkControls"
     xmlns:cal="http://www.caliburnproject.org"
+    xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:imgloader="clr-namespace:ChronoPlurk.Views.ImageLoader"
     mc:Ignorable="d"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -13,6 +16,10 @@
     d:DesignHeight="480" d:DesignWidth="480">
 
     <Grid Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
         <StackPanel Margin="10,0,10,0">
             <Grid>
                 <TextBlock Margin="12,0,0,0" Text="{Binding Path=LocalizedResources.reply, Source={StaticResource LocalizedStrings}}" />
@@ -35,5 +42,49 @@
             <Button x:Name="Compose"
                     Content="{Binding Path=LocalizedResources.reply, Source={StaticResource LocalizedStrings}}" />
         </StackPanel>
+
+        <Grid Grid.Row="1"
+                      Visibility="{Binding EmoticonVisibility}">
+            <TextBlock Text="emoticons"
+                               Grid.Row="1"
+                               Foreground="{StaticResource PhoneSubtleBrush}"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Top"
+                               Margin="12,4"/>
+            <controls:Pivot x:Name="Emoticons"
+                                    Grid.Row="1"
+                                    SelectedItem="{Binding ActiveEmoticon, Mode=TwoWay}">
+                <controls:Pivot.HeaderTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding DisplayName}"
+                                       Margin="-10,12,0,0"
+                                       Height="{StaticResource PhoneFontSizeMedium}"
+                                       FontSize="{StaticResource PhoneFontSizeNormal}" />
+                    </DataTemplate>
+                </controls:Pivot.HeaderTemplate>
+                <controls:Pivot.ItemTemplate>
+                    <DataTemplate>
+                        <ListBox ItemsSource="{Binding Items}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Border imgloader:GifLowProfileImageLoader.UriSource="{Binding Value}"
+                                                    imgloader:GifLowProfileImageLoader.Stretch="None"
+                                                    Width="50"
+                                                    Height="50"
+                                                    Background="{StaticResource PhoneChromeBrush}"
+                                                    cal:Message.Attach="[Event Tap] = [Action OnEmoticonTapped($dataContext)]"
+                                                    Margin="0,0,12,12"/>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <toolkit:WrapPanel Orientation="Horizontal" />
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+                        </ListBox>
+                    </DataTemplate>
+                </controls:Pivot.ItemTemplate>
+            </controls:Pivot>
+        </Grid>
     </Grid>
 </UserControl>

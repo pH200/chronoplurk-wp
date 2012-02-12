@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using Caliburn.Micro;
 using ChronoPlurk.Services;
 using ChronoPlurk.ViewModels.Core;
 using ChronoPlurk.Views;
+using ChronoPlurk.Views.Compose;
 using NotifyPropertyWeaver;
 using Plurto.Core;
 
@@ -184,6 +186,7 @@ namespace ChronoPlurk.ViewModels
             var view = GetView() as PlurkDetailPage;
             if (view != null)
             {
+                view.EmoticonButton.IsEnabled = true;
                 view.PhotosButton.IsEnabled = true;
             }
         }
@@ -193,6 +196,7 @@ namespace ChronoPlurk.ViewModels
             var view = GetView() as PlurkDetailPage;
             if (view != null)
             {
+                view.EmoticonButton.IsEnabled = false;
                 view.PhotosButton.IsEnabled = false;
             }
         }
@@ -217,6 +221,25 @@ namespace ChronoPlurk.ViewModels
             else
             {
                 ReplyViewModel.Compose();
+            }
+        }
+
+        public void EmoticonAppBar()
+        {
+            if (ReplyViewModel.EmoticonVisibility == Visibility.Visible)
+            {
+                ReplyViewModel.EmoticonVisibility = Visibility.Collapsed;
+            }
+            else
+            {
+                ReplyViewModel.EmoticonVisibility = Visibility.Visible;
+                ReplyViewModel.LoadEmoticons();
+            }
+
+            var view = GetView() as Control;
+            if (view != null)
+            {
+                view.Focus();
             }
         }
 
