@@ -67,6 +67,11 @@ namespace ChronoPlurk.ViewModels.Compose
             base.OnActivate();
         }
 
+        protected override void OnEmoticonsLoaded()
+        {
+            LeaveFocus();
+        }
+
         public override void Compose()
         {
             if (_composeHandler != null)
@@ -117,6 +122,15 @@ namespace ChronoPlurk.ViewModels.Compose
             }
         }
 
+        private void LeaveFocus()
+        {
+            var view = GetView() as ComposePage;
+            if (view != null)
+            {
+                view.Focus();
+            }
+        }
+
         #region View Events
 
         public void OnPrivateChecked()
@@ -150,11 +164,7 @@ namespace ChronoPlurk.ViewModels.Compose
 
             LoadEmoticons();
 
-            var view = GetView() as ComposePage;
-            if (view != null)
-            {
-                view.Focus();
-            }
+            LeaveFocus();
         }
 
         public void PhotosAppBar()
@@ -167,11 +177,7 @@ namespace ChronoPlurk.ViewModels.Compose
             EmoticonVisibility = Visibility.Collapsed;
             LockVisibility = Visibility.Visible;
 
-            var view = GetView() as ComposePage;
-            if (view != null)
-            {
-                view.Focus();
-            }
+            LeaveFocus();
         }
 
         #endregion

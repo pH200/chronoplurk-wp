@@ -79,7 +79,7 @@ namespace ChronoPlurk.ViewModels.Compose
             Qualifier = QualifierViewModel.AllQualifiers.First(q => q.Qualifier == Plurto.Core.Qualifier.Says);
         }
 
-        protected void LoadEmoticons()
+        public void LoadEmoticons()
         {
             if (Emoticons == null)
             {
@@ -139,8 +139,16 @@ namespace ChronoPlurk.ViewModels.Compose
                         }
                     }
 
-                }, () => Execute.OnUIThread(() => ProgressService.Hide()));
+                }, () => Execute.OnUIThread(() =>
+                {
+                    ProgressService.Hide();
+                    OnEmoticonsLoaded();
+                }));
             }
+        }
+
+        protected virtual void OnEmoticonsLoaded()
+        {
         }
 
         protected override void OnInitialize()
@@ -156,8 +164,11 @@ namespace ChronoPlurk.ViewModels.Compose
 
         protected override void OnDeactivate(bool close)
         {
-            RecentEmoticonsService.Replace(RecentEmoticons.Items);
-            RecentEmoticonsService.Save(PlurkService.UserId);
+            if (RecentEmoticons != null && RecentEmoticons.Items != null)
+            {
+                RecentEmoticonsService.Replace(RecentEmoticons.Items);
+                RecentEmoticonsService.Save(PlurkService.UserId);
+            }
 
             base.OnDeactivate(close);
         }
