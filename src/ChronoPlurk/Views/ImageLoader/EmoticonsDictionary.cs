@@ -23,7 +23,7 @@ namespace ChronoPlurk.Views.ImageLoader
 
         public static void Initialize()
         {
-            // Official (lovekiss) file is corrupted GIF so using converted version.
+            // Official (girlkiss) file is corrupted GIF so using converted version.
             _dictionary = new Dictionary<string, Uri>(125)
             {
 {"http://statics.plurk.com/ff124032f8cc3a9d43b99e661f8fcb4d.gif", new Uri("ff124032f8cc3a9d43b99e661f8fcb4d.gif", UriKind.Relative)},
@@ -106,7 +106,7 @@ namespace ChronoPlurk.Views.ImageLoader
 {"http://statics.plurk.com/e8ed6c7eed76d2acd9dbf469f29fbec2.gif", new Uri("e8ed6c7eed76d2acd9dbf469f29fbec2.gif", UriKind.Relative)},
 {"http://statics.plurk.com/2b3593aea68efa7a00b4ef2850f98b8a.gif", new Uri("2b3593aea68efa7a00b4ef2850f98b8a.gif", UriKind.Relative)},
 {"http://statics.plurk.com/ed3620ff28a02e3dc9ac4ffa8e6ae2e6.gif", new Uri("ed3620ff28a02e3dc9ac4ffa8e6ae2e6.gif", UriKind.Relative)},
-{"http://statics.plurk.com/08a43d50691a1ed22706fc92f568fa07.gif", new Uri("_converted_lovekiss.png", UriKind.Relative)},
+{"http://statics.plurk.com/08a43d50691a1ed22706fc92f568fa07.gif", new Uri("000_girlkiss.gif", UriKind.Relative)},
 {"http://statics.plurk.com/8600839dc03e6275b53fd03a0eba09cf.gif", new Uri("8600839dc03e6275b53fd03a0eba09cf.gif", UriKind.Relative)},
 {"http://statics.plurk.com/e6bb16b6ef386c5f23900b103dbdba31.gif", new Uri("e6bb16b6ef386c5f23900b103dbdba31.gif", UriKind.Relative)},
 {"http://statics.plurk.com/f053074bcce500fbd1e2327d49748a6d.gif", new Uri("f053074bcce500fbd1e2327d49748a6d.gif", UriKind.Relative)},
