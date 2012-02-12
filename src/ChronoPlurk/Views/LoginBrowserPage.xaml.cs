@@ -38,13 +38,13 @@ namespace ChronoPlurk.Views
                 });
         }
 
-        private void Browser_Navigated(object sender, NavigationEventArgs e)
+        private void Browser_LoadCompleted(object sender, NavigationEventArgs e)
         {
             if (LoadingGrid.Visibility == Visibility.Visible)
             {
                 loadedStoryboard.Begin();
             }
-            if (e.Uri.ToString().Contains("authorizeDone"))
+            if (e.Uri.OriginalString.Contains("authorizeDone"))
             {
                 ProcessVerifier();
                 NavigationService.GoBack();
@@ -53,10 +53,11 @@ namespace ChronoPlurk.Views
 
         private void ProcessVerifier()
         {
+            // verifierText = Browser.InvokeScript("eval", "document.getElementById('oauth_verifier').textContent") as string;
             var document = new HtmlDocument();
             document.LoadHtml(Browser.SaveToString());
             var element = document.GetElementbyId("oauth_verifier");
-            if(element.InnerText != null)
+            if (element != null && element.InnerText != null)
             {
                 var verifier = element.InnerText.Trim();
 

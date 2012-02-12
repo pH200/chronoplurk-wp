@@ -19,6 +19,7 @@
         <Storyboard x:Name="loadedStoryboard"
                     Completed="loadedStoryboard_Completed">
             <DoubleAnimation From="1.0" To="0.0" Duration="0:0:0.5"
+                             BeginTime="0:0:0.5"
                              Storyboard.TargetName="LoadingGrid"
                              Storyboard.TargetProperty="Opacity"/>
         </Storyboard>
@@ -28,7 +29,7 @@
                           IsScriptEnabled="True"
                           VerticalContentAlignment="Stretch"
                           HorizontalContentAlignment="Stretch"
-                          Navigated="Browser_Navigated" />
+                          LoadCompleted="Browser_LoadCompleted" />
         <Grid Background="{StaticResource PhoneBackgroundBrush}"
               x:Name="LoadingGrid">
             <TextBlock Text="Connecting to plurk.com"
