@@ -214,6 +214,7 @@
     </Compile>
     <Compile Include="Views\Control\UrlRemapper.cs" />
     <Compile Include="Views\DesignTime\SearchResultDesignData.cs" />
+    <Compile Include="Views\ImageLoader\EmoticonsDictionary.cs" />
     <Compile Include="Views\ImageLoader\GifLowProfileImageLoader.cs" />
     <Compile Include="Views\ImageLoader\LowProfileImageLoader.cs" />
     <Compile Include="Views\Control\PlurkItemControl.xaml.cs">
@@ -390,6 +391,7 @@
     <None Include="Properties\WMAppManifest.xml">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="Resources\CachedEmoticons\default_all.zip" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ApplicationIcon.png">

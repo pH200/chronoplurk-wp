@@ -12,6 +12,7 @@ using ChronoPlurk.ViewModels.Compose;
 using ChronoPlurk.ViewModels.Main;
 using ChronoPlurk.ViewModels.Profile;
 using ChronoPlurk.ViewModels.Settings;
+using ChronoPlurk.Views.ImageLoader;
 using Microsoft.Phone.Controls;
 
 namespace ChronoPlurk
@@ -29,6 +30,7 @@ namespace ChronoPlurk
         protected override void Configure()
         {
             DefaultConfiguration.Initialize();
+            EmoticonsDictionary.Initialize();
             
             base.Configure();
 
