@@ -32,7 +32,7 @@
                     <pcontrols:FocusBehavior x:Name="ResponseFocus" IsFocused="{Binding ResponseFocus, Mode=TwoWay}" />
                 </i:Interaction.Behaviors>
             </TextBox>
-            <Button x:Name="Reply"
+            <Button x:Name="Compose"
                     Content="{Binding Path=LocalizedResources.reply, Source={StaticResource LocalizedStrings}}" />
         </StackPanel>
     </Grid>

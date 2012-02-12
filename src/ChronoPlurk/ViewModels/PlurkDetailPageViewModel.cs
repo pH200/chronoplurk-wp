@@ -46,17 +46,12 @@ namespace ChronoPlurk.ViewModels
 
         protected override void OnActivate()
         {
-            if (!ReplyViewModel.OpeningPhotoChooser)
+            if (ReplyVisibility != Visibility.Visible)
             {
                 ActivateItem(PlurkHeaderViewModel);
                 ActivateItem(PlurkDetailViewModel);
                 // Read Plurk
                 PlurkHolderService.SetAsRead(PlurkHeaderViewModel.PlurkId);
-            }
-            else
-            {
-                ReplyViewModel.OpeningPhotoChooser = false;
-                ReplyViewModel.ResponseFocus = true;
             }
 
             base.OnActivate();
@@ -221,7 +216,7 @@ namespace ChronoPlurk.ViewModels
             }
             else
             {
-                ReplyViewModel.Reply();
+                ReplyViewModel.Compose();
             }
         }
 
