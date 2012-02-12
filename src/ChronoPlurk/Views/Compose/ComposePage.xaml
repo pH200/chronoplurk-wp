@@ -19,141 +19,141 @@
     Orientation="Portrait"
     mc:Ignorable="d" d:DesignHeight="768" d:DesignWidth="480"
     shell:SystemTray.IsVisible="True">
-    
+
     <Grid x:Name="LayoutRoot" Background="Transparent">
-            <Grid Margin="12,0,12,0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-                <StackPanel>
-                    <toolkit:ListPicker ItemsSource="{Binding Qualifiers}"
+        <Grid Margin="12,0,12,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <StackPanel>
+                <toolkit:ListPicker ItemsSource="{Binding Qualifiers}"
                                         SelectedItem="{Binding Qualifier, Mode=TwoWay}"
                                         Background="Transparent"
                                         BorderBrush="{StaticResource PhoneSubtleBrush}"
                                         CacheMode="BitmapCache"
                                         Margin="12,0">
-                        <toolkit:ListPicker.ItemTemplate>
-                            <DataTemplate>
-                                <Border Background="{Binding Brush}" HorizontalAlignment="Left" MinWidth="150">
-                                    <TextBlock Text="{Binding Text}" Foreground="White" Margin="8 0 8 0"/>
-                                </Border>
-                            </DataTemplate>
-                        </toolkit:ListPicker.ItemTemplate>
-                        <toolkit:ListPicker.FullModeItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal" Margin="16 21 0 20">
-                                    <Rectangle Fill="{Binding Brush}" Width="43" Height="43"/>
-                                    <TextBlock Text="{Binding Text}" Margin="16 0 0 0" FontSize="43" FontFamily="{StaticResource PhoneFontFamilyLight}"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </toolkit:ListPicker.FullModeItemTemplate>
-                    </toolkit:ListPicker>
+                    <toolkit:ListPicker.ItemTemplate>
+                        <DataTemplate>
+                            <Border Background="{Binding Brush}" HorizontalAlignment="Left" MinWidth="150">
+                                <TextBlock Text="{Binding Text}" Foreground="White" Margin="8 0 8 0"/>
+                            </Border>
+                        </DataTemplate>
+                    </toolkit:ListPicker.ItemTemplate>
+                    <toolkit:ListPicker.FullModeItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" Margin="16 21 0 20">
+                                <Rectangle Fill="{Binding Brush}" Width="43" Height="43"/>
+                                <TextBlock Text="{Binding Text}" Margin="16 0 0 0" FontSize="43" FontFamily="{StaticResource PhoneFontFamilyLight}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </toolkit:ListPicker.FullModeItemTemplate>
+                </toolkit:ListPicker>
 
-                    <TextBox x:Name="PostContent"
+                <TextBox x:Name="PostContent"
                              VerticalAlignment="Top"
                              MinHeight="150"
                              TextWrapping="Wrap"
                              AcceptsReturn="True"
                              InputScope="Text">
-                        <i:Interaction.Behaviors>
-                            <pcontrols:FocusBehavior HasInitialFocus="{Binding HasPostContentFocus}" />
-                        </i:Interaction.Behaviors>
-                    </TextBox>
-                    <Grid>
-                        <Grid Margin="12,0,0,0"
+                    <i:Interaction.Behaviors>
+                        <pcontrols:FocusBehavior HasInitialFocus="{Binding HasPostContentFocus}" />
+                    </i:Interaction.Behaviors>
+                </TextBox>
+                <Grid>
+                    <Grid Margin="12,0,0,0"
                               HorizontalAlignment="Left">
-                            <Border imgloader:GifLowProfileImageLoader.UriSource="{Binding UserAvatar}"
+                        <Border imgloader:GifLowProfileImageLoader.UriSource="{Binding UserAvatar}"
                                     HorizontalAlignment="Left"
                                     Width="18" Height="18" />
-                            <TextBlock x:Name="Username"
+                        <TextBlock x:Name="Username"
                                        HorizontalAlignment="Left"
                                        Margin="24,0,0,0"/>
-                        </Grid>
-                        <TextBlock x:Name="TextCountLeft"
+                    </Grid>
+                    <TextBlock x:Name="TextCountLeft"
                                    HorizontalAlignment="Right"
                                    Margin="0,0,12,0"
                                    Foreground="{StaticResource PhoneAccentBrush}"/>
-                    </Grid>
-                </StackPanel>
-                
-                <Grid Grid.Row="1"
+                </Grid>
+            </StackPanel>
+
+            <Grid Grid.Row="1"
                       Visibility="{Binding EmoticonVisibility}">
-                    <TextBlock Text="emoticons"
+                <TextBlock Text="emoticons"
                                Grid.Row="1"
                                Foreground="{StaticResource PhoneSubtleBrush}"
                                HorizontalAlignment="Left"
                                VerticalAlignment="Top"
                                Margin="12,4"/>
-                    <controls:Pivot x:Name="Emoticons"
+                <controls:Pivot x:Name="Emoticons"
                                     Grid.Row="1"
                                     SelectedItem="{Binding ActiveEmoticon, Mode=TwoWay}">
-                        <controls:Pivot.HeaderTemplate>
-                            <DataTemplate>
+                    <controls:Pivot.HeaderTemplate>
+                        <DataTemplate>
                             <TextBlock Text="{Binding DisplayName}"
                                        Margin="-10,12,0,0"
                                        Height="{StaticResource PhoneFontSizeMedium}"
                                        FontSize="{StaticResource PhoneFontSizeNormal}" />
-                            </DataTemplate>
-                        </controls:Pivot.HeaderTemplate>
-                        <controls:Pivot.ItemTemplate>
-                            <DataTemplate>
-                                <ListBox ItemsSource="{Binding Items}">
-                                    <ListBox.ItemTemplate>
-                                        <DataTemplate>
-                                            <Border imgloader:GifLowProfileImageLoader.UriSource="{Binding Value}"
+                        </DataTemplate>
+                    </controls:Pivot.HeaderTemplate>
+                    <controls:Pivot.ItemTemplate>
+                        <DataTemplate>
+                            <ListBox ItemsSource="{Binding Items}">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border imgloader:GifLowProfileImageLoader.UriSource="{Binding Value}"
                                                     imgloader:GifLowProfileImageLoader.Stretch="None"
                                                     Width="50"
                                                     Height="50"
                                                     Background="{StaticResource PhoneChromeBrush}"
                                                     cal:Message.Attach="[Event Tap] = [Action OnEmoticonTapped($dataContext)]"
                                                     Margin="0,0,12,12"/>
-                                        </DataTemplate>
-                                    </ListBox.ItemTemplate>
-                                    <ListBox.ItemsPanel>
-                                        <ItemsPanelTemplate>
-                                            <toolkit:WrapPanel Orientation="Horizontal" />
-                                        </ItemsPanelTemplate>
-                                    </ListBox.ItemsPanel>
-                                </ListBox>
-                            </DataTemplate>
-                        </controls:Pivot.ItemTemplate>
-                    </controls:Pivot>
-                </Grid>
-                
-                <StackPanel Grid.Row="1"
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                                <ListBox.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <toolkit:WrapPanel Orientation="Horizontal" />
+                                    </ItemsPanelTemplate>
+                                </ListBox.ItemsPanel>
+                            </ListBox>
+                        </DataTemplate>
+                    </controls:Pivot.ItemTemplate>
+                </controls:Pivot>
+            </Grid>
+
+            <StackPanel Grid.Row="1"
                             Visibility="{Binding LockVisibility}">
-                    <toolkit:ToggleSwitch x:Name="PrivateSwitch"
+                <toolkit:ToggleSwitch x:Name="PrivateSwitch"
                                       Header="{Binding Path=LocalizedResources.onlyMyFriends, Source={StaticResource LocalizedStrings}}"
                                       IsChecked="{Binding IsPrivateView, Mode=TwoWay}"
                                       cal:Message.Attach="[Event Checked] = [Action OnPrivateChecked()];[Event Unchecked] = [Action OnPrivateUnchecked()]" />
-                    <Button x:Name="ChooseFriends"
+                <Button x:Name="ChooseFriends"
                             Content="{Binding Path=LocalizedResources.chooseFriends, Source={StaticResource LocalizedStrings}}"
                             HorizontalAlignment="Left" />
-                    <ItemsControl x:Name="SelectedUsers"
+                <ItemsControl x:Name="SelectedUsers"
                                   Opacity="{Binding SelectionOpacity}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <Border Background="{StaticResource PhoneForegroundBrush}"
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Background="{StaticResource PhoneForegroundBrush}"
                                         Margin="12,0,0,0">
-                                    <TextBlock Text="{Binding NickName}"
+                                <TextBlock Text="{Binding NickName}"
                                                Margin="4"
                                                Foreground="{StaticResource PhoneChromeBrush}"
                                                FontSize="{StaticResource PhoneFontSizeNormal}"
                                                FontFamily="{StaticResource PhoneFontFamilySemiBold}"/>
-                                </Border>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <StackPanel Orientation="Horizontal" />
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                    </ItemsControl>
-                </StackPanel>
-            </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </StackPanel>
+        </Grid>
     </Grid>
 
     <!-- APP BAR -->
-    
+
 </phone:PhoneApplicationPage>
