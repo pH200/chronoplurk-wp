@@ -88,7 +88,7 @@ namespace ChronoPlurk.ViewModels
                             Client(PlurkService.Client).
                             ToObservable().
                             Timeout(DefaultConfiguration.TimeoutCompose).
-                            PlurkException(error => { });
+                            PlurkException(error => _progressService.Hide());
 
                     _composeHandler = command.ObserveOnDispatcher().Subscribe(plurk =>
                     {
@@ -99,7 +99,7 @@ namespace ChronoPlurk.ViewModels
                         }
                         PostContent = "";
                         LoadNewComments();
-                    }, error => _progressService.Hide());
+                    });
                 }
             }
         }
