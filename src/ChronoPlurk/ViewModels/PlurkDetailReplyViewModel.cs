@@ -95,6 +95,7 @@ namespace ChronoPlurk.ViewModels
                         var parent = this.GetParent();
                         if (parent != null)
                         {
+                            LeaveFocus();
                             parent.BlurReplyFocus();
                         }
                         PostContent = "";
@@ -112,10 +113,14 @@ namespace ChronoPlurk.ViewModels
 
         private void LeaveFocus()
         {
-            var view = GetView() as Control;
-            if (view != null)
+            var parent = this.GetParent();
+            if (parent != null)
             {
-                view.Focus();
+                var view = parent.GetView() as Control;
+                if (view != null)
+                {
+                    view.Focus();
+                }
             }
         }
 
