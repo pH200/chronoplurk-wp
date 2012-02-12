@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reactive.Linq;
@@ -19,15 +20,12 @@ using Plurto.Entities;
 namespace ChronoPlurk.ViewModels.Compose
 {
     [NotifyForAll]
-    public class ComposePageViewModel : Conductor<IScreen>.Collection.OneActive
+    public class ComposeViewModelBase : Conductor<IScreen>.Collection.OneActive
     {
-        private IPlurkService PlurkService { get; set; }
-        private readonly INavigationService _navigationService;
-        private readonly IProgressService _progressService;
-        private readonly FriendsFansCompletionService _friendsFansCompletionService;
-        private readonly RecentEmoticonsService _recentEmoticonsService;
+        protected IPlurkService PlurkService { get; private set; }
+        protected IProgressService ProgressService { get; private set; }
+        protected RecentEmoticonsService RecentEmoticonsService { get; private set; }
 
-        private IDisposable _composeHandler;
         private IDisposable _uploadHandler;
         private IDisposable _photoChooserDisposable;
         private IDisposable _emoticonsDisposable;
@@ -58,23 +56,6 @@ namespace ChronoPlurk.ViewModels.Compose
 
         public IList<QualifierViewModel> Qualifiers { get; private set; }
 
-        public bool IsPrivateView { get; set; }
-
-        public Visibility LockVisibility { get; set; }
-
-        public BindableCollection<CompletionUser> SelectedUsers
-        {
-            get { return _friendsFansCompletionService.SelectedItems; }
-        }
-
-        public bool IsSelectionEnabled { get; set; }
-
-        [DependsOn("IsSelectionEnabled")]
-        public double SelectionOpacity
-        {
-            get { return IsSelectionEnabled ? 1.0 : 0.5; }
-        }
-
         public bool HasPostContentFocus { get; set; }
 
         public BindableCollection<EmoticonListViewModel> Emoticons { get; set; }
@@ -85,32 +66,27 @@ namespace ChronoPlurk.ViewModels.Compose
 
         public Visibility EmoticonVisibility { get; set; }
 
-        public ComposePageViewModel(
+        public ComposeViewModelBase(
             IPlurkService plurkService,
-            INavigationService navigationService,
             IProgressService progressService,
-            FriendsFansCompletionService friendsFansCompletionService,
             RecentEmoticonsService recentEmoticonsService)
         {
             PlurkService = plurkService;
-            _navigationService = navigationService;
-            _progressService = progressService;
-            _friendsFansCompletionService = friendsFansCompletionService;
-            _recentEmoticonsService = recentEmoticonsService;
+            ProgressService = progressService;
+            RecentEmoticonsService = recentEmoticonsService;
 
-            LockVisibility = Visibility.Collapsed;
             EmoticonVisibility = Visibility.Collapsed;
             HasPostContentFocus = true;
 
             Qualifiers = QualifierViewModel.AllQualifiers;
             Qualifier = QualifierViewModel.AllQualifiers.First(q => q.Qualifier == Plurto.Core.Qualifier.Says);
         }
-        
-        private void LoadEmoticons()
+
+        protected void LoadEmoticons()
         {
             if (Emoticons == null)
             {
-                RecentEmoticons = new EmoticonListViewModel(_recentEmoticonsService.List)
+                RecentEmoticons = new EmoticonListViewModel(RecentEmoticonsService.List)
                 {
                     DisplayName = AppResources.emoticonsRecent
                 };
@@ -125,7 +101,7 @@ namespace ChronoPlurk.ViewModels.Compose
                 {
                     _emoticonsDisposable.Dispose();
                 }
-                _progressService.Show(AppResources.msgLoadingEmoticons);
+                ProgressService.Show(AppResources.msgLoadingEmoticons);
                 var emoticonsCmd = EmoticonsCommand.Get().Client(PlurkService.Client)
                     .ToObservable()
                     .Catch<Emoticons, Exception>(e =>
@@ -166,7 +142,7 @@ namespace ChronoPlurk.ViewModels.Compose
                         }
                     }
 
-                }, () => Execute.OnUIThread(() => _progressService.Hide()));
+                }, () => Execute.OnUIThread(() => ProgressService.Hide()));
             }
         }
 
@@ -181,23 +157,10 @@ namespace ChronoPlurk.ViewModels.Compose
             base.OnInitialize();
         }
 
-        protected override void OnActivate()
-        {
-            NotifyOfPropertyChange(() => SelectedUsers);
-            if (SelectedUsers.Count > 0)
-            {
-                IsPrivateView = true;
-                LockVisibility = Visibility.Visible;
-                HasPostContentFocus = false;
-            }
-
-            base.OnActivate();
-        }
-
         protected override void OnDeactivate(bool close)
         {
-            _recentEmoticonsService.Replace(RecentEmoticons.Items);
-            _recentEmoticonsService.Save(PlurkService.UserId);
+            RecentEmoticonsService.Replace(RecentEmoticons.Items);
+            RecentEmoticonsService.Save(PlurkService.UserId);
 
             base.OnDeactivate(close);
         }
@@ -211,62 +174,15 @@ namespace ChronoPlurk.ViewModels.Compose
                 if (RecentEmoticons != null)
                 {
                     RecentEmoticonsService.Insert(RecentEmoticons.Items, emoticon);
-                    //NotifyOfPropertyChange(() => Emoticons);
                 }
             }
         }
 
-        public void Compose()
+        public virtual void Compose()
         {
-            if (_composeHandler != null)
-            {
-                _composeHandler.Dispose();
-            }
-            if (String.IsNullOrWhiteSpace(PostContent))
-            {
-                MessageBox.Show(AppResources.tooManyCharacters);
-            }
-            else
-            {
-                _progressService.Show(AppResources.msgSending);
-
-                var limitedTo = null as IEnumerable<int>;
-                if (IsPrivateView)
-                {
-                    if (SelectedUsers.Count > 0)
-                    {
-                        limitedTo = SelectedUsers.Select(u => u.Id);
-                    }
-                    else
-                    {
-                        limitedTo = new int[] { 0 };
-                    }
-                }
-
-                var lang = LanguageHelper.CultureInfoToPlurkLang(LocalizedStrings.Culture);
-
-                var command =
-                    TimelineCommand.PlurkAdd(PostContent, Qualifier.Qualifier, limitedTo, lang:lang).
-                        Client(PlurkService.Client).ToObservable().
-                        Timeout(DefaultConfiguration.TimeoutCompose).
-                        PlurkException(error => { });
-
-                _composeHandler = command.ObserveOnDispatcher().Subscribe(
-                    plurk =>
-                    {
-                        var page = IoC.Get<PlurkMainPageViewModel>();
-                        if (page != null)
-                        {
-                            page.NewPost = true;
-                        }
-                        PostContent = "";
-                        SelectedUsers.Clear();
-                        _navigationService.GoBack();
-                    }, () => _progressService.Hide());
-            }
         }
 
-        private void InsertPhoto()
+        public void InsertPhoto()
         {
             try
             {
@@ -322,11 +238,11 @@ namespace ChronoPlurk.ViewModels.Compose
                     .Timeout(DefaultConfiguration.TimeoutUpload)
                     .PlurkException();
 
-                _progressService.Show(AppResources.msgUploadingPhoto);
+                ProgressService.Show(AppResources.msgUploadingPhoto);
 
                 System.Action complete = () =>
                 {
-                    _progressService.Hide();
+                    ProgressService.Hide();
                     if (photoStream != null)
                     {
                         photoStream.Dispose();
@@ -352,6 +268,109 @@ namespace ChronoPlurk.ViewModels.Compose
             else if (fileName.EndsWith(".png", StringComparison.InvariantCultureIgnoreCase))
             {
                 upload.ContentType = "image/png";
+            }
+        }
+    }
+
+    [NotifyForAll]
+    public class ComposePageViewModel : ComposeViewModelBase
+    {
+        private readonly INavigationService _navigationService;
+        private readonly FriendsFansCompletionService _friendsFansCompletionService;
+
+        private IDisposable _composeHandler;
+
+        public bool IsPrivateView { get; set; }
+
+        public Visibility LockVisibility { get; set; }
+
+        public BindableCollection<CompletionUser> SelectedUsers
+        {
+            get { return _friendsFansCompletionService.SelectedItems; }
+        }
+
+        public bool IsSelectionEnabled { get; set; }
+
+        [DependsOn("IsSelectionEnabled")]
+        public double SelectionOpacity
+        {
+            get { return IsSelectionEnabled ? 1.0 : 0.5; }
+        }
+
+        public ComposePageViewModel(
+            IPlurkService plurkService,
+            INavigationService navigationService,
+            IProgressService progressService,
+            FriendsFansCompletionService friendsFansCompletionService,
+            RecentEmoticonsService recentEmoticonsService)
+            : base (plurkService, progressService, recentEmoticonsService)
+        {
+            _navigationService = navigationService;
+            _friendsFansCompletionService = friendsFansCompletionService;
+
+            LockVisibility = Visibility.Collapsed;
+        }
+
+        protected override void OnActivate()
+        {
+            NotifyOfPropertyChange(() => SelectedUsers);
+            if (SelectedUsers.Count > 0)
+            {
+                IsPrivateView = true;
+                LockVisibility = Visibility.Visible;
+                HasPostContentFocus = false;
+            }
+
+            base.OnActivate();
+        }
+
+        public override void Compose()
+        {
+            if (_composeHandler != null)
+            {
+                _composeHandler.Dispose();
+            }
+            if (String.IsNullOrWhiteSpace(PostContent))
+            {
+                MessageBox.Show(AppResources.tooManyCharacters);
+            }
+            else
+            {
+                ProgressService.Show(AppResources.msgSending);
+
+                var limitedTo = null as IEnumerable<int>;
+                if (IsPrivateView)
+                {
+                    if (SelectedUsers.Count > 0)
+                    {
+                        limitedTo = SelectedUsers.Select(u => u.Id);
+                    }
+                    else
+                    {
+                        limitedTo = new int[] { 0 };
+                    }
+                }
+
+                var lang = LanguageHelper.CultureInfoToPlurkLang(LocalizedStrings.Culture);
+
+                var command =
+                    TimelineCommand.PlurkAdd(PostContent, Qualifier.Qualifier, limitedTo, lang:lang).
+                        Client(PlurkService.Client).ToObservable().
+                        Timeout(DefaultConfiguration.TimeoutCompose).
+                        PlurkException(error => { });
+
+                _composeHandler = command.ObserveOnDispatcher().Subscribe(
+                    plurk =>
+                    {
+                        var page = IoC.Get<PlurkMainPageViewModel>();
+                        if (page != null)
+                        {
+                            page.NewPost = true;
+                        }
+                        PostContent = "";
+                        SelectedUsers.Clear();
+                        _navigationService.GoBack();
+                    }, () => ProgressService.Hide());
             }
         }
 
