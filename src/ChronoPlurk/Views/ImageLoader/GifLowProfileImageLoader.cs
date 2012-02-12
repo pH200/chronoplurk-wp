@@ -250,8 +250,8 @@ namespace ChronoPlurk.Views.ImageLoader
                                     var decoder = new GifDecoder();
                                     var extendedImage = new ExtendedImage();
                                     decoder.Decode(extendedImage, pendingCompletion.Stream);
-                                    var image = new AnimatedImage() { Source = extendedImage };
-                                    image.Stretch = (Stretch)pendingCompletion.Image.GetValue(StretchProperty);
+                                    var image = new AnimatedImage() { Source = extendedImage, Stretch = Stretch.None };
+                                    // image.Stretch = (Stretch)pendingCompletion.Image.GetValue(StretchProperty);
                                     pendingCompletion.Image.Child = image;
                                 }
                                 else
