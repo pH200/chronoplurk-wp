@@ -51,6 +51,12 @@ namespace ChronoPlurk.Views.Compose
                 Text = AppResources.appbarPlurk,
                 Message = "PlurkAppBar"
             };
+            var emoticonButton = new AppBarButton()
+            {
+                IconUri = new Uri("Resources/Icons/appbar.emoticon.png", UriKind.Relative),
+                Text = AppResources.appbarEmoticon,
+                Message = "EmoticonAppBar"
+            };
             var photosButton = new AppBarButton()
             {
                 IconUri = new Uri("Resources/Icons/appbar.feature.camera.rest.png", UriKind.Relative),
@@ -64,6 +70,7 @@ namespace ChronoPlurk.Views.Compose
                 Message = "PrivateAppBar"
             };
             ApplicationBar.Buttons.Add(plurkButton);
+            ApplicationBar.Buttons.Add(emoticonButton);
             ApplicationBar.Buttons.Add(photosButton);
             ApplicationBar.Buttons.Add(privateButton);
         }

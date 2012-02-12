@@ -106,6 +106,15 @@ namespace ChronoPlurk.Resources.i18n {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to emoticon.
+        /// </summary>
+        public static string appbarEmoticon {
+            get {
+                return ResourceManager.GetString("appbarEmoticon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to help.
         /// </summary>
         public static string appbarHelp {
@@ -660,6 +669,15 @@ namespace ChronoPlurk.Resources.i18n {
         public static string msgLoading {
             get {
                 return ResourceManager.GetString("msgLoading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loading Emoticons.
+        /// </summary>
+        public static string msgLoadingEmoticons {
+            get {
+                return ResourceManager.GetString("msgLoadingEmoticons", resourceCulture);
             }
         }
         

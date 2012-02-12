@@ -95,11 +95,12 @@
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
                                             <Border imgloader:GifLowProfileImageLoader.UriSource="{Binding Value}"
-                                                Width="50"
-                                                Height="50"
-                                                Background="{StaticResource PhoneChromeBrush}"
-                                                cal:Message.Attach="[Event Tap] = [Action OnEmoticonTapped($dataContext)]"
-                                                Margin="0,0,12,12"/>
+                                                    imgloader:GifLowProfileImageLoader.Stretch="None"
+                                                    Width="50"
+                                                    Height="50"
+                                                    Background="{StaticResource PhoneChromeBrush}"
+                                                    cal:Message.Attach="[Event Tap] = [Action OnEmoticonTapped($dataContext)]"
+                                                    Margin="0,0,12,12"/>
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>
                                     <ItemsControl.ItemsPanel>

@@ -420,4 +420,10 @@
   <data name="loginGrantMessage" xml:space="preserve">
     <value>將您的帳號連接到 ChronoPlurk</value>
   </data>
+  <data name="appbarEmoticon" xml:space="preserve">
+    <value>表情符號</value>
+  </data>
+  <data name="msgLoadingEmoticons" xml:space="preserve">
+    <value>讀取表情符號中</value>
+  </data>
 </root>

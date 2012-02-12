@@ -420,4 +420,10 @@
   <data name="loginGrantMessage" xml:space="preserve">
     <value>Connect your account to ChronoPlurk.</value>
   </data>
+  <data name="appbarEmoticon" xml:space="preserve">
+    <value>emoticon</value>
+  </data>
+  <data name="msgLoadingEmoticons" xml:space="preserve">
+    <value>Loading Emoticons</value>
+  </data>
 </root>

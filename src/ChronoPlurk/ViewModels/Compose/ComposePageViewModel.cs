@@ -91,31 +91,34 @@ namespace ChronoPlurk.ViewModels.Compose
             _friendsFansCompletionService = friendsFansCompletionService;
 
             LockVisibility = Visibility.Collapsed;
+            EmoticonVisibility = Visibility.Collapsed;
             HasPostContentFocus = true;
 
             Qualifiers = QualifierViewModel.AllQualifiers;
             Qualifier = QualifierViewModel.AllQualifiers.First(q => q.Qualifier == Plurto.Core.Qualifier.Says);
-
-            LoadEmoticons();
         }
         
         private void LoadEmoticons()
         {
-            var emoticonsCmd = EmoticonsCommand.Get().Client(PlurkService.Client)
-                .ToObservable()
-                .Catch<Emoticons, Exception>(e =>
-                {
-                    Execute.OnUIThread(() => MessageBox.Show("Cannot load emoticons"));
-                    return Observable.Empty<Emoticons>();
-                });
-            emoticonsCmd.Subscribe(emoticons =>
+            if (Emoticons == null)
             {
-                Emoticons = new[]
+                _progressService.Show(AppResources.msgLoadingEmoticons);
+                var emoticonsCmd = EmoticonsCommand.Get().Client(PlurkService.Client)
+                    .ToObservable()
+                    .Catch<Emoticons, Exception>(e =>
+                    {
+                        Execute.OnUIThread(() => MessageBox.Show("Cannot load emoticons"));
+                        return Observable.Empty<Emoticons>();
+                    });
+                emoticonsCmd.Subscribe(emoticons =>
                 {
-                    emoticons.GetKarmaEmoticons(),
-                    emoticons.GetRecuitedEmoticons()
-                };
-            });
+                    Emoticons = new[]
+                    {
+                        emoticons.GetKarmaEmoticons(),
+                        emoticons.GetRecuitedEmoticons()
+                    };
+                }, () => Execute.OnUIThread(() => _progressService.Hide()));
+            }
         }
 
         protected override void OnInitialize()
@@ -316,6 +319,20 @@ namespace ChronoPlurk.ViewModels.Compose
             Compose();
         }
 
+        public void EmoticonAppBar()
+        {
+            LockVisibility = Visibility.Collapsed;
+            EmoticonVisibility = Visibility.Visible;
+
+            LoadEmoticons();
+
+            var view = GetView() as ComposePage;
+            if (view != null)
+            {
+                view.Focus();
+            }
+        }
+
         public void PhotosAppBar()
         {
             InsertPhoto();
@@ -323,16 +340,9 @@ namespace ChronoPlurk.ViewModels.Compose
 
         public void PrivateAppBar()
         {
-            if (LockVisibility == Visibility.Visible)
-            {
-                LockVisibility = Visibility.Collapsed;
-                EmoticonVisibility = Visibility.Visible;
-            }
-            else
-            {
-                EmoticonVisibility = Visibility.Collapsed;
-                LockVisibility = Visibility.Visible;
-            }
+            EmoticonVisibility = Visibility.Collapsed;
+            LockVisibility = Visibility.Visible;
+
             var view = GetView() as ComposePage;
             if (view != null)
             {
