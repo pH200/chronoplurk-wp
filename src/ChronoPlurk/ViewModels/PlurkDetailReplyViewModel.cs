@@ -64,7 +64,7 @@ namespace ChronoPlurk.ViewModels
                         if (parent != null)
                         {
                             LeaveFocus();
-                            parent.BlurReplyFocus();
+                            parent.HideReplyVisibility();
                         }
                         PostContent = "";
                         LoadNewComments();
@@ -120,20 +120,10 @@ namespace ChronoPlurk.ViewModels
 
         public void OnGotFocus()
         {
-            var page = GetPageViewModel();
-            if (page != null)
-            {
-                page.ShowPhotosAppBar();
-            }
         }
 
         public void OnLostFocus()
         {
-            var page = GetPageViewModel();
-            if (page != null)
-            {
-                page.HidePhotosAppBar();
-            }
         }
 
         private PlurkDetailPageViewModel GetPageViewModel()

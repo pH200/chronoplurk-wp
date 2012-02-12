@@ -76,7 +76,7 @@ namespace ChronoPlurk.ViewModels
                 {
                     if (ReplyVisibility == Visibility.Visible)
                     {
-                        ReplyVisibility = Visibility.Collapsed;
+                        HideReplyVisibility();
                         return true;
                     }
                     else
@@ -91,14 +91,21 @@ namespace ChronoPlurk.ViewModels
         {
             if (ReplyVisibility == Visibility.Visible)
             {
-                ReplyVisibility = Visibility.Collapsed;
+                HideReplyVisibility();
                 e.Cancel = true;
             }
         }
 
-        public void BlurReplyFocus()
+        public void ShowReplyVisibility()
+        {
+            ReplyVisibility = Visibility.Visible;
+            ShowAppBarForReply();
+        }
+
+        public void HideReplyVisibility()
         {
             ReplyVisibility = Visibility.Collapsed;
+            HideAppBarForReply();
         }
 
         public long GetPlurkId()
@@ -181,7 +188,7 @@ namespace ChronoPlurk.ViewModels
             }
         }
 
-        public void ShowPhotosAppBar()
+        public void ShowAppBarForReply()
         {
             var view = GetView() as PlurkDetailPage;
             if (view != null)
@@ -191,7 +198,7 @@ namespace ChronoPlurk.ViewModels
             }
         }
 
-        public void HidePhotosAppBar()
+        public void HideAppBarForReply()
         {
             var view = GetView() as PlurkDetailPage;
             if (view != null)
@@ -215,7 +222,7 @@ namespace ChronoPlurk.ViewModels
         {
             if (ReplyVisibility == Visibility.Collapsed)
             {
-                ReplyVisibility = Visibility.Visible;
+                ShowReplyVisibility();
                 ReplyViewModel.ResponseFocus = true;
             }
             else
