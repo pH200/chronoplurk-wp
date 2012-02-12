@@ -181,17 +181,16 @@ namespace ChronoPlurk.Views.ImageLoader
                     if (pendingRequest.Uri == null) continue;
 
                     var isCachedGif = false;
+                    Uri emoticonUri = null;
                     if (pendingRequest.Uri.IsAbsoluteUri)
                     {
-                        Uri emoticonUri;
                         if (EmoticonsDictionary.TryGetValue(pendingRequest.Uri.OriginalString, out emoticonUri))
                         {
-                            pendingRequest.Uri = emoticonUri;
                             isCachedGif = true;
                         }
                     }
                     
-                    if (pendingRequest.Uri.IsAbsoluteUri)
+                    if (!isCachedGif && pendingRequest.Uri.IsAbsoluteUri)
                     {
                         // Download from network
                         var webRequest = HttpWebRequest.CreateHttp(pendingRequest.Uri);
@@ -207,7 +206,7 @@ namespace ChronoPlurk.Views.ImageLoader
                         // Enqueue resource stream for completion
                         var streamResourceInfo = !isCachedGif
                                                      ? Application.GetResourceStream(resourceStreamUri)
-                                                     : Application.GetResourceStream(_emoticonZip, resourceStreamUri);
+                                                     : Application.GetResourceStream(_emoticonZip, emoticonUri);
                         if (null != streamResourceInfo)
                         {
                             pendingCompletions.Enqueue(new PendingCompletion(pendingRequest.Image, pendingRequest.Uri, streamResourceInfo.Stream));
@@ -243,29 +242,32 @@ namespace ChronoPlurk.Views.ImageLoader
                         {
                             // Decode the image and set the source
                             var pendingCompletion = pendingCompletions.Dequeue();
-                            try
+                            if (GetUriSource(pendingCompletion.Image) == pendingCompletion.Uri)
                             {
-                                if (pendingCompletion.Uri.OriginalString.EndsWith(".gif", StringComparison.InvariantCultureIgnoreCase))
+                                try
                                 {
-                                    var decoder = new GifDecoder();
-                                    var extendedImage = new ExtendedImage();
-                                    decoder.Decode(extendedImage, pendingCompletion.Stream);
-                                    var image = new AnimatedImage() { Source = extendedImage, Stretch = Stretch.None };
-                                    // image.Stretch = (Stretch)pendingCompletion.Image.GetValue(StretchProperty);
-                                    pendingCompletion.Image.Child = image;
+                                    if (pendingCompletion.Uri.OriginalString.EndsWith(".gif", StringComparison.InvariantCultureIgnoreCase))
+                                    {
+                                        var decoder = new GifDecoder();
+                                        var extendedImage = new ExtendedImage();
+                                        decoder.Decode(extendedImage, pendingCompletion.Stream);
+                                        var image = new AnimatedImage() { Source = extendedImage, Stretch = Stretch.None };
+                                        // image.Stretch = (Stretch)pendingCompletion.Image.GetValue(StretchProperty);
+                                        pendingCompletion.Image.Child = image;
+                                    }
+                                    else
+                                    {
+                                        var bitmapImage = new BitmapImage();
+                                        bitmapImage.SetSource(pendingCompletion.Stream);
+                                        var image = new Image() { Source = bitmapImage };
+                                        image.Stretch = (Stretch)pendingCompletion.Image.GetValue(StretchProperty);
+                                        pendingCompletion.Image.Child = image;
+                                    }
                                 }
-                                else
+                                catch
                                 {
-                                    var bitmapImage = new BitmapImage();
-                                    bitmapImage.SetSource(pendingCompletion.Stream);
-                                    var image = new Image() { Source = bitmapImage };
-                                    image.Stretch = (Stretch)pendingCompletion.Image.GetValue(StretchProperty);
-                                    pendingCompletion.Image.Child = image;
+                                    // Ignore image decode exceptions (ex: invalid image)
                                 }
-                            }
-                            catch
-                            {
-                                // Ignore image decode exceptions (ex: invalid image)
                             }
                             // Dispose of response stream
                             pendingCompletion.Stream.Dispose();
