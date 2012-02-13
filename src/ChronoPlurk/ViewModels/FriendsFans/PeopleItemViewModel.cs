@@ -28,8 +28,11 @@ namespace ChronoPlurk.ViewModels.FriendsFans
             {
                 if (BirthdayPrivacy == BirthdayPrivacy.ShowAll && DateOfBirth.HasValue)
                 {
-                    var year = DateTime.Now.Year - DateOfBirth.Value.Year;
-                    return string.Format(AppResources.userAgeFormat, year);
+                    var now = DateTime.UtcNow;
+                    var dob = DateOfBirth.Value;
+                    var age = now.Year - dob.Year -
+                              ((now.Month > dob.Month || (now.Month == dob.Month && now.Day >= dob.Day)) ? 0 : 1);
+                    return string.Format(AppResources.userAgeFormat, age);
                 }
                 return null;
             }
