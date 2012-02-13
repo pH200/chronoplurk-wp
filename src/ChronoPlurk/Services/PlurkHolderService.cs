@@ -52,6 +52,13 @@ namespace ChronoPlurk.Services
             SearchAndAction(plurkId, holder => holder.SetAsRead(plurkId));
         }
 
+        public void MarkAsRead(IEnumerable<long> plurkIds)
+        {
+            foreach (var plurkId in plurkIds)
+            {
+                SetAsRead(plurkId);
+            }
+        }
 
         public void Add(IPlurkHolder item)
         {

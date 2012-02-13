@@ -35,6 +35,7 @@ namespace ChronoPlurk.Services
         void Mute(long plurkId);
         void Unmute(long plurkId);
         void SetAsRead(long plurkId);
+        void MarkAsRead(IList<long> plurkIds);
         void Delete(long plurkId);
         void DeleteResponse(long id, long plurkId);
     }
@@ -196,6 +197,11 @@ namespace ChronoPlurk.Services
         public void SetAsRead(long plurkId)
         {
             SimpleAction(TimelineCommand.MarkAsRead(plurkId), service => service.SetAsRead(plurkId));
+        }
+
+        public void MarkAsRead(IList<long> plurkIds)
+        {
+            SimpleAction(TimelineCommand.MarkAsRead(plurkIds), service => service.MarkAsRead(plurkIds));
         }
 
         public void Delete(long plurkId)

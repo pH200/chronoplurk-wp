@@ -438,4 +438,7 @@
   <data name="msgLoadingEmoticons" xml:space="preserve">
     <value>Loading Emoticons</value>
   </data>
+  <data name="appbarMarkAllAsRead" xml:space="preserve">
+    <value>mark all as read</value>
+  </data>
 </root>

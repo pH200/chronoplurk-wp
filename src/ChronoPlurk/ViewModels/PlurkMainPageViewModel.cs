@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Caliburn.Micro;
+using ChronoPlurk.Helpers;
 using ChronoPlurk.Services;
 using ChronoPlurk.ViewModels.Core;
 using ChronoPlurk.ViewModels.Main;
@@ -145,11 +146,37 @@ namespace ChronoPlurk.ViewModels
             RefreshAll(Items);
         }
 
+        private void MarkAllAsRead(ITimelineViewModel item)
+        {
+            if (item != null)
+            {
+                var unreadIds = item.GetUnreadPlurkIds();
+                if (unreadIds != null)
+                {
+                    var list = unreadIds.Distinct().ToList();
+                    if (list.Count > 0)
+                    {
+                        PlurkService.MarkAsRead(list);
+
+                        if (Items.Contains(_unreadPlurksViewModel))
+                        {
+                            _unreadPlurksViewModel.RemoveReadItems();
+                        }
+                    }
+                }
+            }
+        }
+
         #region AppBar
         
         public void RefreshAppBar()
         {
             RefreshAll();
+        }
+
+        public void MarkAllAsReadAppBar()
+        {
+            MarkAllAsRead(ActiveItem as ITimelineViewModel);
         }
 
         public void AllPlurksAppBar()

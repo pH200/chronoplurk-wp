@@ -68,6 +68,11 @@ namespace ChronoPlurk.Views
                 Text = AppResources.appbarSearch,
                 Message = "SearchAppBar"
             };
+            var markAllAsReadButton = new AppBarMenuItem()
+            {
+                Text = AppResources.appbarMarkAllAsRead,
+                Message = "MarkAllAsReadAppBar"
+            };
             var settingsButton = new AppBarMenuItem()
             {
                 Text = AppResources.appbarSettings,
@@ -78,6 +83,7 @@ namespace ChronoPlurk.Views
             ApplicationBar.Buttons.Add(composeButton);
             ApplicationBar.Buttons.Add(allPlurksButton);
             ApplicationBar.Buttons.Add(searchButton);
+            ApplicationBar.MenuItems.Add(markAllAsReadButton);
             ApplicationBar.MenuItems.Add(settingsButton);
         }
     }

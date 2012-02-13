@@ -124,6 +124,15 @@ namespace ChronoPlurk.Resources.i18n {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to mark all as read.
+        /// </summary>
+        public static string appbarMarkAllAsRead {
+            get {
+                return ResourceManager.GetString("appbarMarkAllAsRead", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to photos.
         /// </summary>
         public static string appbarPhotos {

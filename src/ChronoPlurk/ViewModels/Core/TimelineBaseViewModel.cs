@@ -16,8 +16,13 @@ using Plurto.Entities;
 
 namespace ChronoPlurk.ViewModels
 {
+    public interface ITimelineViewModel
+    {
+        IEnumerable<long> GetUnreadPlurkIds();
+    }
+
     [NotifyForAll]
-    public abstract class TimelineBaseViewModel<TSource> : Screen, IPlurkHolder
+    public abstract class TimelineBaseViewModel<TSource> : Screen, IPlurkHolder, ITimelineViewModel
         where TSource : class, ITimeline
     {
         #region Fields
@@ -331,6 +336,17 @@ namespace ChronoPlurk.ViewModels
             return scroll;
         }
 
+        public IEnumerable<long> GetUnreadPlurkIds()
+        {
+            if (Items != null)
+            {
+                return from plurk in Items
+                       where plurk.IsUnread == UnreadStatus.Unread
+                       select plurk.PlurkId;
+            }
+            return null;
+        }
+
         public IEnumerable<long> PlurkIds
         {
             get { return Items.Select(item => item.PlurkId); }
@@ -365,7 +381,7 @@ namespace ChronoPlurk.ViewModels
             SearchAndAction(plurkId, item => item.IsUnread = UnreadStatus.Read);
         }
 
-        public void SetAsRead(long plurkId)
+        public virtual void SetAsRead(long plurkId)
         {
             SearchAndAction(plurkId, item => item.IsUnread = UnreadStatus.Read);
         }

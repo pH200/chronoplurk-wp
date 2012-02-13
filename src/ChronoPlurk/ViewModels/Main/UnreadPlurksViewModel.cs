@@ -16,6 +16,8 @@ namespace ChronoPlurk.ViewModels.Main
 
         public bool RefreshOnActivate { get; set; }
 
+        public int UnreadCount { get; set; }
+
         public UnreadPlurksViewModel(
             INavigationService navigationService,
             IProgressService progressService,
@@ -38,6 +40,45 @@ namespace ChronoPlurk.ViewModels.Main
             base.OnActivate();
         }
 
+        public override void SetAsRead(long plurkId)
+        {
+            var item = Items.FirstOrDefault(p => plurkId == p.PlurkId);
+            if (item != null)
+            {
+                item.IsUnread = UnreadStatus.Read;
+                --UnreadCount;
+                RefreshUnreadCount();
+            }
+        }
+
+        public void RemoveReadItems()
+        {
+            for (var i = Items.Count - 1; i >= 0; i--)
+            {
+                var item = Items[i];
+                if (item.IsUnread != UnreadStatus.Unread)
+                {
+                    Items.RemoveAt(i);
+                }
+            }
+            if (Items.Count == 0)
+            {
+                IsHasMore = false; // Looks better if cleared all items.
+            }
+        }
+
+        public void RefreshUnreadCount()
+        {
+            if (UnreadCount > 0)
+            {
+                this.DisplayName = AppResources.filterUnread + "(" + UnreadCount + ")";
+            }
+            else
+            {
+                this.DisplayName = AppResources.filterUnread;
+            }
+        }
+
         public void RefreshSync()
         {
             if (_getUnreadCountDisposable != null)
@@ -48,7 +89,8 @@ namespace ChronoPlurk.ViewModels.Main
             var getUnreadCount = PollingCommand.GetUnreadCount().Client(PlurkService.Client).ToObservable();
             _getUnreadCountDisposable = getUnreadCount.ObserveOnDispatcher().Subscribe(count =>
             {
-                this.DisplayName = AppResources.filterUnread + string.Format("({0})", count.All);
+                UnreadCount = count.All;
+                RefreshUnreadCount();
             });
 
             var getPlurks = TimelineCommand.GetUnreadPlurks().Client(PlurkService.Client).ToObservable();
