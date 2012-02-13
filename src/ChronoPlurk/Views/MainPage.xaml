@@ -22,12 +22,13 @@
             <RowDefinition />
             <RowDefinition Height="70" />
         </Grid.RowDefinitions>
-        <Grid Margin="12,20,8,0">
+        <Grid Margin="12,0,8,0">
             <TextBox x:Name="SearchField"
+                     VerticalAlignment="Top"
                      InputScope="Text"
                      cal:Message.Attach="[Event KeyUp] = [Action SearchKey($eventArgs)]"/>
             <Border HorizontalAlignment="Right"
-                    VerticalAlignment="Bottom"
+                    VerticalAlignment="Top"
                     Width="84"
                     Height="72"
                     Background="Transparent"
