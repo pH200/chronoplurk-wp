@@ -79,7 +79,7 @@
 
             <Grid Grid.Row="1"
                       Visibility="{Binding EmoticonVisibility}">
-                <TextBlock Text="emoticons"
+                <TextBlock Text="{Binding Path=LocalizedResources.emoticon, Source={StaticResource LocalizedStrings}}"
                                Grid.Row="1"
                                Foreground="{StaticResource PhoneSubtleBrush}"
                                HorizontalAlignment="Left"
@@ -91,7 +91,7 @@
                     <controls:Pivot.HeaderTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding DisplayName}"
-                                       Margin="-10,12,0,0"
+                                       Margin="-9,12,0,0"
                                        Height="{StaticResource PhoneFontSizeMedium}"
                                        FontSize="{StaticResource PhoneFontSizeNormal}" />
                         </DataTemplate>
