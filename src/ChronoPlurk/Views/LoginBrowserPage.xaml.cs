@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Reactive.Linq;
 using System.Windows;
 using System.Windows.Navigation;
@@ -12,6 +13,15 @@ namespace ChronoPlurk.Views
 {
     public partial class LoginBrowserPage
     {
+        private static readonly string[] AllowedUrls = new string[]
+        {
+            "/m/login",
+            "/m/authorize",
+            "/login/authorize", // authorize* wildcard
+            "/OAuth/authorize",
+            "/OAuth/authorizeDone",
+        };
+
         public LoginBrowserPage()
         {
             InitializeComponent();
@@ -46,6 +56,12 @@ namespace ChronoPlurk.Views
             {
                 var progressService = IoC.Get<IProgressService>();
                 progressService.Show();
+            }
+            var path = e.Uri.AbsolutePath;
+            if (AllowedUrls.All(url => !path.StartsWith(url)))
+            {
+                e.Cancel = true;
+                NavigationService.GoBack();
             }
         }
 

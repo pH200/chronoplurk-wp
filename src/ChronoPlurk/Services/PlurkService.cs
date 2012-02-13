@@ -85,7 +85,10 @@ namespace ChronoPlurk.Services
         {
             return _client.ObtainRequestToken()
                 .Do(token => _client.SetToken(token))
-                .Select(token => _client.GetAuthorizationUri(true));
+                .Select(token =>
+                        new Uri("http://www.plurk.com/m/login?return_url=/m/authorize?oauth_token="
+                                + token.Token,
+                                UriKind.Absolute));
         }
 
         public IObservable<OAuthClient> GetAccessToken(string verifier)
