@@ -104,6 +104,8 @@ namespace ChronoPlurk.ViewModels
             if (PlurkService.IsUserChanged)
             {
                 PlurkService.IsUserChanged = false;
+                _unreadPlurksViewModel.UnreadCount = 0;
+                _unreadPlurksViewModel.RefreshUnreadCount();
                 var user = PlurkService.AppUserInfo;
                 if (user != null)
                 {
