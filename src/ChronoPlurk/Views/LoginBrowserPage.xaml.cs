@@ -14,6 +14,7 @@ namespace ChronoPlurk.Views
         public LoginBrowserPage()
         {
             InitializeComponent();
+            // AnimationContext = LayoutRoot;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
