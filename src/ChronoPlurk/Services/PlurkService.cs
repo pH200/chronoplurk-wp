@@ -119,6 +119,7 @@ namespace ChronoPlurk.Services
                     AccessToken = _client.Token,
                     AccessTokenSecret = client.TokenSecret,
                 };
+                IsUserChanged = true;
             }).Select(zip => AppUserInfo);
             return result;
         }
