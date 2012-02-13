@@ -262,6 +262,7 @@ namespace ChronoPlurk.Views.PlurkControls
                     handler => inlineUi.Child.Tap += handler,
                     handler => inlineUi.Child.Tap -= handler);
                 var click = mouseDownEvent
+                    .ObserveOnDispatcher().SubscribeOnDispatcher()
                     .Select(e => new { Args = e.EventArgs, Uri = nextHyperlink.NavigateUri })
                     .Subscribe(e =>
                     {
