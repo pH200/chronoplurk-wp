@@ -438,7 +438,40 @@
   <data name="msgLoadingEmoticons" xml:space="preserve">
     <value>讀取表情符號中</value>
   </data>
+  <data name="appbarFriendsAndFans" xml:space="preserve">
+    <value>friends and fans</value>
+  </data>
   <data name="appbarMarkAllAsRead" xml:space="preserve">
     <value>全部標為已讀</value>
+  </data>
+  <data name="fans" xml:space="preserve">
+    <value>粉絲</value>
+  </data>
+  <data name="friends" xml:space="preserve">
+    <value>朋友</value>
+  </data>
+  <data name="friendsAndFansTitle" xml:space="preserve">
+    <value>朋友與粉絲</value>
+  </data>
+  <data name="genderFemale" xml:space="preserve">
+    <value>女性</value>
+  </data>
+  <data name="genderMale" xml:space="preserve">
+    <value>男性</value>
+  </data>
+  <data name="genderOther" xml:space="preserve">
+    <value>不透露</value>
+  </data>
+  <data name="msgLoadingFans" xml:space="preserve">
+    <value>讀取粉絲中</value>
+  </data>
+  <data name="msgLoadingFriends" xml:space="preserve">
+    <value>讀取朋友中</value>
+  </data>
+  <data name="userAgeFormat" xml:space="preserve">
+    <value>{0} 歲</value>
+  </data>
+  <data name="userFrom" xml:space="preserve">
+    <value> 來自 </value>
   </data>
 </root>

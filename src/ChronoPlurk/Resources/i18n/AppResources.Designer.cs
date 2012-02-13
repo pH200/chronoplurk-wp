@@ -115,6 +115,15 @@ namespace ChronoPlurk.Resources.i18n {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to friends and fans.
+        /// </summary>
+        public static string appbarFriendsAndFans {
+            get {
+                return ResourceManager.GetString("appbarFriendsAndFans", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to help.
         /// </summary>
         public static string appbarHelp {
@@ -547,6 +556,15 @@ namespace ChronoPlurk.Resources.i18n {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to fans.
+        /// </summary>
+        public static string fans {
+            get {
+                return ResourceManager.GetString("fans", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to liked.
         /// </summary>
         public static string filterLiked {
@@ -601,6 +619,24 @@ namespace ChronoPlurk.Resources.i18n {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to friends.
+        /// </summary>
+        public static string friends {
+            get {
+                return ResourceManager.GetString("friends", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FRIENDS AND FANS.
+        /// </summary>
+        public static string friendsAndFansTitle {
+            get {
+                return ResourceManager.GetString("friendsAndFansTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This is your first time using friends list.\nFriends list will download automatically..
         /// </summary>
         public static string friendsListFirst {
@@ -615,6 +651,33 @@ namespace ChronoPlurk.Resources.i18n {
         public static string friendsListHelp {
             get {
                 return ResourceManager.GetString("friendsListHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to female.
+        /// </summary>
+        public static string genderFemale {
+            get {
+                return ResourceManager.GetString("genderFemale", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to male.
+        /// </summary>
+        public static string genderMale {
+            get {
+                return ResourceManager.GetString("genderMale", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to not stating.
+        /// </summary>
+        public static string genderOther {
+            get {
+                return ResourceManager.GetString("genderOther", resourceCulture);
             }
         }
         
@@ -723,6 +786,24 @@ namespace ChronoPlurk.Resources.i18n {
         public static string msgLoadingEmoticons {
             get {
                 return ResourceManager.GetString("msgLoadingEmoticons", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loading Fans.
+        /// </summary>
+        public static string msgLoadingFans {
+            get {
+                return ResourceManager.GetString("msgLoadingFans", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loading Friends.
+        /// </summary>
+        public static string msgLoadingFriends {
+            get {
+                return ResourceManager.GetString("msgLoadingFriends", resourceCulture);
             }
         }
         
@@ -1011,6 +1092,24 @@ namespace ChronoPlurk.Resources.i18n {
         public static string unmute {
             get {
                 return ResourceManager.GetString("unmute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} years old.
+        /// </summary>
+        public static string userAgeFormat {
+            get {
+                return ResourceManager.GetString("userAgeFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  from .
+        /// </summary>
+        public static string userFrom {
+            get {
+                return ResourceManager.GetString("userFrom", resourceCulture);
             }
         }
         

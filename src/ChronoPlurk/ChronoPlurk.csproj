@@ -175,6 +175,9 @@
     <Compile Include="ViewModels\Core\PlurkAppBarPage.cs" />
     <Compile Include="ViewModels\Core\QualifierViewModel.cs" />
     <Compile Include="ViewModels\Core\TimelineBaseViewModel.cs" />
+    <Compile Include="ViewModels\FriendsFans\FriendsFansListPageViewModel.cs" />
+    <Compile Include="ViewModels\FriendsFans\PeopleItemViewModel.cs" />
+    <Compile Include="ViewModels\FriendsFans\PeopleListViewModel.cs" />
     <Compile Include="ViewModels\LoginPageViewModel.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="ViewModels\Main\LikedPlurksViewModel.cs" />
@@ -217,6 +220,12 @@
     </Compile>
     <Compile Include="Views\Control\UrlRemapper.cs" />
     <Compile Include="Views\DesignTime\SearchResultDesignData.cs" />
+    <Compile Include="Views\FriendsFans\FriendsFansListPage.xaml.cs">
+      <DependentUpon>FriendsFansListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FriendsFans\PeopleListView.xaml.cs">
+      <DependentUpon>PeopleListView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ImageLoader\EmoticonsDictionary.cs" />
     <Compile Include="Views\ImageLoader\GifLowProfileImageLoader.cs" />
     <Compile Include="Views\ImageLoader\LowProfileImageLoader.cs" />
@@ -285,6 +294,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Control\TimelineControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FriendsFans\FriendsFansListPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FriendsFans\PeopleListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

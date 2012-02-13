@@ -1,0 +1,73 @@
+﻿<UserControl x:Class="ChronoPlurk.Views.FriendsFans.PeopleListView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:imgloader="clr-namespace:ChronoPlurk.Views.ImageLoader"
+             xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+             xmlns:cal="http://www.caliburnproject.org" mc:Ignorable="d"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    d:DesignHeight="480" d:DesignWidth="480">
+
+    <UserControl.Resources>
+        <DataTemplate x:Key="Footer">
+            <StackPanel>
+                <TextBlock Text="{Binding Message}" />
+                <StackPanel Margin="0,0,0,50" HorizontalAlignment="Stretch">
+                    <Button x:Name="RequestMore"
+                            Content="more"
+                            cal:Message.Attach="[Event Click] = [Action RequestMore()]"
+                            Opacity="{Binding IsHasMoreOpacity}" />
+                </StackPanel>
+            </StackPanel>
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <Grid x:Name="LayoutRoot">
+        <toolkit:LongListSelector x:Name="Items"
+                              ItemsSource="{Binding Items}"
+                              ListFooterTemplate="{StaticResource Footer}"
+                              ListFooter="{Binding}"
+                              IsFlatList="True">
+            <toolkit:LongListSelector.ItemTemplate>
+                <DataTemplate>
+                    <Grid cal:Message.Attach="[Event Tap] = [Action OnUserTapped($dataContext)]"
+                          Background="{StaticResource PhoneBackgroundBrush}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="65" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Border Background="{StaticResource PhoneChromeBrush}"
+                                Height="45"
+                                Width="45"
+                                Margin="10,10,0,0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Top">
+                            <Border imgloader:GifLowProfileImageLoader.UriSource="{Binding AvatarView}"
+                                    imgloader:GifLowProfileImageLoader.Stretch="UniformToFill" />
+                        </Border>
+                        <StackPanel Grid.Column="1">
+                            <TextBlock Text="{Binding Username}"
+        			                   VerticalAlignment="Top"
+        			                   HorizontalAlignment="Left"
+        			                   TextWrapping="NoWrap"
+        			                   Style="{StaticResource PhoneTextTitle2Style}"
+        			                   Margin="0"/>
+                            <TextBlock Text="{Binding NickName}"
+        			                   VerticalAlignment="Top"
+        			                   HorizontalAlignment="Left"
+        			                   TextWrapping="NoWrap"
+                                       Foreground="{StaticResource PhoneSubtleBrush}"
+        			                   Margin="0"/>
+                            <TextBlock Text="{Binding Age}" Foreground="{StaticResource PhoneSubtleBrush}" />
+                            <TextBlock Text="{Binding GenderAndLocation}" Foreground="{StaticResource PhoneSubtleBrush}" />
+                            <TextBlock Text="{Binding KarmaView}" Foreground="{StaticResource PhoneSubtleBrush}" />
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </toolkit:LongListSelector.ItemTemplate>
+        </toolkit:LongListSelector>
+    </Grid>
+</UserControl>

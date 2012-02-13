@@ -9,6 +9,7 @@ using ChronoPlurk.Helpers;
 using ChronoPlurk.Services;
 using ChronoPlurk.ViewModels;
 using ChronoPlurk.ViewModels.Compose;
+using ChronoPlurk.ViewModels.FriendsFans;
 using ChronoPlurk.ViewModels.Main;
 using ChronoPlurk.ViewModels.Profile;
 using ChronoPlurk.ViewModels.Settings;
@@ -89,6 +90,13 @@ namespace ChronoPlurk
             #region Compose VM
             builder.RegisterType<ComposePageViewModel>().AsSelf();
             builder.RegisterType<FriendsSelectionPageViewModel>().AsSelf();
+            #endregion
+
+            #region FriendsFans VM
+
+            builder.RegisterType<FriendsFansListPageViewModel>().AsSelf();
+            builder.RegisterType<PeopleListViewModel>().AsSelf();
+
             #endregion
 
             builder.RegisterType<PlurkProfilePageViewModel>().AsSelf();

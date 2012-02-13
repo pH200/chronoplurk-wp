@@ -438,7 +438,40 @@
   <data name="msgLoadingEmoticons" xml:space="preserve">
     <value>Loading Emoticons</value>
   </data>
+  <data name="appbarFriendsAndFans" xml:space="preserve">
+    <value>friends and fans</value>
+  </data>
   <data name="appbarMarkAllAsRead" xml:space="preserve">
     <value>mark all as read</value>
+  </data>
+  <data name="fans" xml:space="preserve">
+    <value>fans</value>
+  </data>
+  <data name="friends" xml:space="preserve">
+    <value>friends</value>
+  </data>
+  <data name="friendsAndFansTitle" xml:space="preserve">
+    <value>FRIENDS AND FANS</value>
+  </data>
+  <data name="genderFemale" xml:space="preserve">
+    <value>female</value>
+  </data>
+  <data name="genderMale" xml:space="preserve">
+    <value>male</value>
+  </data>
+  <data name="genderOther" xml:space="preserve">
+    <value>not stating</value>
+  </data>
+  <data name="msgLoadingFans" xml:space="preserve">
+    <value>Loading Fans</value>
+  </data>
+  <data name="msgLoadingFriends" xml:space="preserve">
+    <value>Loading Friends</value>
+  </data>
+  <data name="userAgeFormat" xml:space="preserve">
+    <value>{0} years old</value>
+  </data>
+  <data name="userFrom" xml:space="preserve">
+    <value> from </value>
   </data>
 </root>

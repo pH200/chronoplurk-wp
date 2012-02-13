@@ -179,6 +179,11 @@ namespace ChronoPlurk.ViewModels
             MarkAllAsRead(ActiveItem as ITimelineViewModel);
         }
 
+        public void FriendsAndFansAppBar()
+        {
+            NavigationService.Navigate(new Uri("/Views/FriendsFans/FriendsFansListPage.xaml", UriKind.Relative));
+        }
+
         public void AllPlurksAppBar()
         {
             ActivateItem(_timeline);
