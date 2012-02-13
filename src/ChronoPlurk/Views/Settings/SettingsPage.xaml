@@ -83,7 +83,8 @@
                            Source="/Resources/Images/cytisan_logo.jpg"
                            cal:Message.Attach="[Event Tap] = [Action OnCytisanLink()]"
                            Stretch="None" />
-                        <TextBlock Margin="12,12,0,0" Text="Copyright © 2012 Cytisan. All rights reserved." />
+                        <TextBlock Margin="12,12,0,0" Text="Copyright © 2012 Cytisan Software." />
+                        <TextBlock Margin="12,0,0,0" Text="All rights reserved." />
                         <HyperlinkButton Content="http://cytisan.com"
                                      NavigateUri="http://cytisan.com"
                                      TargetName="_blank"
