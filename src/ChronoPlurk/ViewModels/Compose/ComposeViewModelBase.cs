@@ -261,7 +261,7 @@ namespace ChronoPlurk.ViewModels.Compose
                     uploadCommand.ObserveOnDispatcher().Subscribe(
                         picture =>
                         {
-                            PostContent += picture.Full;
+                            PostContent += picture.Full + Environment.NewLine;
                         }, complete);
             }
         }
