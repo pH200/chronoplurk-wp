@@ -29,6 +29,7 @@
                           IsScriptEnabled="True"
                           VerticalContentAlignment="Stretch"
                           HorizontalContentAlignment="Stretch"
+                          Navigating="Browser_Navigating"
                           LoadCompleted="Browser_LoadCompleted" />
         <Grid Background="{StaticResource PhoneBackgroundBrush}"
               x:Name="LoadingGrid">

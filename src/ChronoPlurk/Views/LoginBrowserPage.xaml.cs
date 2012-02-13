@@ -6,6 +6,7 @@ using Caliburn.Micro;
 using ChronoPlurk.Resources.i18n;
 using ChronoPlurk.Services;
 using HtmlAgilityPack;
+using Microsoft.Phone.Controls;
 
 namespace ChronoPlurk.Views
 {
@@ -39,8 +40,19 @@ namespace ChronoPlurk.Views
                 });
         }
 
+        private void Browser_Navigating(object sender, NavigatingEventArgs e)
+        {
+            if (LoadingGrid.Visibility != Visibility.Visible)
+            {
+                var progressService = IoC.Get<IProgressService>();
+                progressService.Show();
+            }
+        }
+
         private void Browser_LoadCompleted(object sender, NavigationEventArgs e)
         {
+            var progressService = IoC.Get<IProgressService>();
+            progressService.Hide();
             if (LoadingGrid.Visibility == Visibility.Visible)
             {
                 loadedStoryboard.Begin();
