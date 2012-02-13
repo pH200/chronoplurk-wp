@@ -108,9 +108,10 @@ namespace ChronoPlurk.ViewModels.Compose
                     });
                 _emoticonsDisposable = emoticonsCmd.Subscribe(emoticons =>
                 {
+                    var excludeList = new[] { "(v_shy)", "(xmas1)", "(xmas2)", "(xmas3)" };
                     var karmaValue = PlurkService.AppUserInfo.User.Karma;
-                    IEnumerable<KeyValuePair<string, string>> karmaEmoticons =
-                        emoticons.GetKarmaEmoticons(karmaValue);
+                    var karmaEmoticons =
+                        emoticons.GetKarmaEmoticons(karmaValue).Where(pair => !excludeList.Contains(pair.Key));
                     if (PlurkService.AppUserInfo.User.Recruited >= 10)
                     {
                         karmaEmoticons = karmaEmoticons.Concat(emoticons.GetRecuitedEmoticons());
@@ -129,14 +130,7 @@ namespace ChronoPlurk.ViewModels.Compose
 
                     if (RecentEmoticons.Items.Count == 0)
                     {
-                        if (custom.Items.Count != 0)
-                        {
-                            ActiveEmoticon = custom;
-                        }
-                        else
-                        {
-                            ActiveEmoticon = karma;
-                        }
+                        ActiveEmoticon = custom.Items.Count != 0 ? custom : karma;
                     }
 
                 }, () => Execute.OnUIThread(() =>
