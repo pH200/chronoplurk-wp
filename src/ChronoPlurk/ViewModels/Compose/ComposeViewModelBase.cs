@@ -83,10 +83,8 @@ namespace ChronoPlurk.ViewModels.Compose
         {
             if (Emoticons == null)
             {
-                RecentEmoticons = new EmoticonListViewModel(RecentEmoticonsService.List)
-                {
-                    DisplayName = AppResources.emoticonsRecent
-                };
+                RecentEmoticons = EmoticonListViewModel.CreateBindable(RecentEmoticonsService.List);
+                RecentEmoticons.DisplayName = DisplayName = AppResources.emoticonsRecent;
                 Emoticons = new BindableCollection<EmoticonListViewModel>()
                 {
                     RecentEmoticons

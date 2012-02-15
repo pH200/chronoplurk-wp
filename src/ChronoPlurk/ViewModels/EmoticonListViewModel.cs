@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Caliburn.Micro;
+using ChronoPlurk.Core;
 using NotifyPropertyWeaver;
 
 namespace ChronoPlurk.ViewModels
@@ -17,23 +18,32 @@ namespace ChronoPlurk.ViewModels
     [NotifyForAll]
     public class EmoticonListViewModel : Screen
     {
-        public BindableCollection<KeyValuePair<string, string>> Items { get; set; }
+        public IList<KeyValuePair<string, string>> Items { get; set; }
 
-        public EmoticonListViewModel()
+        private EmoticonListViewModel()
         {
-            Items = new BindableCollection<KeyValuePair<string, string>>();
         }
 
         public EmoticonListViewModel(IEnumerable<KeyValuePair<string, string>> collection)
         {
             if (collection != null)
             {
-                Items = new BindableCollection<KeyValuePair<string, string>>(collection);
+                Items = new List<KeyValuePair<string, string>>(collection);
             }
             else
             {
-                Items = new BindableCollection<KeyValuePair<string, string>>();
+                Items = new List<KeyValuePair<string, string>>();
             }
+        }
+
+        public static EmoticonListViewModel CreateBindable(IEnumerable<KeyValuePair<string, string>> collection)
+        {
+            var items = new BindableCollection<KeyValuePair<string, string>>();
+            if (collection != null)
+            {
+                items.AddRange(collection);
+            }
+            return new EmoticonListViewModel() { Items = items };
         }
     }
 }
