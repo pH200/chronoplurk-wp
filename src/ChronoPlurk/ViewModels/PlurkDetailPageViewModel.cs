@@ -76,7 +76,14 @@ namespace ChronoPlurk.ViewModels
                 {
                     if (ReplyVisibility == Visibility.Visible)
                     {
-                        HideReplyVisibility();
+                        if (ReplyViewModel.EmoticonVisibility == Visibility.Visible)
+                        {
+                            HideEmoticonVisibility();
+                        }
+                        else
+                        {
+                            HideReplyVisibility();
+                        }
                         return true;
                     }
                     else
@@ -106,6 +113,27 @@ namespace ChronoPlurk.ViewModels
         {
             ReplyVisibility = Visibility.Collapsed;
             HideAppBarForReply();
+        }
+        
+        public void ShowEmoticonVisibility()
+        {
+            var view = GetView() as PlurkDetailPage;
+            if (view != null)
+            {
+                view.ReplyRowMax();
+            }
+            ReplyViewModel.EmoticonVisibility = Visibility.Visible;
+            ReplyViewModel.LoadEmoticons();
+        }
+        
+        public void HideEmoticonVisibility()
+        {
+            ReplyViewModel.EmoticonVisibility = Visibility.Collapsed;
+            var view = GetView() as PlurkDetailPage;
+            if (view != null)
+            {
+                view.ReplyRowAuto();
+            }
         }
 
         public long GetPlurkId()
@@ -205,6 +233,7 @@ namespace ChronoPlurk.ViewModels
             {
                 view.EmoticonButton.IsEnabled = false;
                 view.PhotosButton.IsEnabled = false;
+                HideEmoticonVisibility();
             }
         }
 
@@ -235,12 +264,11 @@ namespace ChronoPlurk.ViewModels
         {
             if (ReplyViewModel.EmoticonVisibility == Visibility.Visible)
             {
-                ReplyViewModel.EmoticonVisibility = Visibility.Collapsed;
+                HideEmoticonVisibility();
             }
             else
             {
-                ReplyViewModel.EmoticonVisibility = Visibility.Visible;
-                ReplyViewModel.LoadEmoticons();
+                ShowEmoticonVisibility();
             }
 
             var view = GetView() as Control;

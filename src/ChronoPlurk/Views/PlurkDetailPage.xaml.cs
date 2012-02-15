@@ -132,5 +132,17 @@ namespace ChronoPlurk.Views
             ApplicationBar.MenuItems.Add(likeButton);
             ApplicationBar.MenuItems.Add(muteButton);
         }
+
+        public void ReplyRowAuto()
+        {
+            ReplyRow.Height = GridLength.Auto;
+            DetailRow.Height = new GridLength(1.0, GridUnitType.Star);
+        }
+
+        public void ReplyRowMax()
+        {
+            DetailRow.Height = new GridLength(0);
+            ReplyRow.Height = new GridLength(1.0, GridUnitType.Star);
+        }
     }
 }

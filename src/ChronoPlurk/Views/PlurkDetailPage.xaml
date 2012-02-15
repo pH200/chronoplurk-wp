@@ -19,8 +19,8 @@
 
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition />
+            <RowDefinition x:Name="ReplyRow" Height="Auto" />
+            <RowDefinition x:Name="DetailRow" />
         </Grid.RowDefinitions>
         <ContentControl x:Name="PlurkDetailViewModel"
                         HorizontalContentAlignment="Stretch"
