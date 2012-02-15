@@ -250,6 +250,7 @@ namespace ChronoPlurk.ViewModels
                 PlurkId = plurk.Plurk.PlurkId,
                 Id = plurk.Plurk.Id,
                 UserId = plurk.User.Id, // Plurk.UserId may return client's id if logged in.
+                ClientUserId = PlurkService.UserId,
                 Username = plurk.User.DisplayNameOrNickName,
                 NickName = plurk.User.NickName,
                 Qualifier = plurk.Plurk.QualifierTextView(),

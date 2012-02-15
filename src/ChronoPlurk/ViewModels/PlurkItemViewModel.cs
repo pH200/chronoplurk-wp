@@ -155,6 +155,14 @@ namespace ChronoPlurk.ViewModels
             get { return IsFavorite ? AppResources.unlike : AppResources.like; }
         }
 
+        public int ClientUserId { get; set; }
+
+        [DependsOn("ClientUserId", "UserId")]
+        public Visibility DeleteVisibility
+        {
+            get { return ClientUserId == UserId ? Visibility.Visible : Visibility.Collapsed; }
+        }
+
         #endregion
         
         public static string ConvertTimeSpan(TimeSpan timeSpan, DateTime? postDate = null)

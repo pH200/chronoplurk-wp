@@ -60,6 +60,7 @@
                                               cal:Message.Attach="MenuLike($dataContext)" />
                             <toolkit:MenuItem x:Name="MenuDelete"
                                               Header="{Binding Path=LocalizedResources.delete, Source={StaticResource LocalizedStrings}}"
+                                              Visibility="{Binding DeleteVisibility}"
                                               Foreground="White"
                                               cal:Message.Attach="MenuDelete($dataContext)" />
                         </toolkit:ContextMenu>
