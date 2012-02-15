@@ -61,7 +61,6 @@ namespace ChronoPlurk.ViewModels
             IsCompareIdInsteadOfPlurkId = true; // Replies' plurk_id are thread id.
             DisableTimelinePlurkHolder = true;
             EnableHyperlink = true;
-            IgnoreSelection = true;
 
             ProgressMessage = AppResources.msgLoadingResponses;
         }
@@ -76,6 +75,16 @@ namespace ChronoPlurk.ViewModels
             }
 
             base.OnActivate();
+        }
+
+        public override void OnItemTap(object dataContext)
+        {
+            var item = dataContext as PlurkItemViewModel;
+            if (item != null)
+            {
+                var reply = string.Format("@{0}: ", item.NickName);
+                this.GetParent().AddTextToReply(reply);
+            }
         }
 
         public void RefreshSync()

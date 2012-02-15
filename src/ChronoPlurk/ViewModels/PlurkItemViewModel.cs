@@ -113,7 +113,20 @@ namespace ChronoPlurk.ViewModels
             }
         }
 
+        public bool? Replurked { get; set; }
+
+        public string ReplurkerName { get; set; }
+
+        [DependsOn("ReplurkerName")]
+        public Visibility ReplurkVisibility
+        {
+            get { return ReplurkerName != null ? Visibility.Visible : Visibility.Collapsed; }
+        }
+
+        public string NickName { get; set; }
+
         #region Context menu related properties
+        
         public bool ContextMenuEnabled { get; set; }
 
         [DependsOn("NoComments")]
@@ -140,16 +153,6 @@ namespace ChronoPlurk.ViewModels
         public string LikeText
         {
             get { return IsFavorite ? AppResources.unlike : AppResources.like; }
-        }
-
-        public bool? Replurked { get; set; }
-
-        public string ReplurkerName { get; set; }
-
-        [DependsOn("ReplurkerName")]
-        public Visibility ReplurkVisibility
-        {
-            get { return ReplurkerName != null ? Visibility.Visible : Visibility.Collapsed; }
         }
 
         #endregion

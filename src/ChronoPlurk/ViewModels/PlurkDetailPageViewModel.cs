@@ -107,12 +107,14 @@ namespace ChronoPlurk.ViewModels
         {
             ReplyVisibility = Visibility.Visible;
             ShowAppBarForReply();
+            UpdateReplyButton();
         }
 
         public void HideReplyVisibility()
         {
             ReplyVisibility = Visibility.Collapsed;
             HideAppBarForReply();
+            UpdateReplyButton();
         }
         
         public void ShowEmoticonVisibility()
@@ -144,6 +146,22 @@ namespace ChronoPlurk.ViewModels
         public void LoadNewComments()
         {
             PlurkDetailViewModel.LoadNewComments();
+        }
+
+        public void AddTextToReply(string value)
+        {
+            if (value == null)
+            {
+                return;
+            }
+            else if (ReplyViewModel.PostContent == null)
+            {
+                ReplyViewModel.PostContent = value;
+            }
+            else
+            {
+                ReplyViewModel.PostContent += value;
+            }
         }
 
         #region AppBar

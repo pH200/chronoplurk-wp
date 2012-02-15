@@ -114,7 +114,7 @@ namespace ChronoPlurk.ViewModels
             base.OnViewLoaded(view);
         }
 
-        public void OnItemTap(object dataContext)
+        public virtual void OnItemTap(object dataContext)
         {
             if (!IgnoreSelection)
             {
@@ -251,6 +251,7 @@ namespace ChronoPlurk.ViewModels
                 Id = plurk.Plurk.Id,
                 UserId = plurk.User.Id, // Plurk.UserId may return client's id if logged in.
                 Username = plurk.User.DisplayNameOrNickName,
+                NickName = plurk.User.NickName,
                 Qualifier = plurk.Plurk.QualifierTextView(),
                 PostDate = plurk.Plurk.PostDate,
                 PostTimeFromNow = _timeBase - plurk.Plurk.PostDate,
