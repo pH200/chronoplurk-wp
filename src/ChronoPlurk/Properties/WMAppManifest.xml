@@ -4,8 +4,9 @@
   <App xmlns="" ProductID="{2826c958-c7c3-4cca-97e8-1add110fe2cb}" Title="ChronoPlurk" RuntimeType="Silverlight" Version="1.6.3.0" Genre="apps.normal" Author="Ting-Yu Lin" Description="Plurk client for Windows Phone." Publisher="Cytisan">
     <IconPath IsRelative="true" IsResource="false">ApplicationIcon.png</IconPath>
     <Capabilities>
+      <Capability Name="ID_CAP_PHONEDIALER" /> <!-- detected by App Hub -->
+      <Capability Name="ID_CAP_ISV_CAMERA" /> <!-- detected by App Hub -->
       <Capability Name="ID_CAP_MEDIALIB" />
-      <Capability Name="ID_CAP_PHONEDIALER" />
       <Capability Name="ID_CAP_NETWORKING" />
       <Capability Name="ID_CAP_WEBBROWSERCOMPONENT" />
     </Capabilities>
