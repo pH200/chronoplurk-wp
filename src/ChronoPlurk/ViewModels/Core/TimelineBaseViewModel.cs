@@ -27,7 +27,7 @@ namespace ChronoPlurk.ViewModels
     {
         #region Fields
         private IDisposable _requestHandler;
-        private DateTime _timeBase;
+        private DateTime _timeBase = DateTime.UtcNow;
         private TSource _lastResult;
         private WeakReference _scrollCache;
         #endregion
@@ -137,13 +137,12 @@ namespace ChronoPlurk.ViewModels
 
         public void Request(IObservable<TSource> observable)
         {
-            _timeBase = DateTime.Now;
+            _timeBase = DateTime.UtcNow;
             InternalRequest(observable, true);
         }
 
         public void AppendRequest(IObservable<TSource> observable, SpecialFallback<TSource> specialFallback = null)
         {
-            _timeBase = DateTime.Now;
             InternalRequest(observable, false, specialFallback);
         }
 

@@ -40,7 +40,7 @@ namespace ChronoPlurk.ViewModels.Main
             var getPlurks = TimelineCommand.GetPlurks(filter:PlurksFilter.OnlyPrivate).Client(PlurkService.Client).ToObservable();
             RequestMoreHandler = plurks =>
             {
-                var oldestOffset = new DateTime(plurks.Plurks.Min(p => p.PostDate.Ticks));
+                var oldestOffset = new DateTime(plurks.Plurks.Min(p => p.PostDate.Ticks), DateTimeKind.Utc);
                 return TimelineCommand.GetPlurks(oldestOffset, filter:PlurksFilter.OnlyPrivate).Client(PlurkService.Client).ToObservable();
             };
             Request(getPlurks);

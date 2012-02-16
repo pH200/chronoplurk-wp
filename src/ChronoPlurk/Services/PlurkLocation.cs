@@ -17,7 +17,7 @@ namespace ChronoPlurk.Services
         public PlurkLocation(PlurkItemViewModel item)
         {
             Parsed = String.Format(PageUri, item.PlurkId, item.UserId, item.Username, (int)item.QualifierEnum, item.Qualifier,
-                                   item.PostDate.ToLocalTime().Ticks, item.AvatarView, (int)item.NoComments, item.IsFavorite,
+                                   item.PostDate.ToUniversalTime().Ticks, item.AvatarView, (int)item.NoComments, item.IsFavorite,
                                    item.ResponseCount, (int)item.IsUnread, (int)item.PlurkType);
         }
 

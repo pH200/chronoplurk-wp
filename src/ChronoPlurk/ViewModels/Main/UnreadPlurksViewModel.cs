@@ -96,7 +96,7 @@ namespace ChronoPlurk.ViewModels.Main
             var getPlurks = TimelineCommand.GetUnreadPlurks().Client(PlurkService.Client).ToObservable();
             RequestMoreHandler = plurks =>
             {
-                var oldestOffset = new DateTime(plurks.Plurks.Min(p => p.PostDate.Ticks));
+                var oldestOffset = new DateTime(plurks.Plurks.Min(p => p.PostDate.Ticks), DateTimeKind.Utc);
                 return TimelineCommand.GetUnreadPlurks(oldestOffset).Client(PlurkService.Client).ToObservable();
             };
             Request(getPlurks);

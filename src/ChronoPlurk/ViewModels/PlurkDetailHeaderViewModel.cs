@@ -49,9 +49,9 @@ namespace ChronoPlurk.ViewModels
         [NotifyProperty(AlsoNotifyFor = new[] { "TimeView" })]
         public long PostDateTicks { get; set; }
 
-        public DateTime PostDate { get { return new DateTime(PostDateTicks, DateTimeKind.Local); } }
+        public DateTime PostDate { get { return new DateTime(PostDateTicks, DateTimeKind.Utc); } }
 
-        public string TimeView { get { return PostDate.ToString(); } }
+        public string TimeView { get { return PostDate.ToLocalTime().ToString("F"); } }
 
         public string ContentRaw { get; set; }
 
