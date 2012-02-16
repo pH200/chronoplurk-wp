@@ -209,7 +209,7 @@ namespace ChronoPlurk.Views.ImageLoader
                                                      : Application.GetResourceStream(_emoticonZip, emoticonUri);
                         if (null != streamResourceInfo)
                         {
-                            pendingCompletions.Enqueue(new PendingCompletion(pendingRequest.Image, pendingRequest.Uri, streamResourceInfo.Stream));
+                            pendingCompletions.Enqueue(new PendingCompletion(pendingRequest.Image, pendingRequest.Uri, streamResourceInfo.Stream, isCachedGif));
                         }
                     }
                     // Yield to UI thread
@@ -223,7 +223,7 @@ namespace ChronoPlurk.Views.ImageLoader
                     try
                     {
                         var response = responseState.WebRequest.EndGetResponse(pendingResponse);
-                        pendingCompletions.Enqueue(new PendingCompletion(responseState.Image, responseState.Uri, response.GetResponseStream()));
+                        pendingCompletions.Enqueue(new PendingCompletion(responseState.Image, responseState.Uri, response.GetResponseStream(), false));
                     }
                     catch (WebException)
                     {
@@ -246,7 +246,7 @@ namespace ChronoPlurk.Views.ImageLoader
                             {
                                 try
                                 {
-                                    if (pendingCompletion.Uri.OriginalString.EndsWith(".gif", StringComparison.InvariantCultureIgnoreCase))
+                                    if (!pendingCompletion.IsCached && pendingCompletion.Uri.OriginalString.EndsWith(".gif", StringComparison.InvariantCultureIgnoreCase))
                                     {
                                         var decoder = new GifDecoder();
                                         var extendedImage = new ExtendedImage();
@@ -341,11 +341,13 @@ namespace ChronoPlurk.Views.ImageLoader
             public Border Image { get; private set; }
             public Uri Uri { get; private set; }
             public Stream Stream { get; private set; }
-            public PendingCompletion(Border image, Uri uri, Stream stream)
+            public bool IsCached { get; private set; }
+            public PendingCompletion(Border image, Uri uri, Stream stream, bool isCached)
             {
                 Image = image;
                 Uri = uri;
                 Stream = stream;
+                IsCached = isCached;
             }
         }
     }
