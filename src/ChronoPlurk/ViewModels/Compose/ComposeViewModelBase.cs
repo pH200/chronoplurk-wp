@@ -99,6 +99,7 @@ namespace ChronoPlurk.ViewModels.Compose
                 ProgressService.Show(AppResources.msgLoadingEmoticons);
                 var emoticonsCmd = EmoticonsCommand.Get().Client(PlurkService.Client)
                     .ToObservable()
+                    .Retry(DefaultConfiguration.RetryCount)
                     .Catch<Emoticons, Exception>(e =>
                     {
                         Execute.OnUIThread(() => MessageBox.Show("Cannot load emoticons"));

@@ -81,12 +81,40 @@ namespace ChronoPlurk.Helpers
                 }
             };
             return args.Source
+                .Catch<TSource, PlurkErrorException>(ex => LoginRequiredHandling(ex, args))
                 .Retry(DefaultConfiguration.RetryCount)
                 .Catch<TSource, Exception>(ex =>
                 {
                     hideProgress();
                     return PlurkExceptionHandling(ex, args);
                 });
+        }
+
+        private static IObservable<TSource> LoginRequiredHandling<TSource>(PlurkErrorException e, PlurkExceptionArguments<TSource> args)
+        {
+            switch (e.Error)
+            {
+                case PlurkError.RequiresLogin:
+                case PlurkError.InvalidAccessToken:
+                    Execute.OnUIThread(() =>
+                    {
+                        MessageBox.Show(AppResources.errRequiresLogin, "Error", MessageBoxButton.OK);
+                        if (args.OnError != null)
+                        {
+                            args.OnError(e.Error);
+                        }
+                        var plurkService = IoC.Get<IPlurkService>();
+                        var navigationService = IoC.Get<INavigationService>();
+                        if (plurkService != null && navigationService != null)
+                        {
+                            plurkService.FlushConnection();
+                            navigationService.GotoLoginPage();
+                        }
+                    });
+                    return Observable.Empty<TSource>();
+                default:
+                    return Observable.Throw<TSource>(e);
+            }
         }
 
         private static IObservable<TSource> TimeoutHandling<TSource>(PlurkExceptionArguments<TSource> args)
@@ -120,7 +148,7 @@ namespace ChronoPlurk.Helpers
             {
                 var plurkException = (PlurkErrorException)ex;
                 error = plurkException.Error;
-                if (error == PlurkError.UnknownError && plurkException.RawError.Contains("invalid access token"))
+                if (error == PlurkError.InvalidAccessToken)
                 {
                     error = PlurkError.RequiresLogin;
                 }
@@ -166,16 +194,18 @@ namespace ChronoPlurk.Helpers
 #endif
             }
 
-            Execute.OnUIThread(() => 
+            Execute.OnUIThread(() =>
             {
-                if (args.Page == Application.Current.GetActivePage())
+                var activePage = Application.Current.GetActivePage();
+                var isRequiresLogin = error == PlurkError.RequiresLogin;
+                if (args.Page == activePage || isRequiresLogin)
                 {
                     MessageBox.Show(errorMessage, "Error", MessageBoxButton.OK);
                     if (args.OnError != null)
                     {
                         args.OnError(error);
                     }
-                    if (error == PlurkError.RequiresLogin)
+                    if (isRequiresLogin)
                     {
                         var plurkService = IoC.Get<IPlurkService>();
                         var navigationService = IoC.Get<INavigationService>();
