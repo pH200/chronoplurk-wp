@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Reactive.Linq;
+using System.Windows;
+using Caliburn.Micro;
 
 namespace ChronoPlurk.Helpers
 {
@@ -11,7 +13,11 @@ namespace ChronoPlurk.Helpers
             return source.Catch<TSource, TException>(e =>
             {
 #if DEBUG
-                return Observable.Throw<TSource>(e);
+                Execute.OnUIThread(() => MessageBox.Show(
+                    source.ToString() + Environment.NewLine + e.ToString(),
+                    "DEBUG",
+                    MessageBoxButton.OK));
+                return Observable.Empty<TSource>();
 #else
                 return Observable.Empty<TSource>();
 #endif

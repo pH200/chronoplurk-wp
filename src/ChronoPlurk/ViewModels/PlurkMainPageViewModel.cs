@@ -146,6 +146,16 @@ namespace ChronoPlurk.ViewModels
         private void RefreshAll()
         {
             RefreshAll(Items);
+            RefreshUnreadCount();
+        }
+
+        private void RefreshUnreadCount()
+        {
+            var unreadViewModel = Items.OfType<UnreadPlurksViewModel>().FirstOrDefault();
+            if (unreadViewModel != null)
+            {
+                unreadViewModel.RequestUnreadCount();
+            }
         }
 
         private void MarkAllAsRead(ITimelineViewModel item)

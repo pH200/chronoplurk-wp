@@ -89,10 +89,10 @@ namespace ChronoPlurk.ViewModels.Main
             {
                 _getUnreadCountDisposable.Dispose();
             }
-            this.DisplayName = AppResources.filterUnread;
             var getUnreadCount = PollingCommand.GetUnreadCount()
                 .Client(PlurkService.Client)
                 .ToObservable()
+                .Retry(DefaultConfiguration.RetryCount)
                 .IgnoreAllExceptions()
                 .ObserveOnDispatcher();
             _getUnreadCountDisposable = getUnreadCount.Subscribe(count =>
