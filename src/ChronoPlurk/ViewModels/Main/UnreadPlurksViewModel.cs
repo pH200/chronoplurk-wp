@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Reactive.Linq;
 using Caliburn.Micro;
+using ChronoPlurk.Helpers;
 using ChronoPlurk.Resources.i18n;
 using ChronoPlurk.Services;
 using Plurto.Commands;
@@ -79,19 +80,35 @@ namespace ChronoPlurk.ViewModels.Main
             }
         }
 
-        public void RefreshSync()
+        /// <summary>
+        /// Request new unread count from Plurk. Refresh automatically. Observes on dispatcher.
+        /// </summary>
+        public void RequestUnreadCount(Action<UnreadCount> onNext = null)
         {
             if (_getUnreadCountDisposable != null)
             {
                 _getUnreadCountDisposable.Dispose();
             }
             this.DisplayName = AppResources.filterUnread;
-            var getUnreadCount = PollingCommand.GetUnreadCount().Client(PlurkService.Client).ToObservable();
-            _getUnreadCountDisposable = getUnreadCount.ObserveOnDispatcher().Subscribe(count =>
+            var getUnreadCount = PollingCommand.GetUnreadCount()
+                .Client(PlurkService.Client)
+                .ToObservable()
+                .IgnoreAllExceptions()
+                .ObserveOnDispatcher();
+            _getUnreadCountDisposable = getUnreadCount.Subscribe(count =>
             {
                 UnreadCount = count.All;
                 RefreshUnreadCount();
+                if (onNext != null)
+                {
+                    onNext(count);
+                }
             });
+        }
+
+        public void RefreshSync()
+        {
+            RequestUnreadCount();
 
             var getPlurks = TimelineCommand.GetUnreadPlurks().Client(PlurkService.Client).ToObservable();
             RequestMoreHandler = plurks =>
