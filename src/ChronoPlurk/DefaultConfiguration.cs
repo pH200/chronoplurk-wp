@@ -22,6 +22,10 @@ namespace ChronoPlurk
 
         public static int RetryCount = 3;
 
+        public static int ResizeWidth = 800; // This is the maximum value for uploaded photos on Plurk.
+        
+        public static int ResizeHeight = 800;
+
         public const string VersionText = "1.6.3";
 
         /// <summary>

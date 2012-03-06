@@ -4,10 +4,12 @@ using System.IO;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Windows;
+using System.Windows.Media.Imaging;
 using Caliburn.Micro;
 using ChronoPlurk.Helpers;
 using ChronoPlurk.Resources.i18n;
 using ChronoPlurk.Services;
+using Microsoft.Phone;
 using Microsoft.Phone.Tasks;
 using NotifyPropertyWeaver;
 using Plurto.Commands;
@@ -227,34 +229,45 @@ namespace ChronoPlurk.ViewModels.Compose
             {
                 _uploadHandler.Dispose();
             }
-            var photoStream = pictureStream;
             var shortFileName = filename.Split(new[] { '\\', '/' }).LastOrDefault();
             if (shortFileName != null)
             {
-                var upload = new UploadFile(photoStream, shortFileName);
-                SetUploadFileContentType(upload, shortFileName);
-                var uploadCommand = TimelineCommand.UploadPicture(upload)
-                    .Client(PlurkService.Client)
-                    .ToObservable()
-                    .PlurkException(expectedTimeout: DefaultConfiguration.TimeoutUpload);
-
-                ProgressService.Show(AppResources.msgUploadingPhoto);
-
-                System.Action complete = () =>
+                using (var photoStream = pictureStream)
                 {
-                    ProgressService.Hide();
-                    if (photoStream != null)
-                    {
-                        photoStream.Dispose();
-                    }
-                };
+                    ProgressService.Show(AppResources.msgUploadingPhoto);
 
-                _uploadHandler =
-                    uploadCommand.ObserveOnDispatcher().Subscribe(
-                        picture =>
+                    // Resizing
+                    var bitmap = PictureDecoder.DecodeJpeg(photoStream,
+                                                           DefaultConfiguration.ResizeWidth,
+                                                           DefaultConfiguration.ResizeHeight);
+                    var resizedPhotoStream = new MemoryStream();
+                    bitmap.SaveJpeg(resizedPhotoStream, bitmap.PixelWidth, bitmap.PixelHeight, 0, 80);
+                    resizedPhotoStream.Seek(0, SeekOrigin.Begin);
+
+                    // Uploading
+                    var upload = new UploadFile(resizedPhotoStream, shortFileName);
+                    SetUploadFileContentType(upload, shortFileName);
+                    var uploadCommand = TimelineCommand.UploadPicture(upload)
+                        .Client(PlurkService.Client)
+                        .ToObservable()
+                        .PlurkException(expectedTimeout: DefaultConfiguration.TimeoutUpload);
+
+                    System.Action complete = () =>
+                    {
+                        ProgressService.Hide();
+                        if (resizedPhotoStream != null)
+                        {
+                            resizedPhotoStream.Dispose();
+                        }
+                    };
+
+                    _uploadHandler = uploadCommand
+                        .ObserveOnDispatcher()
+                        .Subscribe(picture =>
                         {
                             PostContent += picture.Full + Environment.NewLine;
                         }, complete);
+                }
             }
         }
 
