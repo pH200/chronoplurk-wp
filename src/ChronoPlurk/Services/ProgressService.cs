@@ -18,11 +18,15 @@ namespace ChronoPlurk.Services
     public class ProgressService : IProgressService
     {
         private PhoneApplicationPage _page;
-        private ProgressIndicator _progressIndicator = new ProgressIndicator() {IsVisible = true};
+
+        private readonly ProgressIndicator _progressIndicator = new ProgressIndicator()
+        {
+            IsVisible = true
+        };
 
         public void Show(string message = null)
         {
-            var activePage = GetActivePage();
+            var activePage = Application.Current.GetActivePage();
 
             if (activePage != null)
             {
@@ -42,20 +46,6 @@ namespace ChronoPlurk.Services
         {
             _progressIndicator.IsIndeterminate = false;
             _progressIndicator.Text = null;
-        }
-
-        private static PhoneApplicationPage GetActivePage()
-        {
-            var currentApplication = Application.Current;
-            if (currentApplication != null)
-            {
-                var rootVisual = currentApplication.RootVisual as PhoneApplicationFrame;
-                if (rootVisual != null)
-                {
-                    return rootVisual.Content as PhoneApplicationPage;
-                }
-            }
-            return null;
         }
     }
 }

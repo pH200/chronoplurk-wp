@@ -7,8 +7,10 @@ using Caliburn.Micro;
 using ChronoPlurk.Resources.i18n;
 using ChronoPlurk.Services;
 using ChronoPlurk.Views;
+using Microsoft.Phone.Controls;
 using Plurto.Core;
 using Plurto.Exceptions;
+using Action = System.Action;
 
 namespace ChronoPlurk.Helpers
 {
@@ -17,31 +19,59 @@ namespace ChronoPlurk.Helpers
         public static IObservable<TSource> PlurkException<TSource>
             (this IObservable<TSource> source, Action<PlurkError> onError = null, IProgressService progressService = null)
         {
-            return source.Catch<TSource, Exception>(ex =>
+            return source.PlurkException(Application.Current.GetActivePage(), onError, progressService);
+        }
+
+        public static IObservable<TSource> PlurkException<TSource>(
+            this IObservable<TSource> source,
+            PhoneApplicationPage page,
+            Action<PlurkError> onError = null,
+            IProgressService progressService = null)
+        {
+            Action hideProgress = () =>
             {
                 if (progressService != null)
                 {
-                    Execute.OnUIThread(progressService.Hide);
+                    Execute.OnUIThread(() =>
+                    {
+                        var currentPage = Application.Current.GetActivePage();
+                        if (currentPage == page)
+                        {
+                            progressService.Hide();
+                        }
+                    });
                 }
-                if (ex is TimeoutException)
+            };
+            return source
+                .Catch<TSource, TimeoutException>(ex =>
                 {
-                    return TimeoutHandling(source, onError, progressService);
-                }
-                PlurkExceptionHandling(ex, onError);
-                return Observable.Empty<TSource>();
-            });
+                    hideProgress();
+                    return TimeoutHandling(source, page, onError, progressService);
+                })
+                .Retry(DefaultConfiguration.RetryCount)
+                .Catch<TSource, Exception>(ex =>
+                {
+                    hideProgress();
+                    return PlurkExceptionHandling<TSource>(ex, page, onError);
+                });
         }
 
-        private static IObservable<TSource> TimeoutHandling<TSource>
-            (IObservable<TSource> source, Action<PlurkError> onError, IProgressService progressService)
+        private static IObservable<TSource> TimeoutHandling<TSource>(
+            IObservable<TSource> source,
+            PhoneApplicationPage page,
+            Action<PlurkError> onError,
+            IProgressService progressService)
         {
             var timeoutErrorMessage = AppResources.timeoutMessage.Replace("\\n", Environment.NewLine);
             return Observable.Start(() =>
             {
-                switch (MessageBox.Show(timeoutErrorMessage, "Timeout", MessageBoxButton.OKCancel))
+                if (page == Application.Current.GetActivePage())
                 {
-                    case MessageBoxResult.OK:
-                        return source.PlurkException(onError, progressService);
+                    switch (MessageBox.Show(timeoutErrorMessage, "Timeout", MessageBoxButton.OKCancel))
+                    {
+                        case MessageBoxResult.OK:
+                            return source.PlurkException(onError, progressService);
+                    }
                 }
                 if (onError != null)
                 {
@@ -51,7 +81,10 @@ namespace ChronoPlurk.Helpers
             }, DispatcherScheduler.Instance).Merge();
         }
 
-        public static void PlurkExceptionHandling(Exception ex, Action<PlurkError> onError)
+        public static IObservable<TSource> PlurkExceptionHandling<TSource>(
+            Exception ex,
+            PhoneApplicationPage page,
+            Action<PlurkError> onError)
         {
             string errorMessage;
             var error = PlurkError.UnknownError;
@@ -64,6 +97,11 @@ namespace ChronoPlurk.Helpers
                     error = PlurkError.RequiresLogin;
                 }
                 errorMessage = ConvertPlurkErrorMessage(error);
+                if (error == PlurkError.UnknownError)
+                {
+                    errorMessage += Environment.NewLine + Environment.NewLine +
+                                    plurkException.RawError;
+                }
             }
             else if (ex is RequestFailException)
             {
@@ -87,28 +125,32 @@ namespace ChronoPlurk.Helpers
                 }
 #if DEBUG
                 System.Diagnostics.Debug.WriteLine(ex.ToString());
-                throw ex;
+                return Observable.Throw<TSource>(ex);
 #endif
             }
 
             Execute.OnUIThread(() => 
             {
-                MessageBox.Show(errorMessage, "Error", MessageBoxButton.OK);
-                if (onError != null)
+                if (page == Application.Current.GetActivePage())
                 {
-                    onError(error);
-                }
-                if (error == PlurkError.RequiresLogin)
-                {
-                    var plurkService = IoC.Get<IPlurkService>();
-                    var navigationService = IoC.Get<INavigationService>();
-                    if (plurkService != null && navigationService != null)
+                    MessageBox.Show(errorMessage, "Error", MessageBoxButton.OK);
+                    if (onError != null)
                     {
-                        plurkService.FlushConnection();
-                        navigationService.GotoLoginPage();
+                        onError(error);
+                    }
+                    if (error == PlurkError.RequiresLogin)
+                    {
+                        var plurkService = IoC.Get<IPlurkService>();
+                        var navigationService = IoC.Get<INavigationService>();
+                        if (plurkService != null && navigationService != null)
+                        {
+                            plurkService.FlushConnection();
+                            navigationService.GotoLoginPage();
+                        }
                     }
                 }
             });
+            return Observable.Empty<TSource>();
         }
 
         private static string ConvertPlurkErrorMessage(PlurkError plurkError)

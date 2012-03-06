@@ -13,11 +13,14 @@ namespace ChronoPlurk
 
         public static string OAuthConsumerSecret;
 
-        public static TimeSpan TimeoutTimeline = TimeSpan.FromSeconds(15);
+        // Network.http.keep-alive
+        public static TimeSpan TimeoutTimeline = TimeSpan.FromSeconds(115);
 
-        public static TimeSpan TimeoutCompose = TimeSpan.FromSeconds(20);
+        public static TimeSpan TimeoutCompose = TimeSpan.FromSeconds(115);
 
-        public static TimeSpan TimeoutUpload = TimeSpan.FromSeconds(60);
+        public static TimeSpan TimeoutUpload = TimeSpan.FromSeconds(115);
+
+        public static int RetryCount = 3;
 
         public const string VersionText = "1.6.3";
 

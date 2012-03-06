@@ -131,6 +131,7 @@
     <Compile Include="Core\SpecialFrameAdapter.cs" />
     <Compile Include="DefaultConfiguration.conf.cs" />
     <Compile Include="DefaultConfiguration.cs" />
+    <Compile Include="Helpers\ApplicationExtensions.cs" />
     <Compile Include="ViewModels\Compose\ComposeViewModelBase.cs" />
     <Compile Include="ViewModels\EmoticonListViewModel.cs" />
     <Compile Include="Framework\PivotFix.cs" />
