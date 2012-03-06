@@ -235,8 +235,7 @@ namespace ChronoPlurk.ViewModels.Compose
                 var uploadCommand = TimelineCommand.UploadPicture(upload)
                     .Client(PlurkService.Client)
                     .ToObservable()
-                    .Timeout(DefaultConfiguration.TimeoutUpload)
-                    .PlurkException();
+                    .PlurkException(expectedTimeout: DefaultConfiguration.TimeoutUpload);
 
                 ProgressService.Show(AppResources.msgUploadingPhoto);
 

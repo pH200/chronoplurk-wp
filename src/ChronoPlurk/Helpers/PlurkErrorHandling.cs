@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Net;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using System.Windows;
@@ -14,68 +15,96 @@ using Action = System.Action;
 
 namespace ChronoPlurk.Helpers
 {
+    public class PlurkExceptionArguments
+    {
+        public static PlurkExceptionArguments<TSource> Create<TSource>(
+            IObservable<TSource> source,
+            Action<PlurkError> onError,
+            IProgressService progressService,
+            PhoneApplicationPage page,
+            TimeSpan? expectedTimeout)
+        {
+            return new PlurkExceptionArguments<TSource>()
+            {
+                Source = source,
+                OnError = onError,
+                ProgressService = progressService,
+                Page = page,
+                ExpectedTimeout = expectedTimeout,
+            };
+        }
+    }
+
+    public sealed class PlurkExceptionArguments<T> : PlurkExceptionArguments
+    {
+        public IObservable<T> Source { get; set; }
+
+        public Action<PlurkError> OnError { get; set; }
+
+        public IProgressService ProgressService { get; set; }
+
+        public PhoneApplicationPage Page { get; set; }
+
+        public TimeSpan? ExpectedTimeout { get; set; }
+    }
+
     public static class PlurkErrorHandling
     {
-        public static IObservable<TSource> PlurkException<TSource>
-            (this IObservable<TSource> source, Action<PlurkError> onError = null, IProgressService progressService = null)
-        {
-            return source.PlurkException(Application.Current.GetActivePage(), onError, progressService);
-        }
-
         public static IObservable<TSource> PlurkException<TSource>(
             this IObservable<TSource> source,
-            PhoneApplicationPage page,
             Action<PlurkError> onError = null,
-            IProgressService progressService = null)
+            IProgressService progressService = null,
+            TimeSpan? expectedTimeout = null)
+        {
+            var args = PlurkExceptionArguments.Create(source,
+                                                      onError,
+                                                      progressService,
+                                                      Application.Current.GetActivePage(),
+                                                      expectedTimeout);
+            return PlurkException(args);
+        }
+
+        public static IObservable<TSource> PlurkException<TSource>(PlurkExceptionArguments<TSource> args)
         {
             Action hideProgress = () =>
             {
-                if (progressService != null)
+                if (args.ProgressService != null)
                 {
                     Execute.OnUIThread(() =>
                     {
                         var currentPage = Application.Current.GetActivePage();
-                        if (currentPage == page)
+                        if (currentPage == args.Page)
                         {
-                            progressService.Hide();
+                            args.ProgressService.Hide();
                         }
                     });
                 }
             };
-            return source
-                .Catch<TSource, TimeoutException>(ex =>
-                {
-                    hideProgress();
-                    return TimeoutHandling(source, page, onError, progressService);
-                })
+            return args.Source
                 .Retry(DefaultConfiguration.RetryCount)
                 .Catch<TSource, Exception>(ex =>
                 {
                     hideProgress();
-                    return PlurkExceptionHandling<TSource>(ex, page, onError);
+                    return PlurkExceptionHandling(ex, args);
                 });
         }
 
-        private static IObservable<TSource> TimeoutHandling<TSource>(
-            IObservable<TSource> source,
-            PhoneApplicationPage page,
-            Action<PlurkError> onError,
-            IProgressService progressService)
+        private static IObservable<TSource> TimeoutHandling<TSource>(PlurkExceptionArguments<TSource> args)
         {
             var timeoutErrorMessage = AppResources.timeoutMessage.Replace("\\n", Environment.NewLine);
             return Observable.Start(() =>
             {
-                if (page == Application.Current.GetActivePage())
+                if (args.Page == Application.Current.GetActivePage())
                 {
                     switch (MessageBox.Show(timeoutErrorMessage, "Timeout", MessageBoxButton.OKCancel))
                     {
                         case MessageBoxResult.OK:
-                            return source.PlurkException(onError, progressService);
+                            return PlurkException(args);
                     }
                 }
-                if (onError != null)
+                if (args.OnError != null)
                 {
-                    onError(PlurkError.UnknownError);
+                    args.OnError(PlurkError.UnknownError);
                 }
                 return Observable.Empty<TSource>();
             }, DispatcherScheduler.Instance).Merge();
@@ -83,8 +112,7 @@ namespace ChronoPlurk.Helpers
 
         public static IObservable<TSource> PlurkExceptionHandling<TSource>(
             Exception ex,
-            PhoneApplicationPage page,
-            Action<PlurkError> onError)
+            PlurkExceptionArguments<TSource> args)
         {
             string errorMessage;
             var error = PlurkError.UnknownError;
@@ -105,7 +133,16 @@ namespace ChronoPlurk.Helpers
             }
             else if (ex is RequestFailException)
             {
-                errorMessage = AppResources.requestFailedMessage.Replace("\\n", Environment.NewLine);
+                var rException = (RequestFailException)ex;
+                if (rException.WebException != null &&
+                    rException.WebException.Status == WebExceptionStatus.Timeout)
+                {
+                    return TimeoutHandling(args);
+                }
+                else
+                {
+                    errorMessage = AppResources.requestFailedMessage.Replace("\\n", Environment.NewLine);
+                }
             }
             else if (ex is UnauthorizedException)
             {
@@ -131,12 +168,12 @@ namespace ChronoPlurk.Helpers
 
             Execute.OnUIThread(() => 
             {
-                if (page == Application.Current.GetActivePage())
+                if (args.Page == Application.Current.GetActivePage())
                 {
                     MessageBox.Show(errorMessage, "Error", MessageBoxButton.OK);
-                    if (onError != null)
+                    if (args.OnError != null)
                     {
-                        onError(error);
+                        args.OnError(error);
                     }
                     if (error == PlurkError.RequiresLogin)
                     {

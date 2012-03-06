@@ -55,8 +55,7 @@ namespace ChronoPlurk.ViewModels
                         ResponsesCommand.ResponseAdd(GetPlurkId(), PostContent, Plurto.Core.Qualifier.FreestyleColon)
                             .Client(PlurkService.Client)
                             .ToObservable()
-                            .Timeout(DefaultConfiguration.TimeoutCompose)
-                            .PlurkException(error => ProgressService.Hide());
+                            .PlurkException(expectedTimeout: DefaultConfiguration.TimeoutCompose);
 
                     _composeHandler = command.ObserveOnDispatcher().Subscribe(plurk =>
                     {

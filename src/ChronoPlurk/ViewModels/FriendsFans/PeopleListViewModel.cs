@@ -159,11 +159,11 @@ namespace ChronoPlurk.ViewModels.FriendsFans
             }
 
             _requestHandler = observable
-                .Timeout(DefaultConfiguration.TimeoutTimeline)
                 .PlurkException(error =>
                 {
                     IsHasMore = tempIsHasMore;
-                }).Subscribe(users =>
+                }, expectedTimeout: DefaultConfiguration.TimeoutTimeline)
+                .Subscribe(users =>
                 {
                     var result = users;
                     if (result.IsNullOrEmpty())

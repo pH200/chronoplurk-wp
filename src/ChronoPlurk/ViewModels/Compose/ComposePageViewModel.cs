@@ -102,10 +102,10 @@ namespace ChronoPlurk.ViewModels.Compose
                 var lang = LanguageHelper.CultureInfoToPlurkLang(LocalizedStrings.Culture);
 
                 var command =
-                    TimelineCommand.PlurkAdd(PostContent, Qualifier.Qualifier, limitedTo, lang:lang).
-                        Client(PlurkService.Client).ToObservable().
-                        Timeout(DefaultConfiguration.TimeoutCompose).
-                        PlurkException(error => { });
+                    TimelineCommand.PlurkAdd(PostContent, Qualifier.Qualifier, limitedTo, lang: lang)
+                        .Client(PlurkService.Client)
+                        .ToObservable()
+                        .PlurkException(expectedTimeout: DefaultConfiguration.TimeoutCompose);
 
                 _composeHandler = command.ObserveOnDispatcher().Subscribe(
                     plurk =>
