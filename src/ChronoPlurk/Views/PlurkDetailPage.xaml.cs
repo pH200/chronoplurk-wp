@@ -135,12 +135,14 @@ namespace ChronoPlurk.Views
 
         public void ReplyRowAuto()
         {
+            PlurkDetailViewModel.Visibility = Visibility.Visible;
             ReplyRow.Height = GridLength.Auto;
             DetailRow.Height = new GridLength(1.0, GridUnitType.Star);
         }
 
         public void ReplyRowMax()
         {
+            PlurkDetailViewModel.Visibility = Visibility.Collapsed;
             DetailRow.Height = new GridLength(0);
             ReplyRow.Height = new GridLength(1.0, GridUnitType.Star);
         }

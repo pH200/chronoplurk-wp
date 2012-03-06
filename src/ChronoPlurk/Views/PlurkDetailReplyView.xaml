@@ -57,8 +57,7 @@
                 <controls:Pivot.HeaderTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding DisplayName}"
-                                       Margin="-9,12,0,0"
-                                       Height="{StaticResource PhoneFontSizeMedium}"
+                                       Margin="-9,16,0,0"
                                        FontSize="{StaticResource PhoneFontSizeNormal}" />
                     </DataTemplate>
                 </controls:Pivot.HeaderTemplate>
