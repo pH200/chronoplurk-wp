@@ -26,6 +26,8 @@ namespace ChronoPlurk
         
         public static int ResizeHeight = 800;
 
+        public static int CachedItemsCount = 10;
+
         public const string VersionText = "1.6.3";
 
         /// <summary>

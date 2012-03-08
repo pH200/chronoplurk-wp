@@ -20,6 +20,8 @@ namespace ChronoPlurk.ViewModels.Main
             : base(navigationService, progressService, plurkService, plurkContentStorageService)
         {
             this.DisplayName = AppResources.filterTimeline;
+            this.CachingId = "all";
+            LoadCachedItems();
             IsHasMoreHandler = plurks => { return plurks.Plurks != null && plurks.Plurks.Count > 0; };
         }
 

@@ -21,6 +21,8 @@ namespace ChronoPlurk.ViewModels.Main
             : base(navigationService, progressService, plurkService, plurkContentStorageService)
         {
             this.DisplayName = AppResources.filterPrivate;
+            this.CachingId = "private";
+            // LoadCachedItems();
             IsHasMoreHandler = plurks => { return plurks.Plurks != null && plurks.Plurks.Count > 0; };
         }
 

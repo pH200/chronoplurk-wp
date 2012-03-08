@@ -30,6 +30,7 @@ namespace ChronoPlurk.ViewModels
         private DateTime _timeBase = DateTime.UtcNow;
         private TSource _lastResult;
         private WeakReference _scrollCache;
+        private bool _isCachedItemsLoaded;
         #endregion
 
         #region Services
@@ -88,6 +89,8 @@ namespace ChronoPlurk.ViewModels
 
         public bool IgnoreSelection { get; set; }
 
+        public string CachingId { get; set; }
+
         protected TimelineBaseViewModel(
             INavigationService navigationService,
             IProgressService progressService,
@@ -102,6 +105,24 @@ namespace ChronoPlurk.ViewModels
             ProgressMessage = AppResources.msgLoading;
 
             Items = new AdditiveBindableCollection<PlurkItemViewModel>();
+            LoadCachedItems();
+        }
+
+        protected void LoadCachedItems()
+        {
+            if (Items.Count == 0)
+            {
+                var filename = GetSerializationFilename();
+                if (filename != null)
+                {
+                    var list = IsoSettings.DeserializeLoad(filename) as List<PlurkItemViewModel>;
+                    if (list != null)
+                    {
+                        Items.AddRange(list);
+                        _isCachedItemsLoaded = true;
+                    }
+                }
+            }
         }
 
         protected override void OnViewLoaded(object view)
@@ -112,6 +133,41 @@ namespace ChronoPlurk.ViewModels
                 service.Add(this);
             }
             base.OnViewLoaded(view);
+        }
+
+        protected override void OnDeactivate(bool close)
+        {
+            if (Items.Count > 0)
+            {
+                var filename = GetSerializationFilename();
+                if (filename != null)
+                {
+                    ThreadEx.OnThreadPool(() =>
+                    {
+                        var list = Items.Take(DefaultConfiguration.CachedItemsCount).ToList();
+                        IsoSettings.SerializeStore(list, filename);
+                    });
+                }
+            }
+
+            base.OnDeactivate(close);
+        }
+
+        /// <summary>
+        /// Get filename for serialized binary's filename. Null return is possible.
+        /// </summary>
+        /// <returns>Filename or null</returns>
+        public string GetSerializationFilename()
+        {
+            var userId = PlurkService.UserId;
+            if (CachingId != null && userId > 0)
+            {
+                return string.Format("timeline_cache_{0}_{1}.bin", userId, CachingId);
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public virtual void OnItemTap(object dataContext)
@@ -170,7 +226,7 @@ namespace ChronoPlurk.ViewModels
             Message = string.Empty;
             var tempIsHasMore = IsHasMore;
             IsHasMore = false;
-            if (clear)
+            if (clear && !_isCachedItemsLoaded)
             {
                 Clear();
             }
@@ -194,33 +250,33 @@ namespace ChronoPlurk.ViewModels
                     _lastResult = plurks;
 
                     var result = plurks.ToUserPlurks();
-                    if (result != null)
-                    {
-                        result = result.Where(p => Items.All(lastPlurk =>
-                        {
-                            if (IsCompareIdInsteadOfPlurkId && p.Plurk.Id == 0)
-                            {
-                                return true;
-                            }
-                            var compareId = IsCompareIdInsteadOfPlurkId
-                                                ? p.Plurk.Id
-                                                : p.Plurk.PlurkId;
-                            return lastPlurk.PlurkId != compareId;
-                        }));
-                    }
 
                     if (result.IsNullOrEmpty())
                     {
                         if (clear)
                         {
-                            Execute.OnUIThread(() => Message = AppResources.emptyTimeline);
+                            if (_isCachedItemsLoaded)
+                            {
+                                Items.Clear();
+                                _isCachedItemsLoaded = false;
+                            }
+                            Message = AppResources.emptyTimeline;
                         }
                         IsHasMore = false;
                     }
                     else
                     {
                         Execute.OnUIThread(() => ProgressService.Show(AppResources.msgUpdatingTimeline));
-                        Items.AddRange(MapUserPlurkToPlurkItemViewModel(result, plurks));
+                        var items = MapUserPlurkToPlurkItemViewModel(result, plurks);
+                        if (_isCachedItemsLoaded)
+                        {
+                            Items = new AdditiveBindableCollection<PlurkItemViewModel>(items);
+                            _isCachedItemsLoaded = false;
+                        }
+                        else
+                        {
+                            Items.AddRange(items);
+                        }
 
                         if (IsHasMoreHandler != null)
                         {
@@ -257,7 +313,7 @@ namespace ChronoPlurk.ViewModels
                 PostTimeFromNow = _timeBase - plurk.Plurk.PostDate,
                 ContentHtml = plurk.Plurk.Content,
                 ContentRaw = plurk.Plurk.ContentRaw,
-                AvatarView = MapAvatarToUri(plurk.User.AvatarBig),
+                AvatarView = MapAvatarToUri(plurk.User.AvatarBig).ToString(),
                 IsFavorite = plurk.Plurk.Favorite,
                 QualifierEnum = plurk.Plurk.Qualifier,
                 ResponseCount = plurk.Plurk.ResponseCount,

@@ -132,6 +132,7 @@
     <Compile Include="DefaultConfiguration.conf.cs" />
     <Compile Include="DefaultConfiguration.cs" />
     <Compile Include="Helpers\ApplicationExtensions.cs" />
+    <Compile Include="Helpers\Coroutine.cs" />
     <Compile Include="Helpers\IgnoreExceptions.cs" />
     <Compile Include="ViewModels\Compose\ComposeViewModelBase.cs" />
     <Compile Include="ViewModels\EmoticonListViewModel.cs" />
