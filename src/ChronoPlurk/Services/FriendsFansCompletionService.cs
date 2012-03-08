@@ -55,7 +55,10 @@ namespace ChronoPlurk.Services
 
         public IConnectableObservable<FriendsFansCompletion> DownloadAsync()
         {
-            var observable = FriendsFansCommand.GetCompletion().Client(PlurkService.Client).ToObservable();
+            var observable = FriendsFansCommand.GetCompletion()
+                .Client(PlurkService.Client)
+                .ToObservable()
+                .PlurkException();
             var connectable = observable.Publish();
             connectable.Subscribe(completion =>
             {
