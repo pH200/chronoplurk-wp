@@ -28,7 +28,7 @@ namespace ChronoPlurk
 
         public static int CachedItemsCount = 10;
 
-        public const string VersionText = "1.6.4";
+        public const string VersionText = "1.7.4";
 
         /// <summary>
         /// Initialize connection settings.
