@@ -68,8 +68,8 @@
                                 <DataTemplate>
                                     <Border imgloader:GifLowProfileImageLoader.UriSource="{Binding Value}"
                                                     imgloader:GifLowProfileImageLoader.Stretch="None"
-                                                    Width="50"
-                                                    Height="50"
+                                                    Width="60"
+                                                    Height="60"
                                                     Background="{StaticResource PhoneChromeBrush}"
                                                     cal:Message.Attach="[Event Tap] = [Action OnEmoticonTapped($dataContext)]"
                                                     Margin="0,0,12,12"/>
