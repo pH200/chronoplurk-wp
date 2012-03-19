@@ -260,7 +260,7 @@ namespace ChronoPlurk.ViewModels
 
         private void ReloadAppBar()
         {
-            ReloadAppBar(GetView(null) as PlurkDetailPage);
+            ReloadAppBar(GetView() as PlurkDetailPage);
         }
 
         public void RefreshAppBar()

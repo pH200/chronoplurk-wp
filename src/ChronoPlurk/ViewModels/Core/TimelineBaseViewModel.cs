@@ -390,7 +390,7 @@ namespace ChronoPlurk.ViewModels
                 }
             }
             
-            var view = GetView(null) as UIElement;
+            var view = GetView() as UIElement;
             if (view == null)
             {
                 return null;
