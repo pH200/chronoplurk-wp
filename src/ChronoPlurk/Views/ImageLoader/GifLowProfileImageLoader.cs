@@ -225,8 +225,9 @@ namespace ChronoPlurk.Views.ImageLoader
                         var response = responseState.WebRequest.EndGetResponse(pendingResponse);
                         pendingCompletions.Enqueue(new PendingCompletion(responseState.Image, responseState.Uri, response.GetResponseStream(), false));
                     }
-                    catch (WebException)
+                    catch
                     {
+                        // ArgumentException is thrown when url is not legal.
                         // Ignore web exceptions (ex: not found)
                     }
                     // Yield to UI thread
