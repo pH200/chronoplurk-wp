@@ -333,7 +333,7 @@ namespace ChronoPlurk.ViewModels
                 PostTimeFromNow = _timeBase - plurk.Plurk.PostDate,
                 ContentHtml = plurk.Plurk.Content,
                 ContentRaw = plurk.Plurk.ContentRaw,
-                AvatarView = MapAvatarToUri(plurk.User.AvatarBig).ToString(),
+                AvatarView = AvatarHelper.MapAvatar(plurk.User),
                 IsFavorite = plurk.Plurk.Favorite,
                 QualifierEnum = plurk.Plurk.Qualifier,
                 ResponseCount = plurk.Plurk.ResponseCount,
@@ -345,18 +345,6 @@ namespace ChronoPlurk.ViewModels
                 Replurked = plurk.Plurk.Replurked,
                 ReplurkerName = getReplurkerName(plurk),
             });
-        }
-
-        private static Uri MapAvatarToUri(string avatar)
-        {
-            if (avatar.Contains("www.plurk.com/static/default_"))
-            {
-                return new Uri("Resources/Avatar/default_big.jpg", UriKind.Relative);
-            }
-            else
-            {
-                return new Uri(avatar, UriKind.Absolute);
-            }
         }
 
         public void CancelRequest()

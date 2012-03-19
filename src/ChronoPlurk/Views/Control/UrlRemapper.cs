@@ -35,6 +35,22 @@ namespace ChronoPlurk.Views.PlurkControls
                         return UriFactory(u, UriKind.Absolute);
                     }
                 }),
+            new PredicateMapper(
+                predicate: Plurto.Core.Base36.IsPlurkUrl,
+                mapper: u =>
+                {
+                    const string baseUrl = "/Views/PlurkDetailPage.xaml?PlurkId=";
+                    long id;
+                    if (Plurto.Core.Base36.TryDecodeUrl(u, out id))
+                    {
+                        var newUrl = baseUrl + id;
+                        return UriFactory(newUrl, UriKind.Relative);
+                    }
+                    else
+                    {
+                        return UriFactory(u, UriKind.Absolute);
+                    }
+                }),
         };
 
         public static Uri RemapUrl(string url)

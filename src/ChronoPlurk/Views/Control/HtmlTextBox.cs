@@ -299,10 +299,14 @@ namespace ChronoPlurk.Views.PlurkControls
         private static InlineNode CreateHyperlinkInlineNode(HtmlNode node)
         {
             var href = node.Attributes.FirstOrDefault(attr => attr.Name == "href");
-            var hyperlink = new Hyperlink() { TargetName = "_blank", Foreground = PlurkResources.PhoneAccentBrush };
+            var hyperlink = new Hyperlink() { Foreground = PlurkResources.PhoneAccentBrush };
             if (href != null)
             {
                 hyperlink.NavigateUri = UrlRemapper.RemapUrl(href.Value);
+                if (hyperlink.NavigateUri.IsAbsoluteUri)
+                {
+                    hyperlink.TargetName = "_blank";
+                }
             }
             return new InlineNode(node, hyperlink);
         }

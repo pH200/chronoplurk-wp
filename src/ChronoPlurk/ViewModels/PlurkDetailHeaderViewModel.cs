@@ -7,6 +7,7 @@ using ChronoPlurk.Helpers;
 using ChronoPlurk.Resources.i18n;
 using ChronoPlurk.Services;
 using NotifyPropertyWeaver;
+using Plurto.Commands;
 using Plurto.Core;
 
 namespace ChronoPlurk.ViewModels
@@ -17,6 +18,9 @@ namespace ChronoPlurk.ViewModels
         private readonly IPlurkContentStorageService _plurkContentStorageService;
         private readonly INavigationService _navigationService;
         private readonly IPlurkService _plurkService;
+        private readonly IProgressService _progressService;
+
+        private IDisposable _getDisposable;
 
         #region Public Properties
 
@@ -152,11 +156,13 @@ namespace ChronoPlurk.ViewModels
         public PlurkDetailHeaderViewModel(
             IPlurkContentStorageService plurkContentStorageService,
             INavigationService navigationService,
-            IPlurkService plurkService)
+            IPlurkService plurkService,
+            IProgressService progressService)
         {
             _plurkContentStorageService = plurkContentStorageService;
             _navigationService = navigationService;
             _plurkService = plurkService;
+            _progressService = progressService;
         }
 
         protected override void OnActivate()
@@ -168,6 +174,11 @@ namespace ChronoPlurk.ViewModels
             }
             _plurkContentStorageService.Remove(PlurkId);
 
+            if (Username == null) // Uninitialized
+            {
+                Initialize(PlurkId);
+            }
+
             base.OnActivate();
         }
 
@@ -177,6 +188,35 @@ namespace ChronoPlurk.ViewModels
             {
                 _navigationService.GotoProfilePage(UserId, Username, AvatarView);
             }
+        }
+
+        private void Initialize(long id)
+        {
+            if (_getDisposable != null)
+            {
+                _getDisposable.Dispose();
+            }
+
+            _progressService.Show(AppResources.msgLoading);
+
+            var command = TimelineCommand.GetPlurk(id)
+                .Client(_plurkService.Client)
+                .ToObservable()
+                .PlurkException();
+            _getDisposable = command.Subscribe(up =>
+            {
+                UserId = up.User.Id;
+                Username = up.User.DisplayNameOrNickName;
+                QualifierEnumInt = (int)up.Plurk.Qualifier;
+                Qualifier = up.Plurk.QualifierTranslatedOrDefault;
+                PostDateTicks = up.Plurk.PostDate.ToUniversalTime().Ticks;
+                AvatarView = AvatarHelper.MapAvatar(up.User);
+                NoCommentsInt = (int)up.Plurk.NoComments;
+                IsFavorite = up.Plurk.Favorite;
+                ResponseCount = up.Plurk.ResponseCount;
+                IsUnreadInt = (int)up.Plurk.IsUnread;
+                PlurkTypeInt = (int)up.Plurk.PlurkType;
+            }, () => Execute.OnUIThread(_progressService.Hide));
         }
     }
 }
