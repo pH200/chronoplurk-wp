@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Plurto.Helpers;
 
 namespace ChronoPlurk.Views.PlurkControls
 {
@@ -36,12 +37,28 @@ namespace ChronoPlurk.Views.PlurkControls
                     }
                 }),
             new PredicateMapper(
-                predicate: Plurto.Core.Base36.IsPlurkUrl,
+                predicate: UrlHelper.IsPlurkUrl,
                 mapper: u =>
                 {
                     const string baseUrl = "/Views/PlurkDetailPage.xaml?PlurkId=";
                     long id;
-                    if (Plurto.Core.Base36.TryDecodeUrl(u, out id))
+                    if (UrlHelper.TryDecodePlurk(u, out id))
+                    {
+                        var newUrl = baseUrl + id;
+                        return UriFactory(newUrl, UriKind.Relative);
+                    }
+                    else
+                    {
+                        return UriFactory(u, UriKind.Absolute);
+                    }
+                }),
+            new PredicateMapper(
+                predicate: UrlHelper.IsUserUrl,
+                mapper: u =>
+                {
+                    const string baseUrl = "/Views/Profile/PlurkProfilePage.xaml?Username=";
+                    string id;
+                    if (UrlHelper.TryDecodeUser(u, out id))
                     {
                         var newUrl = baseUrl + id;
                         return UriFactory(newUrl, UriKind.Relative);
