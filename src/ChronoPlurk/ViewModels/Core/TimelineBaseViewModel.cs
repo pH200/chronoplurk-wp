@@ -288,7 +288,15 @@ namespace ChronoPlurk.ViewModels
                             IsHasMore = IsHasMoreHandler(plurks);
                         }
                     }
-                }, () => Execute.OnUIThread(() => ProgressService.Hide()));
+                }, () =>
+                {
+                    Execute.OnUIThread(() => ProgressService.Hide());
+                    OnRequestCompleted(_lastResult);
+                });
+        }
+
+        protected virtual void OnRequestCompleted(TSource lastResult)
+        {
         }
 
         private IEnumerable<UserPlurk> RemoveDuplicateResult(IEnumerable<UserPlurk> result)

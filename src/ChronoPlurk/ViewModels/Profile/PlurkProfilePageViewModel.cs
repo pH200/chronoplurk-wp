@@ -30,6 +30,7 @@ namespace ChronoPlurk.ViewModels.Profile
             Items.Add(_timeline);
             ActivateItem(_timeline);
             _timeline.UserId = UserId;
+            _timeline.Username = Username;
             _timeline.RefreshSync();
 
             base.OnInitialize();
