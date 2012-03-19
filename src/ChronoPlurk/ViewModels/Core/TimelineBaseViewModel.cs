@@ -250,6 +250,10 @@ namespace ChronoPlurk.ViewModels
                     _lastResult = plurks;
 
                     var result = plurks.ToUserPlurks();
+                    if (!_isCachedItemsLoaded && result != null)
+                    {
+                        result = RemoveDuplicateResult(result);
+                    }
 
                     if (result.IsNullOrEmpty())
                     {
@@ -270,7 +274,8 @@ namespace ChronoPlurk.ViewModels
                         var items = MapUserPlurkToPlurkItemViewModel(result, plurks);
                         if (_isCachedItemsLoaded)
                         {
-                            Items = new AdditiveBindableCollection<PlurkItemViewModel>(items);
+                            var collection = new AdditiveBindableCollection<PlurkItemViewModel>(items);
+                            Execute.OnUIThread(() => Items = collection);
                             _isCachedItemsLoaded = false;
                         }
                         else
@@ -284,6 +289,21 @@ namespace ChronoPlurk.ViewModels
                         }
                     }
                 }, () => Execute.OnUIThread(() => ProgressService.Hide()));
+        }
+
+        private IEnumerable<UserPlurk> RemoveDuplicateResult(IEnumerable<UserPlurk> result)
+        {
+            return result.Where(p => Items.All(lastPlurk =>
+            {
+                if (IsCompareIdInsteadOfPlurkId && p.Plurk.Id == 0)
+                {
+                    return true;
+                }
+                var compareId = IsCompareIdInsteadOfPlurkId
+                                    ? p.Plurk.Id
+                                    : p.Plurk.PlurkId;
+                return lastPlurk.PlurkId != compareId;
+            }));
         }
 
         private IEnumerable<PlurkItemViewModel> MapUserPlurkToPlurkItemViewModel(IEnumerable<UserPlurk> result, TSource plurks)
@@ -428,7 +448,7 @@ namespace ChronoPlurk.ViewModels
             SearchAndAction(plurkId, item => item.IsFavorite = false);
         }
 
-        public void Mute(long plurkId)
+        public virtual void Mute(long plurkId)
         {
             SearchAndAction(plurkId, item => item.IsUnread = UnreadStatus.Muted);
         }

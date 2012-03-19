@@ -43,14 +43,38 @@ namespace ChronoPlurk.ViewModels.Main
             base.OnActivate();
         }
 
+        public override void Mute(long plurkId)
+        {
+            UpdateItem(plurkId, UnreadStatus.Muted);
+        }
+
         public override void SetAsRead(long plurkId)
+        {
+            UpdateItem(plurkId, UnreadStatus.Read);
+        }
+
+        private void UpdateItem(long plurkId, UnreadStatus status)
         {
             var item = Items.FirstOrDefault(p => plurkId == p.PlurkId);
             if (item != null)
             {
-                item.IsUnread = UnreadStatus.Read;
-                --UnreadCount;
-                RefreshUnreadCount();
+                if (item.IsUnread == UnreadStatus.Unread)
+                {
+                    --UnreadCount;
+                    RefreshUnreadCount();
+                }
+                switch (status)
+                {
+                    case UnreadStatus.Muted:
+                        item.IsUnread = status;
+                        break;
+                    case UnreadStatus.Read:
+                        if (item.IsUnread == UnreadStatus.Unread)
+                        {
+                            item.IsUnread = UnreadStatus.Read;
+                        }
+                        break;
+                }
             }
         }
 
