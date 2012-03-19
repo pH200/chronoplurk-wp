@@ -54,6 +54,11 @@ namespace ChronoPlurk.ViewModels.Compose
             LockVisibility = Visibility.Collapsed;
         }
 
+        public override ISwitchControl GetSwitchView()
+        {
+            return GetView() as ISwitchControl;
+        }
+
         protected override void OnActivate()
         {
             NotifyOfPropertyChange(() => SelectedUsers);
@@ -85,6 +90,7 @@ namespace ChronoPlurk.ViewModels.Compose
             else
             {
                 ProgressService.Show(AppResources.msgSending);
+                IsControlEnabled = false;
 
                 var limitedTo = null as IEnumerable<int>;
                 if (IsPrivateView)
@@ -118,7 +124,11 @@ namespace ChronoPlurk.ViewModels.Compose
                         PostContent = "";
                         SelectedUsers.Clear();
                         _navigationService.GoBack();
-                    }, () => ProgressService.Hide());
+                    }, () =>
+                    {
+                        ProgressService.Hide();
+                        IsControlEnabled = true;
+                    });
             }
         }
 

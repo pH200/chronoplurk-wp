@@ -12,12 +12,13 @@ using System.Windows.Shapes;
 using Caliburn.Micro;
 using ChronoPlurk.Helpers;
 using ChronoPlurk.Resources.i18n;
+using ChronoPlurk.Views.Compose;
 using Microsoft.Phone.Shell;
 using WP7Contrib.View.Transitions.Animation;
 
 namespace ChronoPlurk.Views
 {
-    public partial class PlurkDetailPage
+    public partial class PlurkDetailPage : ISwitchControl
     {
         public PlurkDetailPage()
         {
@@ -145,6 +146,12 @@ namespace ChronoPlurk.Views
             PlurkDetailViewModel.Visibility = Visibility.Collapsed;
             DetailRow.Height = new GridLength(0);
             ReplyRow.Height = new GridLength(1.0, GridUnitType.Star);
+        }
+
+        public void Switch(bool enable)
+        {
+            ReplyButton.IsEnabled = enable;
+            PhotosButton.IsEnabled = enable;
         }
     }
 }

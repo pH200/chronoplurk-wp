@@ -9,6 +9,7 @@ using Caliburn.Micro;
 using ChronoPlurk.Helpers;
 using ChronoPlurk.Resources.i18n;
 using ChronoPlurk.Services;
+using ChronoPlurk.Views.Compose;
 using Microsoft.Phone;
 using Microsoft.Phone.Tasks;
 using NotifyPropertyWeaver;
@@ -19,7 +20,7 @@ using Plurto.Entities;
 namespace ChronoPlurk.ViewModels.Compose
 {
     [NotifyForAll]
-    public class ComposeViewModelBase : Conductor<IScreen>.Collection.OneActive
+    public abstract class ComposeViewModelBase : Conductor<IScreen>.Collection.OneActive
     {
         protected IPlurkService PlurkService { get; private set; }
         protected IProgressService ProgressService { get; private set; }
@@ -65,7 +66,29 @@ namespace ChronoPlurk.ViewModels.Compose
 
         public Visibility EmoticonVisibility { get; set; }
 
-        public ComposeViewModelBase(
+        private bool _isControlEnabled = true;
+        public bool IsControlEnabled
+        {
+            get { return _isControlEnabled; }
+            set
+            {
+                if (_isControlEnabled != value)
+                {
+                    _isControlEnabled = value;
+                    NotifyOfPropertyChange("IsControlEnabled");
+
+                    var view = GetSwitchView();
+                    if (view != null)
+                    {
+                        Execute.OnUIThread(() => view.Switch(value));
+                    }
+                }
+            }
+        }
+
+        public abstract ISwitchControl GetSwitchView();
+
+        protected ComposeViewModelBase(
             IPlurkService plurkService,
             IProgressService progressService,
             RecentEmoticonsService recentEmoticonsService)
@@ -181,9 +204,7 @@ namespace ChronoPlurk.ViewModels.Compose
             }
         }
 
-        public virtual void Compose()
-        {
-        }
+        public abstract void Compose();
 
         public void InsertPhoto()
         {
@@ -252,21 +273,19 @@ namespace ChronoPlurk.ViewModels.Compose
                         .ToObservable()
                         .PlurkException(expectedTimeout: DefaultConfiguration.TimeoutUpload);
 
-                    System.Action complete = () =>
-                    {
-                        ProgressService.Hide();
-                        if (resizedPhotoStream != null)
-                        {
-                            resizedPhotoStream.Dispose();
-                        }
-                    };
-
                     _uploadHandler = uploadCommand
                         .ObserveOnDispatcher()
                         .Subscribe(picture =>
                         {
                             PostContent += picture.Full + Environment.NewLine;
-                        }, complete);
+                        }, onCompleted: () =>
+                        {
+                            ProgressService.Hide();
+                            if (resizedPhotoStream != null)
+                            {
+                                resizedPhotoStream.Dispose();
+                            }
+                        });
                 }
             }
         }

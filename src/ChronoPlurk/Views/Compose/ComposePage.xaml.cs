@@ -16,7 +16,7 @@ using WP7Contrib.View.Transitions.Animation;
 
 namespace ChronoPlurk.Views.Compose
 {
-    public partial class ComposePage
+    public partial class ComposePage : ISwitchControl
     {
         public ComposePage()
         {
@@ -51,6 +51,7 @@ namespace ChronoPlurk.Views.Compose
                 Text = AppResources.appbarPlurk,
                 Message = "PlurkAppBar"
             };
+            PlurkButton = plurkButton;
             var emoticonButton = new AppBarButton()
             {
                 IconUri = new Uri("Resources/Icons/appbar.emoticon.png", UriKind.Relative),
@@ -63,6 +64,7 @@ namespace ChronoPlurk.Views.Compose
                 Text = AppResources.appbarPhotos,
                 Message = "PhotosAppBar"
             };
+            PhotosButton = photosButton;
             var privateButton = new AppBarButton()
             {
                 IconUri = new Uri("Resources/Icons/appbar.lock.png", UriKind.Relative),
@@ -73,6 +75,16 @@ namespace ChronoPlurk.Views.Compose
             ApplicationBar.Buttons.Add(emoticonButton);
             ApplicationBar.Buttons.Add(photosButton);
             ApplicationBar.Buttons.Add(privateButton);
+        }
+
+        protected AppBarButton PlurkButton { get; set; }
+
+        protected AppBarButton PhotosButton { get; set; }
+
+        public void Switch(bool enable)
+        {
+            PlurkButton.IsEnabled = enable;
+            PhotosButton.IsEnabled = enable;
         }
     }
 }

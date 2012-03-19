@@ -6,6 +6,7 @@ using ChronoPlurk.Resources.i18n;
 using ChronoPlurk.Services;
 using ChronoPlurk.Helpers;
 using ChronoPlurk.ViewModels.Compose;
+using ChronoPlurk.Views.Compose;
 using NotifyPropertyWeaver;
 using Plurto.Commands;
 
@@ -26,6 +27,19 @@ namespace ChronoPlurk.ViewModels
             RecentEmoticonsService recentEmoticonsService)
             : base(plurkService, progressService, recentEmoticonsService)
         {
+        }
+
+        public override ISwitchControl GetSwitchView()
+        {
+            var parent = this.GetParent();
+            if (parent != null)
+            {
+                return parent.GetView() as ISwitchControl;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         protected override void OnEmoticonsLoaded()
@@ -49,6 +63,7 @@ namespace ChronoPlurk.ViewModels
                 if (plurkId != -1)
                 {
                     ProgressService.Show(AppResources.msgSending);
+                    IsControlEnabled = false;
                     LeaveFocus();
 
                     var command =
@@ -67,7 +82,7 @@ namespace ChronoPlurk.ViewModels
                         }
                         PostContent = "";
                         LoadNewComments();
-                    });
+                    }, () => IsControlEnabled = true);
                 }
             }
         }

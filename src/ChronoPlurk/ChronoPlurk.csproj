@@ -213,6 +213,7 @@
     <Compile Include="Views\Compose\FriendsSelectionPage.xaml.cs">
       <DependentUpon>FriendsSelectionPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Compose\ISwitchControl.cs" />
     <Compile Include="Views\Control\EmptyView.cs" />
     <Compile Include="Views\Control\FocusBehavior.cs" />
     <Compile Include="Views\Control\HtmlTextBox.cs" />

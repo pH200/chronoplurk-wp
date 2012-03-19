@@ -34,12 +34,14 @@
                      TextWrapping="Wrap"
                      AcceptsReturn="True"
                      InputScope="Text"
+                     IsEnabled="{Binding IsControlEnabled}"
                      cal:Message.Attach="[Event TextChanged] = [Action OnTextChanged()];[Event GotFocus] = [Action OnGotFocus()];[Event LostFocus] = [Action OnLostFocus()]">
                 <i:Interaction.Behaviors>
                     <pcontrols:FocusBehavior x:Name="ResponseFocus" IsFocused="{Binding ResponseFocus, Mode=TwoWay}" />
                 </i:Interaction.Behaviors>
             </TextBox>
             <Button x:Name="Compose"
+                    IsEnabled="{Binding IsControlEnabled}"
                     Content="{Binding Path=LocalizedResources.reply, Source={StaticResource LocalizedStrings}}" />
         </StackPanel>
 

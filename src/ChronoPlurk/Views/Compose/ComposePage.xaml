@@ -31,6 +31,7 @@
                                         SelectedItem="{Binding Qualifier, Mode=TwoWay}"
                                         Background="Transparent"
                                         BorderBrush="{StaticResource PhoneSubtleBrush}"
+                                    IsEnabled="{Binding IsControlEnabled}"
                                         CacheMode="BitmapCache"
                                         Margin="12,0">
                     <toolkit:ListPicker.ItemTemplate>
@@ -51,6 +52,7 @@
                 </toolkit:ListPicker>
 
                 <TextBox x:Name="PostContent"
+                         IsEnabled="{Binding IsControlEnabled}"
                              VerticalAlignment="Top"
                              MinHeight="150"
                              TextWrapping="Wrap"
