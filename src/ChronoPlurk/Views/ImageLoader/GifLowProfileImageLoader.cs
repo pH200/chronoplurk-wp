@@ -252,7 +252,15 @@ namespace ChronoPlurk.Views.ImageLoader
                                         var decoder = new GifDecoder();
                                         var extendedImage = new ExtendedImage();
                                         decoder.Decode(extendedImage, pendingCompletion.Stream);
-                                        var image = new AnimatedImage() { Source = extendedImage, Stretch = Stretch.None };
+                                        var image = new AnimatedImage()
+                                        {
+                                            Source = extendedImage,
+                                            Stretch = Stretch.None,
+                                            Width = extendedImage.PixelWidth,
+                                            Height = extendedImage.PixelHeight
+                                        };
+                                        pendingCompletion.Image.Width = extendedImage.PixelWidth;
+                                        pendingCompletion.Image.Height = extendedImage.PixelHeight;
                                         // image.Stretch = (Stretch)pendingCompletion.Image.GetValue(StretchProperty);
                                         pendingCompletion.Image.Child = image;
                                     }
@@ -262,6 +270,11 @@ namespace ChronoPlurk.Views.ImageLoader
                                         bitmapImage.SetSource(pendingCompletion.Stream);
                                         var image = new Image() { Source = bitmapImage };
                                         image.Stretch = (Stretch)pendingCompletion.Image.GetValue(StretchProperty);
+                                        if (image.Stretch == Stretch.Uniform)
+                                        {
+                                            image.MaxWidth = bitmapImage.PixelWidth;
+                                            image.MaxHeight = bitmapImage.PixelHeight;
+                                        }
                                         pendingCompletion.Image.Child = image;
                                     }
                                 }

@@ -319,7 +319,7 @@ namespace ChronoPlurk.Views.PlurkControls
                 var imageContainer = new Border();
                 if (EnableOrignialSizeImage)
                 {
-                    GifLowProfileImageLoader.SetStretch(imageContainer, Stretch.None);
+                    GifLowProfileImageLoader.SetStretch(imageContainer, Stretch.Uniform);
                 }
                 else
                 {
