@@ -154,13 +154,16 @@ namespace ChronoPlurk.ViewModels
             {
                 return;
             }
-            else if (ReplyViewModel.PostContent == null)
+            if (ReplyVisibility == Visibility.Visible)
             {
-                ReplyViewModel.PostContent = value;
-            }
-            else
-            {
-                ReplyViewModel.PostContent += value;
+                if (ReplyViewModel.PostContent == null)
+                {
+                    ReplyViewModel.PostContent = value;
+                }
+                else
+                {
+                    ReplyViewModel.PostContent += value;
+                }
             }
         }
 
