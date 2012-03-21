@@ -207,6 +207,7 @@ namespace ChronoPlurk.ViewModels
             {
                 UserId = up.User.Id;
                 Username = up.User.DisplayNameOrNickName;
+                ContentHtml = up.Plurk.Content;
                 QualifierEnumInt = (int)up.Plurk.Qualifier;
                 Qualifier = up.Plurk.QualifierTranslatedOrDefault;
                 PostDateTicks = up.Plurk.PostDate.ToUniversalTime().Ticks;
