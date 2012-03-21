@@ -135,24 +135,6 @@ namespace ChronoPlurk.ViewModels
             base.OnViewLoaded(view);
         }
 
-        protected override void OnDeactivate(bool close)
-        {
-            if (Items.Count > 0)
-            {
-                var filename = GetSerializationFilename();
-                if (filename != null)
-                {
-                    ThreadEx.OnThreadPool(() =>
-                    {
-                        var list = Items.Take(DefaultConfiguration.CachedItemsCount).ToList();
-                        IsoSettings.SerializeStore(list, filename);
-                    });
-                }
-            }
-
-            base.OnDeactivate(close);
-        }
-
         /// <summary>
         /// Get filename for serialized binary's filename. Null return is possible.
         /// </summary>
@@ -275,12 +257,14 @@ namespace ChronoPlurk.ViewModels
                         if (_isCachedItemsLoaded)
                         {
                             var collection = new AdditiveBindableCollection<PlurkItemViewModel>(items);
-                            Execute.OnUIThread(() => Items = collection);
+                            Execute.OnUIThread(() => Items = collection); // Fix LongList behavior
                             _isCachedItemsLoaded = false;
+                            CacheItems(collection); // Cache
                         }
                         else
                         {
                             Items.AddRange(items);
+                            CacheItems(Items); // Cache
                         }
 
                         if (IsHasMoreHandler != null)
@@ -293,6 +277,22 @@ namespace ChronoPlurk.ViewModels
                     Execute.OnUIThread(() => ProgressService.Hide());
                     OnRequestCompleted(_lastResult);
                 });
+        }
+
+        private void CacheItems(IObservableCollection<PlurkItemViewModel> items)
+        {
+            if (items.Count > 0)
+            {
+                var filename = GetSerializationFilename();
+                if (filename != null)
+                {
+                    ThreadEx.OnThreadPool(() =>
+                    {
+                        var list = items.Take(DefaultConfiguration.CachedItemsCount).ToList();
+                        IsoSettings.SerializeStore(list, filename);
+                    });
+                }
+            }
         }
 
         protected virtual void OnRequestCompleted(TSource lastResult)
