@@ -255,12 +255,12 @@ namespace ChronoPlurk.Views.ImageLoader
                                         var image = new AnimatedImage()
                                         {
                                             Source = extendedImage,
-                                            Stretch = Stretch.None,
-                                            Width = extendedImage.PixelWidth,
-                                            Height = extendedImage.PixelHeight
+                                            Stretch = Stretch.Uniform,
+                                            MaxWidth = extendedImage.PixelWidth,
+                                            MaxHeight = extendedImage.PixelHeight
                                         };
-                                        pendingCompletion.Image.Width = extendedImage.PixelWidth;
-                                        pendingCompletion.Image.Height = extendedImage.PixelHeight;
+                                        pendingCompletion.Image.MaxWidth = extendedImage.PixelWidth;
+                                        pendingCompletion.Image.MaxHeight = extendedImage.PixelHeight;
                                         // image.Stretch = (Stretch)pendingCompletion.Image.GetValue(StretchProperty);
                                         pendingCompletion.Image.Child = image;
                                     }

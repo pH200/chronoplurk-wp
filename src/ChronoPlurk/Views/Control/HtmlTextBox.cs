@@ -313,6 +313,9 @@ namespace ChronoPlurk.Views.PlurkControls
 
         private Inline CreateImageInline(HtmlNode node)
         {
+            Func<string, bool> isntGif = filename =>
+                                         !filename.EndsWith(".gif", StringComparison.OrdinalIgnoreCase);
+
             var src = node.Attributes.FirstOrDefault(attr => attr.Name == "src");
             if (src != null)
             {
@@ -321,7 +324,7 @@ namespace ChronoPlurk.Views.PlurkControls
                 {
                     GifLowProfileImageLoader.SetStretch(imageContainer, Stretch.Uniform);
                 }
-                else
+                else if (isntGif(src.Value))
                 {
                     var heightAttr = node.Attributes.FirstOrDefault(attr => attr.Name == "height");
                     if (heightAttr != null)
