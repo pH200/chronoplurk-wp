@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Caliburn.Micro;
 
@@ -18,9 +19,11 @@ namespace ChronoPlurk.Core
         {
             Execute.OnUIThread(() =>
             {
+                var index = this.Count;
                 foreach (var item in items)
                 {
-                    Add(item);
+                    InsertItemBase(index, item);
+                    index++;
                 }
             });
         }
