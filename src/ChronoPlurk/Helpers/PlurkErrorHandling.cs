@@ -96,6 +96,7 @@ namespace ChronoPlurk.Helpers
             {
                 case PlurkError.RequiresLogin:
                 case PlurkError.InvalidAccessToken:
+                case PlurkError.MissingAccessToken:
                     Execute.OnUIThread(() =>
                     {
                         MessageBox.Show(AppResources.errRequiresLogin, "Error", MessageBoxButton.OK);
