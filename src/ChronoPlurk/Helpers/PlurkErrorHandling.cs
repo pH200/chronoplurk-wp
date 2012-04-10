@@ -92,29 +92,28 @@ namespace ChronoPlurk.Helpers
 
         private static IObservable<TSource> LoginRequiredHandling<TSource>(PlurkErrorException e, PlurkExceptionArguments<TSource> args)
         {
-            switch (e.Error)
+            if (LoginHelper.IsLoginError(e.Error))
             {
-                case PlurkError.RequiresLogin:
-                case PlurkError.InvalidAccessToken:
-                case PlurkError.MissingAccessToken:
-                    Execute.OnUIThread(() =>
+                Execute.OnUIThread(() =>
+                {
+                    MessageBox.Show(AppResources.errRequiresLogin, "Error", MessageBoxButton.OK);
+                    if (args.OnError != null)
                     {
-                        MessageBox.Show(AppResources.errRequiresLogin, "Error", MessageBoxButton.OK);
-                        if (args.OnError != null)
-                        {
-                            args.OnError(e.Error);
-                        }
-                        var plurkService = IoC.Get<IPlurkService>();
-                        var navigationService = IoC.Get<INavigationService>();
-                        if (plurkService != null && navigationService != null)
-                        {
-                            plurkService.FlushConnection();
-                            navigationService.GotoLoginPage();
-                        }
-                    });
-                    return Observable.Empty<TSource>();
-                default:
-                    return Observable.Throw<TSource>(e);
+                        args.OnError(e.Error);
+                    }
+                    var plurkService = IoC.Get<IPlurkService>();
+                    var navigationService = IoC.Get<INavigationService>();
+                    if (plurkService != null && navigationService != null)
+                    {
+                        plurkService.FlushConnection();
+                        navigationService.GotoLoginPage();
+                    }
+                });
+                return Observable.Empty<TSource>();
+            }
+            else
+            {
+                return Observable.Throw<TSource>(e);
             }
         }
 

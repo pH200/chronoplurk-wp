@@ -137,6 +137,7 @@
     <Compile Include="Helpers\AvatarHelper.cs" />
     <Compile Include="Helpers\Coroutine.cs" />
     <Compile Include="Helpers\IgnoreExceptions.cs" />
+    <Compile Include="Helpers\LoginHelper.cs" />
     <Compile Include="Services\SharePickerService.cs" />
     <Compile Include="ViewModels\Compose\ComposeViewModelBase.cs" />
     <Compile Include="ViewModels\EmoticonListViewModel.cs" />

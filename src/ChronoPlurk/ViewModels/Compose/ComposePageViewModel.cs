@@ -83,7 +83,10 @@ namespace ChronoPlurk.ViewModels.Compose
 
         protected override void OnPictureUploadFailed(PlurkError error)
         {
-            _sharePickerService.SetActionProcessed(false);
+            if (LoginHelper.IsLoginError(error))
+            {
+                _sharePickerService.SetActionProcessed(false);
+            }
         }
 
         protected override void OnEmoticonsLoaded()
