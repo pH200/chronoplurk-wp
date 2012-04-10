@@ -22,6 +22,7 @@ namespace ChronoPlurk.ViewModels
         private readonly LikedPlurksViewModel _likedPlurksViewModel;
 
         private SettingsService SettingsService { get; set; }
+        private SharePickerService SharePickerService { get; set; }
 
         private FiltersOnOffPack _filters;
 
@@ -35,6 +36,7 @@ namespace ChronoPlurk.ViewModels
             INavigationService navigationService,
             IPlurkService plurkService,
             SettingsService settingsService,
+            SharePickerService sharePickerService,
             TimelineViewModel timeline,
             UnreadPlurksViewModel unreadPlurksViewModel,
             MyPlurksViewModel myPlurksViewModel,
@@ -44,6 +46,7 @@ namespace ChronoPlurk.ViewModels
             : base(navigationService, plurkService)
         {
             SettingsService = settingsService;
+            SharePickerService = sharePickerService;
 
             _timeline = timeline;
             _unreadPlurksViewModel = unreadPlurksViewModel;
@@ -126,6 +129,11 @@ namespace ChronoPlurk.ViewModels
             }
 
             base.OnActivate();
+
+            if (SharePickerService.ProcessAction)
+            {
+                NavigationService.GotoComposePage();
+            }
         }
 
         private void RefreshAll<T>(IEnumerable<T> collection)

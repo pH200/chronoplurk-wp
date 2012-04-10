@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Navigation;
@@ -111,6 +112,7 @@ namespace ChronoPlurk
             builder.Register(c => new PlurkHolderService()).AsSelf().SingleInstance();
             builder.RegisterType<FriendsFansCompletionService>().AsSelf().SingleInstance();
             builder.Register(c => new RecentEmoticonsService()).AsSelf().SingleInstance();
+            builder.Register(c => new SharePickerService()).AsSelf().SingleInstance();
             #endregion
 
             #region Plurk Services
@@ -133,19 +135,33 @@ namespace ChronoPlurk
         {
             RootFrame.Navigating += (sender, e) =>
             {
+                var uriString = e.Uri.ToString();
                 // Only care about MainPage
-                if (!e.Uri.ToString().Contains("/MainPage.xaml"))
+                if (!uriString.Contains("/MainPage.xaml"))
                 {
                     return;
                 }
 
-                if (Container.Resolve<IPlurkService>().IsLoaded &&
-                    e.NavigationMode != NavigationMode.Back)
+                // Match FileId for share picker
+                // http://msdn.microsoft.com/en-us/library/ff967563(v=vs.92).aspx
+                var fileIdMatch = Regex.Match(uriString, @"(&|\?)FileId=([^&]+)");
+
+                if (e.NavigationMode != NavigationMode.Back &&
+                    (Container.Resolve<IPlurkService>().IsLoaded || fileIdMatch.Success))
                 {
                     e.Cancel = true;
 
+                    if (fileIdMatch.Success && fileIdMatch.Groups.Count > 2)
+                    {
+                        var fileId = Uri.UnescapeDataString(fileIdMatch.Groups[2].Value);
+                        var sharePicker = Container.Resolve<SharePickerService>();
+                        sharePicker.SetFileId(fileId);
+                    }
+
+                    const string plurkMainPage = "//Views/PlurkMainPage.xaml";
+
                     RootFrame.Dispatcher.BeginInvoke(() =>
-                        RootFrame.Navigate(new Uri("//Views/PlurkMainPage.xaml", UriKind.Relative)));
+                        RootFrame.Navigate(new Uri(plurkMainPage, UriKind.Relative)));
                 }
             };
         }

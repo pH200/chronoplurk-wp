@@ -92,6 +92,7 @@
       <HintPath>..\Dependencies\sltk71382\Microsoft.Phone.Controls.Toolkit.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Phone.Interop" />
+    <Reference Include="Microsoft.Xna.Framework" />
     <Reference Include="PhoneCodeContractsAssemblies">
       <HintPath>..\Dependencies\ImageTools\PhoneCodeContractsAssemblies.dll</HintPath>
     </Reference>
@@ -136,6 +137,7 @@
     <Compile Include="Helpers\AvatarHelper.cs" />
     <Compile Include="Helpers\Coroutine.cs" />
     <Compile Include="Helpers\IgnoreExceptions.cs" />
+    <Compile Include="Services\SharePickerService.cs" />
     <Compile Include="ViewModels\Compose\ComposeViewModelBase.cs" />
     <Compile Include="ViewModels\EmoticonListViewModel.cs" />
     <Compile Include="Framework\PivotFix.cs" />

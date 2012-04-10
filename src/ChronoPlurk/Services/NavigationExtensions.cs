@@ -40,6 +40,12 @@ namespace ChronoPlurk.Services
             navigationService.Navigate(uri);
         }
 
+        public static void GotoComposePage(this INavigate navigationService)
+        {
+            const string pageUrl = "//Views/Compose/ComposePage.xaml";
+            navigationService.Navigate(new Uri(pageUrl, UriKind.Relative));
+        }
+
         public static void SetRemoveBackEntryFlag(this INavigationService navigationService)
         {
             RemoveBackEntryFlag = true;

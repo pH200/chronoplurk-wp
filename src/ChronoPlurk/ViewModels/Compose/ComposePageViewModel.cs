@@ -20,6 +20,7 @@ namespace ChronoPlurk.ViewModels.Compose
     {
         private readonly INavigationService _navigationService;
         private readonly FriendsFansCompletionService _friendsFansCompletionService;
+        private readonly SharePickerService _sharePickerService;
 
         private IDisposable _composeHandler;
 
@@ -45,11 +46,13 @@ namespace ChronoPlurk.ViewModels.Compose
             INavigationService navigationService,
             IProgressService progressService,
             FriendsFansCompletionService friendsFansCompletionService,
-            RecentEmoticonsService recentEmoticonsService)
+            RecentEmoticonsService recentEmoticonsService,
+            SharePickerService sharePickerService)
             : base (plurkService, progressService, recentEmoticonsService)
         {
             _navigationService = navigationService;
             _friendsFansCompletionService = friendsFansCompletionService;
+            _sharePickerService = sharePickerService;
 
             LockVisibility = Visibility.Collapsed;
         }
@@ -70,6 +73,12 @@ namespace ChronoPlurk.ViewModels.Compose
             }
 
             base.OnActivate();
+
+            if (_sharePickerService.ProcessAction)
+            {
+                UploadPicture(_sharePickerService.FileId);
+                _sharePickerService.SetActionProcessed(true);
+            }
         }
 
         protected override void OnEmoticonsLoaded()

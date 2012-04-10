@@ -12,6 +12,7 @@ using ChronoPlurk.Services;
 using ChronoPlurk.Views.Compose;
 using Microsoft.Phone;
 using Microsoft.Phone.Tasks;
+using Microsoft.Xna.Framework.Media;
 using NotifyPropertyWeaver;
 using Plurto.Commands;
 using Plurto.Core;
@@ -205,6 +206,16 @@ namespace ChronoPlurk.ViewModels.Compose
         }
 
         public abstract void Compose();
+
+        public void UploadPicture(string fileId)
+        {
+            var library = new MediaLibrary();
+            using (var picture = library.GetPictureFromToken(fileId))
+            {
+                var stream = picture.GetImage();
+                UploadPicture(stream, picture.Name);
+            }
+        }
 
         public void InsertPhoto()
         {
