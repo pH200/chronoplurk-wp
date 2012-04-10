@@ -81,6 +81,11 @@ namespace ChronoPlurk.ViewModels.Compose
             }
         }
 
+        protected override void OnPictureUploadFailed(PlurkError error)
+        {
+            _sharePickerService.SetActionProcessed(false);
+        }
+
         protected override void OnEmoticonsLoaded()
         {
             LeaveFocus();

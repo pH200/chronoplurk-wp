@@ -64,7 +64,10 @@ namespace ChronoPlurk.ViewModels
 
             Items.Add(_timeline);
             ResetFilters();
-            ActivateItem(_timeline);
+            if (!SharePickerService.ProcessAction)
+            {
+                ActivateItem(_timeline);
+            }
         }
 
         private void ResetFilters()

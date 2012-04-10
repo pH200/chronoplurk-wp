@@ -282,10 +282,11 @@ namespace ChronoPlurk.ViewModels.Compose
                     var uploadCommand = TimelineCommand.UploadPicture(upload)
                         .Client(PlurkService.Client)
                         .ToObservable()
-                        .PlurkException(expectedTimeout: DefaultConfiguration.TimeoutUpload);
+                        .PlurkException(expectedTimeout: DefaultConfiguration.TimeoutUpload,
+                                        onError: OnPictureUploadFailed)
+                        .ObserveOnDispatcher();
 
                     _uploadHandler = uploadCommand
-                        .ObserveOnDispatcher()
                         .Subscribe(picture =>
                         {
                             PostContent += picture.Full + Environment.NewLine;
@@ -299,6 +300,10 @@ namespace ChronoPlurk.ViewModels.Compose
                         });
                 }
             }
+        }
+
+        protected virtual void OnPictureUploadFailed(PlurkError error)
+        {
         }
 
         private static void SetUploadFileContentType(UploadFile upload, string fileName)
