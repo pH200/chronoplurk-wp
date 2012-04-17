@@ -24,7 +24,7 @@ namespace ChronoPlurk.Services
         bool IsLoaded { get; }
         bool IsUserChanged { get; set; }
         void FlushConnection();
-        IObservable<Uri> GetRequestToken();
+        IObservable<Uri> GetRequestToken(string deviceId=null);
         IObservable<OAuthClient> GetAccessToken(string verifier);
         IObservable<AppUserInfo> CreateUserData(OAuthClient client);
         void SaveUserData();
@@ -81,13 +81,26 @@ namespace ChronoPlurk.Services
             _client = new OAuthClient(DefaultConfiguration.OAuthConsumerKey, DefaultConfiguration.OAuthConsumerSecret);
         }
 
-        public IObservable<Uri> GetRequestToken()
+        public IObservable<Uri> GetRequestToken(string deviceid=null)
         {
+            string deviceIdPart;
+            if (deviceid != null)
+            {
+                const string querystring = "&deviceid=";
+                var purify = deviceid.Replace("&", "").Replace("?", "");
+                // Also send querystring for escaping
+                deviceIdPart = HttpTools.EscapeDataStringOmitNull(querystring + purify);
+            }
+            else
+            {
+                deviceIdPart = "";
+            }
             return _client.ObtainRequestToken()
                 .Do(token => _client.SetToken(token))
                 .Select(token =>
                         new Uri("http://www.plurk.com/m/login?return_url=/m/authorize?oauth_token="
-                                + token.Token,
+                                + token.Token
+                                + deviceIdPart,
                                 UriKind.Absolute));
         }
 

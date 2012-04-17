@@ -32,8 +32,15 @@ namespace ChronoPlurk.Views
         {
             base.OnNavigatedTo(e);
 
+            string deviceName;
+            if (!NavigationContext.QueryString.TryGetValue("DeviceName", out deviceName)
+                || deviceName.IsNullOrEmpty())
+            {
+                deviceName = null;
+            }
+
             var plurkService = IoC.Get<IPlurkService>();
-            plurkService.GetRequestToken()
+            plurkService.GetRequestToken(deviceName)
                 .ObserveOnDispatcher()
                 .Catch<Uri, Exception>(ex =>
                 {

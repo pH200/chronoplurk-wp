@@ -65,6 +65,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Autofac.2.6.1.841\lib\SL4-WindowsPhone71\Autofac.dll</HintPath>
     </Reference>
+    <Reference Include="DeepForest.Phone.Assets">
+      <HintPath>..\Dependencies\wpassets\DeepForest.Phone.Assets.dll</HintPath>
+    </Reference>
     <Reference Include="HtmlAgilityPack">
       <HintPath>..\Dependencies\HtmlAgilityPack\HtmlAgilityPack.dll</HintPath>
     </Reference>
@@ -435,6 +438,8 @@
     <Content Include="Resources\Icons\appbar.download.rest.png" />
     <Content Include="Resources\Icons\appbar.next.rest.png" />
     <Content Include="Resources\Icons\appbar.stop.rest.png" />
+    <Content Include="Resources\Icons\Click\Help.png" />
+    <Content Include="Resources\Icons\Click\Undo.png" />
     <Content Include="Resources\Icons\icon.round.png" />
     <Content Include="Resources\Icons\plurk.private.png" />
     <Content Include="Resources\Icons\plurk.replurk.png" />

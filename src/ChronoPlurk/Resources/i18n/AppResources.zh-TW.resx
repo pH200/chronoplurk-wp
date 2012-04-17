@@ -474,4 +474,19 @@
   <data name="userFrom" xml:space="preserve">
     <value> 來自 </value>
   </data>
+  <data name="deviceName" xml:space="preserve">
+    <value>機型名稱</value>
+  </data>
+  <data name="helpDeviceId" xml:space="preserve">
+    <value>提供機型名稱可以使您在多台機器上同時登入ChronoPlurk，您可以自由變更這個欄位。\n\n您可以在\nhttp://www.plurk.com/APP/\n檢視已安裝的噗浪App及機型清單。</value>
+  </data>
+  <data name="helpExample" xml:space="preserve">
+    <value>範例圖</value>
+  </data>
+  <data name="helpOK" xml:space="preserve">
+    <value>確定</value>
+  </data>
+  <data name="helpTitle" xml:space="preserve">
+    <value>說明</value>
+  </data>
 </root>

@@ -105,7 +105,7 @@ namespace ChronoPlurk.Helpers
 
         public static void SaveAsync()
         {
-            Observable.ToAsync(Save)().Subscribe();
+            Observable.ToAsync(Save)().IgnoreAllExceptions().Subscribe();
         }
 
         private static void Save()

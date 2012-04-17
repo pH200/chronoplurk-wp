@@ -474,4 +474,19 @@
   <data name="userFrom" xml:space="preserve">
     <value> from </value>
   </data>
+  <data name="deviceName" xml:space="preserve">
+    <value>Device Name</value>
+  </data>
+  <data name="helpDeviceId" xml:space="preserve">
+    <value>By providing a device name, you can login ChronoPlurk on multiple devices.\nFeel free to change your device's name on this field.\n\nYou can review your Plurk apps and devices on\nhttp://www.plurk.com/APP/</value>
+  </data>
+  <data name="helpExample" xml:space="preserve">
+    <value>Example</value>
+  </data>
+  <data name="helpOK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="helpTitle" xml:space="preserve">
+    <value>Help</value>
+  </data>
 </root>

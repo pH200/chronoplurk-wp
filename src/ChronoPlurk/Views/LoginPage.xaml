@@ -7,6 +7,7 @@
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:cal="http://www.caliburnproject.org"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
@@ -39,6 +40,36 @@
                        TextWrapping="Wrap"
                        Margin="12"
                        Foreground="{StaticResource PlurkTextBrush}" />
+            <TextBlock Text="{Binding Path=LocalizedResources.deviceName, Source={StaticResource LocalizedStrings}}"
+                       HorizontalAlignment="Center"
+                       Foreground="{StaticResource PlurkTextBrush}" />
+            <Grid Width="320">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="250" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <TextBox x:Name="DeviceName"
+                         FontSize="{StaticResource PhoneFontSizeSmall}"
+                         MaxLength="32" />
+                <Rectangle Fill="{StaticResource PlurkTextBrush}"
+                           cal:Message.Attach="[Event Tap] = [Action UndoDevice()]"
+                           Grid.Column="1"
+                           HorizontalAlignment="Left"
+                           Width="32" Height="32">
+                    <Rectangle.OpacityMask>
+                        <ImageBrush ImageSource="/Resources/Icons/Click/Undo.png" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+                <Rectangle Fill="{StaticResource PlurkTextBrush}"
+                           cal:Message.Attach="[Event Tap] = [Action HelpDevice()]"
+                           Grid.Column="1"
+                           HorizontalAlignment="Right"
+                           Width="32" Height="32">
+                    <Rectangle.OpacityMask>
+                        <ImageBrush ImageSource="/Resources/Icons/Click/Help.png" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+            </Grid>
             <Grid>
                 <Button x:Name="Login"
                         Height="72" Width="200"

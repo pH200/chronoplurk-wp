@@ -7,6 +7,8 @@ using ChronoPlurk.Resources.i18n;
 using ChronoPlurk.Services;
 using ChronoPlurk.Views;
 using ChronoPlurk.Helpers;
+using DeepForest.Phone.Assets.Tools;
+using Microsoft.Phone.Tasks;
 using NotifyPropertyWeaver;
 
 namespace ChronoPlurk.ViewModels
@@ -19,11 +21,7 @@ namespace ChronoPlurk.ViewModels
         private readonly INavigationService _navigationService;
         private IDisposable _createDisposable;
 
-        public string Username { get; set; }
-
-        public string Password { get; set; }
-
-        public string Message { get; set; }
+        public string DeviceName { get; set; }
 
         // See also NavigationExtensions.cs
         public bool RedirectMainPage { get; set; }
@@ -38,6 +36,8 @@ namespace ChronoPlurk.ViewModels
             _navigationService = navigationService;
             _progressService = progressService;
             _plurkService = plurkService;
+
+            UpdateDeviceName();
         }
 
         protected override void OnActivate()
@@ -110,7 +110,33 @@ namespace ChronoPlurk.ViewModels
         public void Login()
         {
             IsLoginEnabled = false;
-            _navigationService.Navigate(new Uri("/Views/LoginBrowserPage.xaml", UriKind.Relative));
+            _navigationService.Navigate(new Uri("/Views/LoginBrowserPage.xaml?DeviceName=" + DeviceName, UriKind.Relative));
+        }
+
+        private void UpdateDeviceName()
+        {
+            DeviceName = Microsoft.Phone.Info.DeviceStatus.DeviceName;
+        }
+
+        public void UndoDevice()
+        {
+            UpdateDeviceName();
+        }
+
+        public void HelpDevice()
+        {
+            NotificationTool.Show(
+                AppResources.helpTitle,
+                AppResources.helpDeviceId.Replace("\\n", Environment.NewLine),
+                new NotificationAction(AppResources.helpOK, () => { }),
+                new NotificationAction(AppResources.helpExample, () =>
+                {
+                    var task = new WebBrowserTask()
+                    {
+                        Uri = new Uri("http://images.plurk.com/4c31662a172aad703ef9d5535458b77f.jpg", UriKind.Absolute)
+                    };
+                    task.Show();
+                }));
         }
     }
 }
