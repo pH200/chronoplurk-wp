@@ -244,6 +244,9 @@
     <Compile Include="Views\Control\PlurkItemControl.xaml.cs">
       <DependentUpon>PlurkItemControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ImageViewerPage.xaml.cs">
+      <DependentUpon>ImageViewerPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\LoginBrowserPage.xaml.cs">
       <DependentUpon>LoginBrowserPage.xaml</DependentUpon>
     </Compile>
@@ -314,6 +317,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\FriendsFans\PeopleListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ImageViewerPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

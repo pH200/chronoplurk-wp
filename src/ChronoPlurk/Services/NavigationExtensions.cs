@@ -46,6 +46,12 @@ namespace ChronoPlurk.Services
             navigationService.Navigate(new Uri(pageUrl, UriKind.Relative));
         }
 
+        public static void GotoImageBrowserPage(this INavigationService navigationService, Uri uri)
+        {
+            const string pageUrl = "//Views/ImageViewerPage.xaml?ImageUri=";
+            navigationService.Navigate(new Uri(pageUrl + uri, UriKind.Relative));
+        }
+
         public static void SetRemoveBackEntryFlag(this INavigationService navigationService)
         {
             RemoveBackEntryFlag = true;

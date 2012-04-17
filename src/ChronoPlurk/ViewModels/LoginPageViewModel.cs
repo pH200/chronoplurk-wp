@@ -131,11 +131,8 @@ namespace ChronoPlurk.ViewModels
                 new NotificationAction(AppResources.helpOK, () => { }),
                 new NotificationAction(AppResources.helpExample, () =>
                 {
-                    var task = new WebBrowserTask()
-                    {
-                        Uri = new Uri("http://images.plurk.com/4c31662a172aad703ef9d5535458b77f.jpg", UriKind.Absolute)
-                    };
-                    task.Show();
+                    var uri = new Uri("http://images.plurk.com/4c31662a172aad703ef9d5535458b77f.jpg", UriKind.Absolute);
+                    _navigationService.GotoImageBrowserPage(uri);
                 }));
         }
     }

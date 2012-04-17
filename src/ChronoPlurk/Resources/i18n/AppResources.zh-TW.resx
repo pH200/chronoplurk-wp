@@ -489,4 +489,7 @@
   <data name="helpTitle" xml:space="preserve">
     <value>說明</value>
   </data>
+  <data name="appbarOpenInIE" xml:space="preserve">
+    <value>在internet exploer開啟</value>
+  </data>
 </root>

@@ -142,6 +142,15 @@ namespace ChronoPlurk.Resources.i18n {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to open in internet explorer.
+        /// </summary>
+        public static string appbarOpenInIE {
+            get {
+                return ResourceManager.GetString("appbarOpenInIE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to photos.
         /// </summary>
         public static string appbarPhotos {

@@ -489,4 +489,7 @@
   <data name="helpTitle" xml:space="preserve">
     <value>Help</value>
   </data>
+  <data name="appbarOpenInIE" xml:space="preserve">
+    <value>open in internet explorer</value>
+  </data>
 </root>
