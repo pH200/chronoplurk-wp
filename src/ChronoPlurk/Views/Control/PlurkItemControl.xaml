@@ -41,7 +41,7 @@
                VerticalAlignment="Top"
                CacheMode="BitmapCache" />
         <StackPanel Grid.Column="1">
-            <StackPanel Orientation="Horizontal" Height="40">
+            <StackPanel Orientation="Horizontal" MinHeight="40">
                 <TextBlock Text="{Binding Username}"
         			       VerticalAlignment="Top"
         			       HorizontalAlignment="Left"
