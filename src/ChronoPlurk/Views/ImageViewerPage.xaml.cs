@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Windows.Media;
+using Caliburn.Micro;
 using ChronoPlurk.Helpers;
 using ChronoPlurk.Resources.i18n;
+using ChronoPlurk.Services;
 using Microsoft.Phone.Shell;
 using Microsoft.Phone.Tasks;
 using WP7Contrib.View.Transitions.Animation;
@@ -10,6 +12,7 @@ namespace ChronoPlurk.Views
 {
     public partial class ImageViewerPage
     {
+        private readonly IProgressService _progressService;
         public Uri ImageUri { get; set; }
 
         public ImageViewerPage()
@@ -20,14 +23,7 @@ namespace ChronoPlurk.Views
 
             ImageUri = new Uri("about:blank", UriKind.Absolute);
 
-            Browser.Navigating += (sender, args) =>
-            {
-                BrowserProgress.IsIndeterminate = true;
-            };
-            Browser.Navigated += (sender, args) =>
-            {
-                BrowserProgress.IsIndeterminate = false;
-            };
+            _progressService = IoC.Get<IProgressService>();
         }
 
         protected override AnimatorHelperBase GetAnimation(AnimationType animationType, Uri toOrFrom)
@@ -60,6 +56,16 @@ namespace ChronoPlurk.Views
                 }
             }
             base.OnNavigatedTo(e);
+        }
+
+        private void Browser_Navigating(object sender, Microsoft.Phone.Controls.NavigatingEventArgs e)
+        {
+            _progressService.Show();
+        }
+
+        private void Browser_LoadCompleted(object sender, System.Windows.Navigation.NavigationEventArgs e)
+        {
+            _progressService.Hide();
         }
 
         private void BuildAppBar()

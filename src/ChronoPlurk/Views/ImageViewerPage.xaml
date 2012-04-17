@@ -7,7 +7,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:animation="clr-namespace:WP7Contrib.View.Transitions.Animation;assembly=WP7Contrib.View.Transitions"
-    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
@@ -22,9 +21,10 @@
         </Grid.RowDefinitions>
         
         <phone:WebBrowser x:Name="Browser"
-                          IsScriptEnabled="True"
+                          Navigating="Browser_Navigating"
+                          LoadCompleted="Browser_LoadCompleted"
                           HorizontalContentAlignment="Stretch"
-                          VerticalContentAlignment="Stretch"/>
+                          VerticalContentAlignment="Stretch" />
         
         <Grid Grid.Row="1"
               Margin="8"
@@ -38,8 +38,6 @@
                            Foreground="{StaticResource PhoneTextBoxReadOnlyBrush}"/>
             </ScrollViewer>
         </Grid>
-        <toolkit:PerformanceProgressBar x:Name="BrowserProgress"
-                                        VerticalAlignment="Bottom" />
     </Grid>
 
 </animation:AnimatedBasePage>
