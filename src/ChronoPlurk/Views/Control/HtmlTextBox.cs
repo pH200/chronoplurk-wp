@@ -272,6 +272,14 @@ namespace ChronoPlurk.Views.PlurkControls
                             var webBrowserTask = new WebBrowserTask() { Uri = e.Uri };
                             webBrowserTask.Show();
                         }
+                        else
+                        {
+                            var frame = Application.Current.RootVisual as Microsoft.Phone.Controls.PhoneApplicationFrame;
+                            if (frame != null)
+                            {
+                                frame.Navigate(e.Uri);
+                            }
+                        }
                     });
                 _imageClickEvents.Add(click);
             }

@@ -7,6 +7,18 @@ namespace ChronoPlurk.Views.PlurkControls
 {
     public static class UrlRemapper
     {
+        private static class ImagePredicate
+        {
+            private static readonly string[] Extensions = new[]
+            {
+                ".gif", ".jpg", ".jpeg", ".bmp", ".png", ".svg"
+            };
+            public static bool Predicate(string url)
+            {
+                return Extensions.Any(e => url.EndsWith(e, StringComparison.InvariantCultureIgnoreCase));
+            }
+        }
+
         private static PredicateMapper[] _remappers = new PredicateMapper[]
         {
             new PredicateMapper(
@@ -67,6 +79,13 @@ namespace ChronoPlurk.Views.PlurkControls
                     {
                         return UriFactory(u, UriKind.Absolute);
                     }
+                }),
+            new PredicateMapper(
+                predicate: ImagePredicate.Predicate,
+                mapper: u =>
+                {
+                    const string pageUrl = "//Views/ImageViewerPage.xaml?ImageUri=";
+                    return UriFactory(pageUrl + u, UriKind.Relative);
                 }),
         };
 
