@@ -136,11 +136,12 @@ namespace ChronoPlurk.ViewModels.Main
         {
             RequestUnreadCount();
 
-            var getPlurks = TimelineCommand.GetUnreadPlurks().Client(PlurkService.Client).ToObservable();
+            // Manually set limit, default sends all unreads.
+            var getPlurks = TimelineCommand.GetUnreadPlurks(limit: 20).Client(PlurkService.Client).ToObservable();
             RequestMoreHandler = plurks =>
             {
                 var oldestOffset = new DateTime(plurks.Plurks.Min(p => p.PostDate.Ticks), DateTimeKind.Utc);
-                return TimelineCommand.GetUnreadPlurks(oldestOffset).Client(PlurkService.Client).ToObservable();
+                return TimelineCommand.GetUnreadPlurks(oldestOffset, limit: 20).Client(PlurkService.Client).ToObservable();
             };
             Request(getPlurks);
         }
