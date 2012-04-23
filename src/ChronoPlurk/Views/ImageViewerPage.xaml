@@ -1,4 +1,4 @@
-﻿<animation:AnimatedBasePage 
+﻿<animation:AnimatedBasePage x:Name="animatedBasePage" 
     x:Class="ChronoPlurk.Views.ImageViewerPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -7,37 +7,161 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:animation="clr-namespace:WP7Contrib.View.Transitions.Animation;assembly=WP7Contrib.View.Transitions"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
-    Orientation="Portrait"
-    mc:Ignorable="d" d:DesignHeight="768" d:DesignWidth="480"
-    shell:SystemTray.IsVisible="True">
+    SupportedOrientations="PortraitOrLandscape" Orientation="Portrait"
+    mc:Ignorable="d" d:DesignHeight="800" d:DesignWidth="480"
+    shell:SystemTray.IsVisible="False">
     
-    <Grid x:Name="LayoutRoot" Background="Transparent">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="60"/>
-        </Grid.RowDefinitions>
+    <Grid x:Name="LayoutRoot" Background="Black">
+    	<VisualStateManager.VisualStateGroups>
+    		<VisualStateGroup x:Name="VisualStateGroup">
+    			<VisualStateGroup.Transitions>
+    				<VisualTransition GeneratedDuration="0:0:0.3"/>
+    				<VisualTransition From="LandscapeRight" GeneratedDuration="0:0:0.3" To="Portrait">
+    					<Storyboard>
+    						<DoubleAnimation Duration="0:0:0.0" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.Rotation)" Storyboard.TargetName="UrlContainer"/>
+    						<PointAnimation Duration="0:0:0.0" Storyboard.TargetProperty="(UIElement.RenderTransformOrigin)" Storyboard.TargetName="UrlContainer"/>
+    						<DoubleAnimation Duration="0:0:0.0" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Storyboard.TargetName="UrlContainer"/>
+    						<DoubleAnimation Duration="0:0:0.0" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="UrlContainer"/>
+    						<DoubleAnimation Duration="0:0:0.3" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.Rotation)" Storyboard.TargetName="Browser" From="-90"/>
+    					</Storyboard>
+    				</VisualTransition>
+                    <VisualTransition From="LandscapeLeft" GeneratedDuration="0:0:0.3" To="Portrait">
+                        <Storyboard>
+                            <DoubleAnimation Duration="0:0:0.0" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.Rotation)" Storyboard.TargetName="UrlContainer"/>
+                            <PointAnimation Duration="0:0:0.0" Storyboard.TargetProperty="(UIElement.RenderTransformOrigin)" Storyboard.TargetName="UrlContainer"/>
+                            <DoubleAnimation Duration="0:0:0.0" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Storyboard.TargetName="UrlContainer"/>
+                            <DoubleAnimation Duration="0:0:0.0" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="UrlContainer"/>
+                            <DoubleAnimation Duration="0:0:0.3" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.Rotation)" Storyboard.TargetName="Browser" From="90"/>
+                        </Storyboard>
+                    </VisualTransition>
+                </VisualStateGroup.Transitions>
+    			<VisualState x:Name="Portrait"/>
+    			<VisualState x:Name="LandscapeLeft">
+    				<Storyboard>
+    					<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="Browser">
+    						<DiscreteObjectKeyFrame KeyTime="0">
+    							<DiscreteObjectKeyFrame.Value>
+    								<Thickness>0</Thickness>
+    							</DiscreteObjectKeyFrame.Value>
+    						</DiscreteObjectKeyFrame>
+    					</ObjectAnimationUsingKeyFrames>
+    					<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(PhoneApplicationPage.Orientation)" Storyboard.TargetName="animatedBasePage">
+    						<DiscreteObjectKeyFrame KeyTime="0">
+    							<DiscreteObjectKeyFrame.Value>
+    								<phone:PageOrientation>Landscape</phone:PageOrientation>
+    							</DiscreteObjectKeyFrame.Value>
+    						</DiscreteObjectKeyFrame>
+    					</ObjectAnimationUsingKeyFrames>
+    					<DoubleAnimation Duration="0" To="-90" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.Rotation)" Storyboard.TargetName="UrlContainer" d:IsOptimized="True"/>
+    					<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.HorizontalAlignment)" Storyboard.TargetName="UrlContainer">
+    						<DiscreteObjectKeyFrame KeyTime="0">
+    							<DiscreteObjectKeyFrame.Value>
+    								<HorizontalAlignment>Left</HorizontalAlignment>
+    							</DiscreteObjectKeyFrame.Value>
+    						</DiscreteObjectKeyFrame>
+    					</ObjectAnimationUsingKeyFrames>
+    					<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.VerticalAlignment)" Storyboard.TargetName="UrlContainer">
+    						<DiscreteObjectKeyFrame KeyTime="0">
+    							<DiscreteObjectKeyFrame.Value>
+    								<VerticalAlignment>Top</VerticalAlignment>
+    							</DiscreteObjectKeyFrame.Value>
+    						</DiscreteObjectKeyFrame>
+    					</ObjectAnimationUsingKeyFrames>
+    					<PointAnimation Duration="0" To="0,0" Storyboard.TargetProperty="(UIElement.RenderTransformOrigin)" Storyboard.TargetName="UrlContainer" d:IsOptimized="True"/>
+    					<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Storyboard.TargetName="UrlContainer">
+    						<EasingDoubleKeyFrame KeyTime="0" Value="740"/>
+    						<EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="800"/>
+    					</DoubleAnimationUsingKeyFrames>
+    					<DoubleAnimation Duration="0" To="480" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="UrlContainer" d:IsOptimized="True"/>
+    					<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.Rotation)" Storyboard.TargetName="Browser">
+    						<EasingDoubleKeyFrame KeyTime="0" Value="-90"/>
+    						<EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="0"/>
+    					</DoubleAnimationUsingKeyFrames>
+    				</Storyboard>
+    			</VisualState>
+    			<VisualState x:Name="LandscapeRight">
+    				<Storyboard>
+    					<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="Browser">
+    						<DiscreteObjectKeyFrame KeyTime="0">
+    							<DiscreteObjectKeyFrame.Value>
+    								<Thickness>0</Thickness>
+    							</DiscreteObjectKeyFrame.Value>
+    						</DiscreteObjectKeyFrame>
+    					</ObjectAnimationUsingKeyFrames>
+    					<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(PhoneApplicationPage.Orientation)" Storyboard.TargetName="animatedBasePage">
+    						<DiscreteObjectKeyFrame KeyTime="0">
+    							<DiscreteObjectKeyFrame.Value>
+    								<phone:PageOrientation>Landscape</phone:PageOrientation>
+    							</DiscreteObjectKeyFrame.Value>
+    						</DiscreteObjectKeyFrame>
+    					</ObjectAnimationUsingKeyFrames>
+    					<DoubleAnimation Duration="0" To="-90" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.Rotation)" Storyboard.TargetName="UrlContainer" d:IsOptimized="True"/>
+    					<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.HorizontalAlignment)" Storyboard.TargetName="UrlContainer">
+    						<DiscreteObjectKeyFrame KeyTime="0">
+    							<DiscreteObjectKeyFrame.Value>
+    								<HorizontalAlignment>Left</HorizontalAlignment>
+    							</DiscreteObjectKeyFrame.Value>
+    						</DiscreteObjectKeyFrame>
+    					</ObjectAnimationUsingKeyFrames>
+    					<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.VerticalAlignment)" Storyboard.TargetName="UrlContainer">
+    						<DiscreteObjectKeyFrame KeyTime="0">
+    							<DiscreteObjectKeyFrame.Value>
+    								<VerticalAlignment>Top</VerticalAlignment>
+    							</DiscreteObjectKeyFrame.Value>
+    						</DiscreteObjectKeyFrame>
+    					</ObjectAnimationUsingKeyFrames>
+    					<PointAnimation Duration="0" To="0,0" Storyboard.TargetProperty="(UIElement.RenderTransformOrigin)" Storyboard.TargetName="UrlContainer" d:IsOptimized="True"/>
+    					<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Storyboard.TargetName="UrlContainer">
+    						<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+    						<EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="-80"/>
+    					</DoubleAnimationUsingKeyFrames>
+    					<DoubleAnimation Duration="0" To="480" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="UrlContainer" d:IsOptimized="True"/>
+    					<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.Rotation)" Storyboard.TargetName="Browser">
+    						<EasingDoubleKeyFrame KeyTime="0" Value="90"/>
+    						<EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="0"/>
+    					</DoubleAnimationUsingKeyFrames>
+    				</Storyboard>
+    			</VisualState>
+    		</VisualStateGroup>
+    	</VisualStateManager.VisualStateGroups>
         
         <phone:WebBrowser x:Name="Browser"
+                          IsScriptEnabled="True"
                           Navigating="Browser_Navigating"
                           LoadCompleted="Browser_LoadCompleted"
+                          ScriptNotify="Browser_ScriptNotify"
                           HorizontalContentAlignment="Stretch"
-                          VerticalContentAlignment="Stretch" />
+                          VerticalContentAlignment="Stretch" RenderTransformOrigin="0.5,0.5" >
+        	<phone:WebBrowser.RenderTransform>
+        		<CompositeTransform/>
+        	</phone:WebBrowser.RenderTransform>
+        </phone:WebBrowser>
         
-        <Grid Grid.Row="1"
-              Margin="8"
-              Background="{StaticResource PhoneSubtleBrush}">
+        <Grid x:Name="UrlContainer"
+              Height="60"
+              Background="#FF888888" Width="480" VerticalAlignment="Bottom" RenderTransformOrigin="0.5,0.5">
+        	<Grid.RenderTransform>
+        		<CompositeTransform/>
+        	</Grid.RenderTransform>
             <ScrollViewer HorizontalScrollBarVisibility="Auto"
-                          VerticalScrollBarVisibility="Disabled">
+                          VerticalScrollBarVisibility="Disabled"
+                          Background="#DDFFFFFF"
+                          Margin="8">
                 <TextBlock x:Name="UrlTextBox"
                            Margin="4,0,0,0"
                            VerticalAlignment="Center"
                            FontSize="{StaticResource PhoneFontSizeMediumLarge}"
-                           Foreground="{StaticResource PhoneTextBoxReadOnlyBrush}"/>
+                           Foreground="#FF222222"/>
             </ScrollViewer>
         </Grid>
+        
+        <toolkit:PerformanceProgressBar
+            x:Name="ProgressBar"
+            VerticalAlignment="Top"/>
     </Grid>
 
 </animation:AnimatedBasePage>

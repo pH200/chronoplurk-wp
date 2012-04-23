@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
-using Caliburn.Micro;
 using ChronoPlurk.Helpers;
 using ChronoPlurk.Resources.i18n;
-using ChronoPlurk.Services;
+using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using Microsoft.Phone.Tasks;
 using WP7Contrib.View.Transitions.Animation;
@@ -12,7 +13,42 @@ namespace ChronoPlurk.Views
 {
     public partial class ImageViewerPage
     {
-        private readonly IProgressService _progressService;
+        private const string EmbedPage = @"
+<!doctype html>
+<html>
+<head>
+<title>ChronoPlurk Image Browser</title>
+<meta name=""viewport"" content=""width=800, initial-scale=1.0"">
+<script>
+function replaceImg(imgsrc) {
+    var img = document.createElement('img');
+    img.id = 'inner'
+    img.src = imgsrc;
+    img.addEventListener('load', function(e) {
+    	window.external.notify('load');
+    });
+    var container = document.getElementById('container');
+    container.replaceChild(img, document.getElementById('inner'));
+}
+function changeBg(color) {
+	document.body.bgColor = color;
+}
+</script>
+<style>
+body { margin: 20px 0; }
+#container { text-align: center; }
+#footer { height: 20px; }
+</style>
+</head>
+<body bgcolor=""black"">
+<div id=""container"">
+    <div id=""inner""></div>
+</div>
+<div id=""footer""></div>
+</body>
+</html>
+";
+
         public Uri ImageUri { get; set; }
 
         public ImageViewerPage()
@@ -22,8 +58,6 @@ namespace ChronoPlurk.Views
             BuildAppBar();
 
             ImageUri = new Uri("about:blank", UriKind.Absolute);
-
-            _progressService = IoC.Get<IProgressService>();
         }
 
         protected override AnimatorHelperBase GetAnimation(AnimationType animationType, Uri toOrFrom)
@@ -49,7 +83,7 @@ namespace ChronoPlurk.Views
                 {
                     ImageUri = new Uri(uriString, UriKind.Absolute);
                     UrlTextBox.Text = uriString;
-                    Browser.Navigate(ImageUri);
+                    Browser.NavigateToString(EmbedPage);
                 }
                 catch (UriFormatException)
                 {
@@ -58,14 +92,56 @@ namespace ChronoPlurk.Views
             base.OnNavigatedTo(e);
         }
 
+        protected override void OnOrientationChanged(Microsoft.Phone.Controls.OrientationChangedEventArgs e)
+        {
+            InvalidateOnOrientation(e.Orientation);
+            base.OnOrientationChanged(e);
+        }
+
+        private void InvalidateOnOrientation(PageOrientation orientation)
+        {
+            if (orientation == PageOrientation.LandscapeRight) // Clockwise
+            {
+                ApplicationBar.IsVisible = false;
+                VisualStateManager.GoToState(this, "LandscapeRight", false);
+            }
+            else if (orientation == PageOrientation.LandscapeLeft) // Counterclockwise
+            {
+                ApplicationBar.IsVisible = false;
+                VisualStateManager.GoToState(this, "LandscapeLeft", false);
+            }
+            else
+            {
+                ApplicationBar.IsVisible = true;
+                VisualStateManager.GoToState(this, "Portrait", true);
+            }
+        }
+
         private void Browser_Navigating(object sender, Microsoft.Phone.Controls.NavigatingEventArgs e)
         {
-            _progressService.Show();
+            ProgressBar.IsIndeterminate = true;
         }
 
         private void Browser_LoadCompleted(object sender, System.Windows.Navigation.NavigationEventArgs e)
         {
-            _progressService.Hide();
+            LoadImage();
+        }
+
+        private void Browser_ScriptNotify(object sender, Microsoft.Phone.Controls.NotifyEventArgs e)
+        {
+            ProgressBar.IsIndeterminate = false;
+        }
+
+        private void LoadImage()
+        {
+            try
+            {
+                Browser.InvokeScript("replaceImg", ImageUri.ToString());
+            }
+            catch
+            {
+                // Ignore exception
+            }
         }
 
         private void BuildAppBar()
@@ -83,8 +159,7 @@ namespace ChronoPlurk.Views
             };
             refreshButton.Click += (sender, args) =>
             {
-                // Browser.InvokeScript("eval", "history.go()"); // Crashes
-                Browser.Navigate(ImageUri);
+                Browser.NavigateToString(EmbedPage);
             };
             var openInIeButton = new ApplicationBarMenuItem()
             {

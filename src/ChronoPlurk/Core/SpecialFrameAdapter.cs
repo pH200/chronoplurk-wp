@@ -76,11 +76,15 @@ namespace ChronoPlurk.Core
 
         public static void SetPageSupportedOrientation(AutoRotateService autoRotateSerivce, PhoneApplicationPage page)
         {
-            if (page is ComposePage || page is ListPickerPage)
+            if (page is ImageViewerPage) // Ignore settings
+            {
+                page.SupportedOrientations = SupportedPageOrientation.PortraitOrLandscape;
+            }
+            else if (page is ComposePage || page is ListPickerPage) // Compose pages
             {
                 page.SupportedOrientations = autoRotateSerivce.ComposePageOrientation;
             }
-            else
+            else // Settings
             {
                 page.SupportedOrientations = autoRotateSerivce.PageOrientation;
             }
