@@ -127,6 +127,7 @@ namespace ChronoPlurk
         {
             PlurkResources.PhoneForegroundBrush = (SolidColorBrush)Application.Resources["PhoneForegroundBrush"];
             PlurkResources.PhoneAccentBrush = (SolidColorBrush)Application.Resources["PhoneAccentBrush"];
+            PlurkResources.PhoneDisabledBrush = (SolidColorBrush)Application.Resources["PhoneDisabledBrush"];
             PlurkResources.PhoneWidthGetter = () => RootFrame.ActualWidth;
             PlurkResources.PhoneHeightGetter = () => RootFrame.ActualHeight;
         }

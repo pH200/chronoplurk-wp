@@ -23,6 +23,7 @@ namespace ChronoPlurk.Helpers
 
         public static SolidColorBrush PhoneForegroundBrush { get; set; }
         public static SolidColorBrush PhoneAccentBrush { get; set; }
+        public static SolidColorBrush PhoneDisabledBrush { get; set; }
 
         public static Func<double> PhoneWidthGetter;
 

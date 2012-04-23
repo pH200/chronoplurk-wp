@@ -176,7 +176,7 @@ namespace ChronoPlurk.Views.PlurkControls
                                 }
                                 else
                                 {
-                                    var nextNode = CreateInlineNode(childNode);
+                                    var nextNode = CreateInlineNode(childNode, type);
                                     if (nextNode.Span != null)
                                     {
                                         addInlineOrQueue(nextNode.Span);
@@ -287,7 +287,11 @@ namespace ChronoPlurk.Views.PlurkControls
 
         private InlineNode CreateInlineNode(HtmlNode node)
         {
-            var type = GetHtmlType(node);
+            return CreateInlineNode(node, GetHtmlType(node));
+        }
+
+        private InlineNode CreateInlineNode(HtmlNode node, HtmlType type)
+        {
             switch (type)
             {
                 case HtmlType.Hyperlink:
@@ -299,9 +303,23 @@ namespace ChronoPlurk.Views.PlurkControls
                     {
                         return new InlineNode(node, new Underline() { Foreground = PlurkResources.PhoneAccentBrush });
                     }
-                default:
-                    return new InlineNode(node, null);
+                case HtmlType.Decoration:
+                    var decoration = GetDecorationType(node);
+                    switch (decoration)
+                    {
+                        case DecorationType.B:
+                            return new InlineNode(node, new Bold());
+                        case DecorationType.I:
+                            return new InlineNode(node, new Italic());
+                        case DecorationType.U:
+                            return new InlineNode(node, new Underline());
+                        case DecorationType.Strike:
+                            return new InlineNode(node, new Strikethrough());
+                        default:
+                            return new InlineNode(node, new Span());
+                    }
             }
+            return new InlineNode(node, null);
         }
 
         private static InlineNode CreateHyperlinkInlineNode(HtmlNode node)
@@ -370,8 +388,30 @@ namespace ChronoPlurk.Views.PlurkControls
                     return HtmlType.Image;
                 case "br":
                     return HtmlType.Newline;
+                case "b":
+                case "i":
+                case "u":
+                case "strike":
+                    return HtmlType.Decoration;
                 default:
                     return HtmlType.Text;
+            }
+        }
+
+        private static DecorationType GetDecorationType(HtmlNode node)
+        {
+            switch (node.Name)
+            {
+                case "b":
+                    return DecorationType.B;
+                case "i":
+                    return DecorationType.I;
+                case "u":
+                    return DecorationType.U;
+                case "strike":
+                    return DecorationType.Strike;
+                default:
+                    return DecorationType.None;
             }
         }
 
@@ -395,6 +435,24 @@ namespace ChronoPlurk.Views.PlurkControls
         private enum HtmlType
         {
             Text, Hyperlink, Image, Newline,
+            Decoration,
+        }
+
+        private enum DecorationType
+        {
+            None, B, I, U, Strike,
+        }
+
+        /// <summary>
+        /// Simulate class for strike tag span.
+        /// </summary>
+        private class Strikethrough : Span
+        {
+            public Strikethrough()
+            {
+                // Use fade color instead (Strike is not natively supported)
+                this.Foreground = PlurkResources.PhoneDisabledBrush;
+            }
         }
     }
 }
