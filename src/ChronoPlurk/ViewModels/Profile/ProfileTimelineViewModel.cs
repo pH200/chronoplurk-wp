@@ -75,6 +75,10 @@ namespace ChronoPlurk.ViewModels.Profile
 
         protected override void OnRequestCompleted(TimelineResult lastResult)
         {
+            if (lastResult == null)
+            {
+                return;
+            }
             var parent = this.GetParent();
             if (parent != null && parent.UserAvatar == null)
             {
