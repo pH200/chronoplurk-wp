@@ -135,7 +135,7 @@ namespace ChronoPlurk.Helpers
                     args.OnError(PlurkError.UnknownError);
                 }
                 return Observable.Empty<TSource>();
-            }, DispatcherScheduler.Instance).Merge();
+            }, DispatcherScheduler.Current).Merge();
         }
 
         public static IObservable<TSource> PlurkExceptionHandling<TSource>(
