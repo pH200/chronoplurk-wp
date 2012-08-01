@@ -10,6 +10,7 @@ namespace ChronoPlurk.Services
     {
         private const string AutoRotateModeKey = "AutoRotateMode";
         private const string FiltersOnOffPackKey = "FiltersOnOffPack";
+        private const string IsInfiniteScrollKey = "IsInfiniteScroll";
 
         protected INavigationService NavigationService { get; set; }
 
@@ -55,7 +56,7 @@ namespace ChronoPlurk.Services
         {
             if (save)
             {
-                IsoSettings.AddOrChange("AutoRotateMode", mode);
+                IsoSettings.AddOrChange(AutoRotateModeKey, mode);
             }
             AutoRotateService.SetAutoRotateMode(mode);
             if (applyCurrentPage)
@@ -71,6 +72,24 @@ namespace ChronoPlurk.Services
         public int GetCurrentAutoRotateIndex()
         {
             return ((int)AutoRotateService.AutoRotateMode);
+        }
+
+        public bool GetIsInfiniteScroll()
+        {
+            bool isInfiniteScroll;
+            if (IsoSettings.TryGetValue(IsInfiniteScrollKey, out isInfiniteScroll))
+            {
+                return isInfiniteScroll;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        public void SetIsInfiniteScroll(bool value)
+        {
+            IsoSettings.AddOrChange(IsInfiniteScrollKey, value);
         }
     }
 }

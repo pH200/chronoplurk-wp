@@ -139,9 +139,13 @@ namespace ChronoPlurk.ViewModels
                 var timeline = uiView.FindVisualChildByName<TimelineControl>("Timeline");
                 timeline.VerticalCompressionChanged += (sender, e) =>
                 {
-                    if (e.NewState.Name == "CompressionBottom")
+                    var settings = IoC.Get<SettingsService>();
+                    if (settings.GetIsInfiniteScroll())
                     {
-                        RequestMore();
+                        if (e.NewState.Name == "CompressionBottom")
+                        {
+                            RequestMore();
+                        }
                     }
                 };
             }

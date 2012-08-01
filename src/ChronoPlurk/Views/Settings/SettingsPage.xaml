@@ -41,6 +41,10 @@
                     <ScrollViewer HorizontalScrollBarVisibility="Disabled"
                                   VerticalScrollBarVisibility="Auto">
                         <StackPanel>
+                            <toolkit:ToggleSwitch x:Name="PrivateSwitch"
+                                      Header="{Binding Path=LocalizedResources.settingsInfiniteScroll, Source={StaticResource LocalizedStrings}}"
+                                      IsChecked="{Binding IsInfiniteScroll, Mode=TwoWay}"
+                                      cal:Message.Attach="[Event Checked] = [Action OnIsInfiniteScrollChanged()];[Event Unchecked] = [Action OnIsInfiniteScrollChanged()]"/>
                             <toolkit:ListPicker x:Name="AutoRotates"
                                             ItemsSource="{Binding AutoRotates}"
                                             Header="{Binding Path=LocalizedResources.settingsAutoRotate, Source={StaticResource LocalizedStrings}}"

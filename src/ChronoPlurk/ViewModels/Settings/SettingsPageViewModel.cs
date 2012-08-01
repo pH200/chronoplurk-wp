@@ -31,6 +31,8 @@ namespace ChronoPlurk.ViewModels.Settings
 
         public string VersionText { get; set; }
 
+        public bool IsInfiniteScroll { get; set; }
+
         #region FiltersOnOff
 
         public bool UnreadChk { get; set; }
@@ -61,6 +63,8 @@ namespace ChronoPlurk.ViewModels.Settings
             
             var pack = SettingsService.GetFiltersPack();
             SetFiltersValue(pack);
+
+            IsInfiniteScroll = SettingsService.GetIsInfiniteScroll();
 
             VersionText = DefaultConfiguration.VersionText;
         }
@@ -125,6 +129,11 @@ namespace ChronoPlurk.ViewModels.Settings
             {
                 return default(AutoRotateMode);
             }
+        }
+
+        public void OnIsInfiniteScrollChanged()
+        {
+            SettingsService.SetIsInfiniteScroll(IsInfiniteScroll);
         }
 
         public void OnPlurkLink()

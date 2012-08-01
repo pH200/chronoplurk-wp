@@ -492,4 +492,7 @@
   <data name="appbarOpenInIE" xml:space="preserve">
     <value>open in internet explorer</value>
   </data>
+  <data name="settingsInfiniteScroll" xml:space="preserve">
+    <value>infinite scrolling on timeline</value>
+  </data>
 </root>

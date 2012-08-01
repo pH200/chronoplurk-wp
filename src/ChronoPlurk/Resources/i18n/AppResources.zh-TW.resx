@@ -492,4 +492,7 @@
   <data name="appbarOpenInIE" xml:space="preserve">
     <value>在internet exploer開啟</value>
   </data>
+  <data name="settingsInfiniteScroll" xml:space="preserve">
+    <value>河道無限捲軸</value>
+  </data>
 </root>
