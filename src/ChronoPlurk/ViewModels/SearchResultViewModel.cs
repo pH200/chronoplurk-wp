@@ -45,8 +45,8 @@ namespace ChronoPlurk.ViewModels
 
         public void Search(string query, int? offset = null)
         {
-            var getPlurks = SearchCommand.Find(query, offset).Client(PlurkService.Client).ToObservable();
-            RequestMoreHandler = plurks => SearchCommand.Find(query, plurks.LastOffset).Client(PlurkService.Client).ToObservable();
+            var getPlurks = SearchCommand.PlurkSearch(query, offset).Client(PlurkService.Client).ToObservable();
+            RequestMoreHandler = plurks => SearchCommand.PlurkSearch(query, plurks.LastOffset).Client(PlurkService.Client).ToObservable();
 
             Request(getPlurks);
             
