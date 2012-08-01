@@ -10,6 +10,7 @@ using ChronoPlurk.Resources.i18n;
 using ChronoPlurk.Services;
 using ChronoPlurk.Helpers;
 using ChronoPlurk.ViewModels.Core;
+using ChronoPlurk.Views.PlurkControls;
 using NotifyPropertyWeaver;
 using Plurto.Core;
 using Plurto.Entities;
@@ -131,6 +132,18 @@ namespace ChronoPlurk.ViewModels
             {
                 var service = IoC.Get<PlurkHolderService>();
                 service.Add(this);
+            }
+            var uiView = view as UIElement;
+            if (uiView != null)
+            {
+                var timeline = uiView.FindVisualChildByName<TimelineControl>("Timeline");
+                timeline.VerticalCompressionChanged += (sender, e) =>
+                {
+                    if (e.NewState.Name == "CompressionBottom")
+                    {
+                        RequestMore();
+                    }
+                };
             }
             base.OnViewLoaded(view);
         }

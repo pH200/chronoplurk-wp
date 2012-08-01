@@ -40,7 +40,8 @@
                               ListFooterTemplate="{StaticResource Footer}"
                               ListHeader="{Binding}"
                               ListFooter="{Binding}"
-                              IsFlatList="True">
+                              IsFlatList="True"
+                              Loaded="LongListSelector_Loaded">
         <toolkit:LongListSelector.ItemTemplate>
             <DataTemplate>
                 <pcontrols:PlurkItemControl QualifierColor="{Binding QualifierColor}"
