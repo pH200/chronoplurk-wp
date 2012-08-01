@@ -284,7 +284,12 @@ namespace ChronoPlurk.ViewModels.Compose
                         .ToObservable()
                         .PlurkException(expectedTimeout: DefaultConfiguration.TimeoutUpload,
                                         onError: OnPictureUploadFailed)
-                        .ObserveOnDispatcher();
+                        .ObserveOnDispatcher()
+                        .Finally(() =>
+                        {
+                            resizedPhotoStream.Dispose();
+                            upload.Dispose();
+                        });
 
                     _uploadHandler = uploadCommand
                         .Subscribe(picture =>
@@ -293,10 +298,6 @@ namespace ChronoPlurk.ViewModels.Compose
                         }, onCompleted: () =>
                         {
                             ProgressService.Hide();
-                            if (resizedPhotoStream != null)
-                            {
-                                resizedPhotoStream.Dispose();
-                            }
                         });
                 }
             }
