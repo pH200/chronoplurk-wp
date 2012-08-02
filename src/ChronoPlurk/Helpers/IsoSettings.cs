@@ -3,6 +3,7 @@ using System.IO;
 using System.IO.IsolatedStorage;
 using System.Linq;
 using System.Reactive.Linq;
+using System.Windows;
 using Polenter.Serialization;
 using Polenter.Serialization.Core;
 
@@ -51,13 +52,12 @@ namespace ChronoPlurk.Helpers
                             {
                                 return sharpSerializer.Deserialize(file);
                             }
-                            catch (DeserializingException)
+                            catch (DeserializingException e)
                             {
 #if DEBUG
-                                throw;
-#else
-                                return null;
+                                ThreadEx.OnUIThread(() => MessageBox.Show(e.ToString(), "DEBUG MODE", MessageBoxButton.OK));
 #endif
+                                return null;
                             }
                         }
                     }
