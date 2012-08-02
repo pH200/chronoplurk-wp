@@ -3,9 +3,10 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:imgloader="clr-namespace:ChronoPlurk.Views.ImageLoader"
-             xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
-             xmlns:cal="http://www.caliburnproject.org" mc:Ignorable="d"
+    xmlns:imgloader="clr-namespace:ChronoPlurk.Views.ImageLoader"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:cal="http://www.caliburnproject.org"
+    mc:Ignorable="d"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
@@ -25,22 +26,21 @@
         </DataTemplate>
     </UserControl.Resources>
 
-    <Grid x:Name="LayoutRoot">
+    <Grid x:Name="LayoutRoot" Background="Transparent">
         <toolkit:LongListSelector x:Name="Items"
-                              ItemsSource="{Binding Items}"
-                              ListFooterTemplate="{StaticResource Footer}"
-                              ListFooter="{Binding}"
-                              IsFlatList="True">
+                                  ItemsSource="{Binding Items}"
+                                  ListFooterTemplate="{StaticResource Footer}"
+                                  ListFooter="{Binding}"
+                                  IsFlatList="True"
+                                  Background="Transparent">
             <toolkit:LongListSelector.ItemTemplate>
                 <DataTemplate>
-                    <Grid cal:Message.Attach="[Event Tap] = [Action OnUserTapped($dataContext)]"
-                          Background="{StaticResource PhoneBackgroundBrush}">
+                    <Grid cal:Message.Attach="[Event Tap] = [Action OnUserTapped($dataContext)]">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="65" />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
-                        <Border Background="{StaticResource PhoneChromeBrush}"
-                                Height="45"
+                        <Border Height="45"
                                 Width="45"
                                 Margin="10,10,0,0"
                                 HorizontalAlignment="Left"
