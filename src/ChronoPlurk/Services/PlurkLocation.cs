@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using ChronoPlurk.ViewModels;
+using Plurto.Core;
 
 namespace ChronoPlurk.Services
 {
@@ -16,9 +18,24 @@ namespace ChronoPlurk.Services
 
         public PlurkLocation(PlurkItemViewModel item)
         {
-            Parsed = String.Format(PageUri, item.PlurkId, item.UserId, item.Username, (int)item.QualifierEnum, item.Qualifier,
-                                   item.PostDate.ToUniversalTime().Ticks, item.AvatarView, (int)item.NoComments, item.IsFavorite,
-                                   item.ResponseCount, (int)item.IsUnread, (int)item.PlurkType);
+            Parsed = HttpFormat(PageUri, item.PlurkId, item.UserId, item.Username, (int)item.QualifierEnum, item.Qualifier,
+                                item.PostDate.ToUniversalTime().Ticks, item.AvatarView, (int)item.NoComments, item.IsFavorite,
+                                item.ResponseCount, (int)item.IsUnread, (int)item.PlurkType);
+        }
+
+        private static string HttpFormat(string format, params object[] args)
+        {
+            var array = args.Select(arg =>
+            {
+                var value = ObjectToString(arg);
+                return (object) HttpTools.EscapeDataStringOmitNull(value);
+            }).ToArray();
+            return string.Format(format, array);
+        }
+
+        private static string ObjectToString(object value)
+        {
+            return value == null ? null : value.ToString();
         }
 
         public string Parsed { get; private set; }
