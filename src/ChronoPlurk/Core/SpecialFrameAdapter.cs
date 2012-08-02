@@ -1,5 +1,7 @@
 using System;
 using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using Caliburn.Micro;
 using ChronoPlurk.Services;
@@ -50,8 +52,28 @@ namespace ChronoPlurk.Core
         {
             var page = e.Content as PhoneApplicationPage;
             SetOrientationInternal(page);
+            SetBackgroundInternal(page);
             ProcessMainPageBackEntryRemoval(page);
             base.OnNavigated(sender, e);
+        }
+
+
+        private static void SetBackgroundInternal(PhoneApplicationPage page)
+        {
+            if (page is ImageViewerPage || page is ListPickerPage)
+            {
+                return;
+            }
+            var layoutRoot = VisualTreeHelper.GetChild(page, 0) as Grid;
+            if (layoutRoot != null && layoutRoot.Name == "LayoutRoot")
+            {
+                layoutRoot.Background = new ImageBrush()
+                {
+                    ImageSource = new BitmapImage(new Uri("/Resources/Images/bg_half_white.jpg", UriKind.Relative)),
+                    Stretch = Stretch.UniformToFill,
+                    Opacity = 0.2,
+                };
+            }
         }
 
         private void ProcessMainPageBackEntryRemoval(PhoneApplicationPage page)

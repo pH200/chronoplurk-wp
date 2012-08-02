@@ -208,6 +208,7 @@
     <Compile Include="ViewModels\SearchRecordsViewModel.cs" />
     <Compile Include="ViewModels\SearchResultViewModel.cs" />
     <Compile Include="Helpers\TextBoxExtensions.cs" />
+    <Compile Include="ViewModels\Settings\SettingsBgViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsOssCreditsPageViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsPageViewModel.cs" />
     <Compile Include="ViewModels\Profile\PlurkProfilePageViewModel.cs" />
@@ -230,6 +231,7 @@
       <DependentUpon>TimelineControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Control\UrlRemapper.cs" />
+    <Compile Include="Views\Control\VisibilityConverter.cs" />
     <Compile Include="Views\DesignTime\SearchResultDesignData.cs" />
     <Compile Include="Views\FriendsFans\FriendsFansListPage.xaml.cs">
       <DependentUpon>FriendsFansListPage.xaml</DependentUpon>
@@ -278,6 +280,9 @@
     </Compile>
     <Compile Include="Views\SearchPage.xaml.cs">
       <DependentUpon>SearchPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Settings\SettingsBgView.xaml.cs">
+      <DependentUpon>SettingsBgView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Settings\SettingsOssCreditsPage.xaml.cs">
       <DependentUpon>SettingsOssCreditsPage.xaml</DependentUpon>
@@ -411,6 +416,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Settings\SettingsBgView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Settings\SettingsOssCreditsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -450,6 +459,7 @@
     <Content Include="Resources\Icons\plurk.private.png" />
     <Content Include="Resources\Icons\plurk.replurk.png" />
     <Content Include="Resources\Icons\Search.png" />
+    <Content Include="Resources\Images\bg_half_white.jpg" />
     <Content Include="Resources\Images\cytisan_logo.jpg" />
     <Content Include="Resources\Images\plurkicon.png" />
     <Content Include="Resources\Avatar\default_big.jpg" />

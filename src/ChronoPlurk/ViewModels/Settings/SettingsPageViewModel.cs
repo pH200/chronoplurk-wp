@@ -17,6 +17,8 @@ namespace ChronoPlurk.ViewModels.Settings
     [NotifyForAll]
     public class SettingsPageViewModel : Conductor<IScreen>.Collection.OneActive
     {
+        public SettingsBgViewModel SettingsBgViewModel { get; set; }
+
         protected SettingsService SettingsService { get; set; }
 
         protected IPlurkService PlurkService { get; set; }
@@ -45,10 +47,13 @@ namespace ChronoPlurk.ViewModels.Settings
         #endregion
 
         public SettingsPageViewModel(
+            SettingsBgViewModel settingsBgViewModel,
             SettingsService settingsService,
             IPlurkService plurkService,
             INavigationService navigationService)
         {
+            SettingsBgViewModel = settingsBgViewModel;
+            SettingsBgViewModel.Parent = this;
             SettingsService = settingsService;
             PlurkService = plurkService;
             NavigationService = navigationService;
@@ -81,6 +86,22 @@ namespace ChronoPlurk.ViewModels.Settings
             SettingsService.SetFiltersPack(pack);
 
             base.OnDeactivate(close);
+        }
+
+        public void SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var pivot = sender as Pivot;
+            if (pivot != null)
+            {
+                if (pivot.SelectedIndex == 2)
+                {
+                    ActivateItem(SettingsBgViewModel);
+                }
+                else
+                {
+                    DeactivateItem(SettingsBgViewModel, false);
+                }
+            }
         }
 
         public void LogoutButton()

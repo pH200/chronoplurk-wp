@@ -12,6 +12,7 @@
     xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro"
     xmlns:imgloader="clr-namespace:ChronoPlurk.Views.ImageLoader"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:pcontrols="clr-namespace:ChronoPlurk.Views"
     mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -23,10 +24,13 @@
         <DataTemplate x:Key="FullTemplate">
             <TextBlock Text="{Binding}" Style="{StaticResource PhoneTextLargeStyle}" Margin="12,12"/>
         </DataTemplate>
+        <pcontrols:VisibilityConverter x:Key="VisibilityConverter" />
     </phone:PhoneApplicationPage.Resources>
 
     <Grid x:Name="LayoutRoot" Background="Transparent">
-        <controls:Pivot Title="{Binding Path=LocalizedResources.settingsTitle, Source={StaticResource LocalizedStrings}}">
+        <toolkit:LockablePivot x:Name="SettingsPivot"
+                               Title="{Binding Path=LocalizedResources.settingsTitle, Source={StaticResource LocalizedStrings}}"
+                               cal:Message.Attach="[Event SelectionChanged] = [Action SelectionChanged($source, $eventArgs)]">
             <controls:PivotItem Header="{Binding Path=LocalizedResources.settingsAccounts, Source={StaticResource LocalizedStrings}}">
                 <Grid>
                     <StackPanel>
@@ -70,6 +74,12 @@
                 </Grid>
             </controls:PivotItem>
 
+            <controls:PivotItem Header="background">
+                <ContentControl cal:View.Model="{Binding SettingsBgViewModel}"
+                                HorizontalAlignment="Stretch"
+                                HorizontalContentAlignment="Stretch" />
+            </controls:PivotItem>
+
             <controls:PivotItem Header="{Binding Path=LocalizedResources.settingsAbout, Source={StaticResource LocalizedStrings}}">
                 <ScrollViewer HorizontalScrollBarVisibility="Disabled"
                               VerticalScrollBarVisibility="Auto">
@@ -110,6 +120,6 @@
                     </StackPanel>
                 </ScrollViewer>
             </controls:PivotItem>
-        </controls:Pivot>
+        </toolkit:LockablePivot>
     </Grid>
 </animation:AnimatedBasePage>
