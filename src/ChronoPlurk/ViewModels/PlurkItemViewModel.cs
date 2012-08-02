@@ -187,7 +187,16 @@ namespace ChronoPlurk.ViewModels
             {
                 postDate = DateTime.Now - timeSpan;
             }
-            return postDate.Value.ToString(AppResources.timeShort);
+            const string numbersAndSpace = " 0123456789";
+            var date = postDate.Value.ToString(AppResources.timeShort);
+            if (date.All(c => numbersAndSpace.Contains(c)))
+            {
+                return postDate.Value.ToShortDateString();
+            }
+            else
+            {
+                return date;
+            }
         }
     }
 }
