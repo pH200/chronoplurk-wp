@@ -125,16 +125,21 @@ namespace ChronoPlurk.Views.PlurkControls
 
             if (!string.IsNullOrEmpty(html))
             {
-                var document = new HtmlDocument();
-                document.LoadHtml(html);
-
-                var paragraph = new Paragraph();
-                var inlines = ProcessNodeInternal(document.DocumentNode);
-                foreach (var inline in inlines)
+                ThreadEx.OnThreadPool(() =>
                 {
-                    paragraph.Inlines.Add(inline);
-                }
-                RichTextBox.Blocks.Add(paragraph);
+                    var document = new HtmlDocument();
+                    document.LoadHtml(html);
+                    return document;
+                }, document =>
+                {
+                    var paragraph = new Paragraph();
+                    var inlines = ProcessNodeInternal(document.DocumentNode);
+                    foreach (var inline in inlines)
+                    {
+                        paragraph.Inlines.Add(inline);
+                    }
+                    RichTextBox.Blocks.Add(paragraph);
+                });
             }
         }
 

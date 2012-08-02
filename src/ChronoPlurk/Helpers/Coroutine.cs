@@ -14,5 +14,23 @@ namespace ChronoPlurk.Helpers
         {
             ThreadPool.QueueUserWorkItem(state => action());
         }
+
+        public static void OnThreadPool(this Action action, Action onCompleteUI)
+        {
+            ThreadPool.QueueUserWorkItem(state =>
+            {
+                action();
+                onCompleteUI.OnUIThread();
+            });
+        }
+
+        public static void OnThreadPool<T>(this Func<T> action, Action<T> onCompleteUI)
+        {
+            ThreadPool.QueueUserWorkItem(state =>
+            {
+                var result = action();
+                OnUIThread(() => onCompleteUI(result));
+            });
+        }
     }
 }
