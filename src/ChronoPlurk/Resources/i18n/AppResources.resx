@@ -495,4 +495,7 @@
   <data name="settingsInfiniteScroll" xml:space="preserve">
     <value>infinite scrolling on timeline</value>
   </data>
+  <data name="appbarScrollToLatest" xml:space="preserve">
+    <value>scroll to latest</value>
+  </data>
 </root>

@@ -205,6 +205,15 @@ namespace ChronoPlurk.Resources.i18n {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to scroll to latest.
+        /// </summary>
+        public static string appbarScrollToLatest {
+            get {
+                return ResourceManager.GetString("appbarScrollToLatest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to search.
         /// </summary>
         public static string appbarSearch {

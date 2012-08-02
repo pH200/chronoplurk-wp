@@ -335,6 +335,11 @@ namespace ChronoPlurk.ViewModels
             ReloadAppBar();
         }
 
+        public void ScrollToLatestAppBar()
+        {
+            this.PlurkDetailViewModel.ScrollToEnd();
+        }
+
         #endregion
 
         #region Can...

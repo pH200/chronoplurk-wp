@@ -410,7 +410,7 @@ namespace ChronoPlurk.ViewModels
             var scroll = FindScroll();
             if (scroll != null)
             {
-                scroll.ScrollToVerticalOffset(double.MaxValue);
+                scroll.ScrollToVerticalOffset(scroll.ScrollableHeight);
             }
         }
 

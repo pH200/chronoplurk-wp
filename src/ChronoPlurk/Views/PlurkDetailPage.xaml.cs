@@ -125,6 +125,11 @@ namespace ChronoPlurk.Views
                 Message = "MuteAppBar"
             };
             MuteButton = muteButton;
+            var scrollToLatestButton = new AppBarMenuItem()
+            {
+                Text = AppResources.appbarScrollToLatest,
+                Message = "ScrollToLatestAppBar"
+            };
 
             ApplicationBar.Buttons.Add(refreshButton);
             ApplicationBar.Buttons.Add(replyButton);
@@ -132,6 +137,7 @@ namespace ChronoPlurk.Views
             ApplicationBar.Buttons.Add(photosButton);
             ApplicationBar.MenuItems.Add(likeButton);
             ApplicationBar.MenuItems.Add(muteButton);
+            ApplicationBar.MenuItems.Add(scrollToLatestButton);
         }
 
         public void ReplyRowAuto()
