@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reactive.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using Caliburn.Micro;
 using ChronoPlurk.Core;
 using ChronoPlurk.Resources.i18n;
@@ -14,6 +15,8 @@ using ChronoPlurk.Views.PlurkControls;
 using NotifyPropertyWeaver;
 using Plurto.Core;
 using Plurto.Entities;
+using WP7Contrib.View.Controls.BindingListener;
+using WP7Contrib.View.Controls.Extensions;
 
 namespace ChronoPlurk.ViewModels
 {
@@ -136,20 +139,35 @@ namespace ChronoPlurk.ViewModels
             var uiView = view as UIElement;
             if (uiView != null)
             {
-                var timeline = uiView.FindVisualChildByName<TimelineControl>("Timeline");
-                timeline.VerticalCompressionChanged += (sender, e) =>
+                SubscribeTimelineScroll(uiView);
+            }
+            base.OnViewLoaded(view);
+        }
+
+        private void SubscribeTimelineScroll(DependencyObject uiView)
+        {
+            var timeline = uiView.FindVisualChildByName<TimelineControl>("Timeline");
+            var sv = timeline.GetVisualDescendants()
+                .OfType<ScrollViewer>()
+                .First();
+            var listener = new DependencyPropertyListener();
+            listener.ValueChanged += (sender, args) =>
+            {
+                if (!IsHasMore)
+                {
+                    return;
+                }
+                var isBottom = (sv.VerticalOffset + 7) >= sv.ScrollableHeight;
+                if (isBottom)
                 {
                     var settings = IoC.Get<SettingsService>();
                     if (settings.GetIsInfiniteScroll())
                     {
-                        if (e.NewState.Name == "CompressionBottom")
-                        {
-                            RequestMore();
-                        }
+                        RequestMore();
                     }
-                };
-            }
-            base.OnViewLoaded(view);
+                }
+            };
+            listener.Attach(sv, new Binding("VerticalOffset") {Source = sv});
         }
 
         /// <summary>
