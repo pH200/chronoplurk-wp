@@ -60,7 +60,10 @@ namespace ChronoPlurk.Core
 
         private static void SetBackgroundInternal(PhoneApplicationPage page)
         {
-            if (page is ImageViewerPage || page is ListPickerPage)
+            if (page is ImageViewerPage ||
+                page is ListPickerPage ||
+                page is LoginPage ||
+                page is LoginBrowserPage)
             {
                 return;
             }
