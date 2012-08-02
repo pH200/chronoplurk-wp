@@ -18,10 +18,10 @@
     
     <Grid x:Name="LayoutRoot">
         <ScrollViewer HorizontalScrollBarVisibility="Disabled"
-                                  VerticalScrollBarVisibility="Auto">
+                      VerticalScrollBarVisibility="Auto">
             <StackPanel>
                 <toolkit:ToggleSwitch x:Name="BackgroundSwitch"
-                                      Header="enable background"
+                                      Header="{Binding Path=LocalizedResources.settingsEnableBackground, Source={StaticResource LocalizedStrings}}"
                                       IsChecked="{Binding IsBgEnabled, Mode=TwoWay}"
                                       cal:Message.Attach="
                                       [Event Checked] = [Action OnSwitchChanged()];
@@ -29,7 +29,7 @@
                                       "/>
                 <StackPanel x:Name="BgPanel"
                             Visibility="{Binding IsChecked, ElementName=BackgroundSwitch, Converter={StaticResource VisibilityConverter}}">
-                    <TextBlock Text="opacity"
+                    <TextBlock Text="{Binding Path=LocalizedResources.settingsBackgroundOpacity, Source={StaticResource LocalizedStrings}}"
                                Style="{StaticResource PhoneTextSmallStyle}" />
                     <Slider Minimum="0.0"
                             Maximum="1.0"
@@ -41,6 +41,9 @@
                             [Event ManipulationStarted] = [Action SliderStarted($view)];
                             [Event ManipulationCompleted] = [Action SliderCompleted($view)]
                             " />
+                    <TextBlock Text="{Binding Path=LocalizedResources.settingsBackgroundVersionMsg, Source={StaticResource LocalizedStrings}}"
+                               TextWrapping="Wrap"
+                               Style="{StaticResource PhoneTextSmallStyle}" />
                 </StackPanel>
             </StackPanel>
         </ScrollViewer>

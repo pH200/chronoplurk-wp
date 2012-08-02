@@ -498,4 +498,16 @@
   <data name="appbarScrollToLatest" xml:space="preserve">
     <value>捲至最新回應</value>
   </data>
+  <data name="settingsBackground" xml:space="preserve">
+    <value>背景</value>
+  </data>
+  <data name="settingsBackgroundOpacity" xml:space="preserve">
+    <value>透明度</value>
+  </data>
+  <data name="settingsBackgroundVersionMsg" xml:space="preserve">
+    <value>自訂背景功能將會在下一版加入</value>
+  </data>
+  <data name="settingsEnableBackground" xml:space="preserve">
+    <value>啟用背景</value>
+  </data>
 </root>

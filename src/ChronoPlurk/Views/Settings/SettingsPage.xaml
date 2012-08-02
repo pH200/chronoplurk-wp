@@ -72,7 +72,7 @@
                 </Grid>
             </controls:PivotItem>
 
-            <controls:PivotItem Header="background">
+            <controls:PivotItem Header="{Binding Path=LocalizedResources.settingsBackground, Source={StaticResource LocalizedStrings}}">
                 <ContentControl cal:View.Model="{Binding SettingsBgViewModel}"
                                 VerticalAlignment="Stretch"
                                 VerticalContentAlignment="Stretch"

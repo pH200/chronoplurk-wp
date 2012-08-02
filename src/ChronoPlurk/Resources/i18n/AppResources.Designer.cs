@@ -673,7 +673,7 @@ namespace ChronoPlurk.Resources.i18n {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tap items on left column to select.\n\nIn order to update friends list manually, you have to click download button at the menu bar..
+        ///   Looks up a localized string similar to Tap items on left column to select.\n\nIn order to update your latest friends list, you have to click download button at the menu bar..
         /// </summary>
         public static string friendsListHelp {
             get {
@@ -1011,6 +1011,42 @@ namespace ChronoPlurk.Resources.i18n {
         public static string settingsAutoRotate {
             get {
                 return ResourceManager.GetString("settingsAutoRotate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to background.
+        /// </summary>
+        public static string settingsBackground {
+            get {
+                return ResourceManager.GetString("settingsBackground", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to opacity.
+        /// </summary>
+        public static string settingsBackgroundOpacity {
+            get {
+                return ResourceManager.GetString("settingsBackgroundOpacity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Background customization will be included in the next version..
+        /// </summary>
+        public static string settingsBackgroundVersionMsg {
+            get {
+                return ResourceManager.GetString("settingsBackgroundVersionMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to enable background.
+        /// </summary>
+        public static string settingsEnableBackground {
+            get {
+                return ResourceManager.GetString("settingsEnableBackground", resourceCulture);
             }
         }
         

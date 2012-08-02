@@ -235,7 +235,7 @@
     <value>This is your first time using friends list.\nFriends list will download automatically.</value>
   </data>
   <data name="friendsListHelp" xml:space="preserve">
-    <value>Tap items on left column to select.\n\nIn order to update friends list manually, you have to click download button at the menu bar.</value>
+    <value>Tap items on left column to select.\n\nIn order to update your latest friends list, you have to click download button at the menu bar.</value>
   </data>
   <data name="like" xml:space="preserve">
     <value>like</value>
@@ -497,5 +497,17 @@
   </data>
   <data name="appbarScrollToLatest" xml:space="preserve">
     <value>scroll to latest</value>
+  </data>
+  <data name="settingsBackground" xml:space="preserve">
+    <value>background</value>
+  </data>
+  <data name="settingsBackgroundOpacity" xml:space="preserve">
+    <value>opacity</value>
+  </data>
+  <data name="settingsBackgroundVersionMsg" xml:space="preserve">
+    <value>Background customization will be included in the next version.</value>
+  </data>
+  <data name="settingsEnableBackground" xml:space="preserve">
+    <value>enable background</value>
   </data>
 </root>
