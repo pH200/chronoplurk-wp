@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Linq;
+using System.Reactive.Linq;
 using Caliburn.Micro;
 using ChronoPlurk.Resources.i18n;
 using ChronoPlurk.Services;
 using Plurto.Commands;
+using Plurto.Core;
 using Plurto.Entities;
 
 namespace ChronoPlurk.ViewModels
@@ -45,11 +47,41 @@ namespace ChronoPlurk.ViewModels
 
         public void Search(string query, int? offset = null)
         {
+            if (string.IsNullOrWhiteSpace(query))
+            {
+                PlurkTop();
+                return;
+            }
             var getPlurks = SearchCommand.PlurkSearch(query, offset).Client(PlurkService.Client).ToObservable();
             RequestMoreHandler = plurks => SearchCommand.PlurkSearch(query, plurks.LastOffset).Client(PlurkService.Client).ToObservable();
 
             Request(getPlurks);
             
+            ScrollToTop();
+        }
+
+        public void PlurkTop()
+        {
+            var culture = Plurto.Helpers.Culture.GetRecommendPlurkCulture();
+            PlurkTop(culture.CollectionName, sorting:PlurkTopSorting.New);
+        }
+
+        public void PlurkTop(string collectionName, int? filter=null, double? offset=null, PlurkTopSorting? sorting=null)
+        {
+            var getPlurks = PlurkTopCommand.GetPlurks(collectionName, offset, 30, sorting, filter)
+                .Client(PlurkService.Client)
+                .ToObservable()
+                .Select(s => new SearchResult()
+                {
+                    HasMore = false,
+                    LastOffset = null,
+                    Plurks = s.Plurks,
+                    Users = s.Users,
+                });
+            RequestMoreHandler = null;
+
+            Request(getPlurks);
+
             ScrollToTop();
         }
     }
