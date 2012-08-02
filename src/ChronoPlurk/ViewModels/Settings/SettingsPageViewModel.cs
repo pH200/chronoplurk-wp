@@ -164,22 +164,33 @@ namespace ChronoPlurk.ViewModels.Settings
 
         public void OnCytisanLink()
         {
-            var webBrowserTask = new WebBrowserTask() { Uri = new Uri("http://cytisan.com/", UriKind.Absolute) };
-            webBrowserTask.Show();
+            OpenExternalLink(AppResources.msgCytisanSite, () =>
+            {
+                var webBrowserTask = new WebBrowserTask() { Uri = new Uri("http://cytisan.com/", UriKind.Absolute) };
+                webBrowserTask.Show();
+            });
         }
 
         public void OnGrandPrizeLink()
         {
-            var msgResult = MessageBox.Show(AppResources.wpawardsRedirectMsg,
-                                            AppResources.msgExternalLink,
-                                            MessageBoxButton.OKCancel);
-            if (msgResult == MessageBoxResult.OK)
+            OpenExternalLink(AppResources.wpawardsRedirectMsg, () =>
             {
                 var webBrowserTask = new WebBrowserTask()
                 {
                     Uri = new Uri(AppResources.wpawardsExtLink, UriKind.Absolute)
                 };
                 webBrowserTask.Show();
+            });
+        }
+
+        private void OpenExternalLink(string message, System.Action okAction)
+        {
+            var msgResult = MessageBox.Show(message,
+                                            AppResources.msgExternalLink,
+                                            MessageBoxButton.OKCancel);
+            if (msgResult == MessageBoxResult.OK)
+            {
+                okAction();
             }
         }
     }

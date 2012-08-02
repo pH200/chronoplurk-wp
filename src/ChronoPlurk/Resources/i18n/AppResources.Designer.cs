@@ -817,6 +817,15 @@ namespace ChronoPlurk.Resources.i18n {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to http://cytisan.com.
+        /// </summary>
+        public static string msgCytisanSite {
+            get {
+                return ResourceManager.GetString("msgCytisanSite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to To view photos, disconnect your phone from the computer..
         /// </summary>
         public static string msgDisconnectPC {
@@ -1249,7 +1258,7 @@ namespace ChronoPlurk.Resources.i18n {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to http://bit.ly/NNdhZ6.
+        ///   Looks up a localized string similar to http://wp7app.dotblogs.com.tw/winners.aspx.
         /// </summary>
         public static string wpawardsExtLink {
             get {

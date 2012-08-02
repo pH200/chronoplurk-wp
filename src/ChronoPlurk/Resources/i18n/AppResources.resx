@@ -498,6 +498,9 @@
   <data name="appbarScrollToLatest" xml:space="preserve">
     <value>scroll to latest</value>
   </data>
+  <data name="msgCytisanSite" xml:space="preserve">
+    <value>http://cytisan.com</value>
+  </data>
   <data name="msgExternalLink" xml:space="preserve">
     <value>external link</value>
   </data>
@@ -514,7 +517,7 @@
     <value>enable background</value>
   </data>
   <data name="wpawardsExtLink" xml:space="preserve">
-    <value>http://bit.ly/NNdhZ6</value>
+    <value>http://wp7app.dotblogs.com.tw/winners.aspx</value>
   </data>
   <data name="wpawardsLine1" xml:space="preserve">
     <value>Windows Phone Apps Dev Contest, Taiwan</value>
