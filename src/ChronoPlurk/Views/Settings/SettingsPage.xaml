@@ -12,7 +12,6 @@
     xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro"
     xmlns:imgloader="clr-namespace:ChronoPlurk.Views.ImageLoader"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
-    xmlns:pcontrols="clr-namespace:ChronoPlurk.Views"
     mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -24,7 +23,6 @@
         <DataTemplate x:Key="FullTemplate">
             <TextBlock Text="{Binding}" Style="{StaticResource PhoneTextLargeStyle}" Margin="12,12"/>
         </DataTemplate>
-        <pcontrols:VisibilityConverter x:Key="VisibilityConverter" />
     </phone:PhoneApplicationPage.Resources>
 
     <Grid x:Name="LayoutRoot" Background="Transparent">

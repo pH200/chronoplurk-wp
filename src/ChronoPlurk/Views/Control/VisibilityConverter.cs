@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-namespace ChronoPlurk.Views
+namespace ChronoPlurk.Views.PlurkControls
 {
     /// <summary>
     /// A type converter for visibility and boolean values.
