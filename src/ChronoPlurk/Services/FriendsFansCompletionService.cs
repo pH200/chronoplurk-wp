@@ -1,20 +1,8 @@
 ﻿using System;
-using System.Net;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
-using System.Threading;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
 using Caliburn.Micro;
-using ChronoPlurk.Core;
 using ChronoPlurk.Helpers;
-using ChronoPlurk.ViewModels.Compose;
 using Plurto.Commands;
 using Plurto.Entities;
 
@@ -22,8 +10,6 @@ namespace ChronoPlurk.Services
 {
     public class FriendsFansCompletionService
     {
-        private IDisposable _saveDisposable;
-
         protected IPlurkService PlurkService { get; set; }
 
         public FriendsFansCompletion Completion { get; private set; }
@@ -70,19 +56,14 @@ namespace ChronoPlurk.Services
         }
 
         /// <summary>
-        /// Save completion to isolated storage. Run on current thread.
+        /// Save completion to isolated storage. Executes asynchronously.
         /// </summary>
         public void SaveCompletion()
         {
             if (Completion != null)
             {
-                if (_saveDisposable != null)
-                {
-                    _saveDisposable.Dispose();
-                }
                 var filename = GetBinaryFileName();
-                var observable = Observable.Start(() => IsoSettings.SerializeStore(Completion, filename));
-                _saveDisposable = observable.Subscribe();
+                ThreadEx.OnThreadPool(() => IsoSettings.SerializeStore(Completion, filename));
             }
         }
 

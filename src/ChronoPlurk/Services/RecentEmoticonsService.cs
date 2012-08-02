@@ -70,9 +70,17 @@ namespace ChronoPlurk.Services
             Emoticons.Clear();
         }
 
+
+        /// <summary>
+        /// Save emoticons list for specific user. Executes asynchronously.
+        /// </summary>
+        /// <param name="id"></param>
         public void Save(int id)
         {
-            IsoSettings.SerializeStore(Emoticons, string.Format(IsoStoreFormat, id));
+            ThreadEx.OnThreadPool(() =>
+            {
+                IsoSettings.SerializeStore(Emoticons, string.Format(IsoStoreFormat, id));
+            });
         }
 
         public void Load(int id)
