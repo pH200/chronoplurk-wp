@@ -64,15 +64,10 @@ namespace ChronoPlurk.Core
             {
                 return;
             }
-            var layoutRoot = VisualTreeHelper.GetChild(page, 0) as Grid;
-            if (layoutRoot != null && layoutRoot.Name == "LayoutRoot")
+            var service = IoC.Get<BackgroundImageService>();
+            if (service != null)
             {
-                layoutRoot.Background = new ImageBrush()
-                {
-                    ImageSource = new BitmapImage(new Uri("/Resources/Images/bg_half_white.jpg", UriKind.Relative)),
-                    Stretch = Stretch.UniformToFill,
-                    Opacity = 0.2,
-                };
+                service.ApplyBackground(page);
             }
         }
 

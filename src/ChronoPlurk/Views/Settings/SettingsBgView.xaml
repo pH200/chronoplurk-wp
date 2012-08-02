@@ -22,57 +22,25 @@
             <StackPanel>
                 <toolkit:ToggleSwitch x:Name="BackgroundSwitch"
                                       Header="enable background"
-                                      IsChecked="True"
-                                      cal:Message.Attach="[Event Checked] = [Action OnIsInfiniteScrollChanged()];[Event Unchecked] = [Action OnIsInfiniteScrollChanged()]"/>
+                                      IsChecked="{Binding IsBgEnabled, Mode=TwoWay}"
+                                      cal:Message.Attach="
+                                      [Event Checked] = [Action OnSwitchChanged()];
+                                      [Event Unchecked] = [Action OnSwitchChanged()]
+                                      "/>
                 <StackPanel x:Name="BgPanel"
-                                        Visibility="{Binding IsChecked, ElementName=BackgroundSwitch, Converter={StaticResource VisibilityConverter}}">
+                            Visibility="{Binding IsChecked, ElementName=BackgroundSwitch, Converter={StaticResource VisibilityConverter}}">
                     <TextBlock Text="opacity"
-                                       Style="{StaticResource PhoneTextSmallStyle}" />
+                               Style="{StaticResource PhoneTextSmallStyle}" />
                     <Slider Minimum="0.0"
                             Maximum="1.0"
                             LargeChange="0.2"
-                            Value="0.2"
+                            Value="{Binding OpacityValue, Mode=TwoWay}"
                             Margin="20,0"
                             cal:Message.Attach="
                             [Event ValueChanged] = [Action SliderValueChanged($eventArgs)];
                             [Event ManipulationStarted] = [Action SliderStarted($view)];
                             [Event ManipulationCompleted] = [Action SliderCompleted($view)]
                             " />
-                    <ItemsControl x:Name="BgImages">
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <toolkit:WrapPanel />
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <Image Height="80" Width="80"
-                                                   Source="{Binding Thumbnail}"
-                                                   Stretch="UniformToFill">
-                                    <toolkit:ContextMenuService.ContextMenu>
-                                        <toolkit:ContextMenu x:Name="Menu"
-                                                                         Background="#FFCF682F"
-                                                                         IsEnabled="{Binding ContextMenuEnabled}"
-                                                                         cal:Action.TargetWithoutContext="{Binding DataContext, ElementName=BgImages}">
-                                            <toolkit:MenuItem x:Name="MenuEnable"
-                                                                          Header="enable"
-                                                                          Foreground="White"
-                                                                          cal:Message.Attach="MenuEnable($dataContext)" />
-                                            <toolkit:MenuItem x:Name="MenuDelete"
-                                                                          Header="{Binding Path=LocalizedResources.delete, Source={StaticResource LocalizedStrings}}"
-                                                                          Foreground="White"
-                                                                          cal:Message.Attach="MenuDelete($dataContext)" />
-                                        </toolkit:ContextMenu>
-                                    </toolkit:ContextMenuService.ContextMenu>
-                                </Image>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                    <StackPanel Orientation="Horizontal">
-                        <Button x:Name="Add" Content="add" Width="160" />
-                        <Button x:Name="Reset" Content="reset" Width="160" />
-                    </StackPanel>
-
                 </StackPanel>
             </StackPanel>
         </ScrollViewer>

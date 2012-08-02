@@ -76,6 +76,8 @@
 
             <controls:PivotItem Header="background">
                 <ContentControl cal:View.Model="{Binding SettingsBgViewModel}"
+                                VerticalAlignment="Stretch"
+                                VerticalContentAlignment="Stretch"
                                 HorizontalAlignment="Stretch"
                                 HorizontalContentAlignment="Stretch" />
             </controls:PivotItem>

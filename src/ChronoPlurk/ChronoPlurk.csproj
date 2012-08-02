@@ -140,6 +140,8 @@
     <Compile Include="Helpers\Coroutine.cs" />
     <Compile Include="Helpers\IgnoreExceptions.cs" />
     <Compile Include="Helpers\LoginHelper.cs" />
+    <Compile Include="Models\BgSettings.cs" />
+    <Compile Include="Services\BackgroundImageService.cs" />
     <Compile Include="Services\SharePickerService.cs" />
     <Compile Include="ViewModels\Compose\ComposeViewModelBase.cs" />
     <Compile Include="ViewModels\EmoticonListViewModel.cs" />
@@ -459,7 +461,8 @@
     <Content Include="Resources\Icons\plurk.private.png" />
     <Content Include="Resources\Icons\plurk.replurk.png" />
     <Content Include="Resources\Icons\Search.png" />
-    <Content Include="Resources\Images\bg_half_white.jpg" />
+    <Content Include="Resources\Images\bg_black.jpg" />
+    <Content Include="Resources\Images\bg_white.jpg" />
     <Content Include="Resources\Images\cytisan_logo.jpg" />
     <Content Include="Resources\Images\plurkicon.png" />
     <Content Include="Resources\Avatar\default_big.jpg" />
