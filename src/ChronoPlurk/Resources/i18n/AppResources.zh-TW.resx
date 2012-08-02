@@ -316,7 +316,7 @@
     <value>一般設定</value>
   </data>
   <data name="settingsOss" xml:space="preserve">
-    <value>開放原始碼使用名單</value>
+    <value>開放原始碼使用列表</value>
   </data>
   <data name="settingsTitle" xml:space="preserve">
     <value>設定</value>
@@ -498,6 +498,9 @@
   <data name="appbarScrollToLatest" xml:space="preserve">
     <value>捲至最新回應</value>
   </data>
+  <data name="msgExternalLink" xml:space="preserve">
+    <value>外部連結</value>
+  </data>
   <data name="settingsBackground" xml:space="preserve">
     <value>背景</value>
   </data>
@@ -509,5 +512,17 @@
   </data>
   <data name="settingsEnableBackground" xml:space="preserve">
     <value>啟用背景</value>
+  </data>
+  <data name="wpawardsExtLink" xml:space="preserve">
+    <value>http://wp7app.dotblogs.com.tw/winners.aspx</value>
+  </data>
+  <data name="wpawardsLine1" xml:space="preserve">
+    <value>Windows Phone Apps 開發挑戰賽</value>
+  </data>
+  <data name="wpawardsLine2" xml:space="preserve">
+    <value>Nokia 大賞紀念版</value>
+  </data>
+  <data name="wpawardsRedirectMsg" xml:space="preserve">
+    <value>您將會開啟「Windows Phone Apps 開發挑戰賽」的得獎名單網頁</value>
   </data>
 </root>

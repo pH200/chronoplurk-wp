@@ -93,11 +93,21 @@
                              FontSize="{StaticResource PhoneFontSizeMedium}"
                              Foreground="{StaticResource PhoneSubtleBrush}" />
                         </TextBlock>
-                        <Image Margin="0,24,0,0"
-                           Source="/Resources/Images/cytisan_logo.jpg"
-                           cal:Message.Attach="[Event Tap] = [Action OnCytisanLink()]"
-                           Stretch="None" />
-                        <TextBlock Margin="12,12,0,0" Text="Copyright © 2012 Cytisan Software." />
+                        <TextBlock Margin="12,0,0,0"
+                                   Foreground="{StaticResource PhoneSubtleBrush}"
+                                   cal:Message.Attach="[Event Tap] = [Action OnGrandPrizeLink()]">
+                            <Run Text="{Binding Path=LocalizedResources.wpawardsLine1, Source={StaticResource LocalizedStrings}}" />
+                            <LineBreak />
+                            <Underline>
+                                <Run Text="{Binding Path=LocalizedResources.wpawardsLine2, Source={StaticResource LocalizedStrings}}" />
+                            </Underline>
+                        </TextBlock>
+                        <Image Margin="12,24,0,0"
+                               HorizontalAlignment="Left"
+                               Source="/Resources/Images/cytisan_logo.jpg"
+                               cal:Message.Attach="[Event Tap] = [Action OnCytisanLink()]"
+                               Stretch="None" />
+                        <TextBlock Margin="12,4,0,0" Text="Copyright © 2012 Cytisan Software." />
                         <TextBlock Margin="12,0,0,0" Text="All rights reserved." />
                         <HyperlinkButton Content="http://cytisan.com"
                                      NavigateUri="http://cytisan.com"
@@ -112,7 +122,7 @@
                                Style="{StaticResource PhoneTextLargeStyle}" />
                         <HyperlinkButton Content="@ChronoPlurk"
                                      HorizontalAlignment="Left"
-                                     FontSize="{StaticResource PhoneFontSizeMediumLarge}"
+                                     FontSize="{StaticResource PhoneFontSizeMedium}"
                                      cal:Message.Attach="[Event Click] = [Action OnPlurkLink()]"/>
                         <Button x:Name="OssCreditsButton"
                             Content="{Binding Path=LocalizedResources.settingsOss, Source={StaticResource LocalizedStrings}}"

@@ -167,5 +167,20 @@ namespace ChronoPlurk.ViewModels.Settings
             var webBrowserTask = new WebBrowserTask() { Uri = new Uri("http://cytisan.com/", UriKind.Absolute) };
             webBrowserTask.Show();
         }
+
+        public void OnGrandPrizeLink()
+        {
+            var msgResult = MessageBox.Show(AppResources.wpawardsRedirectMsg,
+                                            AppResources.msgExternalLink,
+                                            MessageBoxButton.OKCancel);
+            if (msgResult == MessageBoxResult.OK)
+            {
+                var webBrowserTask = new WebBrowserTask()
+                {
+                    Uri = new Uri(AppResources.wpawardsExtLink, UriKind.Absolute)
+                };
+                webBrowserTask.Show();
+            }
+        }
     }
 }

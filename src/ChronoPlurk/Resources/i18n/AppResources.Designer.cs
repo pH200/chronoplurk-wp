@@ -835,6 +835,15 @@ namespace ChronoPlurk.Resources.i18n {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to external link.
+        /// </summary>
+        public static string msgExternalLink {
+            get {
+                return ResourceManager.GetString("msgExternalLink", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Loading.
         /// </summary>
         public static string msgLoading {
@@ -1236,6 +1245,42 @@ namespace ChronoPlurk.Resources.i18n {
         public static string whoCanSee {
             get {
                 return ResourceManager.GetString("whoCanSee", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to http://bit.ly/NNdhZ6.
+        /// </summary>
+        public static string wpawardsExtLink {
+            get {
+                return ResourceManager.GetString("wpawardsExtLink", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Windows Phone Apps Dev Contest, Taiwan.
+        /// </summary>
+        public static string wpawardsLine1 {
+            get {
+                return ResourceManager.GetString("wpawardsLine1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nokia Grand Prize Edition.
+        /// </summary>
+        public static string wpawardsLine2 {
+            get {
+                return ResourceManager.GetString("wpawardsLine2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You will be redirected to &apos;Windows Phone Apps Dev Contest, Taiwan&apos; awards webpage..
+        /// </summary>
+        public static string wpawardsRedirectMsg {
+            get {
+                return ResourceManager.GetString("wpawardsRedirectMsg", resourceCulture);
             }
         }
     }

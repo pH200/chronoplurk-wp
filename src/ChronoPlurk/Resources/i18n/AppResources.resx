@@ -498,6 +498,9 @@
   <data name="appbarScrollToLatest" xml:space="preserve">
     <value>scroll to latest</value>
   </data>
+  <data name="msgExternalLink" xml:space="preserve">
+    <value>external link</value>
+  </data>
   <data name="settingsBackground" xml:space="preserve">
     <value>background</value>
   </data>
@@ -509,5 +512,17 @@
   </data>
   <data name="settingsEnableBackground" xml:space="preserve">
     <value>enable background</value>
+  </data>
+  <data name="wpawardsExtLink" xml:space="preserve">
+    <value>http://bit.ly/NNdhZ6</value>
+  </data>
+  <data name="wpawardsLine1" xml:space="preserve">
+    <value>Windows Phone Apps Dev Contest, Taiwan</value>
+  </data>
+  <data name="wpawardsLine2" xml:space="preserve">
+    <value>Nokia Grand Prize Edition</value>
+  </data>
+  <data name="wpawardsRedirectMsg" xml:space="preserve">
+    <value>You will be redirected to 'Windows Phone Apps Dev Contest, Taiwan' awards webpage.</value>
   </data>
 </root>
