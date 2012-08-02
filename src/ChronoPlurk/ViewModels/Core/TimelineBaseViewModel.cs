@@ -95,6 +95,8 @@ namespace ChronoPlurk.ViewModels
 
         public string CachingId { get; set; }
 
+        public IEnumerable<PlurkItemViewModel> PrecachedItems { get; set; }
+
         protected TimelineBaseViewModel(
             INavigationService navigationService,
             IProgressService progressService,
@@ -112,20 +114,48 @@ namespace ChronoPlurk.ViewModels
             LoadCachedItems();
         }
 
+        protected override void OnActivate()
+        {
+            LoadPrecachedItems();
+
+            base.OnActivate();
+        }
+
         protected void LoadCachedItems()
         {
             if (Items.Count == 0)
             {
-                var filename = GetSerializationFilename();
-                if (filename != null)
+                if (PrecachedItems != null)
                 {
-                    var list = IsoSettings.DeserializeLoad(filename) as List<PlurkItemViewModel>;
-                    if (list != null)
+                    LoadPrecachedItems();
+                }
+                else
+                {
+                    var filename = GetSerializationFilename();
+                    if (filename != null)
                     {
-                        Items.AddRange(list);
-                        _isCachedItemsLoaded = true;
+                        var list = IsoSettings.DeserializeLoad(filename) as List<PlurkItemViewModel>;
+                        if (list != null)
+                        {
+                            Items.AddRange(list);
+                            _isCachedItemsLoaded = true;
+                        }
                     }
                 }
+            }
+        }
+
+        private void LoadPrecachedItems()
+        {
+            if (PrecachedItems != null && Items.Count == 0)
+            {
+                Items.AddRange(PrecachedItems);
+                PrecachedItems = null; // Release
+                _isCachedItemsLoaded = true;
+            }
+            else
+            {
+                PrecachedItems = null;
             }
         }
 
