@@ -45,6 +45,8 @@ namespace ChronoPlurk.ViewModels
             PlurkDetailViewModel.RefreshOnActivate = true;
         }
 
+        #region Screen Events
+
         protected override void OnActivate()
         {
             if (ReplyVisibility != Visibility.Visible)
@@ -66,6 +68,10 @@ namespace ChronoPlurk.ViewModels
 
             base.OnViewLoaded(view);
         }
+
+        #endregion
+
+        #region Back Key Handling
 
         private void SetBackKeyPress(PlurkDetailPage view)
         {
@@ -102,6 +108,10 @@ namespace ChronoPlurk.ViewModels
             }
         }
 
+        #endregion
+
+        #region Reply View Methods
+
         public void ShowReplyVisibility()
         {
             ReplyVisibility = Visibility.Visible;
@@ -115,7 +125,7 @@ namespace ChronoPlurk.ViewModels
             HideAppBarForReply();
             UpdateReplyButton();
         }
-        
+
         public void ShowEmoticonVisibility()
         {
             var view = GetView() as PlurkDetailPage;
@@ -126,7 +136,7 @@ namespace ChronoPlurk.ViewModels
             ReplyViewModel.EmoticonVisibility = Visibility.Visible;
             ReplyViewModel.LoadEmoticons();
         }
-        
+
         public void HideEmoticonVisibility()
         {
             ReplyViewModel.EmoticonVisibility = Visibility.Collapsed;
@@ -136,6 +146,10 @@ namespace ChronoPlurk.ViewModels
                 view.ReplyRowAuto();
             }
         }
+
+        #endregion
+
+        #region Public Methods
 
         public long GetPlurkId()
         {
@@ -165,6 +179,8 @@ namespace ChronoPlurk.ViewModels
                 }
             }
         }
+
+        #endregion
 
         #region AppBar
 
@@ -204,6 +220,17 @@ namespace ChronoPlurk.ViewModels
                 view.MuteButton.Text = text;
             }
         }
+        
+        public void UpdateReplurkButton(string text)
+        {
+            var view = GetView() as PlurkDetailPage;
+            if (view != null)
+            {
+                view.ReplurkButton.Text = text;
+            }
+        }
+
+        #region Reply Button
 
         public void UpdateReplyButton()
         {
@@ -242,15 +269,6 @@ namespace ChronoPlurk.ViewModels
             }
         }
 
-        public void UpdateReplurkButton(string text)
-        {
-            var view = GetView() as PlurkDetailPage;
-            if (view != null)
-            {
-                view.ReplurkButton.Text = text;
-            }
-        }
-
         public void ShowAppBarForReply()
         {
             var view = GetView() as PlurkDetailPage;
@@ -271,6 +289,9 @@ namespace ChronoPlurk.ViewModels
                 HideEmoticonVisibility();
             }
         }
+
+        #endregion
+
 
         public void RefreshAppBar()
         {
@@ -394,10 +415,14 @@ namespace ChronoPlurk.ViewModels
         }
         #endregion
 
+        #region INavigationInjectionRedirect
+
         public object GetRedirectedViewModel()
         {
             return PlurkDetailViewModel.ListHeader;
         }
+
+        #endregion
 
         #region IPlurkHolder
         
