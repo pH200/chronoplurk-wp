@@ -59,6 +59,11 @@
                                               Header="{Binding LikeText}"
                                               Foreground="White"
                                               cal:Message.Attach="MenuLike($dataContext)" />
+                            <toolkit:MenuItem x:Name="MenuReplurk"
+                                              Header="{Binding ReplurkText}"
+                                              Visibility="{Binding CanReplurkVisibility}"
+                                              Foreground="White"
+                                              cal:Message.Attach="MenuReplurk($dataContext)" />
                             <toolkit:MenuItem x:Name="MenuDelete"
                                               Header="{Binding Path=LocalizedResources.delete, Source={StaticResource LocalizedStrings}}"
                                               Visibility="{Binding DeleteVisibility}"

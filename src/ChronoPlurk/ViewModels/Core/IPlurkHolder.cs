@@ -10,5 +10,7 @@ namespace ChronoPlurk.ViewModels.Core
         void Mute(long plurkId);
         void Unmute(long plurkId);
         void SetAsRead(long plurkId);
+        void Replurk(long plurkId);
+        void Unreplurk(long plurkId);
     }
 }

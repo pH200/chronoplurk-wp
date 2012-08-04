@@ -525,4 +525,10 @@
   <data name="wpawardsRedirectMsg" xml:space="preserve">
     <value>您將會開啟「Windows Phone Apps 開發挑戰賽」的得獎名單網頁</value>
   </data>
+  <data name="replurk" xml:space="preserve">
+    <value>轉噗</value>
+  </data>
+  <data name="unreplurk" xml:space="preserve">
+    <value>收回轉噗</value>
+  </data>
 </root>

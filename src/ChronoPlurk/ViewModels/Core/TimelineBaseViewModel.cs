@@ -415,7 +415,8 @@ namespace ChronoPlurk.ViewModels
                 PlurkType = plurk.Plurk.PlurkType,
                 ContextMenuEnabled = PlurkService.IsLoaded,
                 EnableHyperlink = this.EnableHyperlink,
-                Replurked = plurk.Plurk.Replurked,
+                IsReplurkable = plurk.Plurk.Replurkable,
+                IsReplurked = plurk.Plurk.Replurked,
                 ReplurkerName = getReplurkerName(plurk),
             });
         }
@@ -485,6 +486,8 @@ namespace ChronoPlurk.ViewModels
             return null;
         }
 
+        #region IPlurkHolder
+
         public IEnumerable<long> PlurkIds
         {
             get { return Items.Select(item => item.PlurkId); }
@@ -524,6 +527,19 @@ namespace ChronoPlurk.ViewModels
             SearchAndAction(plurkId, item => item.IsUnread = UnreadStatus.Read);
         }
 
+        public void Replurk(long plurkId)
+        {
+            SearchAndAction(plurkId, item => item.IsReplurked = true);
+        }
+
+        public void Unreplurk(long plurkId)
+        {
+            SearchAndAction(plurkId, item => item.IsReplurked = false);
+        }
+
+        #endregion
+
+
         #region Context Menu
 
         public void MenuMute(object dataContext)
@@ -556,6 +572,23 @@ namespace ChronoPlurk.ViewModels
                 else
                 {
                     service.Favorite(item.PlurkId);
+                }
+            }
+        }
+
+        public void MenuReplurk(object dataContext)
+        {
+            var item = dataContext as PlurkItemViewModel;
+            if (item != null)
+            {
+                var service = IoC.Get<IPlurkService>();
+                if (item.IsReplurked == true)
+                {
+                    service.Unreplurk(item.PlurkId);
+                }
+                else
+                {
+                    service.Replurk(item.PlurkId);
                 }
             }
         }

@@ -961,6 +961,15 @@ namespace ChronoPlurk.Resources.i18n {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to replurk.
+        /// </summary>
+        public static string replurk {
+            get {
+                return ResourceManager.GetString("replurk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to reply.
         /// </summary>
         public static string reply {
@@ -1218,6 +1227,15 @@ namespace ChronoPlurk.Resources.i18n {
         public static string unmute {
             get {
                 return ResourceManager.GetString("unmute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to unreplurk.
+        /// </summary>
+        public static string unreplurk {
+            get {
+                return ResourceManager.GetString("unreplurk", resourceCulture);
             }
         }
         

@@ -74,6 +74,8 @@ namespace ChronoPlurk.Views
 
         public AppBarButton PhotosButton { get; private set; }
 
+        public AppBarMenuItem ReplurkButton { get; private set; }
+
         public static readonly Uri ReplyIconUri = new Uri("Resources/Icons/appbar.edit.rest.png", UriKind.Relative);
         public static readonly Uri CheckIconUri = new Uri("Resources/Icons/appbar.check.rest.png", UriKind.Relative);
 
@@ -125,6 +127,12 @@ namespace ChronoPlurk.Views
                 Message = "MuteAppBar"
             };
             MuteButton = muteButton;
+            var replurkButton = new AppBarMenuItem()
+            {
+                Text = AppResources.replurk,
+                Message = "ReplurkAppBar"
+            };
+            ReplurkButton = replurkButton;
             var scrollToLatestButton = new AppBarMenuItem()
             {
                 Text = AppResources.appbarScrollToLatest,
@@ -137,6 +145,7 @@ namespace ChronoPlurk.Views
             ApplicationBar.Buttons.Add(photosButton);
             ApplicationBar.MenuItems.Add(likeButton);
             ApplicationBar.MenuItems.Add(muteButton);
+            ApplicationBar.MenuItems.Add(replurkButton);
             ApplicationBar.MenuItems.Add(scrollToLatestButton);
         }
 

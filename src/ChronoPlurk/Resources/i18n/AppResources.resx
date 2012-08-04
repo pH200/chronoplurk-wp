@@ -528,4 +528,10 @@
   <data name="wpawardsRedirectMsg" xml:space="preserve">
     <value>You will be redirected to 'Windows Phone Apps Dev Contest, Taiwan' awards webpage.</value>
   </data>
+  <data name="replurk" xml:space="preserve">
+    <value>replurk</value>
+  </data>
+  <data name="unreplurk" xml:space="preserve">
+    <value>unreplurk</value>
+  </data>
 </root>

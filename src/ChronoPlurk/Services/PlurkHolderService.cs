@@ -59,6 +59,16 @@ namespace ChronoPlurk.Services
                 SetAsRead(plurkId);
             }
         }
+        
+        public void Replurk(long plurkId)
+        {
+            SearchAndAction(plurkId, holder => holder.Replurk(plurkId));
+        }
+
+        public void Unreplurk(long plurkId)
+        {
+            SearchAndAction(plurkId, holder => holder.Unreplurk(plurkId));
+        }
 
         public void Add(IPlurkHolder item)
         {
@@ -93,46 +103,5 @@ namespace ChronoPlurk.Services
         {
             get { return _plurkHolders.Count; }
         }
-
-        //public void CopyTo(IPlurkHolder[] array, int arrayIndex)
-        //{
-        //    _plurkHolders.CopyTo(array, arrayIndex);
-        //}
-
-        //public bool IsReadOnly
-        //{
-        //    get { return _plurkHolders.IsReadOnly; }
-        //}
-
-        //public IEnumerator<IPlurkHolder> GetEnumerator()
-        //{
-        //    return _plurkHolders.GetEnumerator();
-        //}
-
-        //IEnumerator IEnumerable.GetEnumerator()
-        //{
-        //    return GetEnumerator();
-        //}
-
-        //public int IndexOf(IPlurkHolder item)
-        //{
-        //    return _plurkHolders.IndexOf(item);
-        //}
-
-        //public void Insert(int index, IPlurkHolder item)
-        //{
-        //    _plurkHolders.Insert(index, item);
-        //}
-
-        //public void RemoveAt(int index)
-        //{
-        //    _plurkHolders.RemoveAt(index);
-        //}
-
-        //public IPlurkHolder this[int index]
-        //{
-        //    get { return _plurkHolders[index]; }
-        //    set { _plurkHolders[index] = value; }
-        //}
     }
 }

@@ -151,6 +151,22 @@ namespace ChronoPlurk.ViewModels
             }
         }
 
+        public bool IsReplurkable { get; set; }
+
+        public bool IsReplurked { get; set; }
+        
+        [DependsOn("IsReplurked")]
+        public Visibility IsReplurkedVisibilityView
+        {
+            get { return IsReplurked == true ? Visibility.Visible : Visibility.Collapsed; }
+        }
+
+        [DependsOn("IsReplurked")]
+        public string ReplurkText
+        {
+            get { return IsReplurked == true ? AppResources.unreplurk : AppResources.replurk; }
+        }
+
         #endregion
 
         public PlurkDetailHeaderViewModel(

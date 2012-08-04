@@ -113,14 +113,6 @@ namespace ChronoPlurk.ViewModels
             }
         }
 
-        public bool? Replurked { get; set; }
-
-        [DependsOn("Replurked")]
-        public Visibility IsReplurkedVisibilityView
-        {
-            get { return Replurked == true ? Visibility.Visible : Visibility.Collapsed; }
-        }
-
         public string ReplurkerName { get; set; }
 
         [DependsOn("ReplurkerName")]
@@ -163,10 +155,36 @@ namespace ChronoPlurk.ViewModels
 
         public int ClientUserId { get; set; }
 
+        public bool IsMyPlurk
+        {
+            get { return ClientUserId == UserId; }
+        }
+
         [DependsOn("ClientUserId", "UserId")]
         public Visibility DeleteVisibility
         {
             get { return ClientUserId == UserId ? Visibility.Visible : Visibility.Collapsed; }
+        }
+
+        public bool IsReplurkable { get; set; }
+
+        [DependsOn("IsReplurkable")]
+        public Visibility CanReplurkVisibility
+        {
+            get { return IsReplurkable && !IsMyPlurk ? Visibility.Visible : Visibility.Collapsed; }
+        }
+
+        public bool? IsReplurked { get; set; }
+
+        [DependsOn("IsReplurked")]
+        public Visibility IsReplurkedVisibilityView
+        {
+            get { return IsReplurked == true ? Visibility.Visible : Visibility.Collapsed; }
+        }
+
+        public string ReplurkText
+        {
+            get { return IsReplurked == true ? AppResources.unreplurk : AppResources.replurk; }
         }
 
         #endregion

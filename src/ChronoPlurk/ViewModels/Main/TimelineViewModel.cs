@@ -66,7 +66,7 @@ namespace ChronoPlurk.ViewModels.Main
             var unread = Items.Where(p => p.IsUnread == UnreadStatus.Unread).Take(10);
             var my = Items.Where(p => p.UserId == p.ClientUserId).Take(10);
             var pri = Items.Where(p => p.IsPrivateVisibilityView == Visibility.Visible).Take(10);
-            var liked = Items.Where(p => p.IsFavorite || p.Replurked == true).Take(10);
+            var liked = Items.Where(p => p.IsFavorite || p.IsReplurked == true).Take(10);
 
             var parent = this.GetParent();
             if (parent != null)

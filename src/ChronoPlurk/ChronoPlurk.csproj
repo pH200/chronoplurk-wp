@@ -140,6 +140,7 @@
     <Compile Include="Helpers\Coroutine.cs" />
     <Compile Include="Helpers\IgnoreExceptions.cs" />
     <Compile Include="Helpers\LoginHelper.cs" />
+    <Compile Include="Helpers\ObservableExtensions.cs" />
     <Compile Include="Models\BgSettings.cs" />
     <Compile Include="Services\BackgroundImageService.cs" />
     <Compile Include="Services\SharePickerService.cs" />

@@ -30,6 +30,7 @@ namespace ChronoPlurk.Services
         void SaveUserData();
         bool LoadUserData();
         void ClearUserData();
+
         void Favorite(long plurkId);
         void Unfavorite(long plurkId);
         void Mute(long plurkId);
@@ -38,6 +39,8 @@ namespace ChronoPlurk.Services
         void MarkAsRead(IList<long> plurkIds);
         void Delete(long plurkId);
         void DeleteResponse(long id, long plurkId);
+        void Replurk(long plurkId);
+        void Unreplurk(long plurkId);
     }
 
     public class PlurkService : IPlurkService
@@ -187,7 +190,7 @@ namespace ChronoPlurk.Services
                 {
                     holderAction(service);
                 }
-                command.Client(Client).ToObservable().PlurkException().Subscribe();
+                command.Client(Client).ToObservable().PlurkException().SubscribeAndForget();
             }
         }
 
@@ -229,6 +232,16 @@ namespace ChronoPlurk.Services
         public void DeleteResponse(long id, long plurkId)
         {
             SimpleAction(ResponsesCommand.ResponseDelete(id, plurkId), service => { });
+        }
+
+        public void Replurk(long plurkId)
+        {
+            SimpleAction(TimelineCommand.Replurk(plurkId), service => service.Replurk(plurkId));
+        }
+
+        public void Unreplurk(long plurkId)
+        {
+            SimpleAction(TimelineCommand.Unreplurk(plurkId), service => service.Unreplurk(plurkId));
         }
     }
 }

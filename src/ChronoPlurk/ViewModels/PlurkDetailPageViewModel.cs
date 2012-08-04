@@ -8,7 +8,6 @@ using Caliburn.Micro;
 using ChronoPlurk.Services;
 using ChronoPlurk.ViewModels.Core;
 using ChronoPlurk.Views;
-using ChronoPlurk.Views.Compose;
 using NotifyPropertyWeaver;
 using Plurto.Core;
 
@@ -169,6 +168,11 @@ namespace ChronoPlurk.ViewModels
 
         #region AppBar
 
+        private void ReloadAppBar()
+        {
+            ReloadAppBar(GetView() as PlurkDetailPage);
+        }
+
         private void ReloadAppBar(PlurkDetailPage view)
         {
             if (view == null)
@@ -180,6 +184,7 @@ namespace ChronoPlurk.ViewModels
 
             view.LikeButton.Text = PlurkHeaderViewModel.LikeText;
             view.MuteButton.Text = PlurkHeaderViewModel.MuteText;
+            view.ReplurkButton.Text = PlurkHeaderViewModel.ReplurkText;
         }
 
         public void UpdateLikeButton(string text)
@@ -237,6 +242,15 @@ namespace ChronoPlurk.ViewModels
             }
         }
 
+        public void UpdateReplurkButton(string text)
+        {
+            var view = GetView() as PlurkDetailPage;
+            if (view != null)
+            {
+                view.ReplurkButton.Text = text;
+            }
+        }
+
         public void ShowAppBarForReply()
         {
             var view = GetView() as PlurkDetailPage;
@@ -256,11 +270,6 @@ namespace ChronoPlurk.ViewModels
                 view.PhotosButton.IsEnabled = false;
                 HideEmoticonVisibility();
             }
-        }
-
-        private void ReloadAppBar()
-        {
-            ReloadAppBar(GetView() as PlurkDetailPage);
         }
 
         public void RefreshAppBar()
@@ -335,6 +344,21 @@ namespace ChronoPlurk.ViewModels
             ReloadAppBar();
         }
 
+        public void ReplurkAppBar()
+        {
+            var isReplurked = PlurkHeaderViewModel.IsReplurked;
+            if (isReplurked)
+            {
+                PlurkService.Unreplurk(PlurkHeaderViewModel.PlurkId);
+            }
+            else
+            {
+                PlurkService.Replurk(PlurkHeaderViewModel.PlurkId);
+            }
+            PlurkDetailViewModel.ScrollToTop();
+            ReloadAppBar();
+        }
+
         public void ScrollToLatestAppBar()
         {
             this.PlurkDetailViewModel.ScrollToEnd();
@@ -356,6 +380,12 @@ namespace ChronoPlurk.ViewModels
         public bool CanMuteAppBar()
         {
             return IsLoggedIn();
+        }
+
+        public bool CanReplurk()
+        {
+            return PlurkHeaderViewModel.IsReplurkable &&
+                   PlurkService.UserId != PlurkHeaderViewModel.UserId;
         }
 
         private bool IsLoggedIn()
@@ -407,6 +437,18 @@ namespace ChronoPlurk.ViewModels
         {
             PlurkHeaderViewModel.IsUnreadInt = (int)UnreadStatus.Read;
             UpdateMuteButton(PlurkHeaderViewModel.MuteText);
+        }
+
+        public void Replurk(long plurkId)
+        {
+            PlurkHeaderViewModel.IsReplurked = true;
+            UpdateReplurkButton(PlurkHeaderViewModel.ReplurkText);
+        }
+
+        public void Unreplurk(long plurkId)
+        {
+            PlurkHeaderViewModel.IsReplurked = false;
+            UpdateReplurkButton(PlurkHeaderViewModel.ReplurkText);
         }
 
         #endregion
