@@ -28,6 +28,8 @@ namespace ChronoPlurk
 
         public static int CachedItemsCount = 10;
 
+        public static int RequestItemsLimit = 10;
+
         public const string VersionText = "2.0.0";
 
         /// <summary>

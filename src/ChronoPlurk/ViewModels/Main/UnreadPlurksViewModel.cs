@@ -33,14 +33,18 @@ namespace ChronoPlurk.ViewModels.Main
             RequestMoreHandler = plurks =>
             {
                 var oldestOffset = new DateTime(plurks.Plurks.Min(p => p.PostDate.Ticks), DateTimeKind.Utc);
-                return TimelineCommand.GetUnreadPlurks(oldestOffset, limit: 20).Client(PlurkService.Client).ToObservable();
+                return TimelineCommand.GetUnreadPlurks(oldestOffset,
+                                                       limit: DefaultConfiguration.RequestItemsLimit)
+                    .Client(PlurkService.Client).ToObservable();
             };
             RequestMoreFromPrecachedHandler = items =>
             {
                 if (!items.IsNullOrEmpty())
                 {
                     var oldestOffset = new DateTime(items.Min(p => p.PostDate.Ticks), DateTimeKind.Utc);
-                    return TimelineCommand.GetUnreadPlurks(oldestOffset, limit: 20).Client(PlurkService.Client).ToObservable();
+                    return TimelineCommand.GetUnreadPlurks(oldestOffset,
+                                                           limit: DefaultConfiguration.RequestItemsLimit)
+                        .Client(PlurkService.Client).ToObservable();
                 }
                 else
                 {

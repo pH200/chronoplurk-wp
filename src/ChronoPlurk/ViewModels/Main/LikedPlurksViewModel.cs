@@ -23,11 +23,18 @@ namespace ChronoPlurk.ViewModels.Main
             this.DisplayName = AppResources.filterLiked;
             this.CachingId = "liked";
             // LoadCachedItems();
-            IsHasMoreHandler = plurks => { return plurks.Plurks != null && plurks.Plurks.Count > 0; };
+            IsHasMoreHandler = plurks =>
+            {
+                return plurks.Plurks != null &&
+                       plurks.Plurks.Count > 0;
+            };
             RequestMoreHandler = plurks =>
             {
                 var oldestOffset = new DateTime(plurks.Plurks.Min(p => p.PostDate.Ticks), DateTimeKind.Utc);
-                return TimelineCommand.GetPlurks(oldestOffset, filter: PlurksFilter.OnlyFavorite).Client(PlurkService.Client).ToObservable();
+                return TimelineCommand.GetPlurks(oldestOffset,
+                                                 filter: PlurksFilter.OnlyFavorite,
+                                                 limit: DefaultConfiguration.RequestItemsLimit)
+                    .Client(PlurkService.Client).ToObservable();
             };
             RequestMoreFromPrecachedHandler = items =>
             {
@@ -56,7 +63,9 @@ namespace ChronoPlurk.ViewModels.Main
 
         private IObservable<TimelineResult> RequestHandler()
         {
-            return TimelineCommand.GetPlurks(filter: PlurksFilter.OnlyFavorite).Client(PlurkService.Client).ToObservable();
+            return TimelineCommand.GetPlurks(filter: PlurksFilter.OnlyFavorite,
+                                             limit: DefaultConfiguration.RequestItemsLimit)
+                .Client(PlurkService.Client).ToObservable();
         }
 
         public void RefreshSync()

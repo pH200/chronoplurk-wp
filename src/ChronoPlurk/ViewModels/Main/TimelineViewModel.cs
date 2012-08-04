@@ -25,7 +25,11 @@ namespace ChronoPlurk.ViewModels.Main
             this.CachingId = "all";
             LoadCachedItems();
             // GeneratePrecachedItems(false);
-            IsHasMoreHandler = plurks => { return plurks.Plurks != null && plurks.Plurks.Count > 0; };
+            IsHasMoreHandler = plurks =>
+            {
+                return plurks.Plurks != null &&
+                       plurks.Plurks.Count > 0;
+            };
         }
 
         protected override void OnActivate()
@@ -41,11 +45,14 @@ namespace ChronoPlurk.ViewModels.Main
 
         public void RefreshSync()
         {
-            var getPlurks = TimelineCommand.GetPlurks().Client(PlurkService.Client).ToObservable();
+            var getPlurks = TimelineCommand.GetPlurks(limit: DefaultConfiguration.RequestItemsLimit)
+                .Client(PlurkService.Client).ToObservable();
             RequestMoreHandler = plurks =>
             {
                 var oldestOffset = new DateTime(plurks.Plurks.Min(p => p.PostDate.Ticks), DateTimeKind.Utc);
-                return TimelineCommand.GetPlurks(oldestOffset).Client(PlurkService.Client).ToObservable();
+                return TimelineCommand.GetPlurks(oldestOffset,
+                                                 limit: DefaultConfiguration.RequestItemsLimit)
+                    .Client(PlurkService.Client).ToObservable();
             };
             Request(getPlurks);
         }
