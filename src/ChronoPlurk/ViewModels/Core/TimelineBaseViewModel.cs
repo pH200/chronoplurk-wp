@@ -279,11 +279,7 @@ namespace ChronoPlurk.ViewModels
         {
             if (IsHasMore)
             {
-                if (RequestMoreFromPrecachedHandler != null)
-                {
-                    InternalRequest(RequestMoreFromPrecachedHandler(Items), false);
-                }
-                else if (RequestMoreHandler != null)
+                if (RequestMoreHandler != null)
                 {
                     InternalRequest(RequestMoreHandler(_lastResult), false);
                 }
