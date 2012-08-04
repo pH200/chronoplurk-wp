@@ -56,12 +56,17 @@ namespace ChronoPlurk.Helpers
             IProgressService progressService = null,
             TimeSpan? expectedTimeout = null)
         {
-            var args = PlurkExceptionArguments.Create(source,
+            var obs = Observable.Start(() =>
+            {
+                return PlurkExceptionArguments.Create(source,
                                                       onError,
                                                       progressService,
                                                       Application.Current.GetActivePage(),
                                                       expectedTimeout);
-            return PlurkException(args);
+            }, DispatcherScheduler.Current);
+            return from args in obs
+            from ex in PlurkException(args)
+            select ex;
         }
 
         public static IObservable<TSource> PlurkException<TSource>(PlurkExceptionArguments<TSource> args)
