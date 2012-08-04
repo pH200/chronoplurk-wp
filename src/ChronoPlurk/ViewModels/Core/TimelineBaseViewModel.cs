@@ -356,12 +356,14 @@ namespace ChronoPlurk.ViewModels
                             var collection = new AdditiveBindableCollection<PlurkItemViewModel>(items);
                             Execute.OnUIThread(() => Items = collection); // Fix LongList behavior
                             _isCachedItemsLoaded = false;
-                            CacheItems(collection); // Cache
                         }
                         else
                         {
                             Items.AddRange(items);
-                            CacheItems(Items); // Cache
+                        }
+                        if (clear)
+                        {
+                            CacheItems(items); // Cache
                         }
 
                         if (IsHasMoreHandler != null)
@@ -376,19 +378,19 @@ namespace ChronoPlurk.ViewModels
                 });
         }
 
-        private void CacheItems(IObservableCollection<PlurkItemViewModel> items)
+        private void CacheItems(IEnumerable<PlurkItemViewModel> items)
         {
-            if (items.Count > 0)
+            var filename = GetSerializationFilename();
+            if (filename != null)
             {
-                var filename = GetSerializationFilename();
-                if (filename != null)
+                ThreadEx.OnThreadPool(() =>
                 {
-                    ThreadEx.OnThreadPool(() =>
+                    var list = items.Take(DefaultConfiguration.CachedItemsCount).ToList();
+                    if (list.Any())
                     {
-                        var list = items.Take(DefaultConfiguration.CachedItemsCount).ToList();
                         IsoSettings.SerializeStore(list, filename);
-                    });
-                }
+                    }
+                });
             }
         }
 
@@ -445,7 +447,7 @@ namespace ChronoPlurk.ViewModels
                 IsUnread = plurk.Plurk.IsUnread,
                 NoComments = plurk.Plurk.NoComments,
                 PlurkType = plurk.Plurk.PlurkType,
-                ContextMenuEnabled = PlurkService.IsLoaded,
+                ContextMenuEnabled = PlurkService.IsLoaded && !IsCompareIdInsteadOfPlurkId, // response page
                 EnableHyperlink = this.EnableHyperlink,
                 IsReplurkable = plurk.Plurk.Replurkable,
                 IsReplurked = (plurk.Plurk.Replurked == true),
