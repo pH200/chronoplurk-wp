@@ -119,12 +119,33 @@ namespace ChronoPlurk.ViewModels
             Items = new AdditiveBindableCollection<PlurkItemViewModel>();
         }
 
+        #region Screen Events
+
         protected override void OnActivate()
         {
             LoadPrecachedItems();
 
             base.OnActivate();
         }
+
+        protected override void OnViewLoaded(object view)
+        {
+            if (!DisableTimelinePlurkHolder)
+            {
+                var service = IoC.Get<PlurkHolderService>();
+                service.Add(this);
+            }
+            var uiView = view as UIElement;
+            if (uiView != null)
+            {
+                SubscribeTimelineScroll(uiView);
+            }
+            base.OnViewLoaded(view);
+        }
+
+        #endregion
+
+        #region Caching
 
         protected void LoadCachedItems()
         {
@@ -170,27 +191,14 @@ namespace ChronoPlurk.ViewModels
                 IsFreshPrecachedItemsLoaded = false;
             }
         }
-        
+
         public void SetPrecachedItems(IEnumerable<PlurkItemViewModel> items, bool isFresh)
         {
             PrecachedItems = items;
             IsPrecachedItemsFresh = isFresh;
         }
 
-        protected override void OnViewLoaded(object view)
-        {
-            if (!DisableTimelinePlurkHolder)
-            {
-                var service = IoC.Get<PlurkHolderService>();
-                service.Add(this);
-            }
-            var uiView = view as UIElement;
-            if (uiView != null)
-            {
-                SubscribeTimelineScroll(uiView);
-            }
-            base.OnViewLoaded(view);
-        }
+        #endregion
 
         private void SubscribeTimelineScroll(DependencyObject uiView)
         {
