@@ -52,13 +52,18 @@ namespace ChronoPlurk.Helpers
                             {
                                 return sharpSerializer.Deserialize(file);
                             }
+#if DEBUG
                             catch (DeserializingException e)
                             {
-#if DEBUG
                                 ThreadEx.OnUIThread(() => MessageBox.Show(e.ToString(), "DEBUG MODE", MessageBoxButton.OK));
-#endif
                                 return null;
                             }
+#else
+                            catch (DeserializingException)
+                            {
+                                return null;
+                            }
+#endif
                         }
                     }
                     else
