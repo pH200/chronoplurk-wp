@@ -85,8 +85,6 @@ namespace ChronoPlurk.ViewModels
 
         protected Func<TSource, IObservable<TSource>> RequestMoreHandler { get; set; }
 
-        protected Func<IList<PlurkItemViewModel>, IObservable<TSource>> RequestMoreFromPrecachedHandler { get; set; }
-
         protected bool DisableTimelinePlurkHolder { get; set; }
 
         protected bool IsCompareIdInsteadOfPlurkId { get; set; }
@@ -96,12 +94,6 @@ namespace ChronoPlurk.ViewModels
         public bool IgnoreSelection { get; set; }
 
         public string CachingId { get; set; }
-
-        public IEnumerable<PlurkItemViewModel> PrecachedItems { get; private set; }
-
-        public bool IsPrecachedItemsFresh { get; private set; }
-
-        public bool IsFreshPrecachedItemsLoaded { get; private set; }
 
         protected TimelineBaseViewModel(
             INavigationService navigationService,
@@ -120,13 +112,6 @@ namespace ChronoPlurk.ViewModels
         }
 
         #region Screen Events
-
-        protected override void OnActivate()
-        {
-            LoadPrecachedItems();
-
-            base.OnActivate();
-        }
 
         protected override void OnViewLoaded(object view)
         {
@@ -162,40 +147,6 @@ namespace ChronoPlurk.ViewModels
                     }
                 }
             }
-        }
-
-        protected void LoadPrecachedItems()
-        {
-            if (PrecachedItems != null)
-            {
-                if (IsPrecachedItemsFresh && RequestMoreFromPrecachedHandler != null)
-                {
-                    var items = new AdditiveBindableCollection<PlurkItemViewModel>(PrecachedItems);
-                    if (items.Count > 0)
-                    {
-                        Items = items;
-                        IsFreshPrecachedItemsLoaded = true;
-                        IsHasMore = true;
-                        RequestMore();
-                    }
-                }
-                else if (Items.Count == 0)
-                {
-                    Items.AddRange(PrecachedItems);
-                    _isCachedItemsLoaded = true;
-                }
-                PrecachedItems = null;
-            }
-            else
-            {
-                IsFreshPrecachedItemsLoaded = false;
-            }
-        }
-
-        public void SetPrecachedItems(IEnumerable<PlurkItemViewModel> items, bool isFresh)
-        {
-            PrecachedItems = items;
-            IsPrecachedItemsFresh = isFresh;
         }
 
         #endregion

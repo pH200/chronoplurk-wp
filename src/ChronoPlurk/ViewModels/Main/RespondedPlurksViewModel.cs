@@ -22,7 +22,6 @@ namespace ChronoPlurk.ViewModels.Main
         {
             this.DisplayName = AppResources.filterResponded;
             this.CachingId = "responded";
-            // LoadCachedItems();
             IsHasMoreHandler = plurks =>
             {
                 return plurks.Plurks != null &&

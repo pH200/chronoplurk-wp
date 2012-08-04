@@ -22,7 +22,6 @@ namespace ChronoPlurk.ViewModels.Main
         {
             this.DisplayName = AppResources.filterLiked;
             this.CachingId = "liked";
-            // LoadCachedItems();
             IsHasMoreHandler = plurks =>
             {
                 return plurks.Plurks != null &&
@@ -36,18 +35,6 @@ namespace ChronoPlurk.ViewModels.Main
                                                  limit: DefaultConfiguration.RequestItemsLimit)
                     .Client(PlurkService.Client).ToObservable();
             };
-            RequestMoreFromPrecachedHandler = items =>
-            {
-                if (!items.IsNullOrEmpty())
-                {
-                    var oldestOffset = new DateTime(items.Min(p => p.PostDate.Ticks), DateTimeKind.Utc);
-                    return TimelineCommand.GetPlurks(oldestOffset, filter: PlurksFilter.OnlyFavorite).Client(PlurkService.Client).ToObservable();
-                }
-                else
-                {
-                    return RequestHandler();
-                }
-            };
         }
 
         protected override void OnActivate()
@@ -57,7 +44,7 @@ namespace ChronoPlurk.ViewModels.Main
             if (RefreshOnActivate)
             {
                 RefreshOnActivate = false;
-                if (!IsFreshPrecachedItemsLoaded) RefreshSync();
+                RefreshSync();
             }
         }
 

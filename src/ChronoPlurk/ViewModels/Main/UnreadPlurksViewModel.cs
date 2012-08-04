@@ -28,7 +28,6 @@ namespace ChronoPlurk.ViewModels.Main
         {
             this.DisplayName = AppResources.filterUnread;
             this.CachingId = "unread";
-            // LoadCachedItems();
             IsHasMoreHandler = plurks => { return plurks.Plurks != null && plurks.Plurks.Count > 0; };
             RequestMoreHandler = plurks =>
             {
@@ -36,20 +35,6 @@ namespace ChronoPlurk.ViewModels.Main
                 return TimelineCommand.GetUnreadPlurks(oldestOffset,
                                                        limit: DefaultConfiguration.RequestItemsLimit)
                     .Client(PlurkService.Client).ToObservable();
-            };
-            RequestMoreFromPrecachedHandler = items =>
-            {
-                if (!items.IsNullOrEmpty())
-                {
-                    var oldestOffset = new DateTime(items.Min(p => p.PostDate.Ticks), DateTimeKind.Utc);
-                    return TimelineCommand.GetUnreadPlurks(oldestOffset,
-                                                           limit: DefaultConfiguration.RequestItemsLimit)
-                        .Client(PlurkService.Client).ToObservable();
-                }
-                else
-                {
-                    return RequestHandler();
-                }
             };
         }
 
@@ -60,14 +45,7 @@ namespace ChronoPlurk.ViewModels.Main
             if (RefreshOnActivate)
             {
                 RefreshOnActivate = false;
-                if (!IsFreshPrecachedItemsLoaded)
-                {
-                    RefreshSync();
-                }
-                else
-                {
-                    RequestUnreadCount();
-                }
+                RefreshSync();
             }
         }
 

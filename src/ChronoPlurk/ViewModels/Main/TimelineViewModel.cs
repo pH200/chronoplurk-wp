@@ -24,7 +24,6 @@ namespace ChronoPlurk.ViewModels.Main
             this.DisplayName = AppResources.filterTimeline;
             this.CachingId = "all";
             LoadCachedItems();
-            // GeneratePrecachedItems(false);
             IsHasMoreHandler = plurks =>
             {
                 return plurks.Plurks != null &&
@@ -55,31 +54,6 @@ namespace ChronoPlurk.ViewModels.Main
                     .Client(PlurkService.Client).ToObservable();
             };
             Request(getPlurks);
-        }
-
-        protected override void OnRequestCompleted(TimelineResult lastResult)
-        {
-            // GeneratePrecachedItems(true);
-
-            base.OnRequestCompleted(lastResult);
-        }
-
-        private void GeneratePrecachedItems(bool isFresh)
-        {
-            if (Items.Count == 0)
-            {
-                return;
-            }
-            var unread = Items.Where(p => p.IsUnread == UnreadStatus.Unread).Take(10);
-            var my = Items.Where(p => p.UserId == p.ClientUserId).Take(10);
-            var pri = Items.Where(p => p.IsPrivateVisibilityView == Visibility.Visible).Take(10);
-            var liked = Items.Where(p => p.IsFavorite || p.IsReplurked).Take(10);
-
-            var parent = this.GetParent();
-            if (parent != null)
-            {
-                parent.LoadPrecachedItems(unread, my, pri, liked, isFresh);
-            }
         }
     }
 }
