@@ -41,7 +41,8 @@
                               ListHeader="{Binding}"
                               ListFooter="{Binding}"
                               IsFlatList="True"
-                              Background="Transparent">
+                              Background="Transparent"
+                              pcontrols:TiltEffect.IsTiltEnabled="True">
         <toolkit:LongListSelector.ItemTemplate>
             <DataTemplate>
                 <pcontrols:PlurkItemControl QualifierColor="{Binding QualifierColor}"
@@ -49,7 +50,9 @@
                     <toolkit:ContextMenuService.ContextMenu>
                         <toolkit:ContextMenu x:Name="Menu"
                                              Background="#FFCF682F"
-                                             IsEnabled="{Binding ContextMenuEnabled}"
+                                             Visibility="{Binding ContextMenuVisibility}"
+                                             IsFadeEnabled="False"
+                                             IsZoomEnabled="False"
                                              cal:Action.TargetWithoutContext="{Binding DataContext, ElementName=Items}">
                             <toolkit:MenuItem x:Name="MenuMute"
                                               Header="{Binding MuteText}"

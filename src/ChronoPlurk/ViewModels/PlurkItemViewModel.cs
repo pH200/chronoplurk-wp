@@ -127,6 +127,12 @@ namespace ChronoPlurk.ViewModels
         
         public bool ContextMenuEnabled { get; set; }
 
+        [DependsOn("ContextMenuEnabled")]
+        public Visibility ContextMenuVisibility
+        {
+            get { return ContextMenuEnabled ? Visibility.Visible : Visibility.Collapsed; }
+        }
+
         [DependsOn("NoComments")]
         public bool CanReply
         {
