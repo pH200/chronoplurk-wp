@@ -24,22 +24,25 @@
             <Border imgloader:GifLowProfileImageLoader.UriSource="{Binding AvatarView}"
                     imgloader:GifLowProfileImageLoader.Stretch="UniformToFill" />
         </Border>
-        <Image Source="/Resources/Icons/plurk.private.png"
-               Visibility="{Binding IsPrivateVisibilityView}"
-               Stretch="Fill"
-               Width="20" Height="20"
-               Margin="40,0,0,0"
+        <StackPanel Margin="40,0,0,0"
                HorizontalAlignment="Left"
-               VerticalAlignment="Top"
-               CacheMode="BitmapCache" />
-        <Image Source="/Resources/Icons/plurk.like.png"
-               Visibility="{Binding IsFavoriteVisibilityView}"
-               Stretch="Fill"
-               Width="20" Height="20"
-               Margin="40,40,0,0"
-               HorizontalAlignment="Left"
-               VerticalAlignment="Top"
-               CacheMode="BitmapCache" />
+               VerticalAlignment="Top">
+            <Image Source="/Resources/Icons/plurk.private.png"
+                   Visibility="{Binding IsPrivateVisibilityView}"
+                   Stretch="Fill"
+                   Width="20" Height="20"
+                   CacheMode="BitmapCache" />
+            <Image Source="/Resources/Icons/plurk.like.png"
+                   Visibility="{Binding IsFavoriteVisibilityView}"
+                   Stretch="Fill"
+                   Width="20" Height="20"
+                   CacheMode="BitmapCache" />
+            <Image Source="/Resources/Icons/plurk.mereplurk.png"
+                   Visibility="{Binding IsReplurkedVisibilityView}"
+                   Stretch="Fill"
+                   Width="20" Height="20"
+                   CacheMode="BitmapCache" />
+        </StackPanel>
         <StackPanel Grid.Column="1">
             <StackPanel Orientation="Horizontal" MinHeight="40">
                 <TextBlock Text="{Binding Username}"

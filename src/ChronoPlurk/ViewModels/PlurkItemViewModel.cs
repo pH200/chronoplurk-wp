@@ -115,6 +115,12 @@ namespace ChronoPlurk.ViewModels
 
         public bool? Replurked { get; set; }
 
+        [DependsOn("Replurked")]
+        public Visibility IsReplurkedVisibilityView
+        {
+            get { return Replurked == true ? Visibility.Visible : Visibility.Collapsed; }
+        }
+
         public string ReplurkerName { get; set; }
 
         [DependsOn("ReplurkerName")]
