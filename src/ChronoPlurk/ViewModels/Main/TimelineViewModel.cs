@@ -24,7 +24,7 @@ namespace ChronoPlurk.ViewModels.Main
             this.DisplayName = AppResources.filterTimeline;
             this.CachingId = "all";
             LoadCachedItems();
-            GeneratePrecachedItems(false);
+            // GeneratePrecachedItems(false);
             IsHasMoreHandler = plurks => { return plurks.Plurks != null && plurks.Plurks.Count > 0; };
         }
 
@@ -52,7 +52,7 @@ namespace ChronoPlurk.ViewModels.Main
 
         protected override void OnRequestCompleted(TimelineResult lastResult)
         {
-            GeneratePrecachedItems(true);
+            // GeneratePrecachedItems(true);
 
             base.OnRequestCompleted(lastResult);
         }
