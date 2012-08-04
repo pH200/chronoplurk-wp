@@ -205,7 +205,11 @@ namespace ChronoPlurk.ViewModels
             var timeline = uiView.FindVisualChildByName<TimelineControl>("Timeline");
             var sv = timeline.GetVisualDescendants()
                 .OfType<ScrollViewer>()
-                .First();
+                .FirstOrDefault();
+            if (sv == null)
+            {
+                return;
+            }
             var listener = new DependencyPropertyListener();
             listener.ValueChanged += (sender, args) =>
             {
@@ -214,16 +218,18 @@ namespace ChronoPlurk.ViewModels
                     return;
                 }
                 var isBottom = (sv.VerticalOffset + 7) >= sv.ScrollableHeight;
-                if (isBottom)
+                if (isBottom && GetIsInfiniteScroll())
                 {
-                    var settings = IoC.Get<SettingsService>();
-                    if (settings.GetIsInfiniteScroll())
-                    {
-                        RequestMore();
-                    }
+                    RequestMore();
                 }
             };
             listener.Attach(sv, new Binding("VerticalOffset") {Source = sv});
+        }
+
+        private bool GetIsInfiniteScroll()
+        {
+            var settings = IoC.Get<SettingsService>();
+            return settings.GetIsInfiniteScroll();
         }
 
         /// <summary>
@@ -297,7 +303,7 @@ namespace ChronoPlurk.ViewModels
                 _requestHandler.Dispose();
             }
 
-            ProgressService.Show(ProgressMessage);
+            Execute.OnUIThread(() => ProgressService.Show(ProgressMessage));
             Message = string.Empty;
             var tempIsHasMore = IsHasMore;
             IsHasMore = false;
@@ -370,6 +376,7 @@ namespace ChronoPlurk.ViewModels
                 }, () =>
                 {
                     Execute.OnUIThread(() => ProgressService.Hide());
+                    RequestMoreForScroll();
                     OnRequestCompleted(_lastResult);
                 });
         }
@@ -387,6 +394,16 @@ namespace ChronoPlurk.ViewModels
                         IsoSettings.SerializeStore(list, filename);
                     }
                 });
+            }
+        }
+
+        private void RequestMoreForScroll()
+        {
+            if (Items != null &&
+                Items.Count < DefaultConfiguration.RequestItemsLimit &&
+                GetIsInfiniteScroll())
+            {
+                RequestMore();
             }
         }
 
