@@ -155,11 +155,6 @@ namespace ChronoPlurk.ViewModels
 
         public int ClientUserId { get; set; }
 
-        public bool IsMyPlurk
-        {
-            get { return ClientUserId == UserId; }
-        }
-
         [DependsOn("ClientUserId", "UserId")]
         public Visibility DeleteVisibility
         {
@@ -168,10 +163,16 @@ namespace ChronoPlurk.ViewModels
 
         public bool IsReplurkable { get; set; }
 
-        [DependsOn("IsReplurkable")]
+        [DependsOn("IsReplurkable", "ClientUserId", "UserId")]
         public Visibility CanReplurkVisibility
         {
-            get { return IsReplurkable && !IsMyPlurk ? Visibility.Visible : Visibility.Collapsed; }
+            get
+            {
+                return IsReplurkable &&
+                       (ClientUserId != UserId)
+                           ? Visibility.Visible
+                           : Visibility.Collapsed;
+            }
         }
 
         public bool IsReplurked { get; set; }

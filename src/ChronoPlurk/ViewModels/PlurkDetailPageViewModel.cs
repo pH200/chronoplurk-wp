@@ -405,7 +405,8 @@ namespace ChronoPlurk.ViewModels
 
         public bool CanReplurkAppBar()
         {
-            return PlurkHeaderViewModel.IsReplurkable &&
+            return IsLoggedIn() &&
+                   PlurkHeaderViewModel.IsReplurkable &&
                    PlurkService.UserId != PlurkHeaderViewModel.UserId;
         }
 
