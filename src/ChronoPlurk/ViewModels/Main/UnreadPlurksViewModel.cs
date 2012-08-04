@@ -30,17 +30,41 @@ namespace ChronoPlurk.ViewModels.Main
             this.CachingId = "unread";
             // LoadCachedItems();
             IsHasMoreHandler = plurks => { return plurks.Plurks != null && plurks.Plurks.Count > 0; };
+            RequestMoreHandler = plurks =>
+            {
+                var oldestOffset = new DateTime(plurks.Plurks.Min(p => p.PostDate.Ticks), DateTimeKind.Utc);
+                return TimelineCommand.GetUnreadPlurks(oldestOffset, limit: 20).Client(PlurkService.Client).ToObservable();
+            };
+            RequestMoreFromPrecachedHandler = items =>
+            {
+                if (!items.IsNullOrEmpty())
+                {
+                    var oldestOffset = new DateTime(items.Min(p => p.PostDate.Ticks), DateTimeKind.Utc);
+                    return TimelineCommand.GetUnreadPlurks(oldestOffset, limit: 20).Client(PlurkService.Client).ToObservable();
+                }
+                else
+                {
+                    return RequestHandler();
+                }
+            };
         }
 
         protected override void OnActivate()
         {
+            base.OnActivate();
+            
             if (RefreshOnActivate)
             {
                 RefreshOnActivate = false;
-                RefreshSync();
+                if (!IsFreshPrecachedItemsLoaded)
+                {
+                    RefreshSync();
+                }
+                else
+                {
+                    RequestUnreadCount();
+                }
             }
-
-            base.OnActivate();
         }
 
         public override void Mute(long plurkId)
@@ -132,18 +156,17 @@ namespace ChronoPlurk.ViewModels.Main
             });
         }
 
+        private IObservable<TimelineResult> RequestHandler()
+        {
+            // Manually set limit, default sends all unreads.
+            return TimelineCommand.GetUnreadPlurks(limit: 20).Client(PlurkService.Client).ToObservable();
+        }
+
         public void RefreshSync()
         {
             RequestUnreadCount();
-
-            // Manually set limit, default sends all unreads.
-            var getPlurks = TimelineCommand.GetUnreadPlurks(limit: 20).Client(PlurkService.Client).ToObservable();
-            RequestMoreHandler = plurks =>
-            {
-                var oldestOffset = new DateTime(plurks.Plurks.Min(p => p.PostDate.Ticks), DateTimeKind.Utc);
-                return TimelineCommand.GetUnreadPlurks(oldestOffset, limit: 20).Client(PlurkService.Client).ToObservable();
-            };
-            Request(getPlurks);
+            
+            Request(RequestHandler());
         }
     }
 }

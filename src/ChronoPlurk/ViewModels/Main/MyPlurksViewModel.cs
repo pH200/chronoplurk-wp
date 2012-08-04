@@ -24,28 +24,44 @@ namespace ChronoPlurk.ViewModels.Main
             this.CachingId = "my";
             // LoadCachedItems();
             IsHasMoreHandler = plurks => { return plurks.Plurks != null && plurks.Plurks.Count > 0; };
+            RequestMoreHandler = plurks =>
+            {
+                var oldestOffset = new DateTime(plurks.Plurks.Min(p => p.PostDate.Ticks), DateTimeKind.Utc);
+                return TimelineCommand.GetPlurks(oldestOffset, filter: PlurksFilter.OnlyUser).Client(PlurkService.Client).ToObservable();
+            };
+            RequestMoreFromPrecachedHandler = items =>
+            {
+                if (!items.IsNullOrEmpty())
+                {
+                    var oldestOffset = new DateTime(items.Min(p => p.PostDate.Ticks), DateTimeKind.Utc);
+                    return TimelineCommand.GetPlurks(oldestOffset, filter: PlurksFilter.OnlyUser).Client(PlurkService.Client).ToObservable();
+                }
+                else
+                {
+                    return RequestHandler();
+                }
+            };
         }
 
         protected override void OnActivate()
         {
+            base.OnActivate();
+
             if (RefreshOnActivate)
             {
                 RefreshOnActivate = false;
-                RefreshSync();
+                if (!IsFreshPrecachedItemsLoaded) RefreshSync();
             }
+        }
 
-            base.OnActivate();
+        private IObservable<TimelineResult> RequestHandler()
+        {
+            return TimelineCommand.GetPlurks(filter: PlurksFilter.OnlyUser).Client(PlurkService.Client).ToObservable();
         }
 
         public void RefreshSync()
         {
-            var getPlurks = TimelineCommand.GetPlurks(filter:PlurksFilter.OnlyUser).Client(PlurkService.Client).ToObservable();
-            RequestMoreHandler = plurks =>
-            {
-                var oldestOffset = new DateTime(plurks.Plurks.Min(p => p.PostDate.Ticks), DateTimeKind.Utc);
-                return TimelineCommand.GetPlurks(oldestOffset, filter:PlurksFilter.OnlyUser).Client(PlurkService.Client).ToObservable();
-            };
-            Request(getPlurks);
+            Request(RequestHandler());
         }
     }
 }

@@ -85,7 +85,7 @@ namespace ChronoPlurk.ViewModels
 
         protected Func<TSource, IObservable<TSource>> RequestMoreHandler { get; set; }
 
-        protected Func<IEnumerable<PlurkItemViewModel>, IObservable<TSource>> RequestMoreFromPrecachedHandler { get; set; }
+        protected Func<IList<PlurkItemViewModel>, IObservable<TSource>> RequestMoreFromPrecachedHandler { get; set; }
 
         protected bool DisableTimelinePlurkHolder { get; set; }
 
@@ -99,7 +99,9 @@ namespace ChronoPlurk.ViewModels
 
         public IEnumerable<PlurkItemViewModel> PrecachedItems { get; private set; }
 
-        public bool IsPrecachedItemsFresh { get; set; }
+        public bool IsPrecachedItemsFresh { get; private set; }
+
+        public bool IsFreshPrecachedItemsLoaded { get; private set; }
 
         protected TimelineBaseViewModel(
             INavigationService navigationService,
@@ -115,7 +117,6 @@ namespace ChronoPlurk.ViewModels
             ProgressMessage = AppResources.msgLoading;
 
             Items = new AdditiveBindableCollection<PlurkItemViewModel>();
-            LoadCachedItems();
         }
 
         protected override void OnActivate()
@@ -133,9 +134,9 @@ namespace ChronoPlurk.ViewModels
                 if (filename != null)
                 {
                     var list = IsoSettings.DeserializeLoad(filename) as List<PlurkItemViewModel>;
-                    if (list != null)
+                    if (list != null && list.Any())
                     {
-                        Items.AddRange(list);
+                        Items = new AdditiveBindableCollection<PlurkItemViewModel>(list);
                         _isCachedItemsLoaded = true;
                     }
                 }
@@ -144,22 +145,29 @@ namespace ChronoPlurk.ViewModels
 
         protected void LoadPrecachedItems()
         {
-            if (PrecachedItems != null && Items.Count == 0)
+            if (PrecachedItems != null)
             {
-                Items.AddRange(PrecachedItems);
-                PrecachedItems = null; // Release
                 if (IsPrecachedItemsFresh && RequestMoreFromPrecachedHandler != null)
                 {
-                    _isCachedItemsLoaded = false;
+                    var items = new AdditiveBindableCollection<PlurkItemViewModel>(PrecachedItems);
+                    if (items.Count > 0)
+                    {
+                        Items = items;
+                        IsFreshPrecachedItemsLoaded = true;
+                        IsHasMore = true;
+                        RequestMore();
+                    }
                 }
-                else
+                else if (Items.Count == 0)
                 {
+                    Items.AddRange(PrecachedItems);
                     _isCachedItemsLoaded = true;
                 }
+                PrecachedItems = null;
             }
             else
             {
-                PrecachedItems = null;
+                IsFreshPrecachedItemsLoaded = false;
             }
         }
         
@@ -193,7 +201,7 @@ namespace ChronoPlurk.ViewModels
             var listener = new DependencyPropertyListener();
             listener.ValueChanged += (sender, args) =>
             {
-                if (!IsHasMore)
+                if (!IsHasMore || sv.VerticalOffset == 0)
                 {
                     return;
                 }
