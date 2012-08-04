@@ -416,7 +416,7 @@ namespace ChronoPlurk.ViewModels
                 ContextMenuEnabled = PlurkService.IsLoaded,
                 EnableHyperlink = this.EnableHyperlink,
                 IsReplurkable = plurk.Plurk.Replurkable,
-                IsReplurked = plurk.Plurk.Replurked,
+                IsReplurked = (plurk.Plurk.Replurked == true),
                 ReplurkerName = getReplurkerName(plurk),
             });
         }
@@ -582,7 +582,7 @@ namespace ChronoPlurk.ViewModels
             if (item != null)
             {
                 var service = IoC.Get<IPlurkService>();
-                if (item.IsReplurked == true)
+                if (item.IsReplurked)
                 {
                     service.Unreplurk(item.PlurkId);
                 }

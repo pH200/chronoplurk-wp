@@ -174,17 +174,17 @@ namespace ChronoPlurk.ViewModels
             get { return IsReplurkable && !IsMyPlurk ? Visibility.Visible : Visibility.Collapsed; }
         }
 
-        public bool? IsReplurked { get; set; }
+        public bool IsReplurked { get; set; }
 
         [DependsOn("IsReplurked")]
         public Visibility IsReplurkedVisibilityView
         {
-            get { return IsReplurked == true ? Visibility.Visible : Visibility.Collapsed; }
+            get { return IsReplurked ? Visibility.Visible : Visibility.Collapsed; }
         }
 
         public string ReplurkText
         {
-            get { return IsReplurked == true ? AppResources.unreplurk : AppResources.replurk; }
+            get { return IsReplurked ? AppResources.unreplurk : AppResources.replurk; }
         }
 
         #endregion

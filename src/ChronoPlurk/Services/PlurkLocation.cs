@@ -14,13 +14,15 @@ namespace ChronoPlurk.Services
             "&PostDateTicks={5}&" +
             "&AvatarView={6}&NoCommentsInt={7}&IsFavorite={8}"+
             "&ResponseCount={9}&IsUnreadInt={10}" + 
-            "&PlurkTypeInt={11}";
+            "&PlurkTypeInt={11}" +
+            "&IsReplurkable={12}&IsReplurked={13}";
 
         public PlurkLocation(PlurkItemViewModel item)
         {
             Parsed = HttpFormat(PageUri, item.PlurkId, item.UserId, item.Username, (int)item.QualifierEnum, item.Qualifier,
                                 item.PostDate.ToUniversalTime().Ticks, item.AvatarView, (int)item.NoComments, item.IsFavorite,
-                                item.ResponseCount, (int)item.IsUnread, (int)item.PlurkType);
+                                item.ResponseCount, (int)item.IsUnread, (int)item.PlurkType,
+                                item.IsReplurkable, item.IsReplurked);
         }
 
         private static string HttpFormat(string format, params object[] args)

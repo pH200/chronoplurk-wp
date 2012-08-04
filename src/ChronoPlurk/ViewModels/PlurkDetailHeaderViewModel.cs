@@ -158,13 +158,13 @@ namespace ChronoPlurk.ViewModels
         [DependsOn("IsReplurked")]
         public Visibility IsReplurkedVisibilityView
         {
-            get { return IsReplurked == true ? Visibility.Visible : Visibility.Collapsed; }
+            get { return IsReplurked ? Visibility.Visible : Visibility.Collapsed; }
         }
 
         [DependsOn("IsReplurked")]
         public string ReplurkText
         {
-            get { return IsReplurked == true ? AppResources.unreplurk : AppResources.replurk; }
+            get { return IsReplurked ? AppResources.unreplurk : AppResources.replurk; }
         }
 
         #endregion
@@ -233,6 +233,8 @@ namespace ChronoPlurk.ViewModels
                 ResponseCount = up.Plurk.ResponseCount;
                 IsUnreadInt = (int)up.Plurk.IsUnread;
                 PlurkTypeInt = (int)up.Plurk.PlurkType;
+                IsReplurked = up.Plurk.Replurked == true;
+                IsReplurkable = up.Plurk.Replurkable;
             }, () => Execute.OnUIThread(_progressService.Hide));
         }
     }
