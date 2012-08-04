@@ -65,8 +65,8 @@ namespace ChronoPlurk.Helpers
                                                       expectedTimeout);
             }, DispatcherScheduler.Current);
             return from args in obs
-            from ex in PlurkException(args)
-            select ex;
+                   from ex in PlurkException(args)
+                   select ex;
         }
 
         public static IObservable<TSource> PlurkException<TSource>(PlurkExceptionArguments<TSource> args)
