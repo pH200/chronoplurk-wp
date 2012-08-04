@@ -93,6 +93,8 @@ namespace ChronoPlurk.ViewModels
 
         public bool IgnoreSelection { get; set; }
 
+        public bool EnableCaching { get; set; }
+
         public string CachingId { get; set; }
 
         protected TimelineBaseViewModel(
@@ -253,6 +255,10 @@ namespace ChronoPlurk.ViewModels
             {
                 _requestHandler.Dispose();
             }
+            Action<ICollection<PlurkItemViewModel>> cache = cacheItems =>
+            {
+                if (clear) CacheItems(cacheItems); // cache when clearing
+            };
 
             Execute.OnUIThread(() => ProgressService.Show(ProgressMessage));
             Message = string.Empty;
@@ -309,15 +315,14 @@ namespace ChronoPlurk.ViewModels
                             var collection = new AdditiveBindableCollection<PlurkItemViewModel>(items);
                             Execute.OnUIThread(() => Items = collection); // Fix LongList behavior
                             _isCachedItemsLoaded = false;
+                            cache(collection);
                         }
                         else
                         {
                             Items.AddRange(items);
+                            cache(Items);
                         }
-                        if (clear)
-                        {
-                            CacheItems(items); // Cache
-                        }
+                        
 
                         if (IsHasMoreHandler != null)
                         {
@@ -334,16 +339,17 @@ namespace ChronoPlurk.ViewModels
 
         private void CacheItems(IEnumerable<PlurkItemViewModel> items)
         {
+            if (!EnableCaching)
+            {
+                return;
+            }
             var filename = GetSerializationFilename();
             if (filename != null)
             {
                 ThreadEx.OnThreadPool(() =>
                 {
                     var list = items.Take(DefaultConfiguration.CachedItemsCount).ToList();
-                    if (list.Any())
-                    {
-                        IsoSettings.SerializeStore(list, filename);
-                    }
+                    IsoSettings.SerializeStore(list, filename);
                 });
             }
         }

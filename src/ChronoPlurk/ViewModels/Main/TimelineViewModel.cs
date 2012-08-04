@@ -23,6 +23,7 @@ namespace ChronoPlurk.ViewModels.Main
         {
             this.DisplayName = AppResources.filterTimeline;
             this.CachingId = "all";
+            EnableCaching = true;
             LoadCachedItems();
             IsHasMoreHandler = plurks =>
             {
