@@ -62,6 +62,8 @@ namespace ChronoPlurk.ViewModels
         {
             base.OnInitialize();
 
+            IsoSettings.SaveVersion();
+
             Items.Add(_timeline);
             ResetFilters();
             if (!SharePickerService.ProcessAction)

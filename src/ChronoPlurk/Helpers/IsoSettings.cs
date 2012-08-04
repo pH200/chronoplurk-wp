@@ -11,6 +11,8 @@ namespace ChronoPlurk.Helpers
 {
     public static class IsoSettings
     {
+        private const string VersionTextKey = "VersionText";
+
         private static readonly object Padlock = new object();
 
         public static IsolatedStorageSettings Settings { get; private set; }
@@ -119,6 +121,11 @@ namespace ChronoPlurk.Helpers
             {
                 Settings.Save();
             }
+        }
+
+        public static void SaveVersion()
+        {
+            AddOrChange(VersionTextKey, DefaultConfiguration.VersionText);
         }
     }
 }
