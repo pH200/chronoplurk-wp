@@ -194,12 +194,13 @@ namespace ChronoPlurk.ViewModels
             IEnumerable<PlurkItemViewModel> unread,
             IEnumerable<PlurkItemViewModel> my,
             IEnumerable<PlurkItemViewModel> @private,
-            IEnumerable<PlurkItemViewModel> liked)
+            IEnumerable<PlurkItemViewModel> liked,
+            bool isFresh)
         {
-            _unreadPlurksViewModel.PrecachedItems = unread;
-            _myPlurksViewModel.PrecachedItems = my;
-            _privatePlurksViewModel.PrecachedItems = @private;
-            _likedPlurksViewModel.PrecachedItems = liked;
+            _unreadPlurksViewModel.SetPrecachedItems(unread, isFresh);
+            _myPlurksViewModel.SetPrecachedItems(my, isFresh);
+            _privatePlurksViewModel.SetPrecachedItems(@private, isFresh);
+            _likedPlurksViewModel.SetPrecachedItems(liked, isFresh);
         }
 
         #region AppBar

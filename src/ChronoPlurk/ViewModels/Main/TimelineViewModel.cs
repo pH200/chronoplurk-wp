@@ -24,7 +24,7 @@ namespace ChronoPlurk.ViewModels.Main
             this.DisplayName = AppResources.filterTimeline;
             this.CachingId = "all";
             LoadCachedItems();
-            GeneratePrecachedItems();
+            GeneratePrecachedItems(false);
             IsHasMoreHandler = plurks => { return plurks.Plurks != null && plurks.Plurks.Count > 0; };
         }
 
@@ -52,12 +52,12 @@ namespace ChronoPlurk.ViewModels.Main
 
         protected override void OnRequestCompleted(TimelineResult lastResult)
         {
-            GeneratePrecachedItems();
+            GeneratePrecachedItems(true);
 
             base.OnRequestCompleted(lastResult);
         }
 
-        private void GeneratePrecachedItems()
+        private void GeneratePrecachedItems(bool isFresh)
         {
             if (Items.Count == 0)
             {
@@ -71,7 +71,7 @@ namespace ChronoPlurk.ViewModels.Main
             var parent = this.GetParent();
             if (parent != null)
             {
-                parent.LoadPrecachedItems(unread, my, pri, liked);
+                parent.LoadPrecachedItems(unread, my, pri, liked, isFresh);
             }
         }
     }
