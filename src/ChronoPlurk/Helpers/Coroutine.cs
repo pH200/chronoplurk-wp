@@ -32,5 +32,20 @@ namespace ChronoPlurk.Helpers
                 OnUIThread(() => onCompleteUI(result));
             });
         }
+
+        public static void OnThreadPoolIgnoreExceptions(this Action action)
+        {
+            ThreadPool.QueueUserWorkItem(state =>
+            {
+                try
+                {
+                    action();
+                }
+                catch (Exception)
+                {
+                    return;
+                }
+            });
+        }
     }
 }

@@ -26,16 +26,30 @@ namespace ChronoPlurk.Helpers
         {
             lock (Padlock)
             {
-                using (var appStorage = IsolatedStorageFile.GetUserStoreForApplication())
+                try
                 {
-                    using (var file = appStorage.FileExists(filename) 
-                        ? appStorage.OpenFile(filename, FileMode.Truncate)
-                        : appStorage.CreateFile(filename))
+                    using (var appStorage = IsolatedStorageFile.GetUserStoreForApplication())
                     {
-                        var sharpSerializer = new SharpSerializer(true);
-                        sharpSerializer.Serialize(data, file);
+                        using (var file = appStorage.FileExists(filename)
+                            ? appStorage.OpenFile(filename, FileMode.Truncate)
+                            : appStorage.CreateFile(filename))
+                        {
+                            var sharpSerializer = new SharpSerializer(true);
+                            sharpSerializer.Serialize(data, file);
+                        }
                     }
                 }
+#if DEBUG
+                catch (Exception)
+                {
+                    throw;
+                }
+#else
+                catch (Exception)
+                {
+                    return;
+                }
+#endif
             }
         }
 
@@ -43,36 +57,36 @@ namespace ChronoPlurk.Helpers
         {
             lock (Padlock)
             {
-                using (var appStorage = IsolatedStorageFile.GetUserStoreForApplication())
+                try
                 {
-                    if (appStorage.FileExists(filename))
+                    using (var appStorage = IsolatedStorageFile.GetUserStoreForApplication())
                     {
-                        using (var file = appStorage.OpenFile(filename, FileMode.Open, FileAccess.Read))
+                        if (appStorage.FileExists(filename))
                         {
-                            var sharpSerializer = new SharpSerializer(true);
-                            try
+                            using (var file = appStorage.OpenFile(filename, FileMode.Open, FileAccess.Read))
                             {
+                                var sharpSerializer = new SharpSerializer(true);
                                 return sharpSerializer.Deserialize(file);
                             }
-#if DEBUG
-                            catch (DeserializingException e)
-                            {
-                                ThreadEx.OnUIThread(() => MessageBox.Show(e.ToString(), "DEBUG MODE", MessageBoxButton.OK));
-                                return null;
-                            }
-#else
-                            catch (DeserializingException)
-                            {
-                                return null;
-                            }
-#endif
+                        }
+                        else
+                        {
+                            return null;
                         }
                     }
-                    else
-                    {
-                        return null;
-                    }
                 }
+#if DEBUG
+                catch (DeserializingException e)
+                {
+                    ThreadEx.OnUIThread(() => MessageBox.Show(e.ToString(), "DEBUG MODE", MessageBoxButton.OK));
+                    return null;
+                }
+#else
+                catch (Exception)
+                {
+                    return null;
+                }
+#endif
             }
         }
 
@@ -101,9 +115,19 @@ namespace ChronoPlurk.Helpers
         {
             lock (Padlock)
             {
-                using (var store = IsolatedStorageFile.GetUserStoreForApplication())
+                try
                 {
-                    store.Remove();
+                    using (var store = IsolatedStorageFile.GetUserStoreForApplication())
+                    {
+                        store.Remove();
+                    }
+                }
+                catch (Exception e)
+                {
+                    if (System.Diagnostics.Debugger.IsAttached)
+                    {
+                        throw e;
+                    }
                 }
             }
             Settings.Clear();
@@ -112,7 +136,7 @@ namespace ChronoPlurk.Helpers
 
         public static void SaveAsync()
         {
-            Observable.ToAsync(Save)().IgnoreAllExceptions().Subscribe();
+            ThreadEx.OnThreadPoolIgnoreExceptions(Save);
         }
 
         private static void Save()
