@@ -97,5 +97,13 @@ namespace ChronoPlurk.ViewModels.Settings
         {
             BackgroundImageService.SelectFromPhotoChooser();
         }
+
+        public void ChangeBackgroundDefault()
+        {
+            BackgroundImageService.ChangeBgDefault();
+            BackgroundImageService.ApplyBackground(this.GetParent().GetView());
+            OpacityValue = 0.2;
+            IsBgEnabled = true;
+        }
     }
 }

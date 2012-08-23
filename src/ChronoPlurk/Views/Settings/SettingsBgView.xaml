@@ -18,20 +18,23 @@
     
     <Grid x:Name="LayoutRoot">
         <ScrollViewer HorizontalScrollBarVisibility="Disabled"
-                      VerticalScrollBarVisibility="Auto">
-            <StackPanel>
-                <toolkit:ToggleSwitch x:Name="BackgroundSwitch"
+                      VerticalScrollBarVisibility="Auto"
+                      HorizontalContentAlignment="Stretch"
+                      VerticalContentAlignment="Stretch">
+            <Grid>
+                <StackPanel>
+                    <toolkit:ToggleSwitch x:Name="BackgroundSwitch"
                                       Header="{Binding Path=LocalizedResources.settingsEnableBackground, Source={StaticResource LocalizedStrings}}"
                                       IsChecked="{Binding IsBgEnabled, Mode=TwoWay}"
                                       cal:Message.Attach="
                                       [Event Checked] = [Action OnSwitchChanged()];
                                       [Event Unchecked] = [Action OnSwitchChanged()]
                                       "/>
-                <StackPanel x:Name="BgPanel"
+                    <StackPanel x:Name="BgPanel"
                             Visibility="{Binding IsChecked, ElementName=BackgroundSwitch, Converter={StaticResource VisibilityConverter}}">
-                    <TextBlock Text="{Binding Path=LocalizedResources.settingsBackgroundOpacity, Source={StaticResource LocalizedStrings}}"
+                        <TextBlock Text="{Binding Path=LocalizedResources.settingsBackgroundOpacity, Source={StaticResource LocalizedStrings}}"
                                Style="{StaticResource PhoneTextSmallStyle}" />
-                    <Slider Minimum="0.0"
+                        <Slider Minimum="0.0"
                             Maximum="1.0"
                             LargeChange="0.2"
                             Value="{Binding OpacityValue, Mode=TwoWay}"
@@ -41,9 +44,18 @@
                             [Event ManipulationStarted] = [Action SliderStarted($view)];
                             [Event ManipulationCompleted] = [Action SliderCompleted($view)]
                             " />
-                    <Button x:Name="ChangeBackground" Content="Change Background" />
+                        <Button x:Name="ChangeBackground"
+                                HorizontalAlignment="Left"
+                                Width="400"
+                                Content="{Binding Path=LocalizedResources.settingsBackgroundChange, Source={StaticResource LocalizedStrings}}" />
+                    </StackPanel>
                 </StackPanel>
-            </StackPanel>
+                <Button x:Name="ChangeBackgroundDefault"
+                        Width="400"
+                        VerticalAlignment="Bottom"
+                        HorizontalAlignment="Left"
+                        Content="{Binding Path=LocalizedResources.settingsBackgroundDefault, Source={StaticResource LocalizedStrings}}" />
+            </Grid>
         </ScrollViewer>
     </Grid>
 </UserControl>

@@ -1051,6 +1051,24 @@ namespace ChronoPlurk.Resources.i18n {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Change Background.
+        /// </summary>
+        public static string settingsBackgroundChange {
+            get {
+                return ResourceManager.GetString("settingsBackgroundChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Restore Default.
+        /// </summary>
+        public static string settingsBackgroundDefault {
+            get {
+                return ResourceManager.GetString("settingsBackgroundDefault", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to opacity.
         /// </summary>
         public static string settingsBackgroundOpacity {

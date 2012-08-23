@@ -534,4 +534,10 @@
   <data name="unreplurk" xml:space="preserve">
     <value>unreplurk</value>
   </data>
+  <data name="settingsBackgroundChange" xml:space="preserve">
+    <value>Change Background</value>
+  </data>
+  <data name="settingsBackgroundDefault" xml:space="preserve">
+    <value>Restore Default</value>
+  </data>
 </root>

@@ -531,4 +531,10 @@
   <data name="unreplurk" xml:space="preserve">
     <value>收回轉噗</value>
   </data>
+  <data name="settingsBackgroundChange" xml:space="preserve">
+    <value>變更背景</value>
+  </data>
+  <data name="settingsBackgroundDefault" xml:space="preserve">
+    <value>回復預設值</value>
+  </data>
 </root>

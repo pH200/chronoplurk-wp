@@ -233,7 +233,7 @@ namespace ChronoPlurk.Services
                 {
                     bitmap.SaveJpeg(fileStream, bitmap.PixelWidth, bitmap.PixelHeight, 0, 80);
                 });
-                ThreadEx.OnUIThread(() => ChangeBg(filename));
+                ChangeBg(filename);
             }
         }
 
