@@ -122,15 +122,14 @@ namespace ChronoPlurk.ViewModels.Compose
             {
                 _downloadDisposable.Dispose();
             }
-            ProgressService.Show(AppResources.msgDownloadingFriendsList);
             var download = FriendsFansCompletionService.DownloadAsync();
-            _downloadDisposable = download.Subscribe(
-                completion =>
+            _downloadDisposable = download
+                .DoProgress(ProgressService, AppResources.msgDownloadingFriendsList)
+                .Subscribe(completion =>
                 {
                     InitializeAllItems(completion);
                     Execute.OnUIThread(() => Search(completion, SearchTextBox));
-                },
-                () => Execute.OnUIThread(ProgressService.Hide));
+                });
             download.Connect();
         }
 

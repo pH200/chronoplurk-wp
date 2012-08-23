@@ -60,7 +60,6 @@ namespace ChronoPlurk.ViewModels
                 _createDisposable.Dispose();
             }
             IsLoginEnabled = false;
-            _progressService.Show(AppResources.msgConnecting);
 
             var verifier = _plurkService.VerifierTemp;
             _plurkService.VerifierTemp = null;
@@ -71,11 +70,11 @@ namespace ChronoPlurk.ViewModels
                 .Merge();
 
             _createDisposable = getAccessToken
-                .PlurkException(progressService: _progressService)
+                .PlurkException()
+                .DoProgress(_progressService, AppResources.msgConnecting)
                 .ObserveOnDispatcher()
                 .Subscribe(unit => OnLoggedIn(), () =>
                 {
-                    _progressService.Hide();
                     IsLoginEnabled = true;
                 });
         }

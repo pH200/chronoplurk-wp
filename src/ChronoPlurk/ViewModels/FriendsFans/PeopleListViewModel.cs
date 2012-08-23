@@ -149,7 +149,6 @@ namespace ChronoPlurk.ViewModels.FriendsFans
                 _requestHandler.Dispose();
             }
 
-            ProgressService.Show(ProgressMessage);
             Message = string.Empty;
             var tempIsHasMore = IsHasMore;
             IsHasMore = false;
@@ -163,6 +162,7 @@ namespace ChronoPlurk.ViewModels.FriendsFans
                 {
                     IsHasMore = tempIsHasMore;
                 }, expectedTimeout: DefaultConfiguration.TimeoutTimeline)
+                .DoProgress(ProgressService, ProgressMessage)
                 .Subscribe(users =>
                 {
                     var result = users;
@@ -183,7 +183,7 @@ namespace ChronoPlurk.ViewModels.FriendsFans
                             IsHasMore = IsHasMoreHandler(users);
                         }
                     }
-                }, () => Execute.OnUIThread(() => ProgressService.Hide()));
+                });
         }
 
         private static IEnumerable<PeopleItemViewModel> Map(IEnumerable<User> result)

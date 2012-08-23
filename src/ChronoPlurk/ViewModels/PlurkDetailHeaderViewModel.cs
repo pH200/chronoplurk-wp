@@ -213,12 +213,11 @@ namespace ChronoPlurk.ViewModels
                 _getDisposable.Dispose();
             }
 
-            _progressService.Show(AppResources.msgLoading);
-
             var command = TimelineCommand.GetPlurk(id)
                 .Client(_plurkService.Client)
                 .ToObservable()
-                .PlurkException();
+                .PlurkException()
+                .DoProgress(_progressService, AppResources.msgLoading);
             _getDisposable = command.Subscribe(up =>
             {
                 UserId = up.User.Id;
@@ -235,7 +234,7 @@ namespace ChronoPlurk.ViewModels
                 PlurkTypeInt = (int)up.Plurk.PlurkType;
                 IsReplurked = up.Plurk.Replurked == true;
                 IsReplurkable = up.Plurk.Replurkable;
-            }, () => Execute.OnUIThread(_progressService.Hide));
+            });
         }
     }
 }

@@ -106,7 +106,6 @@ namespace ChronoPlurk.ViewModels.Compose
             }
             else
             {
-                ProgressService.Show(AppResources.msgSending);
                 IsControlEnabled = false;
 
                 var limitedTo = null as IEnumerable<int>;
@@ -124,28 +123,27 @@ namespace ChronoPlurk.ViewModels.Compose
 
                 var lang = LanguageHelper.CultureInfoToPlurkLang(LocalizedStrings.Culture);
 
-                var command =
-                    TimelineCommand.PlurkAdd(PostContent, Qualifier.Qualifier, limitedTo, lang: lang)
-                        .Client(PlurkService.Client)
-                        .ToObservable()
-                        .PlurkException(expectedTimeout: DefaultConfiguration.TimeoutCompose);
+                var command = TimelineCommand.PlurkAdd(PostContent, Qualifier.Qualifier, limitedTo, lang: lang)
+                    .Client(PlurkService.Client)
+                    .ToObservable()
+                    .DoProgress(ProgressService, AppResources.msgSending)
+                    .PlurkException(expectedTimeout: DefaultConfiguration.TimeoutCompose)
+                    .ObserveOnDispatcher();
 
-                _composeHandler = command.ObserveOnDispatcher().Subscribe(
-                    plurk =>
+                _composeHandler = command.Subscribe(plurk =>
+                {
+                    var page = IoC.Get<PlurkMainPageViewModel>();
+                    if (page != null)
                     {
-                        var page = IoC.Get<PlurkMainPageViewModel>();
-                        if (page != null)
-                        {
-                            page.NewPost = true;
-                        }
-                        PostContent = "";
-                        SelectedUsers.Clear();
-                        _navigationService.GoBack();
-                    }, () =>
-                    {
-                        ProgressService.Hide();
-                        IsControlEnabled = true;
-                    });
+                        page.NewPost = true;
+                    }
+                    PostContent = "";
+                    SelectedUsers.Clear();
+                    _navigationService.GoBack();
+                }, () =>
+                {
+                    IsControlEnabled = true;
+                });
             }
         }
 

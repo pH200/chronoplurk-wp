@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls.Primitives;
 using ChronoPlurk.Helpers;
@@ -11,7 +12,8 @@ namespace ChronoPlurk.Services
 {
     public interface IProgressService
     {
-        void Show(string message = null);
+        int Show(string message = null);
+        void Hide(int id);
         void Hide();
     }
 
@@ -19,33 +21,73 @@ namespace ChronoPlurk.Services
     {
         private PhoneApplicationPage _page;
 
+        private int _idCounter = 1;
+
+        private readonly Dictionary<int, string> _messages = new Dictionary<int, string>();
+
         private readonly ProgressIndicator _progressIndicator = new ProgressIndicator()
         {
             IsVisible = true
         };
 
-        public void Show(string message = null)
+        private int AddStack(string message)
         {
-            var activePage = Application.Current.GetActivePage();
+            var id = _idCounter;
+            _messages.Add(id, message);
+            _idCounter++;
+            return id;
+        }
 
-            if (activePage != null)
+        public int Show(string message = null)
+        {
+            ShowInternal(message);
+
+            return AddStack(message);
+        }
+
+        private void ShowInternal(string message)
+        {
+            ThreadEx.OnUIThread(() =>
             {
-                if (_page != null && activePage != _page)
-                {
-                    SystemTray.SetProgressIndicator(_page, null);
-                }
+                var activePage = Application.Current.GetActivePage();
 
-                _page = activePage;
-                _progressIndicator.Text = message;
-                _progressIndicator.IsIndeterminate = true;
-                SystemTray.SetProgressIndicator(_page, _progressIndicator);
-            } 
+                if (activePage != null)
+                {
+                    if (_page != null && activePage != _page)
+                    {
+                        SystemTray.SetProgressIndicator(_page, null);
+                    }
+
+                    _page = activePage;
+                    _progressIndicator.Text = message;
+                    _progressIndicator.IsIndeterminate = true;
+                    SystemTray.SetProgressIndicator(_page, _progressIndicator);
+                }
+            });
+        }
+
+        public void Hide(int id)
+        {
+            _messages.Remove(id);
+            if (_messages.Count > 0)
+            {
+                var message = _messages.OrderByDescending(m => m.Key).First();
+                ShowInternal(message.Value);
+            }
+            else
+            {
+                Hide();
+            }
         }
 
         public void Hide()
         {
-            _progressIndicator.IsIndeterminate = false;
-            _progressIndicator.Text = null;
+            _messages.Clear();
+            ThreadEx.OnUIThread(() =>
+            {
+                _progressIndicator.IsIndeterminate = false;
+                _progressIndicator.Text = null;
+            });
         }
     }
 }

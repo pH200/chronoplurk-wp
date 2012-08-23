@@ -122,13 +122,14 @@ namespace ChronoPlurk.ViewModels.Compose
                 {
                     _emoticonsDisposable.Dispose();
                 }
-                ProgressService.Show(AppResources.msgLoadingEmoticons);
+                var prgId = ProgressService.Show(AppResources.msgLoadingEmoticons);
                 var emoticonsCmd = EmoticonsCommand.Get().Client(PlurkService.Client)
                     .ToObservable()
                     .Retry(DefaultConfiguration.RetryCount)
                     .Catch<Emoticons, Exception>(e =>
                     {
                         Execute.OnUIThread(() => MessageBox.Show("Cannot load emoticons"));
+                        ProgressService.Hide(prgId);
                         return Observable.Empty<Emoticons>();
                     });
                 _emoticonsDisposable = emoticonsCmd.Subscribe(emoticons =>
@@ -157,12 +158,11 @@ namespace ChronoPlurk.ViewModels.Compose
                     {
                         ActiveEmoticon = custom.Items.Count != 0 ? custom : karma;
                     }
-
-                }, () => Execute.OnUIThread(() =>
+                }, () =>
                 {
-                    ProgressService.Hide();
-                    OnEmoticonsLoaded();
-                }));
+                    ProgressService.Hide(prgId);
+                    Execute.OnUIThread(OnEmoticonsLoaded);
+                });
             }
         }
 
@@ -266,7 +266,7 @@ namespace ChronoPlurk.ViewModels.Compose
             {
                 using (var photoStream = pictureStream)
                 {
-                    ProgressService.Show(AppResources.msgUploadingPhoto);
+                    var prgId = ProgressService.Show(AppResources.msgUploadingPhoto);
 
                     // Resizing
                     var bitmap = PictureDecoder.DecodeJpeg(photoStream,
@@ -282,6 +282,7 @@ namespace ChronoPlurk.ViewModels.Compose
                     var uploadCommand = TimelineCommand.UploadPicture(upload)
                         .Client(PlurkService.Client)
                         .ToObservable()
+                        .DoProgress(ProgressService, prgId)
                         .PlurkException(expectedTimeout: DefaultConfiguration.TimeoutUpload,
                                         onError: OnPictureUploadFailed)
                         .ObserveOnDispatcher()
@@ -291,14 +292,10 @@ namespace ChronoPlurk.ViewModels.Compose
                             upload.Dispose();
                         });
 
-                    _uploadHandler = uploadCommand
-                        .Subscribe(picture =>
-                        {
-                            PostContent += picture.Full + Environment.NewLine;
-                        }, onCompleted: () =>
-                        {
-                            ProgressService.Hide();
-                        });
+                    _uploadHandler = uploadCommand.Subscribe(picture =>
+                    {
+                        PostContent += picture.Full + Environment.NewLine;
+                    });
                 }
             }
         }

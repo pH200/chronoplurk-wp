@@ -152,10 +152,10 @@ namespace ChronoPlurk.Services
                 {
                     _saveUserInfoDisposable.Dispose();
                 }
-                _saveUserInfoDisposable =
-                    Observable.Start(() => IsoSettings.SerializeStore(AppUserInfo, "appUserInfo.bin"))
-                        .Subscribe(unit => { },
-                                   () => Execute.OnUIThread(() => _progressService.Hide()));
+                _saveUserInfoDisposable = Observable
+                    .Start(() => IsoSettings.SerializeStore(AppUserInfo, "appUserInfo.bin"))
+                    .DoProgress(_progressService, AppResources.msgCreatingProfile)
+                    .Subscribe(unit => { });
             }
         }
 

@@ -11,7 +11,6 @@ namespace ChronoPlurk.ViewModels
     [NotifyForAll]
     public sealed class SearchPageViewModel : PlurkAppBarPage, ISearchPage
     {
-        private readonly IProgressService _progressService;
         private readonly SearchResultViewModel _searchResult;
         private readonly SearchRecordsViewModel _searchRecords;
         private SearchPage _view;
@@ -21,12 +20,10 @@ namespace ChronoPlurk.ViewModels
         public SearchPageViewModel(
             INavigationService navigationService,
             IPlurkService plurkService,
-            IProgressService progressService,
             SearchResultViewModel searchResult,
             SearchRecordsViewModel searchRecords)
             : base(navigationService, plurkService)
         {
-            _progressService = progressService;
             _searchResult = searchResult;
             _searchRecords = searchRecords;
         }
@@ -46,13 +43,6 @@ namespace ChronoPlurk.ViewModels
 
             _view = (SearchPage)view;
             SearchOnLoaded();
-        }
-
-        protected override void OnDeactivate(bool close)
-        {
-            base.OnDeactivate(close);
-
-            _progressService.Hide();
         }
 
         private void SearchOnLoaded()

@@ -260,7 +260,6 @@ namespace ChronoPlurk.ViewModels
                 if (clear) CacheItems(cacheItems); // cache when clearing
             };
 
-            Execute.OnUIThread(() => ProgressService.Show(ProgressMessage));
             Message = string.Empty;
             var tempIsHasMore = IsHasMore;
             IsHasMore = false;
@@ -274,6 +273,7 @@ namespace ChronoPlurk.ViewModels
                 {
                     IsHasMore = tempIsHasMore;
                 }, expectedTimeout: DefaultConfiguration.TimeoutTimeline)
+                .DoProgress(ProgressService, ProgressMessage)
                 .Subscribe(plurks =>
                 {
                     if (specialFallback != null)
@@ -308,7 +308,7 @@ namespace ChronoPlurk.ViewModels
                     }
                     else
                     {
-                        Execute.OnUIThread(() => ProgressService.Show(AppResources.msgUpdatingTimeline));
+                        var prgId = ProgressService.Show(AppResources.msgUpdatingTimeline);
                         var items = MapUserPlurkToPlurkItemViewModel(result, plurks);
                         if (_isCachedItemsLoaded)
                         {
@@ -322,16 +322,16 @@ namespace ChronoPlurk.ViewModels
                             Items.AddRange(items);
                             cache(Items);
                         }
-                        
 
                         if (IsHasMoreHandler != null)
                         {
                             IsHasMore = IsHasMoreHandler(plurks);
                         }
+
+                        ProgressService.Hide(prgId);
                     }
                 }, () =>
                 {
-                    Execute.OnUIThread(() => ProgressService.Hide());
                     RequestMoreForScroll();
                     OnRequestCompleted(_lastResult);
                 });
@@ -427,7 +427,7 @@ namespace ChronoPlurk.ViewModels
 
         public void CancelRequest()
         {
-            Execute.OnUIThread(() => ProgressService.Hide());
+            ProgressService.Hide();
             _requestHandler.Dispose();
         }
 

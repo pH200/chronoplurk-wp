@@ -21,6 +21,7 @@ namespace ChronoPlurk.Helpers
             IObservable<TSource> source,
             Action<PlurkError> onError,
             IProgressService progressService,
+            int? progressId,
             PhoneApplicationPage page,
             TimeSpan? expectedTimeout)
         {
@@ -29,6 +30,7 @@ namespace ChronoPlurk.Helpers
                 Source = source,
                 OnError = onError,
                 ProgressService = progressService,
+                ProgressId = progressId,
                 Page = page,
                 ExpectedTimeout = expectedTimeout,
             };
@@ -43,6 +45,8 @@ namespace ChronoPlurk.Helpers
 
         public IProgressService ProgressService { get; set; }
 
+        public int? ProgressId { get; set; }
+
         public PhoneApplicationPage Page { get; set; }
 
         public TimeSpan? ExpectedTimeout { get; set; }
@@ -54,6 +58,7 @@ namespace ChronoPlurk.Helpers
             this IObservable<TSource> source,
             Action<PlurkError> onError = null,
             IProgressService progressService = null,
+            int? progressId = null,
             TimeSpan? expectedTimeout = null)
         {
             var obs = Observable.Start(() =>
@@ -61,6 +66,7 @@ namespace ChronoPlurk.Helpers
                 return PlurkExceptionArguments.Create(source,
                                                       onError,
                                                       progressService,
+                                                      progressId,
                                                       Application.Current.GetActivePage(),
                                                       expectedTimeout);
             }, DispatcherScheduler.Current);
@@ -73,16 +79,9 @@ namespace ChronoPlurk.Helpers
         {
             Action hideProgress = () =>
             {
-                if (args.ProgressService != null)
+                if (args.ProgressService != null && args.ProgressId.HasValue)
                 {
-                    Execute.OnUIThread(() =>
-                    {
-                        var currentPage = Application.Current.GetActivePage();
-                        if (currentPage == args.Page)
-                        {
-                            args.ProgressService.Hide();
-                        }
-                    });
+                    args.ProgressService.Hide(args.ProgressId.Value);
                 }
             };
             return args.Source
