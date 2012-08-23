@@ -16,6 +16,11 @@ namespace ChronoPlurk.Views.ImageLoader
     {
         private static Dictionary<string, Uri> _dictionary;
 
+        public static bool Contains(string key)
+        {
+            return _dictionary.ContainsKey(key);
+        }
+
         public static bool TryGetValue(string key, out Uri value)
         {
             return _dictionary.TryGetValue(key, out value);

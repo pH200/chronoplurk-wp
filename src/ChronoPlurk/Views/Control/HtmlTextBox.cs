@@ -128,6 +128,11 @@ namespace ChronoPlurk.Views.PlurkControls
                 var sanitized = Regex.Replace(html, @"<(.|\n)*?>", "");
                 var rawParagraph = new Paragraph();
                 rawParagraph.Inlines.Add(sanitized);
+                var imgCount = Regex.Matches(html, "<img").Count;
+                for (var i = 0; i < imgCount; i++)
+                {
+                    rawParagraph.Inlines.Add(new LineBreak() { FontSize = 20.0 });
+                }
                 RichTextBox.Blocks.Add(rawParagraph);
 
                 ThreadEx.OnThreadPool(() =>
@@ -351,8 +356,7 @@ namespace ChronoPlurk.Views.PlurkControls
 
         private Inline CreateImageInline(HtmlNode node)
         {
-            Func<string, bool> isntGif = filename =>
-                                         !filename.EndsWith(".gif", StringComparison.OrdinalIgnoreCase);
+            Func<string, bool> isntEmoticon = filename => !EmoticonsDictionary.Contains(filename);
 
             var src = node.Attributes.FirstOrDefault(attr => attr.Name == "src");
             if (src != null)
@@ -362,7 +366,7 @@ namespace ChronoPlurk.Views.PlurkControls
                 {
                     GifLowProfileImageLoader.SetStretch(imageContainer, Stretch.Uniform);
                 }
-                else if (isntGif(src.Value))
+                else if (isntEmoticon(src.Value))
                 {
                     var heightAttr = node.Attributes.FirstOrDefault(attr => attr.Name == "height");
                     if (heightAttr != null)
@@ -374,7 +378,9 @@ namespace ChronoPlurk.Views.PlurkControls
                             double height;
                             if (double.TryParse(match.Value, out height))
                             {
-                                imageContainer.Height = height;
+                                var adjustedHeight = height == 30.0 ? 40.0 : height;
+                                imageContainer.Height = adjustedHeight;
+                                GifLowProfileImageLoader.SetStretch(imageContainer, Stretch.Uniform);
                             }
                         }
                     }
