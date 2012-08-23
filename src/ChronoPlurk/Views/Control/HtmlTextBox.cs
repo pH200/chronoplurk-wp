@@ -125,6 +125,11 @@ namespace ChronoPlurk.Views.PlurkControls
 
             if (!string.IsNullOrEmpty(html))
             {
+                var sanitized = Regex.Replace(html, @"<(.|\n)*?>", "");
+                var rawParagraph = new Paragraph();
+                rawParagraph.Inlines.Add(sanitized);
+                RichTextBox.Blocks.Add(rawParagraph);
+
                 ThreadEx.OnThreadPool(() =>
                 {
                     var document = new HtmlDocument();
@@ -132,6 +137,8 @@ namespace ChronoPlurk.Views.PlurkControls
                     return document;
                 }, document =>
                 {
+                    RichTextBox.Blocks.Remove(rawParagraph);
+
                     var paragraph = new Paragraph();
                     var inlines = ProcessNodeInternal(document.DocumentNode);
                     foreach (var inline in inlines)
