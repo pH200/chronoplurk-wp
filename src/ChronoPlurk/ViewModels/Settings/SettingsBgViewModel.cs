@@ -92,5 +92,10 @@ namespace ChronoPlurk.ViewModels.Settings
                 uiView.SettingsPivot.IsLocked = value;
             }
         }
+
+        public void ChangeBackground()
+        {
+            BackgroundImageService.SelectFromPhotoChooser();
+        }
     }
 }

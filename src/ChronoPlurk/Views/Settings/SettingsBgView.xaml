@@ -41,9 +41,7 @@
                             [Event ManipulationStarted] = [Action SliderStarted($view)];
                             [Event ManipulationCompleted] = [Action SliderCompleted($view)]
                             " />
-                    <TextBlock Text="{Binding Path=LocalizedResources.settingsBackgroundVersionMsg, Source={StaticResource LocalizedStrings}}"
-                               TextWrapping="Wrap"
-                               Style="{StaticResource PhoneTextSmallStyle}" />
+                    <Button x:Name="ChangeBackground" Content="Change Background" />
                 </StackPanel>
             </StackPanel>
         </ScrollViewer>

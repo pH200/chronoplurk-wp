@@ -106,6 +106,7 @@ namespace ChronoPlurk.ViewModels.Settings
 
         public void LogoutButton()
         {
+            SettingsService.ClearToDefault();
             PlurkService.ClearUserData();
             NavigationService.GotoMainPage(true);
         }

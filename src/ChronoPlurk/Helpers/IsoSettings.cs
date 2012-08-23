@@ -22,6 +22,80 @@ namespace ChronoPlurk.Helpers
             Settings = IsolatedStorageSettings.ApplicationSettings;
         }
 
+        /// <summary>
+        /// Create file on isolated storage, automatically ignore exceptions on callback.
+        /// </summary>
+        /// <param name="path">The path and filename.</param>
+        /// <param name="onFileStream">Callback of file stream.</param>
+        public static void CreateBackgroundFile(string path, Action<Stream> onFileStream)
+        {
+            lock (Padlock)
+            {
+                try
+                {
+                    using (var appStorage = IsolatedStorageFile.GetUserStoreForApplication())
+                    {
+                        if (!appStorage.DirectoryExists("bgs"))
+                        {
+                            appStorage.CreateDirectory("bgs");
+                        }
+                        using (var file = appStorage.FileExists(path)
+                                              ? appStorage.OpenFile(path, FileMode.Truncate, FileAccess.Write)
+                                              : appStorage.CreateFile(path))
+                        {
+                            onFileStream(file);
+                        }
+                    }
+                }
+#if DEBUG
+                catch (Exception) // Isolated storage exception
+                {
+                    throw;
+                }
+#else
+                catch (Exception)
+                {
+                    return;
+                }
+#endif
+            }
+        }
+
+        public static MemoryStream ReadBackgroundFile(string path)
+        {
+            lock (Padlock)
+            {
+                try
+                {
+                    using (var appStorage = IsolatedStorageFile.GetUserStoreForApplication())
+                    {
+                        if (appStorage.FileExists(path))
+                        {
+                            using (var file = appStorage.OpenFile(path, FileMode.Open, FileAccess.Read))
+                            {
+                                var memoryStream = new MemoryStream();
+                                file.CopyTo(memoryStream);
+                                memoryStream.Seek(0, SeekOrigin.Begin);
+                                return memoryStream;
+                            }
+                        }
+                    }
+                }
+#if DEBUG
+                catch (Exception)
+                {
+                    throw;
+                }
+#else
+                catch (Exception)
+                {
+                    return null;
+                }
+#endif
+            }
+            return null;
+        }
+
         public static void SerializeStore(object data, string filename)
         {
             lock (Padlock)
@@ -31,7 +105,7 @@ namespace ChronoPlurk.Helpers
                     using (var appStorage = IsolatedStorageFile.GetUserStoreForApplication())
                     {
                         using (var file = appStorage.FileExists(filename)
-                            ? appStorage.OpenFile(filename, FileMode.Truncate)
+                            ? appStorage.OpenFile(filename, FileMode.Truncate, FileAccess.Write)
                             : appStorage.CreateFile(filename))
                         {
                             var sharpSerializer = new SharpSerializer(true);

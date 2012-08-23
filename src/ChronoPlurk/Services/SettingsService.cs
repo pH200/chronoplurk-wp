@@ -30,6 +30,11 @@ namespace ChronoPlurk.Services
             CtorBackgroundImageService(backgroundImageService);
         }
 
+        public void ClearToDefault()
+        {
+            BackgroundImageService.ChangeBgDefault();
+        }
+
         #region Filters
 
         public FiltersOnOffPack GetFiltersPack()
