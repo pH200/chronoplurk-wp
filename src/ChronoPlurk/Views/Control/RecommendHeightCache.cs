@@ -13,15 +13,15 @@ namespace ChronoPlurk.Views.PlurkControls
             Instance = new RecommendHeightCache();
         }
 
-        private const int CacheLength = 200;
+        private const int CacheLength = 500;
 
         private readonly Dictionary<int, double> _cache = new Dictionary<int, double>(CacheLength + 1);
 
-        private readonly Queue<int> _keyOrderCache = new Queue<int>(CacheLength + 1);
+        private readonly List<int> _keyOrderCache = new List<int>(CacheLength + 1);
 
-        public void Add(string value, double height)
+        public void Add(string str, double height)
         {
-            var key = value.GetHashCode();
+            var key = str.GetHashCode();
             if (_cache.ContainsKey(key))
             {
                 _cache[key] = height;
@@ -29,18 +29,22 @@ namespace ChronoPlurk.Views.PlurkControls
             else
             {
                 _cache.Add(key, height);
-                _keyOrderCache.Enqueue(key);
-                if (_cache.Count > CacheLength)
+                _keyOrderCache.Add(key);
+                if (_keyOrderCache.Count > CacheLength)
                 {
-                    var removeKey = _keyOrderCache.Dequeue();
+                    var removeKey = _keyOrderCache[0];
                     _cache.Remove(removeKey);
+                    _keyOrderCache.RemoveAt(0);
                 }
             }
         }
 
-        public bool TryGetValue(string key, out double value)
+        public bool TryGetValue(string str, out double value)
         {
-            return _cache.TryGetValue(key.GetHashCode(), out value);
+            var key = str.GetHashCode();
+            _keyOrderCache.Remove(key);
+            _keyOrderCache.Add(key);
+            return _cache.TryGetValue(key, out value);
         }
     }
 }
