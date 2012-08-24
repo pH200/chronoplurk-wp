@@ -158,11 +158,11 @@ namespace ChronoPlurk.ViewModels.FriendsFans
             }
 
             _requestHandler = observable
+                .DoProgress(ProgressService, ProgressMessage)
                 .PlurkException(error =>
                 {
                     IsHasMore = tempIsHasMore;
                 }, expectedTimeout: DefaultConfiguration.TimeoutTimeline)
-                .DoProgress(ProgressService, ProgressMessage)
                 .Subscribe(users =>
                 {
                     var result = users;

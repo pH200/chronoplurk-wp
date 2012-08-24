@@ -216,8 +216,8 @@ namespace ChronoPlurk.ViewModels
             var command = TimelineCommand.GetPlurk(id)
                 .Client(_plurkService.Client)
                 .ToObservable()
-                .PlurkException()
-                .DoProgress(_progressService, AppResources.msgLoading);
+                .DoProgress(_progressService, AppResources.msgLoading)
+                .PlurkException();
             _getDisposable = command.Subscribe(up =>
             {
                 UserId = up.User.Id;

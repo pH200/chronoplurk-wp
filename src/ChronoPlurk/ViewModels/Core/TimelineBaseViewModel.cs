@@ -269,11 +269,11 @@ namespace ChronoPlurk.ViewModels
             }
 
             _requestHandler = observable
+                .DoProgress(ProgressService, ProgressMessage)
                 .PlurkException(error =>
                 {
                     IsHasMore = tempIsHasMore;
                 }, expectedTimeout: DefaultConfiguration.TimeoutTimeline)
-                .DoProgress(ProgressService, ProgressMessage)
                 .Subscribe(plurks =>
                 {
                     if (specialFallback != null)

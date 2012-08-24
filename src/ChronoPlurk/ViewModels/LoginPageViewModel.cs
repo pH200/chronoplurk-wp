@@ -64,14 +64,13 @@ namespace ChronoPlurk.ViewModels
             var verifier = _plurkService.VerifierTemp;
             _plurkService.VerifierTemp = null;
 
-            var getAccessToken = _plurkService
-                .GetAccessToken(verifier)
-                .Select(client => _plurkService.CreateUserData(client))
-                .Merge();
+            var getAccessToken = from oauthClient in _plurkService.GetAccessToken(verifier)
+                                 from userData in _plurkService.CreateUserData(oauthClient)
+                                 select userData;
 
             _createDisposable = getAccessToken
-                .PlurkException()
                 .DoProgress(_progressService, AppResources.msgConnecting)
+                .PlurkException()
                 .ObserveOnDispatcher()
                 .Subscribe(unit => OnLoggedIn(), () =>
                 {
