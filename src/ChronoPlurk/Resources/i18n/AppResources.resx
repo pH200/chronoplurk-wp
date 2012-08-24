@@ -229,7 +229,7 @@
     <value>responded</value>
   </data>
   <data name="filterTimeline" xml:space="preserve">
-    <value>timeline</value>
+    <value>all</value>
   </data>
   <data name="friendsListFirst" xml:space="preserve">
     <value>This is your first time using friends list.\nFriends list will download automatically.</value>

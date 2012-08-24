@@ -637,7 +637,7 @@ namespace ChronoPlurk.Resources.i18n {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to timeline.
+        ///   Looks up a localized string similar to all.
         /// </summary>
         public static string filterTimeline {
             get {
