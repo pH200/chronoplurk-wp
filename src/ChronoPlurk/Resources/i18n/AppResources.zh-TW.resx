@@ -552,4 +552,7 @@
   <data name="savedPictures" xml:space="preserve">
     <value>已儲存的相片</value>
   </data>
+  <data name="msgImageDownloaded" xml:space="preserve">
+    <value>圖片已下載完成</value>
+  </data>
 </root>

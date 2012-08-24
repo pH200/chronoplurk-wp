@@ -15,6 +15,23 @@
     mc:Ignorable="d" d:DesignHeight="800" d:DesignWidth="480"
     shell:SystemTray.IsVisible="False">
     
+	<animation:AnimatedBasePage.Resources>
+		<Storyboard x:Name="ShowProgressMessage">
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="ProgressMessage">
+				<EasingDoubleKeyFrame KeyTime="0" Value="-35"/>
+				<EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="0"/>
+				<EasingDoubleKeyFrame KeyTime="0:0:2.8" Value="0"/>
+				<EasingDoubleKeyFrame KeyTime="0:0:3" Value="-35"/>
+			</DoubleAnimationUsingKeyFrames>
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="ProgressMessage">
+				<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+				<EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="1"/>
+				<EasingDoubleKeyFrame KeyTime="0:0:2.8" Value="1"/>
+				<EasingDoubleKeyFrame KeyTime="0:0:3" Value="0"/>
+			</DoubleAnimationUsingKeyFrames>
+		</Storyboard>
+	</animation:AnimatedBasePage.Resources>
+    
     <Grid x:Name="LayoutRoot" Background="Black">
     	<VisualStateManager.VisualStateGroups>
     		<VisualStateGroup x:Name="VisualStateGroup">
@@ -158,10 +175,31 @@
                            Foreground="#FF222222"/>
             </ScrollViewer>
         </Grid>
-        
-        <toolkit:PerformanceProgressBar
-            x:Name="ProgressBar"
-            VerticalAlignment="Top"/>
+
+        <Border x:Name="ProgressMessage"
+                Height="35"
+                VerticalAlignment="Top"
+                Background="{StaticResource PhoneBackgroundBrush}"
+                RenderTransformOrigin="0.5,0.5"
+                Opacity="0" >
+            <Border.RenderTransform>
+                <CompositeTransform TranslateY="-35"/>
+            </Border.RenderTransform>
+            <TextBlock HorizontalAlignment="Left"
+                       VerticalAlignment="Top"
+                       FontFamily="{StaticResource PhoneFontFamilySemiLight}"
+                       FontSize="{StaticResource PhoneFontSizeNormal}"
+                       Text="{Binding Path=LocalizedResources.msgImageDownloaded, Source={StaticResource LocalizedStrings}}"
+                       Margin="18,0,0,0" >
+            </TextBlock>
+        </Border>
+
+        <toolkit:PerformanceProgressBar x:Name="ProgressBar"
+                                        Width="480"
+                                        HorizontalAlignment="Stretch"
+                                        HorizontalContentAlignment="Stretch"
+                                        VerticalAlignment="Top"
+                                        VerticalContentAlignment="Stretch" />
     </Grid>
 
 </animation:AnimatedBasePage>

@@ -237,18 +237,15 @@ body { margin: 20px 0; }
                 };
 
                 var filename = ImageUri.AbsolutePath.Split('/').Last();
-                var message = AppResources.savedPictures + " >" +
-                              Environment.NewLine +
-                              filename;
                 ap.Select(onWebResponse)
                     .ObserveOnDispatcher()
                     .Do(onImageStream)
                     .DoProgress(progress, prgId)
                     .Do(afterSaved)
-                    .Subscribe(memoryStream => MessageBox.Show(message,
-                                                               AppResources.msgCaptionImageSaved,
-                                                               MessageBoxButton.OK),
-                               err => MessageBox.Show(AppResources.msgErrImageDownloading));
+                    .Subscribe(memoryStream => ShowProgressMessage.Begin(),
+                               err => MessageBox.Show(AppResources.msgErrImageDownloading,
+                                                      filename,
+                                                      MessageBoxButton.OK));
             };
             ApplicationBar.MenuItems.Add(downloadButton);
         }

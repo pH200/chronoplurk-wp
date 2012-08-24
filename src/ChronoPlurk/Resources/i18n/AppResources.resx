@@ -555,4 +555,7 @@
   <data name="savedPictures" xml:space="preserve">
     <value>saved pictures</value>
   </data>
+  <data name="msgImageDownloaded" xml:space="preserve">
+    <value>Done downloading image</value>
+  </data>
 </root>
