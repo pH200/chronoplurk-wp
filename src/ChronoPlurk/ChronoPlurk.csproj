@@ -227,6 +227,7 @@
     <Compile Include="Views\Control\FocusBehavior.cs" />
     <Compile Include="Views\Control\HtmlTextBox.cs" />
     <Compile Include="Views\Control\OrientationTrigger.cs" />
+    <Compile Include="Views\Control\RecommendHeightCache.cs" />
     <Compile Include="Views\Control\TiltEffect.cs" />
     <Compile Include="Views\Control\TimelineControl.xaml.cs">
       <DependentUpon>TimelineControl.xaml</DependentUpon>

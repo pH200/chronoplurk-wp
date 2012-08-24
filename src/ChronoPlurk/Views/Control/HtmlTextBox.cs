@@ -19,8 +19,6 @@ namespace ChronoPlurk.Views.PlurkControls
     [TemplatePart(Name = "RichTextBoxElement", Type = typeof(RichTextBox))]
     public class HtmlTextBox : Control
     {
-        private const double DefaultImageHeight = 20.0;
-
         private readonly CompositeDisposable _imageClickEvents = new CompositeDisposable();
 
         #region Html (DependencyProperty)
@@ -135,6 +133,12 @@ namespace ChronoPlurk.Views.PlurkControls
                 }
                 RichTextBox.Blocks.Add(rawParagraph);
 
+                double recommendHeight; // Get recommend height for LongListSelector scrolling
+                if (RecommendHeightCache.Instance.TryGetValue(html, out recommendHeight))
+                {
+                    this.Height = recommendHeight;
+                }
+
                 ThreadEx.OnThreadPool(() =>
                 {
                     var document = new HtmlDocument();
@@ -151,6 +155,9 @@ namespace ChronoPlurk.Views.PlurkControls
                         paragraph.Inlines.Add(inline);
                     }
                     RichTextBox.Blocks.Add(paragraph);
+
+                    this.Height = double.NaN; // Reset height to auto.
+                    RecommendHeightCache.Instance.Add(html, this.ActualHeight); // Cache current height.
                 });
             }
         }
