@@ -102,7 +102,7 @@ namespace ChronoPlurk.ViewModels.Compose
             }
             if (String.IsNullOrWhiteSpace(PostContent))
             {
-                MessageBox.Show(AppResources.tooManyCharacters);
+                MessageBox.Show(AppResources.warnEmpty);
             }
             else
             {

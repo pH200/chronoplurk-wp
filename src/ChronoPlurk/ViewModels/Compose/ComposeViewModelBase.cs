@@ -49,7 +49,7 @@ namespace ChronoPlurk.ViewModels.Compose
                 }
 
                 var count = 140 - length;
-                return count >= 0 ? count.ToString() : AppResources.warnEmpty;
+                return count >= 0 ? count.ToString() : AppResources.tooManyCharacters;
             }
         }
 
