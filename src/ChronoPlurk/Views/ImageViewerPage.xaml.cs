@@ -1,12 +1,19 @@
 ﻿using System;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Reactive.Linq;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using Caliburn.Micro;
 using ChronoPlurk.Helpers;
 using ChronoPlurk.Resources.i18n;
+using ChronoPlurk.Services;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using Microsoft.Phone.Tasks;
+using Microsoft.Xna.Framework.Media;
 using WP7Contrib.View.Transitions.Animation;
 
 namespace ChronoPlurk.Views
@@ -48,6 +55,7 @@ body { margin: 20px 0; }
 </body>
 </html>
 ";
+        private static readonly string[] SupportExts = new[] {".jpg", ".jpeg", ".png"};
 
         public Uri ImageUri { get; set; }
 
@@ -55,7 +63,6 @@ body { margin: 20px 0; }
         {
             InitializeComponent();
             AnimationContext = LayoutRoot;
-            BuildAppBar();
 
             ImageUri = new Uri("about:blank", UriKind.Absolute);
         }
@@ -83,6 +90,9 @@ body { margin: 20px 0; }
                 {
                     ImageUri = new Uri(uriString, UriKind.Absolute);
                     UrlTextBox.Text = uriString;
+
+                    BuildAppBar();
+
                     Browser.NavigateToString(EmbedPage);
                 }
                 catch (UriFormatException)
@@ -175,6 +185,65 @@ body { margin: 20px 0; }
             };
             ApplicationBar.Buttons.Add(refreshButton);
             ApplicationBar.MenuItems.Add(openInIeButton);
+
+            if (IsSupportedImage())
+            {
+                AddDownloadButton();
+            }
+        }
+
+        private void AddDownloadButton()
+        {
+            var downloadButton = new ApplicationBarMenuItem()
+            {
+                Text = "save image"
+            };
+            downloadButton.Click += (sender, args) =>
+            {
+                var progress = IoC.Get<IProgressService>();
+                var prgId = progress.Show("Downloading image");
+                ProgressBar.IsIndeterminate = true;
+
+                var client = WebRequest.Create(ImageUri);
+                var ap = Observable.FromAsyncPattern<WebResponse>(client.BeginGetResponse, client.EndGetResponse)();
+
+                Func<WebResponse, MemoryStream> onWebResponse = response =>
+                {
+                    using (response)
+                    using (var responseStream = response.GetResponseStream())
+                    {
+                        var memoryStream = new MemoryStream();
+                        responseStream.CopyTo(memoryStream);
+                        memoryStream.Seek(0, SeekOrigin.Begin);
+                        return memoryStream;
+                    }
+                };
+                Action<MemoryStream> onImageStream = memoryStream =>
+                {
+                    var bitmap = new BitmapImage {CreateOptions = BitmapCreateOptions.None};
+                    bitmap.SetSource(memoryStream);
+                    var wb = new WriteableBitmap(bitmap);
+                    memoryStream.Flush();
+                    wb.SaveJpeg(memoryStream, wb.PixelWidth, wb.PixelHeight, 0, 90);
+                    memoryStream.Seek(0, SeekOrigin.Begin);
+                    var library = new MediaLibrary();
+                    library.SavePicture(Guid.NewGuid() + ".jpg", memoryStream);
+                };
+
+                ap.Select(onWebResponse)
+                    .ObserveOnDispatcher()
+                    .Do(onImageStream)
+                    .DoProgress(progress, prgId)
+                    .Do(memoryStream => ProgressBar.IsIndeterminate = false)
+                    .Subscribe(memoryStream => MessageBox.Show("Image saved to saved pictures album"),
+                               err => MessageBox.Show("Error downloading file."));
+            };
+            ApplicationBar.MenuItems.Add(downloadButton);
+        }
+
+        private bool IsSupportedImage()
+        {
+            return SupportExts.Any(ext => ImageUri.AbsolutePath.EndsWith(ext, StringComparison.OrdinalIgnoreCase));
         }
     }
 }
