@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reactive.Linq;
 using System.Threading;
 
 namespace ChronoPlurk.Helpers
@@ -46,6 +47,16 @@ namespace ChronoPlurk.Helpers
                     return;
                 }
             });
+        }
+
+        public static void TimerAction(TimeSpan dueTime, Action action)
+        {
+            Observable.Timer(dueTime).Subscribe(tick => { }, action);
+        }
+
+        public static void TimerActionUI(TimeSpan dueTime, Action action)
+        {
+            Observable.Timer(dueTime).ObserveOnDispatcher().Subscribe(tick => { }, action);
         }
     }
 }

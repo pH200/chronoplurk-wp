@@ -13,6 +13,7 @@ namespace ChronoPlurk.Services
     public interface IProgressService
     {
         int Show(string message = null);
+        void ShowQuickMessage(string message);
         void Hide(int id);
         void Hide();
     }
@@ -25,6 +26,8 @@ namespace ChronoPlurk.Services
 
         private readonly Dictionary<int, string> _messages = new Dictionary<int, string>();
 
+        private readonly object _gate = new object();
+
         private readonly ProgressIndicator _progressIndicator = new ProgressIndicator()
         {
             IsVisible = true
@@ -32,20 +35,29 @@ namespace ChronoPlurk.Services
 
         private int AddStack(string message)
         {
-            var id = _idCounter;
-            _messages.Add(id, message);
-            _idCounter++;
-            return id;
+            lock (_gate)
+            {
+                var id = _idCounter;
+                _messages.Add(id, message);
+                _idCounter++;
+                return id;
+            }
         }
 
         public int Show(string message = null)
         {
-            ShowInternal(message);
-
+            ShowInternal(message, true);
             return AddStack(message);
         }
 
-        private void ShowInternal(string message)
+        public void ShowQuickMessage(string message)
+        {
+            ShowInternal(message, false);
+            var prgId = AddStack(message);
+            ThreadEx.TimerAction(TimeSpan.FromSeconds(1.5), () => Hide(prgId));
+        }
+
+        private void ShowInternal(string message, bool isIndeterminate)
         {
             ThreadEx.OnUIThread(() =>
             {
@@ -60,7 +72,7 @@ namespace ChronoPlurk.Services
 
                     _page = activePage;
                     _progressIndicator.Text = message;
-                    _progressIndicator.IsIndeterminate = true;
+                    _progressIndicator.IsIndeterminate = isIndeterminate;
                     SystemTray.SetProgressIndicator(_page, _progressIndicator);
                 }
             });
@@ -68,21 +80,25 @@ namespace ChronoPlurk.Services
 
         public void Hide(int id)
         {
-            _messages.Remove(id);
-            if (_messages.Count > 0)
+            lock (_gate)
             {
-                var message = _messages.OrderByDescending(m => m.Key).First();
-                ShowInternal(message.Value);
+                _messages.Remove(id);
+                if (_messages.Count > 0)
+                {
+                    var message = _messages.OrderByDescending(m => m.Key).First();
+                    ShowInternal(message.Value, true);
+                    return;
+                }
             }
-            else
-            {
-                Hide();
-            }
+            Hide();
         }
 
         public void Hide()
         {
-            _messages.Clear();
+            lock (_gate)
+            {
+                _messages.Clear();
+            }
             ThreadEx.OnUIThread(() =>
             {
                 _progressIndicator.IsIndeterminate = false;
