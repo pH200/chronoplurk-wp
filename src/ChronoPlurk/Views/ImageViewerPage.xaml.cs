@@ -196,13 +196,13 @@ body { margin: 20px 0; }
         {
             var downloadButton = new ApplicationBarMenuItem()
             {
-                Text = "save image"
+                Text = AppResources.appbarSaveImage
             };
             downloadButton.Click += (sender, args) =>
             {
                 downloadButton.IsEnabled = false;
                 var progress = IoC.Get<IProgressService>();
-                var prgId = progress.Show("Downloading image");
+                var prgId = progress.Show(AppResources.msgDownloadingImage);
                 ProgressBar.IsIndeterminate = true;
 
                 var client = WebRequest.Create(ImageUri);
@@ -236,13 +236,19 @@ body { margin: 20px 0; }
                     downloadButton.IsEnabled = true;
                 };
 
+                var filename = ImageUri.AbsolutePath.Split('/').Last();
+                var message = AppResources.savedPictures + " >" +
+                              Environment.NewLine +
+                              filename;
                 ap.Select(onWebResponse)
                     .ObserveOnDispatcher()
                     .Do(onImageStream)
                     .DoProgress(progress, prgId)
                     .Do(afterSaved)
-                    .Subscribe(memoryStream => MessageBox.Show("Image saved to saved pictures album"),
-                               err => MessageBox.Show("Error downloading file."));
+                    .Subscribe(memoryStream => MessageBox.Show(message,
+                                                               AppResources.msgCaptionImageSaved,
+                                                               MessageBoxButton.OK),
+                               err => MessageBox.Show(AppResources.msgErrImageDownloading));
             };
             ApplicationBar.MenuItems.Add(downloadButton);
         }

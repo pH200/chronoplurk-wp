@@ -205,6 +205,15 @@ namespace ChronoPlurk.Resources.i18n {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to save image.
+        /// </summary>
+        public static string appbarSaveImage {
+            get {
+                return ResourceManager.GetString("appbarSaveImage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to scroll to latest.
         /// </summary>
         public static string appbarScrollToLatest {
@@ -799,6 +808,15 @@ namespace ChronoPlurk.Resources.i18n {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Image saved.
+        /// </summary>
+        public static string msgCaptionImageSaved {
+            get {
+                return ResourceManager.GetString("msgCaptionImageSaved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Connecting.
         /// </summary>
         public static string msgConnecting {
@@ -840,6 +858,24 @@ namespace ChronoPlurk.Resources.i18n {
         public static string msgDownloadingFriendsList {
             get {
                 return ResourceManager.GetString("msgDownloadingFriendsList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Downloading Image.
+        /// </summary>
+        public static string msgDownloadingImage {
+            get {
+                return ResourceManager.GetString("msgDownloadingImage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot save image..
+        /// </summary>
+        public static string msgErrImageDownloading {
+            get {
+                return ResourceManager.GetString("msgErrImageDownloading", resourceCulture);
             }
         }
         
@@ -1002,6 +1038,15 @@ namespace ChronoPlurk.Resources.i18n {
         public static string responseSingle {
             get {
                 return ResourceManager.GetString("responseSingle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to saved pictures.
+        /// </summary>
+        public static string savedPictures {
+            get {
+                return ResourceManager.GetString("savedPictures", resourceCulture);
             }
         }
         

@@ -540,4 +540,19 @@
   <data name="settingsBackgroundDefault" xml:space="preserve">
     <value>Restore Default</value>
   </data>
+  <data name="appbarSaveImage" xml:space="preserve">
+    <value>save image</value>
+  </data>
+  <data name="msgCaptionImageSaved" xml:space="preserve">
+    <value>Image saved</value>
+  </data>
+  <data name="msgDownloadingImage" xml:space="preserve">
+    <value>Downloading Image</value>
+  </data>
+  <data name="msgErrImageDownloading" xml:space="preserve">
+    <value>Cannot save image.</value>
+  </data>
+  <data name="savedPictures" xml:space="preserve">
+    <value>saved pictures</value>
+  </data>
 </root>
