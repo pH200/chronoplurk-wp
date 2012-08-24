@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Reactive;
 using System.Reactive.Linq;
-using System.Windows.Input;
 using Caliburn.Micro;
 using ChronoPlurk.Resources.i18n;
 using ChronoPlurk.Services;
-using ChronoPlurk.Views;
 using ChronoPlurk.Helpers;
-using DeepForest.Phone.Assets.Tools;
-using Microsoft.Phone.Tasks;
 using NotifyPropertyWeaver;
 
 namespace ChronoPlurk.ViewModels
@@ -119,19 +114,6 @@ namespace ChronoPlurk.ViewModels
         public void UndoDevice()
         {
             UpdateDeviceName();
-        }
-
-        public void HelpDevice()
-        {
-            NotificationTool.Show(
-                AppResources.helpTitle,
-                AppResources.helpDeviceId.Replace("\\n", Environment.NewLine),
-                new NotificationAction(AppResources.helpOK, () => { }),
-                new NotificationAction(AppResources.helpExample, () =>
-                {
-                    var uri = new Uri("http://images.plurk.com/4c31662a172aad703ef9d5535458b77f.jpg", UriKind.Absolute);
-                    _navigationService.GotoImageBrowserPage(uri);
-                }));
         }
     }
 }
