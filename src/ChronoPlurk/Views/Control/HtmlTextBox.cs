@@ -112,8 +112,21 @@ namespace ChronoPlurk.Views.PlurkControls
         public override void OnApplyTemplate()
         {
             RichTextBox = GetTemplateChild("RichTextBoxElement") as RichTextBox;
+            RegisterHeightChanged();
 
             base.OnApplyTemplate();
+        }
+
+        private void RegisterHeightChanged()
+        {
+            RichTextBox.SizeChanged += (sender, args) =>
+            {
+                var actualHeight = RichTextBox.ActualHeight;
+                if (actualHeight > 0)
+                {
+                    RecommendHeightCache.Instance.Add(Html, ActualHeight); // Cache current height.
+                }
+            };
         }
 
         private void ConvertHtml(string html)
@@ -136,7 +149,7 @@ namespace ChronoPlurk.Views.PlurkControls
                 double recommendHeight; // Get recommend height for LongListSelector scrolling
                 if (RecommendHeightCache.Instance.TryGetValue(html, out recommendHeight))
                 {
-                    this.Height = recommendHeight;
+                    RichTextBox.Height = recommendHeight;
                 }
 
                 ThreadEx.OnThreadPool(() =>
@@ -156,8 +169,7 @@ namespace ChronoPlurk.Views.PlurkControls
                     }
                     RichTextBox.Blocks.Add(paragraph);
 
-                    this.Height = double.NaN; // Reset height to auto.
-                    RecommendHeightCache.Instance.Add(html, this.ActualHeight); // Cache current height.
+                    RichTextBox.Height = double.NaN; // Reset height to auto.
                 });
             }
         }
