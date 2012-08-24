@@ -200,6 +200,7 @@ body { margin: 20px 0; }
             };
             downloadButton.Click += (sender, args) =>
             {
+                downloadButton.IsEnabled = false;
                 var progress = IoC.Get<IProgressService>();
                 var prgId = progress.Show("Downloading image");
                 ProgressBar.IsIndeterminate = true;
@@ -229,12 +230,17 @@ body { margin: 20px 0; }
                     var library = new MediaLibrary();
                     library.SavePicture(Guid.NewGuid() + ".jpg", memoryStream);
                 };
+                Action<MemoryStream> afterSaved = memoryStream =>
+                {
+                    ProgressBar.IsIndeterminate = false;
+                    downloadButton.IsEnabled = true;
+                };
 
                 ap.Select(onWebResponse)
                     .ObserveOnDispatcher()
                     .Do(onImageStream)
                     .DoProgress(progress, prgId)
-                    .Do(memoryStream => ProgressBar.IsIndeterminate = false)
+                    .Do(afterSaved)
                     .Subscribe(memoryStream => MessageBox.Show("Image saved to saved pictures album"),
                                err => MessageBox.Show("Error downloading file."));
             };
