@@ -15,9 +15,9 @@ namespace ChronoPlurk.Views.PlurkControls
 
         private const int CacheLength = 200;
 
-        private readonly Dictionary<int, double> _cache = new Dictionary<int, double>();
+        private readonly Dictionary<int, double> _cache = new Dictionary<int, double>(CacheLength + 1);
 
-        private readonly Queue<int> _keyOrderCache = new Queue<int>();
+        private readonly Queue<int> _keyOrderCache = new Queue<int>(CacheLength + 1);
 
         public void Add(string value, double height)
         {
