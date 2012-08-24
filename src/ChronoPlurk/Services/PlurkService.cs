@@ -49,8 +49,6 @@ namespace ChronoPlurk.Services
 
         private readonly OAuthClient _client;
 
-        private IDisposable _saveUserInfoDisposable;
-
         public AppUserInfo AppUserInfo { get; private set; }
         
         public string VerifierTemp { get; set; }
@@ -147,15 +145,9 @@ namespace ChronoPlurk.Services
         {
             if (AppUserInfo != null)
             {
-                _progressService.Show(AppResources.msgCreatingProfile);
-                if (_saveUserInfoDisposable != null)
-                {
-                    _saveUserInfoDisposable.Dispose();
-                }
-                _saveUserInfoDisposable = Observable
-                    .Start(() => IsoSettings.SerializeStore(AppUserInfo, "appUserInfo.bin"))
+                Observable.Start(() => IsoSettings.SerializeStore(AppUserInfo, "appUserInfo.bin"))
                     .DoProgress(_progressService, AppResources.msgCreatingProfile)
-                    .Subscribe(unit => { });
+                    .Subscribe();
             }
         }
 
