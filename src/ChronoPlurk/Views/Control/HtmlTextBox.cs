@@ -348,11 +348,11 @@ namespace ChronoPlurk.Views.PlurkControls
 
         private static InlineNode CreateHyperlinkInlineNode(HtmlNode node)
         {
-            var href = node.Attributes.FirstOrDefault(attr => attr.Name == "href");
+            var href = node.GetAttributeValue("href", null as string);
             var hyperlink = new Hyperlink() { Foreground = PlurkResources.PhoneAccentBrush };
             if (href != null)
             {
-                hyperlink.NavigateUri = UrlRemapper.RemapUrl(href.Value);
+                hyperlink.NavigateUri = UrlRemapper.RemapUrl(href);
                 if (hyperlink.NavigateUri.IsAbsoluteUri)
                 {
                     hyperlink.TargetName = "_blank";
@@ -365,7 +365,7 @@ namespace ChronoPlurk.Views.PlurkControls
         {
             Func<string, bool> isntEmoticon = filename => !EmoticonsDictionary.Contains(filename);
 
-            var src = node.Attributes.FirstOrDefault(attr => attr.Name == "src");
+            var src = node.GetAttributeValue("src", null as string);
             if (src != null)
             {
                 var imageContainer = new Border();
@@ -373,26 +373,22 @@ namespace ChronoPlurk.Views.PlurkControls
                 {
                     GifLowProfileImageLoader.SetStretch(imageContainer, Stretch.Uniform);
                 }
-                else if (isntEmoticon(src.Value))
+                else if (isntEmoticon(src))
                 {
-                    var heightAttr = node.Attributes.FirstOrDefault(attr => attr.Name == "height");
-                    if (heightAttr != null)
+                    // NOTE: Some imgs may have attributes like height="40px"
+                    var heightMatch = Regex.Match(node.GetAttributeValue("height", ""), "[0-9]+");
+                    if (heightMatch.Success)
                     {
-                        // NOTE: Some imgs may have attributes like height="40px"
-                        var match = Regex.Match(heightAttr.Value, "[0-9]+");
-                        if (match.Success)
+                        double height;
+                        if (double.TryParse(heightMatch.Value, out height))
                         {
-                            double height;
-                            if (double.TryParse(match.Value, out height))
-                            {
-                                var adjustedHeight = height == 30.0 ? 40.0 : height;
-                                imageContainer.Height = adjustedHeight;
-                                GifLowProfileImageLoader.SetStretch(imageContainer, Stretch.Uniform);
-                            }
+                            var adjustedHeight = (height == 30.0) ? 40.0 : height;
+                            imageContainer.Height = adjustedHeight;
+                            GifLowProfileImageLoader.SetStretch(imageContainer, Stretch.Uniform);
                         }
                     }
                 }
-                GifLowProfileImageLoader.SetUriSource(imageContainer, new Uri(src.Value, UriKind.Absolute));
+                GifLowProfileImageLoader.SetUriSource(imageContainer, new Uri(src, UriKind.Absolute));
                 var container = new InlineUIContainer { Child = imageContainer };
                 return container;
             }
