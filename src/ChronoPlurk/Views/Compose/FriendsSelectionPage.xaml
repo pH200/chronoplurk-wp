@@ -42,23 +42,27 @@
                 </Grid.ColumnDefinitions>
                 <Border BorderBrush="{StaticResource PhoneForegroundBrush}"
                         BorderThickness="3">
-                    <ListBox x:Name="ResultItems">
+                    <ListBox x:Name="ResultItems"
+                             mycontrol:TiltEffect.IsTiltEnabled="True">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <StackPanel Height="80"
-                                            cal:Message.Attach="[Event Tap] = [OnItemTap($dataContext)]">
-                                    <TextBlock Text="{Binding NickName}"
-                                       Margin="0,8,0,-4"
-                                       Foreground="{Binding SelectedBrush}"
-                                       FontSize="{StaticResource PhoneFontSizeLarge}" 
-                                       FontFamily="{StaticResource PhoneFontFamilySemiLight}"/>
-                                    <TextBlock Text="{Binding DisplayName}"
-                                       TextWrapping="Wrap"
-                                       Margin="0,0,0,-2"
-                                       Foreground="{StaticResource PhoneSubtleBrush}"
-                                       FontSize="{StaticResource PhoneFontSizeNormal}"
-                                       FontFamily="{StaticResource PhoneFontFamilySemiBold}"/>
-                                </StackPanel>
+                                <ListBoxItem>
+                                    <StackPanel Height="80"
+                                                Margin="4,0,0,0"
+                                                cal:Message.Attach="[Event Tap] = [OnItemTap($dataContext)]">
+                                        <TextBlock Text="{Binding NickName}"
+                                                   Margin="0,8,0,-4"
+                                                   Foreground="{Binding SelectedBrush}"
+                                                   FontSize="{StaticResource PhoneFontSizeLarge}" 
+                                                   FontFamily="{StaticResource PhoneFontFamilySemiLight}"/>
+                                        <TextBlock Text="{Binding DisplayName}"
+                                                   TextWrapping="Wrap"
+                                                   Margin="0,0,0,-2"
+                                                   Foreground="{StaticResource PhoneSubtleBrush}"
+                                                   FontSize="{StaticResource PhoneFontSizeNormal}"
+                                                   FontFamily="{StaticResource PhoneFontFamilySemiBold}"/>
+                                    </StackPanel>
+                                </ListBoxItem>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
@@ -67,23 +71,27 @@
                 <Border BorderBrush="{StaticResource PhoneForegroundBrush}"
                         BorderThickness="3"
                         Grid.Column="1">
-                    <ListBox x:Name="SelectedItems">
+                    <ListBox x:Name="SelectedItems"
+                             mycontrol:TiltEffect.IsTiltEnabled="True">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <StackPanel Height="80"
-                                            cal:Message.Attach="[Event Tap] = [OnSelectedItemTap($dataContext)]">
-                                    <TextBlock Text="{Binding NickName}"
-                                       Margin="0,8,0,-4"
-                                       Foreground="{StaticResource PhoneAccentBrush}"
-                                       FontSize="{StaticResource PhoneFontSizeLarge}" 
-                                       FontFamily="{StaticResource PhoneFontFamilySemiLight}"/>
-                                    <TextBlock Text="{Binding DisplayName}"
-                                       TextWrapping="Wrap"
-                                       Margin="0,0,0,-2"
-                                       Foreground="{StaticResource PhoneSubtleBrush}"
-                                       FontSize="{StaticResource PhoneFontSizeNormal}"
-                                       FontFamily="{StaticResource PhoneFontFamilySemiBold}"/>
-                                </StackPanel>
+                                <ListBoxItem>
+                                    <StackPanel Height="80"
+                                                Margin="4,0,0,0"
+                                                cal:Message.Attach="[Event Tap] = [OnSelectedItemTap($dataContext)]">
+                                        <TextBlock Text="{Binding NickName}"
+                                                   Margin="0,8,0,-4"
+                                                   Foreground="{StaticResource PhoneAccentBrush}"
+                                                   FontSize="{StaticResource PhoneFontSizeLarge}" 
+                                                   FontFamily="{StaticResource PhoneFontFamilySemiLight}"/>
+                                        <TextBlock Text="{Binding DisplayName}"
+                                                   TextWrapping="Wrap"
+                                                   Margin="0,0,0,-2"
+                                                   Foreground="{StaticResource PhoneSubtleBrush}"
+                                                   FontSize="{StaticResource PhoneFontSizeNormal}"
+                                                   FontFamily="{StaticResource PhoneFontFamilySemiBold}"/>
+                                    </StackPanel>
+                                </ListBoxItem>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>

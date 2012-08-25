@@ -178,10 +178,16 @@ namespace ChronoPlurk.ViewModels.Compose
             var item = dataContext as FriendResultItemViewModel;
             if (item != null)
             {
-                if (SelectedItems.FirstOrDefault(u => u.Id == item.Id).Id == 0)
+                var selectedItem = SelectedItems.FirstOrDefault(u => u.Id == item.Id);
+                if (selectedItem.Id == default(int)) // struct default
                 {
                     item.IsSelected = true;
                     SelectedItems.Add(item.CompletionUser);
+                }
+                else
+                {
+                    item.IsSelected = false;
+                    SelectedItems.Remove(selectedItem);
                 }
             }
         }

@@ -47,6 +47,7 @@ namespace ChronoPlurk.Views.PlurkControls
             TiltableItems = new List<Type>()
             {
                 // typeof(ButtonBase), typeof(ListBoxItem),
+                typeof(ListBoxItem),
                 typeof(PlurkItemControl)
             };
             UseLogarithmicEase = false;
