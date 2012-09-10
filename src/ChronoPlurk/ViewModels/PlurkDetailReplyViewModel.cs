@@ -62,7 +62,6 @@ namespace ChronoPlurk.ViewModels
                 var plurkId = GetPlurkId();
                 if (plurkId != -1)
                 {
-                    ProgressService.Show(AppResources.msgSending);
                     IsControlEnabled = false;
                     LeaveFocus();
 
@@ -70,6 +69,7 @@ namespace ChronoPlurk.ViewModels
                         ResponsesCommand.ResponseAdd(GetPlurkId(), PostContent, Plurto.Core.Qualifier.FreestyleColon)
                             .Client(PlurkService.Client)
                             .ToObservable()
+                            .DoProgress(ProgressService, AppResources.msgSending)
                             .PlurkException(expectedTimeout: DefaultConfiguration.TimeoutCompose);
 
                     _composeHandler = command.ObserveOnDispatcher().Subscribe(plurk =>
