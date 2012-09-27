@@ -41,11 +41,11 @@
                               ListHeader="{Binding}"
                               ListFooter="{Binding}"
                               IsFlatList="True"
-                              Background="Transparent"
-                              pcontrols:TiltEffect.IsTiltEnabled="True">
+                              Background="Transparent">
         <toolkit:LongListSelector.ItemTemplate>
             <DataTemplate>
                 <pcontrols:PlurkItemControl QualifierColor="{Binding QualifierColor}"
+                                            pcontrols:TiltEffect.IsTiltEnabled="True"
                                             cal:Message.Attach="[Event Tap] = [Action OnItemTap($dataContext)]">
                     <toolkit:ContextMenuService.ContextMenu>
                         <toolkit:ContextMenu x:Name="Menu"

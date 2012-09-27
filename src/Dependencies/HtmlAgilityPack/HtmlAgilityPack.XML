@@ -704,6 +704,20 @@
             Gets the node at the specified index.
             </summary>
         </member>
+        <member name="T:HtmlAgilityPack.SilverlightExtensions">
+            <summary>
+            Extensions used for Silverlight Compatibility
+            </summary>
+        </member>
+        <member name="M:HtmlAgilityPack.SilverlightExtensions.Split(System.String,System.Char[],System.Int32)">
+            <summary>
+            Splits a string on provided characters and returns an array up to the count provided
+            </summary>
+            <param name="this">The string to split</param>
+            <param name="chars">The list of chars to split on</param>
+            <param name="count">The number of items to retrieve</param>
+            <returns></returns>
+        </member>
         <member name="T:HtmlAgilityPack.HtmlNodeType">
             <summary>
             Represents the type of a node.
@@ -920,32 +934,12 @@
             <param name="stream">The input stream. May not be null.</param>
             <returns>The detected encoding.</returns>
         </member>
-        <member name="M:HtmlAgilityPack.HtmlDocument.DetectEncoding(System.String)">
-            <summary>
-            Detects the encoding of an HTML file.
-            </summary>
-            <param name="path">Path for the file containing the HTML document to detect. May not be null.</param>
-            <returns>The detected encoding.</returns>
-        </member>
         <member name="M:HtmlAgilityPack.HtmlDocument.DetectEncoding(System.IO.TextReader)">
             <summary>
             Detects the encoding of an HTML text provided on a TextReader.
             </summary>
             <param name="reader">The TextReader used to feed the HTML. May not be null.</param>
             <returns>The detected encoding.</returns>
-        </member>
-        <member name="M:HtmlAgilityPack.HtmlDocument.DetectEncodingAndLoad(System.String)">
-            <summary>
-            Detects the encoding of an HTML document from a file first, and then loads the file.
-            </summary>
-            <param name="path">The complete file path to be read.</param>
-        </member>
-        <member name="M:HtmlAgilityPack.HtmlDocument.DetectEncodingAndLoad(System.String,System.Boolean)">
-            <summary>
-            Detects the encoding of an HTML document from a file first, and then loads the file.
-            </summary>
-            <param name="path">The complete file path to be read. May not be null.</param>
-            <param name="detectEncoding">true to detect encoding, false otherwise.</param>
         </member>
         <member name="M:HtmlAgilityPack.HtmlDocument.DetectEncodingHtml(System.String)">
             <summary>
@@ -998,6 +992,69 @@
             <param name="detectEncodingFromByteOrderMarks">Indicates whether to look for byte order marks at the beginning of the stream.</param>
             <param name="buffersize">The minimum buffer size.</param>
         </member>
+        <member name="M:HtmlAgilityPack.HtmlDocument.Load(System.IO.TextReader)">
+            <summary>
+            Loads the HTML document from the specified TextReader.
+            </summary>
+            <param name="reader">The TextReader used to feed the HTML data into the document. May not be null.</param>
+        </member>
+        <member name="M:HtmlAgilityPack.HtmlDocument.LoadHtml(System.String)">
+            <summary>
+            Loads the HTML document from the specified string.
+            </summary>
+            <param name="html">String containing the HTML document to load. May not be null.</param>
+        </member>
+        <member name="M:HtmlAgilityPack.HtmlDocument.Save(System.IO.Stream)">
+            <summary>
+            Saves the HTML document to the specified stream.
+            </summary>
+            <param name="outStream">The stream to which you want to save.</param>
+        </member>
+        <member name="M:HtmlAgilityPack.HtmlDocument.Save(System.IO.Stream,System.Text.Encoding)">
+            <summary>
+            Saves the HTML document to the specified stream.
+            </summary>
+            <param name="outStream">The stream to which you want to save. May not be null.</param>
+            <param name="encoding">The character encoding to use. May not be null.</param>
+        </member>
+        <member name="M:HtmlAgilityPack.HtmlDocument.Save(System.IO.StreamWriter)">
+            <summary>
+            Saves the HTML document to the specified StreamWriter.
+            </summary>
+            <param name="writer">The StreamWriter to which you want to save.</param>
+        </member>
+        <member name="M:HtmlAgilityPack.HtmlDocument.Save(System.IO.TextWriter)">
+            <summary>
+            Saves the HTML document to the specified TextWriter.
+            </summary>
+            <param name="writer">The TextWriter to which you want to save. May not be null.</param>
+        </member>
+        <member name="M:HtmlAgilityPack.HtmlDocument.Save(System.Xml.XmlWriter)">
+            <summary>
+            Saves the HTML document to the specified XmlWriter.
+            </summary>
+            <param name="writer">The XmlWriter to which you want to save.</param>
+        </member>
+        <member name="M:HtmlAgilityPack.HtmlDocument.DetectEncodingAndLoad(System.String)">
+            <summary>
+            Detects the encoding of an HTML document from a file first, and then loads the file.
+            </summary>
+            <param name="path">The complete file path to be read.</param>
+        </member>
+        <member name="M:HtmlAgilityPack.HtmlDocument.DetectEncodingAndLoad(System.String,System.Boolean)">
+            <summary>
+            Detects the encoding of an HTML document from a file first, and then loads the file.
+            </summary>
+            <param name="path">The complete file path to be read. May not be null.</param>
+            <param name="detectEncoding">true to detect encoding, false otherwise.</param>
+        </member>
+        <member name="M:HtmlAgilityPack.HtmlDocument.DetectEncoding(System.String)">
+            <summary>
+            Detects the encoding of an HTML file.
+            </summary>
+            <param name="path">Path for the file containing the HTML document to detect. May not be null.</param>
+            <returns>The detected encoding.</returns>
+        </member>
         <member name="M:HtmlAgilityPack.HtmlDocument.Load(System.String)">
             <summary>
             Loads an HTML document from a file.
@@ -1035,31 +1092,6 @@
             <param name="detectEncodingFromByteOrderMarks">Indicates whether to look for byte order marks at the beginning of the file.</param>
             <param name="buffersize">The minimum buffer size.</param>
         </member>
-        <member name="M:HtmlAgilityPack.HtmlDocument.Load(System.IO.TextReader)">
-            <summary>
-            Loads the HTML document from the specified TextReader.
-            </summary>
-            <param name="reader">The TextReader used to feed the HTML data into the document. May not be null.</param>
-        </member>
-        <member name="M:HtmlAgilityPack.HtmlDocument.LoadHtml(System.String)">
-            <summary>
-            Loads the HTML document from the specified string.
-            </summary>
-            <param name="html">String containing the HTML document to load. May not be null.</param>
-        </member>
-        <member name="M:HtmlAgilityPack.HtmlDocument.Save(System.IO.Stream)">
-            <summary>
-            Saves the HTML document to the specified stream.
-            </summary>
-            <param name="outStream">The stream to which you want to save.</param>
-        </member>
-        <member name="M:HtmlAgilityPack.HtmlDocument.Save(System.IO.Stream,System.Text.Encoding)">
-            <summary>
-            Saves the HTML document to the specified stream.
-            </summary>
-            <param name="outStream">The stream to which you want to save. May not be null.</param>
-            <param name="encoding">The character encoding to use. May not be null.</param>
-        </member>
         <member name="M:HtmlAgilityPack.HtmlDocument.Save(System.String)">
             <summary>
             Saves the mixed document to the specified file.
@@ -1072,24 +1104,6 @@
             </summary>
             <param name="filename">The location of the file where you want to save the document. May not be null.</param>
             <param name="encoding">The character encoding to use. May not be null.</param>
-        </member>
-        <member name="M:HtmlAgilityPack.HtmlDocument.Save(System.IO.StreamWriter)">
-            <summary>
-            Saves the HTML document to the specified StreamWriter.
-            </summary>
-            <param name="writer">The StreamWriter to which you want to save.</param>
-        </member>
-        <member name="M:HtmlAgilityPack.HtmlDocument.Save(System.IO.TextWriter)">
-            <summary>
-            Saves the HTML document to the specified TextWriter.
-            </summary>
-            <param name="writer">The TextWriter to which you want to save. May not be null.</param>
-        </member>
-        <member name="M:HtmlAgilityPack.HtmlDocument.Save(System.Xml.XmlWriter)">
-            <summary>
-            Saves the HTML document to the specified XmlWriter.
-            </summary>
-            <param name="writer">The XmlWriter to which you want to save.</param>
         </member>
         <member name="P:HtmlAgilityPack.HtmlDocument.CheckSum">
             <summary>
@@ -1617,6 +1631,13 @@
             <param name="encoding">The encoding to use while downloading the document</param>
             <param name="credentials">The credentials to use for authenticating the web request</param>
         </member>
+        <member name="M:HtmlAgilityPack.HtmlWeb.LoadAsync(System.String,System.EventHandler{HtmlAgilityPack.HtmlDocumentLoadCompleted})">
+            <summary>
+            Retrieves an HtmlDocument using the provided url
+            </summary>
+            <param name="url">The address to load</param>
+            <param name="callback"></param>
+        </member>
         <member name="E:HtmlAgilityPack.HtmlWeb.LoadCompleted">
             <summary>
             Fired when a web request has finished
@@ -1689,6 +1710,21 @@
         <member name="P:HtmlAgilityPack.HtmlEntity.EntityValue">
             <summary>
             A collection of entities indexed by value.
+            </summary>
+        </member>
+        <member name="T:HtmlAgilityPack.HtmlDocumentLoadCompleted">
+            <summary>
+            Happens when a document has been loaded
+            </summary>
+        </member>
+        <member name="F:HtmlAgilityPack.HtmlDocumentLoadCompleted.Error">
+            <summary>
+            If an error occured when loading the document, null if not
+            </summary>
+        </member>
+        <member name="P:HtmlAgilityPack.HtmlDocumentLoadCompleted.Document">
+            <summary>
+            The document that has been loaded
             </summary>
         </member>
         <member name="T:HtmlAgilityPack.MixedCodeDocumentFragmentList">
