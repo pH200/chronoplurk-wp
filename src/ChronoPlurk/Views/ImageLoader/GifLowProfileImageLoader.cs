@@ -26,7 +26,7 @@ namespace ChronoPlurk.Views.ImageLoader
     /// </summary>
     public static class GifLowProfileImageLoader
     {
-        private const int WorkItemQuantum = 5;
+        private const int WorkItemQuantum = 2;
         private static readonly Thread _thread = new Thread(WorkerThreadProc);
         private static readonly Queue<PendingRequest> _pendingRequests = new Queue<PendingRequest>();
         private static readonly Queue<IAsyncResult> _pendingResponses = new Queue<IAsyncResult>();
@@ -213,7 +213,7 @@ namespace ChronoPlurk.Views.ImageLoader
                         }
                     }
                     // Yield to UI thread
-                    Thread.Sleep(5);
+                    Thread.Sleep(10);
                 }
                 // Process pending responses
                 for (var i = 0; (i < pendingResponses.Count) && (i < WorkItemQuantum); i++)
@@ -231,7 +231,7 @@ namespace ChronoPlurk.Views.ImageLoader
                         // Ignore web exceptions (ex: not found)
                     }
                     // Yield to UI thread
-                    Thread.Sleep(5);
+                    Thread.Sleep(10);
                 }
                 // Process pending completions
                 if (0 < pendingCompletions.Count)
