@@ -13,11 +13,11 @@ namespace ChronoPlurk.Views.PlurkControls
             Instance = new RecommendHeightCache();
         }
 
-        private const int CacheLength = 500;
+        private const int CacheLength = 400;
 
         private readonly Dictionary<int, double> _cache = new Dictionary<int, double>(CacheLength + 1);
 
-        private readonly List<int> _keyOrderCache = new List<int>(CacheLength + 1);
+        private readonly LinkedList<int> _keyOrderCache = new LinkedList<int>();
 
         public void Add(string str, double height)
         {
@@ -29,22 +29,36 @@ namespace ChronoPlurk.Views.PlurkControls
             else
             {
                 _cache.Add(key, height);
-                _keyOrderCache.Add(key);
-                if (_keyOrderCache.Count > CacheLength)
-                {
-                    var removeKey = _keyOrderCache[0];
-                    _cache.Remove(removeKey);
-                    _keyOrderCache.RemoveAt(0);
-                }
+                _keyOrderCache.AddLast(key);
+                RemoveExceededCaches();
             }
         }
 
         public bool TryGetValue(string str, out double value)
         {
             var key = str.GetHashCode();
-            _keyOrderCache.Remove(key);
-            _keyOrderCache.Add(key);
+            var node = _keyOrderCache.Find(key);
+            if (node != null)
+            {
+                _keyOrderCache.Remove(node);
+                _keyOrderCache.AddLast(node);
+            }
+            else
+            {
+                _keyOrderCache.AddLast(key);
+            }
+            RemoveExceededCaches();
             return _cache.TryGetValue(key, out value);
+        }
+
+        private void RemoveExceededCaches()
+        {
+            if (_keyOrderCache.Count > CacheLength)
+            {
+                var first = _keyOrderCache.First;
+                _cache.Remove(first.Value);
+                _keyOrderCache.RemoveFirst();
+            }
         }
     }
 }
