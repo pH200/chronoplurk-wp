@@ -65,7 +65,7 @@
                 <Grid>
                     <Grid Margin="12,0,0,0"
                               HorizontalAlignment="Left">
-                        <Border imgloader:GifLowProfileImageLoader.UriSource="{Binding UserAvatar}"
+                        <Image imgloader:LowProfileImageLoader.UriSource="{Binding UserAvatar}"
                                     HorizontalAlignment="Left"
                                     Width="18" Height="18" />
                         <TextBlock x:Name="Username"

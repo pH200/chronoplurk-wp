@@ -1,10 +1,17 @@
-﻿// Copyright (C) Microsoft Corporation. All Rights Reserved.
+﻿// --------------------------------------------------------------------------------------------------------------------
+// Copyright (C) Microsoft Corporation. All Rights Reserved.
 // This code released under the terms of the Microsoft Public License
 // (Ms-PL, http://opensource.org/licenses/ms-pl.html).
+// <Credits>
+// http://blogs.msdn.com/b/delay/archive/2010/10/04/there-s-no-substitute-for-customer-feedback-improving-windows-phone-7-application-performance-now-a-bit-easier-with-lowprofileimageloader-and-deferredloadlistbox-updates.aspx
+// </Credits>
+// --------------------------------------------------------------------------------------------------------------------
+
 
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Net;
@@ -21,12 +28,22 @@ namespace ChronoPlurk.Views.ImageLoader
     /// </summary>
     public static class LowProfileImageLoader
     {
-        private const int WorkItemQuantum = 5;
+        private const int WorkItemQuantum = 3;
+        private const int ThreadSleepTime = 10;
+        private const int DefferedSleepTime = 300;
+        private const long CacheSize = 5 * 1024 * 1024; //5MB
+        private const int MaxCachedImageHeight = 200;
+        private const int MaxCachedImageWidth = 200;
+
         private static readonly Thread _thread = new Thread(WorkerThreadProc);
+        private static readonly Dictionary<Image, Uri> _pausedRequests = new Dictionary<Image, Uri>();
         private static readonly Queue<PendingRequest> _pendingRequests = new Queue<PendingRequest>();
         private static readonly Queue<IAsyncResult> _pendingResponses = new Queue<IAsyncResult>();
         private static readonly object _syncBlock = new object();
         private static bool _exiting;
+
+        private static WP7Contrib.View.Controls.WebBitmapSourceCache webBitmapSourceCache =
+            new WP7Contrib.View.Controls.WebBitmapSourceCache(CacheSize);
 
         /// <summary>
         /// Gets the value of the Uri to use for providing the contents of the Image's Source property.
@@ -69,13 +86,16 @@ namespace ChronoPlurk.Views.ImageLoader
         /// </summary>
         public static bool IsEnabled { get; set; }
 
+        public static bool IsPaused { get; set; }
+
         [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = "Static constructor performs additional tasks.")]
         static LowProfileImageLoader()
         {
             // Start worker thread
-            // _thread.Start();
-            // Application.Current.Exit += new EventHandler(HandleApplicationExit);
-            // IsEnabled = true;
+            _thread.IsBackground = true;
+            _thread.Start();
+            Application.Current.Exit += new EventHandler(HandleApplicationExit);
+            IsEnabled = true;
         }
 
         private static void HandleApplicationExit(object sender, EventArgs e)
@@ -94,8 +114,17 @@ namespace ChronoPlurk.Views.ImageLoader
         {
             Queue<PendingRequest> pendingRequests = new Queue<PendingRequest>();
             Queue<IAsyncResult> pendingResponses = new Queue<IAsyncResult>();
+
             while (!_exiting)
             {
+                while (IsPaused)
+                {
+                    //Debug.WriteLine("clearing {0}", pendingRequests.Count);
+                    //pendingRequests.Clear();
+                    Thread.Sleep(DefferedSleepTime);
+                    pendingRequests = new Queue<PendingRequest>();
+                }
+
                 lock (_syncBlock)
                 {
                     // Wait for more work if there's nothing left to do
@@ -107,6 +136,7 @@ namespace ChronoPlurk.Views.ImageLoader
                             return;
                         }
                     }
+
                     // Copy work items to private collections
                     while (0 < _pendingRequests.Count)
                     {
@@ -117,34 +147,42 @@ namespace ChronoPlurk.Views.ImageLoader
                         pendingResponses.Enqueue(_pendingResponses.Dequeue());
                     }
                 }
+
                 Queue<PendingCompletion> pendingCompletions = new Queue<PendingCompletion>();
                 // Process pending requests
+
+                Debug.WriteLine("pending requests: {0}", pendingRequests.Count);
                 for (var i = 0; (i < pendingRequests.Count) && (i < WorkItemQuantum); i++)
                 {
                     var pendingRequest = pendingRequests.Dequeue();
-                    if (pendingRequest.Uri.IsAbsoluteUri)
+                    if (pendingRequest.Uri != null)
                     {
-                        // Download from network
-                        var webRequest = HttpWebRequest.CreateHttp(pendingRequest.Uri);
-                        webRequest.AllowReadStreamBuffering = true; // Don't want to block this thread or the UI thread on network access
-                        webRequest.BeginGetResponse(HandleGetResponseResult, new ResponseState(webRequest, pendingRequest.Image, pendingRequest.Uri));
-                    }
-                    else
-                    {
-                        // Load from application (must have "Build Action"="Content")
-                        var originalUriString = pendingRequest.Uri.OriginalString;
-                        // Trim leading '/' to avoid problems
-                        var resourceStreamUri = originalUriString.StartsWith("/", StringComparison.Ordinal) ? new Uri(originalUriString.TrimStart('/'), UriKind.Relative) : pendingRequest.Uri;
-                        // Enqueue resource stream for completion
-                        var streamResourceInfo = Application.GetResourceStream(resourceStreamUri);
-                        if (null != streamResourceInfo)
+                        if (pendingRequest.Uri.IsAbsoluteUri)
                         {
-                            pendingCompletions.Enqueue(new PendingCompletion(pendingRequest.Image, pendingRequest.Uri, streamResourceInfo.Stream));
+                            // Download from network
+                            var webRequest = HttpWebRequest.CreateHttp(pendingRequest.Uri);
+                            webRequest.AllowReadStreamBuffering = true; // Don't want to block this thread or the UI thread on network access
+                            webRequest.BeginGetResponse(HandleGetResponseResult, new ResponseState(webRequest, pendingRequest.Image, pendingRequest.Uri));
+                        }
+                        else
+                        {
+                            // Load from application (must have "Build Action"="Content")
+                            var originalUriString = pendingRequest.Uri.OriginalString;
+                            // Trim leading '/' to avoid problems
+                            var resourceStreamUri = originalUriString.StartsWith("/", StringComparison.Ordinal) ? new Uri(originalUriString.TrimStart('/'), UriKind.Relative) : pendingRequest.Uri;
+                            // Enqueue resource stream for completion
+                            var streamResourceInfo = Application.GetResourceStream(resourceStreamUri);
+                            if (null != streamResourceInfo)
+                            {
+                                pendingCompletions.Enqueue(new PendingCompletion(pendingRequest.Image, pendingRequest.Uri, streamResourceInfo.Stream));
+                            }
                         }
                     }
+
                     // Yield to UI thread
-                    Thread.Sleep(1);
+                    Thread.Sleep(ThreadSleepTime);
                 }
+
                 // Process pending responses
                 for (var i = 0; (i < pendingResponses.Count) && (i < WorkItemQuantum); i++)
                 {
@@ -155,16 +193,20 @@ namespace ChronoPlurk.Views.ImageLoader
                         var response = responseState.WebRequest.EndGetResponse(pendingResponse);
                         pendingCompletions.Enqueue(new PendingCompletion(responseState.Image, responseState.Uri, response.GetResponseStream()));
                     }
-                    catch (WebException)
+                    catch (WebException ex)
                     {
+                        Debug.WriteLine(ex.Message);
                         // Ignore web exceptions (ex: not found)
                     }
                     // Yield to UI thread
-                    Thread.Sleep(1);
+                    Thread.Sleep(ThreadSleepTime);
                 }
+
                 // Process pending completions
                 if (0 < pendingCompletions.Count)
                 {
+                    //TODO: shoudl save stream to disk here
+
                     // Get the Dispatcher and process everything that needs to happen on the UI thread in one batch
                     Deployment.Current.Dispatcher.BeginInvoke(() =>
                     {
@@ -172,29 +214,60 @@ namespace ChronoPlurk.Views.ImageLoader
                         {
                             // Decode the image and set the source
                             var pendingCompletion = pendingCompletions.Dequeue();
+                            var bitmap = new BitmapImage();
+
+                            try
+                            {
+                                bitmap.SetSource(pendingCompletion.Stream);
+
+                                if (bitmap != null &&
+                                    bitmap.PixelWidth < MaxCachedImageWidth &&
+                                    bitmap.PixelHeight < MaxCachedImageHeight &&
+                                    !webBitmapSourceCache.ContainsKey(pendingCompletion.Uri.OriginalString))
+                                {
+                                    webBitmapSourceCache.Add(pendingCompletion.Uri.OriginalString, bitmap);
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                Debug.WriteLine(ex.Message);
+                                // Ignore image decode exceptions (ex: invalid image)
+                            }
+
                             if (GetUriSource(pendingCompletion.Image) == pendingCompletion.Uri)
                             {
-                                var bitmap = new BitmapImage();
-                                try
-                                {
-                                    bitmap.SetSource(pendingCompletion.Stream);
-                                }
-                                catch
-                                {
-                                    // Ignore image decode exceptions (ex: invalid image)
-                                }
                                 pendingCompletion.Image.Source = bitmap;
                             }
                             else
                             {
                                 // Uri mis-match; do nothing
                             }
+
                             // Dispose of response stream
                             pendingCompletion.Stream.Dispose();
                         }
                     });
                 }
             }
+        }
+
+        public static void DeferDownloads()
+        {
+            IsPaused = true;
+        }
+
+        public static void ResumeDownloads()
+        {
+            lock (_syncBlock)
+            {
+                foreach (var kvp in _pausedRequests)
+                {
+                    _pendingRequests.Enqueue(new PendingRequest(kvp.Key, kvp.Value));
+                }
+                _pausedRequests.Clear();
+                Monitor.Pulse(_syncBlock);
+            }
+            IsPaused = false;
         }
 
         private static void OnUriSourceChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
@@ -209,11 +282,29 @@ namespace ChronoPlurk.Views.ImageLoader
             }
             else
             {
-                lock (_syncBlock)
+                BitmapSource bitmapSource = null;
+                if (uri != null && webBitmapSourceCache.TryGetCachedBitmapSource(uri.OriginalString, out bitmapSource))
                 {
-                    // Enqueue the request
-                    _pendingRequests.Enqueue(new PendingRequest(image, uri));
-                    Monitor.Pulse(_syncBlock);
+                    image.Source = bitmapSource;
+                    //Debug.WriteLine("Image cache hit");
+                }
+                else
+                {
+                    image.Source = null;
+
+                    if (IsPaused)
+                    {
+                        _pausedRequests[image] = uri;
+                    }
+                    else
+                    {
+                        lock (_syncBlock)
+                        {
+                            // Enqueue the request
+                            _pendingRequests.Enqueue(new PendingRequest(image, uri));
+                            Monitor.Pulse(_syncBlock);
+                        }
+                    }
                 }
             }
         }

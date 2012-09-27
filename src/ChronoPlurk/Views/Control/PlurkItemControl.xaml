@@ -21,8 +21,8 @@
                 Margin="10,10,0,0"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top">
-            <Border imgloader:GifLowProfileImageLoader.UriSource="{Binding AvatarView}"
-                    imgloader:GifLowProfileImageLoader.Stretch="UniformToFill" />
+            <Image imgloader:LowProfileImageLoader.UriSource="{Binding AvatarView}"
+                   Stretch="UniformToFill" />
         </Border>
         <StackPanel Margin="40,0,0,0"
                HorizontalAlignment="Left"
