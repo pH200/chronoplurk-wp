@@ -12,7 +12,7 @@ using Plurto.Commands;
 
 namespace ChronoPlurk.ViewModels
 {
-    [NotifyForAll]
+    [ImplementPropertyChanged]
     public class PlurkDetailReplyViewModel : ComposeViewModelBase, IChildT<PlurkDetailPageViewModel>
     {
         private IDisposable _composeHandler;

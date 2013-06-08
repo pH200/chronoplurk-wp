@@ -10,7 +10,7 @@ using NotifyPropertyWeaver;
 
 namespace ChronoPlurk.ViewModels
 {
-    [NotifyForAll]
+    [ImplementPropertyChanged]
     public sealed class MainPageViewModel : PivotViewModel, ISearchPage
     {
         private readonly INavigationService _navigationService;

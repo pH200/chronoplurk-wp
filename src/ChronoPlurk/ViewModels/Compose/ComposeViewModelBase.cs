@@ -20,7 +20,7 @@ using Plurto.Entities;
 
 namespace ChronoPlurk.ViewModels.Compose
 {
-    [NotifyForAll]
+    [ImplementPropertyChanged]
     public abstract class ComposeViewModelBase : Conductor<IScreen>.Collection.OneActive
     {
         protected IPlurkService PlurkService { get; private set; }

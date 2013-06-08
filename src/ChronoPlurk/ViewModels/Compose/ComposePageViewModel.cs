@@ -15,7 +15,7 @@ using Plurto.Entities;
 
 namespace ChronoPlurk.ViewModels.Compose
 {
-    [NotifyForAll]
+    [ImplementPropertyChanged]
     public class ComposePageViewModel : ComposeViewModelBase
     {
         private readonly INavigationService _navigationService;

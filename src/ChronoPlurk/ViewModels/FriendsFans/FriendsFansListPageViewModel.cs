@@ -14,7 +14,7 @@ using NotifyPropertyWeaver;
 
 namespace ChronoPlurk.ViewModels.FriendsFans
 {
-    [NotifyForAll]
+    [ImplementPropertyChanged]
     public class FriendsFansListPageViewModel : Conductor<IScreen>.Collection.OneActive
     {
         public PeopleListViewModel FriendsListViewModel { get; set; }

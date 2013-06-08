@@ -20,7 +20,7 @@ using Plurto.Entities;
 
 namespace ChronoPlurk.ViewModels
 {
-    [NotifyForAll]
+    [ImplementPropertyChanged]
     public class PlurkDetailViewModel : TimelineBaseViewModel<ResponsesResult>, IRefreshSync, IChildT<PlurkDetailPageViewModel>
     {
         [DependsOn("DetailHeader")]

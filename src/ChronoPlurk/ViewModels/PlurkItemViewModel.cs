@@ -11,7 +11,7 @@ using Plurto.Core;
 
 namespace ChronoPlurk.ViewModels
 {
-    [NotifyForAll]
+    [ImplementPropertyChanged]
     public sealed class PlurkItemViewModel : PropertyChangedBase
     {
         #region View Properties

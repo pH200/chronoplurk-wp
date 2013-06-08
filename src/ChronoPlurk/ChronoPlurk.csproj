@@ -26,6 +26,7 @@
     <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
     <Utf8Output>true</Utf8Output>
     <ExpressionBlendVersion>4.0.20901.0</ExpressionBlendVersion>
+    <FodyPath>..\packages\Fody.1.13.8.0</FodyPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -101,6 +102,10 @@
     <Reference Include="Polenter.SharpSerializer.Silverlight, Version=2.18.0.0, Culture=neutral, PublicKeyToken=8f4f20011571ee5f, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\SharpSerializer.2.18\lib\sl4-windowsphone71\Polenter.SharpSerializer.Silverlight.dll</HintPath>
+    </Reference>
+    <Reference Include="PropertyChanged">
+      <HintPath>..\packages\PropertyChanged.Fody.1.38.5.0\Lib\portable-net4+sl4+wp7+win8+MonoAndroid16+MonoTouch40\PropertyChanged.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System.Observable" />
     <Reference Include="System.Reactive.Core, Version=2.1.30214.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -442,6 +447,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Fody.targets" />
     <None Include="packages.config" />
     <None Include="Properties\AppManifest.xml">
       <SubType>Designer</SubType>
@@ -449,6 +455,7 @@
     <None Include="Properties\WMAppManifest.xml">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="FodyWeavers.xml" />
     <Content Include="Resources\CachedEmoticons\default_all.zip" />
   </ItemGroup>
   <ItemGroup>
@@ -519,8 +526,6 @@
   </Target>
   <Target Name="AfterBuild" />
   <ProjectExtensions />
-  <Target Name="AfterCompile">
-    <NotifyPropertyWeaverMsBuildTask.WeavingTask TryToWeaveAllTypes="false" />
-  </Target>
-  <UsingTask TaskName="NotifyPropertyWeaverMsBuildTask.WeavingTask" AssemblyFile="$(SolutionDir)Dependencies\NotifyPropertyWeaverMsBuildTask.dll" />
+  <Target Name="AfterCompile" />
+  <Import Project="Fody.targets" />
 </Project>

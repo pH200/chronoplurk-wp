@@ -18,7 +18,7 @@ using Plurto.Core;
 
 namespace ChronoPlurk.ViewModels
 {
-    [NotifyForAll]
+    [ImplementPropertyChanged]
     public class QualifierViewModel
     {
         public Qualifier Qualifier { get; set; }

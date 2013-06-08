@@ -8,7 +8,7 @@ using NotifyPropertyWeaver;
 
 namespace ChronoPlurk.ViewModels.Settings
 {
-    [NotifyForAll]
+    [ImplementPropertyChanged]
     public class SettingsBgViewModel : Screen, IChildT<SettingsPageViewModel>
     {
         protected BackgroundImageService BackgroundImageService { get; set; }

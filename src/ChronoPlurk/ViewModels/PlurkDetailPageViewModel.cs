@@ -13,7 +13,7 @@ using Plurto.Core;
 
 namespace ChronoPlurk.ViewModels
 {
-    [NotifyForAll]
+    [ImplementPropertyChanged]
     public class PlurkDetailPageViewModel : Conductor<IScreen>.Collection.OneActive, INavigationInjectionRedirect, IPlurkHolder
     {
         private IPlurkService PlurkService { get; set; }

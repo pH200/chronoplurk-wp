@@ -14,7 +14,7 @@ using NotifyPropertyWeaver;
 
 namespace ChronoPlurk.ViewModels.Settings
 {
-    [NotifyForAll]
+    [ImplementPropertyChanged]
     public class SettingsPageViewModel : Conductor<IScreen>.Collection.OneActive
     {
         public SettingsBgViewModel SettingsBgViewModel { get; set; }

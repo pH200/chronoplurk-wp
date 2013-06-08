@@ -6,7 +6,7 @@ using Plurto.Core;
 
 namespace ChronoPlurk.ViewModels.FriendsFans
 {
-    [NotifyForAll]
+    [ImplementPropertyChanged]
     public class PeopleItemViewModel : PropertyChangedBase
     {
         public int Id { get; set; }

@@ -12,7 +12,7 @@ using Plurto.Entities;
 
 namespace ChronoPlurk.ViewModels.Compose
 {
-    [NotifyForAll]
+    [ImplementPropertyChanged]
     public class FriendsSelectionPageViewModel : Screen
     {
         private const string BopomoList = "ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦㄧㄨㄩˊˇˋ˙";
@@ -241,7 +241,7 @@ namespace ChronoPlurk.ViewModels.Compose
         #endregion
     }
 
-    [NotifyForAll]
+    [ImplementPropertyChanged]
     public sealed class FriendResultItemViewModel : PropertyChangedBase
     {
         public CompletionUser CompletionUser { get; set; }

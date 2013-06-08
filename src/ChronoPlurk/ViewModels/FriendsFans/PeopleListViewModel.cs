@@ -12,7 +12,7 @@ using Plurto.Entities;
 
 namespace ChronoPlurk.ViewModels.FriendsFans
 {
-    [NotifyForAll]
+    [ImplementPropertyChanged]
     public class PeopleListViewModel : Screen, IRefreshSync
     {
         private IDisposable _requestHandler;

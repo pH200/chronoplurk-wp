@@ -12,7 +12,7 @@ using Plurto.Core;
 
 namespace ChronoPlurk.ViewModels
 {
-    [NotifyForAll]
+    [ImplementPropertyChanged]
     public class PlurkDetailHeaderViewModel : Screen
     {
         private readonly IPlurkContentStorageService _plurkContentStorageService;
@@ -30,7 +30,7 @@ namespace ChronoPlurk.ViewModels
 
         public string Username { get; set; }
 
-        [NotifyProperty(AlsoNotifyFor = new[] { "QualifierColor" })]
+        [AlsoNotifyFor("QualifierColor")]
         public int QualifierEnumInt { get; set; }
 
         public string Qualifier { get; set; }
@@ -50,7 +50,7 @@ namespace ChronoPlurk.ViewModels
             get { return new SolidColorBrush(QualifierColor); }
         }
 
-        [NotifyProperty(AlsoNotifyFor = new[] { "TimeView" })]
+        [AlsoNotifyFor("TimeView")]
         public long PostDateTicks { get; set; }
 
         [DependsOn("PostDateTicks")]

@@ -2,16 +2,16 @@
 
 namespace NotifyPropertyWeaver
 {
-    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false, Inherited = true)]
-    public class NotifyPropertyAttribute : Attribute
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
+    public class ImplementPropertyChangedAttribute : Attribute
     {
-        public bool PerformEqualityCheck { get; set; }
-        public string[] AlsoNotifyFor { get; set; }
     }
 
-    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
-    public class NotifyForAllAttribute : Attribute
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false, Inherited = false)]
+    public class AlsoNotifyForAttribute : Attribute
     {
+        public AlsoNotifyForAttribute(string property) { }
+        public AlsoNotifyForAttribute(string property, params string[] otherProperties) { }
     }
 
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false, Inherited = false)]
@@ -19,11 +19,10 @@ namespace NotifyPropertyWeaver
     {
     }
 
-    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = true, Inherited = true)]
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false, Inherited = false)]
     public class DependsOnAttribute : Attribute
     {
-        public DependsOnAttribute(string dependency, params string[] otherDependencies)
-        {
-        }
+        public DependsOnAttribute(string dependency) { }
+        public DependsOnAttribute(string dependency, params string[] otherDependencies) { }
     }
 }

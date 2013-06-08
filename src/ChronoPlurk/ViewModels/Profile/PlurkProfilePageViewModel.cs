@@ -5,7 +5,7 @@ using NotifyPropertyWeaver;
 
 namespace ChronoPlurk.ViewModels.Profile
 {
-    [NotifyForAll]
+    [ImplementPropertyChanged]
     public sealed class PlurkProfilePageViewModel : PlurkAppBarPage
     {
         private readonly ProfileTimelineViewModel _timeline;

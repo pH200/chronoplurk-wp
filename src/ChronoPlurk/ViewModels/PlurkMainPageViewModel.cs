@@ -11,7 +11,7 @@ using NotifyPropertyWeaver;
 namespace ChronoPlurk.ViewModels
 {
     // Content may vary depending on user.
-    [NotifyForAll]
+    [ImplementPropertyChanged]
     public sealed class PlurkMainPageViewModel : PlurkAppBarPage
     {
         private readonly TimelineViewModel _timeline;

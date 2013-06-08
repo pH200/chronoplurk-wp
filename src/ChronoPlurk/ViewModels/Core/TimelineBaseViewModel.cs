@@ -25,7 +25,7 @@ namespace ChronoPlurk.ViewModels
         IEnumerable<long> GetUnreadPlurkIds();
     }
 
-    [NotifyForAll]
+    [ImplementPropertyChanged]
     public abstract class TimelineBaseViewModel<TSource> : Screen, IPlurkHolder, ITimelineViewModel
         where TSource : class, ITimeline
     {

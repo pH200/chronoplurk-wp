@@ -8,7 +8,7 @@ using NotifyPropertyWeaver;
 
 namespace ChronoPlurk.ViewModels
 {
-    [NotifyForAll]
+    [ImplementPropertyChanged]
     public class LoginPageViewModel : Screen
     {
         private readonly IPlurkService _plurkService;

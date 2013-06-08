@@ -15,7 +15,7 @@ using NotifyPropertyWeaver;
 
 namespace ChronoPlurk.ViewModels
 {
-    [NotifyForAll]
+    [ImplementPropertyChanged]
     public class EmoticonListViewModel : Screen
     {
         public IList<KeyValuePair<string, string>> Items { get; set; }

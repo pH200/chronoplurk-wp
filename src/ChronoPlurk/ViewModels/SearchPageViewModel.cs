@@ -8,7 +8,7 @@ using NotifyPropertyWeaver;
 
 namespace ChronoPlurk.ViewModels
 {
-    [NotifyForAll]
+    [ImplementPropertyChanged]
     public sealed class SearchPageViewModel : PlurkAppBarPage, ISearchPage
     {
         private readonly SearchResultViewModel _searchResult;
