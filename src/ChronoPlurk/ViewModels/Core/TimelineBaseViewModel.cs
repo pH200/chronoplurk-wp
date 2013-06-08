@@ -12,7 +12,7 @@ using ChronoPlurk.Services;
 using ChronoPlurk.Helpers;
 using ChronoPlurk.ViewModels.Core;
 using ChronoPlurk.Views.PlurkControls;
-using NotifyPropertyWeaver;
+using PropertyChanged;
 using Plurto.Core;
 using Plurto.Entities;
 using WP7Contrib.View.Controls.BindingListener;

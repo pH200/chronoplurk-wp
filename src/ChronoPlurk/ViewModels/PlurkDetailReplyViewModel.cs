@@ -7,7 +7,7 @@ using ChronoPlurk.Services;
 using ChronoPlurk.Helpers;
 using ChronoPlurk.ViewModels.Compose;
 using ChronoPlurk.Views.Compose;
-using NotifyPropertyWeaver;
+using PropertyChanged;
 using Plurto.Commands;
 
 namespace ChronoPlurk.ViewModels

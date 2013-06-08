@@ -8,7 +8,7 @@ using ChronoPlurk.Resources.i18n;
 using ChronoPlurk.Services;
 using ChronoPlurk.Helpers;
 using ChronoPlurk.Views.Compose;
-using NotifyPropertyWeaver;
+using PropertyChanged;
 using Plurto.Commands;
 using Plurto.Core;
 using Plurto.Entities;

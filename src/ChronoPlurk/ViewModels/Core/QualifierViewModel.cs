@@ -13,7 +13,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using ChronoPlurk.Helpers;
 using ChronoPlurk.Resources.i18n;
-using NotifyPropertyWeaver;
+using PropertyChanged;
 using Plurto.Core;
 
 namespace ChronoPlurk.ViewModels

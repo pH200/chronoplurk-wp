@@ -13,7 +13,7 @@ using ChronoPlurk.Views.Compose;
 using Microsoft.Phone;
 using Microsoft.Phone.Tasks;
 using Microsoft.Xna.Framework.Media;
-using NotifyPropertyWeaver;
+using PropertyChanged;
 using Plurto.Commands;
 using Plurto.Core;
 using Plurto.Entities;

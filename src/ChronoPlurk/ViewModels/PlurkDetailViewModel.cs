@@ -14,7 +14,7 @@ using Caliburn.Micro;
 using ChronoPlurk.Core;
 using ChronoPlurk.Resources.i18n;
 using ChronoPlurk.Services;
-using NotifyPropertyWeaver;
+using PropertyChanged;
 using Plurto.Commands;
 using Plurto.Entities;
 

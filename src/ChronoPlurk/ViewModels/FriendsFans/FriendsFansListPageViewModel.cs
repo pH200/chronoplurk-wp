@@ -10,7 +10,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Caliburn.Micro;
 using ChronoPlurk.Resources.i18n;
-using NotifyPropertyWeaver;
+using PropertyChanged;
 
 namespace ChronoPlurk.ViewModels.FriendsFans
 {

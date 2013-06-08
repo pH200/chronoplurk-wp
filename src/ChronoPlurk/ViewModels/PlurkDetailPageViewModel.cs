@@ -8,7 +8,7 @@ using Caliburn.Micro;
 using ChronoPlurk.Services;
 using ChronoPlurk.ViewModels.Core;
 using ChronoPlurk.Views;
-using NotifyPropertyWeaver;
+using PropertyChanged;
 using Plurto.Core;
 
 namespace ChronoPlurk.ViewModels

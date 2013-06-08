@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using Caliburn.Micro;
 using ChronoPlurk.Services;
-using NotifyPropertyWeaver;
+using PropertyChanged;
 
 namespace ChronoPlurk.ViewModels.Profile
 {

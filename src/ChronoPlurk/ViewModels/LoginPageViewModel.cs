@@ -4,7 +4,7 @@ using Caliburn.Micro;
 using ChronoPlurk.Resources.i18n;
 using ChronoPlurk.Services;
 using ChronoPlurk.Helpers;
-using NotifyPropertyWeaver;
+using PropertyChanged;
 
 namespace ChronoPlurk.ViewModels
 {

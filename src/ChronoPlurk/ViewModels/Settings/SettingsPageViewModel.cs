@@ -10,7 +10,7 @@ using ChronoPlurk.Services;
 using ChronoPlurk.ViewModels.Core;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Tasks;
-using NotifyPropertyWeaver;
+using PropertyChanged;
 
 namespace ChronoPlurk.ViewModels.Settings
 {

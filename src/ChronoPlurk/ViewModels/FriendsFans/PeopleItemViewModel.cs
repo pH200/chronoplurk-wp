@@ -1,7 +1,7 @@
 using System;
 using Caliburn.Micro;
 using ChronoPlurk.Resources.i18n;
-using NotifyPropertyWeaver;
+using PropertyChanged;
 using Plurto.Core;
 
 namespace ChronoPlurk.ViewModels.FriendsFans

@@ -6,7 +6,7 @@ using Caliburn.Micro;
 using ChronoPlurk.Core;
 using ChronoPlurk.Helpers;
 using ChronoPlurk.Services;
-using NotifyPropertyWeaver;
+using PropertyChanged;
 using Plurto.Commands;
 using Plurto.Entities;
 

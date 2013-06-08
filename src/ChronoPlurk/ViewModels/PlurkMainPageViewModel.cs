@@ -6,7 +6,7 @@ using ChronoPlurk.Helpers;
 using ChronoPlurk.Services;
 using ChronoPlurk.ViewModels.Core;
 using ChronoPlurk.ViewModels.Main;
-using NotifyPropertyWeaver;
+using PropertyChanged;
 
 namespace ChronoPlurk.ViewModels
 {

@@ -4,7 +4,7 @@ using System.Windows;
 using Caliburn.Micro;
 using ChronoPlurk.Services;
 using ChronoPlurk.Views.Settings;
-using NotifyPropertyWeaver;
+using PropertyChanged;
 
 namespace ChronoPlurk.ViewModels.Settings
 {

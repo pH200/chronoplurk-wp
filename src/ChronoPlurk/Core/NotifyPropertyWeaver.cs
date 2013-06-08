@@ -1,6 +1,8 @@
-﻿using System;
+﻿#if NOPCDLL
 
-namespace NotifyPropertyWeaver
+using System;
+
+namespace PropertyChanged
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
     public class ImplementPropertyChangedAttribute : Attribute
@@ -26,3 +28,5 @@ namespace NotifyPropertyWeaver
         public DependsOnAttribute(string dependency, params string[] otherDependencies) { }
     }
 }
+
+#endif
