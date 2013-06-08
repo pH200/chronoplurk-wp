@@ -19,7 +19,7 @@ namespace ChronoPlurk.Core
 
         protected virtual Func<IPhoneService> BuildPhoneService
         {
-            get { return () => new PhoneApplicationServiceAdapter(RootFrame); }
+            get { return () => new PhoneApplicationServiceAdapter(PhoneService, RootFrame); }
         }
 
         protected virtual Func<IEventAggregator> BuildEventAggregator

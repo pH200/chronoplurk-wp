@@ -5,9 +5,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChronoPlurk", "ChronoPlurk\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plurto.WindowsPhone", "..\Plurto\src\Plurto.WindowsPhone\Plurto.WindowsPhone.csproj", "{EE6B1210-5D97-4232-84F6-BF2DD8060F65}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caliburn.Micro.WP71", "..\Caliburn.Micro\src\Caliburn.Micro.WP71\Caliburn.Micro.WP71.csproj", "{B3F474B3-85C7-482D-9382-097CF64BCBB0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caliburn.Micro.WP71", "..\caliburnmicro\src\Caliburn.Micro.WP71\Caliburn.Micro.WP71.csproj", "{B3F474B3-85C7-482D-9382-097CF64BCBB0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caliburn.Micro.WP71.Extensions", "..\Caliburn.Micro\src\Caliburn.Micro.WP71.Extensions\Caliburn.Micro.WP71.Extensions.csproj", "{FDA153CE-6970-48AA-A720-293A4F91D134}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caliburn.Micro.WP71.Extensions", "..\caliburnmicro\src\Caliburn.Micro.WP71.Extensions\Caliburn.Micro.WP71.Extensions.csproj", "{FDA153CE-6970-48AA-A720-293A4F91D134}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
