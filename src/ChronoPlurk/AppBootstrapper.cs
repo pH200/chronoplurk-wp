@@ -19,8 +19,13 @@ using Microsoft.Phone.Controls;
 
 namespace ChronoPlurk
 {
-    public class AppBootstrapper : AutofacPhoneBootstrapper
+    public class AppBootstrapper : AutofacPhoneBootstrapperBase
     {
+        public AppBootstrapper()
+        {
+            Start();
+        }
+
         protected override Func<INavigationService> BuildFrameAdapter
         {
             get

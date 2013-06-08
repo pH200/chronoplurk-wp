@@ -7,7 +7,7 @@ using Microsoft.Phone.Controls;
 
 namespace ChronoPlurk.Core
 {
-    public abstract class AutofacPhoneBootstrapper : PhoneBootstrapper
+    public abstract class AutofacPhoneBootstrapperBase : PhoneBootstrapperBase
     {
         protected IContainer Container { get; private set; }
 
@@ -49,14 +49,17 @@ namespace ChronoPlurk.Core
 
             // Frame adapter must be generated before first page navigation.
             builder.RegisterInstance(BuildFrameAdapter());
-            builder.RegisterInstance(BuildPhoneService());
+            if (!Execute.InDesignMode)
+            {
+                builder.RegisterInstance(BuildPhoneService());
 
-            builder.Register<IEventAggregator>(c => BuildEventAggregator()).SingleInstance();
-            builder.Register<IWindowManager>(c => BuildWindowManager()).SingleInstance();
-            builder.Register<ISoundEffectPlayer>(c => BuildSoundEffectPlayer()).SingleInstance();
-            builder.Register<IVibrateController>(c => BuildVibrateController()).SingleInstance();
-            builder.RegisterType<StorageCoordinator>().AsSelf().SingleInstance();
-            builder.RegisterType<TaskController>().AsSelf().SingleInstance();
+                builder.Register<IEventAggregator>(c => BuildEventAggregator()).SingleInstance();
+                builder.Register<IWindowManager>(c => BuildWindowManager()).SingleInstance();
+                builder.Register<ISoundEffectPlayer>(c => BuildSoundEffectPlayer()).SingleInstance();
+                builder.Register<IVibrateController>(c => BuildVibrateController()).SingleInstance();
+                builder.RegisterType<StorageCoordinator>().AsSelf().SingleInstance();
+                builder.RegisterType<TaskController>().AsSelf().SingleInstance();
+            }
 
             ConfigureContainer(builder);
 
