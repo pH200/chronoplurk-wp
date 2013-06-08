@@ -3,9 +3,13 @@ using System.Collections.Generic;
 
 namespace ChronoPlurk.Views.PlurkControls
 {
-    public class RecommendHeightCache
+    public sealed class RecommendHeightCache
     {
         public static RecommendHeightCache Instance { get; private set; }
+
+        private RecommendHeightCache()
+        {
+        }
 
         static RecommendHeightCache()
         {

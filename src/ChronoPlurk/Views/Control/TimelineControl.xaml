@@ -20,7 +20,7 @@
         </DataTemplate>
         <DataTemplate x:Key="Footer">
             <StackPanel>
-                <TextBlock Text="{Binding Message}" />
+                <TextBlock Margin="12,12,0,0" Text="{Binding Message}" />
                 <StackPanel Margin="0,0,0,50" HorizontalAlignment="Stretch">
                     <Button x:Name="RequestMore"
                             Content="more"

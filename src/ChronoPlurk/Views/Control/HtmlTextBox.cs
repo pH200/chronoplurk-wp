@@ -112,7 +112,10 @@ namespace ChronoPlurk.Views.PlurkControls
         public override void OnApplyTemplate()
         {
             RichTextBox = GetTemplateChild("RichTextBoxElement") as RichTextBox;
-            RegisterHeightChanged();
+            if (!System.ComponentModel.DesignerProperties.IsInDesignTool)
+            {
+                RegisterHeightChanged();
+            }
 
             base.OnApplyTemplate();
         }
