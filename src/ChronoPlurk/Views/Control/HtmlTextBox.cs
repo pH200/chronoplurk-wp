@@ -111,25 +111,27 @@ namespace ChronoPlurk.Views.PlurkControls
 
         public override void OnApplyTemplate()
         {
+            if (RichTextBox != null)
+            {
+                RichTextBox.SizeChanged -= RegisterHeightChangedEvent;
+            }
             RichTextBox = GetTemplateChild("RichTextBoxElement") as RichTextBox;
             if (!System.ComponentModel.DesignerProperties.IsInDesignTool)
             {
-                RegisterHeightChanged();
+                RichTextBox.SizeChanged += RegisterHeightChangedEvent;
             }
 
             base.OnApplyTemplate();
         }
 
-        private void RegisterHeightChanged()
+        private void RegisterHeightChangedEvent(object sender, SizeChangedEventArgs args)
         {
-            RichTextBox.SizeChanged += (sender, args) =>
+            var actualHeight = RichTextBox.ActualHeight;
+            if (actualHeight > 0)
             {
-                var actualHeight = RichTextBox.ActualHeight;
-                if (actualHeight > 0)
-                {
-                    RecommendHeightCache.Instance.Add(Html, ActualHeight); // Cache current height.
-                }
-            };
+                // Cache current height.
+                RecommendHeightCache.Instance.Add(Html, ActualHeight);
+            }
         }
 
         private void ConvertHtml(string html)
