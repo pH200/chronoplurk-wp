@@ -30,7 +30,7 @@ namespace ChronoPlurk
 
         public static int RequestItemsLimit = 15;
 
-        public const string VersionText = "2.1.0";
+        public const string VersionText = "2.1.2";
 
         /// <summary>
         /// Initialize connection settings.
