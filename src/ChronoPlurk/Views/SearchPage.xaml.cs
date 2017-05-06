@@ -21,20 +21,7 @@ namespace ChronoPlurk.Views
         public SearchPage()
         {
             InitializeComponent();
-            AnimationContext = LayoutRoot;
             BuildAppBar();
-        }
-
-        protected override AnimatorHelperBase GetAnimation(AnimationType animationType, Uri toOrFrom)
-        {
-            switch (animationType)
-            {
-                case AnimationType.NavigateForwardOut:
-                    return new DefaultPageAnimator() { RootElement = LayoutRoot };
-                case AnimationType.NavigateBackwardIn:
-                    return new DefaultPageAnimator() { RootElement = LayoutRoot };
-            }
-            return base.GetAnimation(animationType, toOrFrom);
         }
 
         private void BuildAppBar()
