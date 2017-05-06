@@ -112,8 +112,21 @@
     <Optimize>true</Optimize>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Autofac, Version=2.6.3.862, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
-      <HintPath>$(SolutionDir)packages\Autofac.2.6.3.862\lib\SL4-WindowsPhone71\Autofac.dll</HintPath>
+    <Reference Include="Autofac, Version=3.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.3.5.2\lib\portable-net4+sl5+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\Autofac.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Caliburn.Micro, Version=3.0.3.0, Culture=neutral, PublicKeyToken=8e5891231f2ed21f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Caliburn.Micro.Core.3.0.3\lib\portable-net45+win8+wp8+wpa81+MonoAndroid10+Xamarin.iOS10+MonoTouch10+uap10.0\Caliburn.Micro.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Caliburn.Micro.Platform, Version=3.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Caliburn.Micro.3.0.3\lib\wp8\Caliburn.Micro.Platform.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Caliburn.Micro.Platform.Core, Version=3.0.3.0, Culture=neutral, PublicKeyToken=8e5891231f2ed21f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Caliburn.Micro.3.0.3\lib\wp8\Caliburn.Micro.Platform.Core.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="DeepForest.Phone.Assets">
       <HintPath>..\Dependencies\wpassets\DeepForest.Phone.Assets.dll</HintPath>
@@ -147,9 +160,9 @@
     <Reference Include="PhoneCodeContractsAssemblies">
       <HintPath>..\Dependencies\ImageTools\PhoneCodeContractsAssemblies.dll</HintPath>
     </Reference>
-    <Reference Include="Polenter.SharpSerializer.Silverlight, Version=2.18.0.0, Culture=neutral, PublicKeyToken=8f4f20011571ee5f, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(SolutionDir)packages\SharpSerializer.2.18\lib\sl4-windowsphone71\Polenter.SharpSerializer.Silverlight.dll</HintPath>
+    <Reference Include="Polenter.SharpSerializer.Portable, Version=2.20.0.0, Culture=neutral, PublicKeyToken=8f4f20011571ee5f, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpSerializer.2.20\lib\sl4-windowsphone71\Polenter.SharpSerializer.Portable.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="PropertyChanged">
       <HintPath>$(SolutionDir)packages\PropertyChanged.Fody.1.38.5.0\Lib\portable-net4+sl4+wp7+win8+MonoAndroid16+MonoTouch40\PropertyChanged.dll</HintPath>
@@ -188,7 +201,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Windows.Interactivity, Version=3.9.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Expression.Blend.Sdk.1.0.2\lib\wp8\System.Windows.Interactivity.dll</HintPath>
+      <HintPath>..\packages\Caliburn.Micro.3.0.3\lib\wp8\System.Windows.Interactivity.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="WP7Contrib.View.Controls">
@@ -626,18 +639,6 @@
     <Content Include="SplashScreenImage.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Caliburn.Micro\src\Caliburn.Micro.Extensions.WP71\Caliburn.Micro.Extensions.WP8.csproj">
-      <Project>{749adf14-7d11-4380-ab64-ceb61dff2a73}</Project>
-      <Name>Caliburn.Micro.Extensions.WP8</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Caliburn.Micro\src\Caliburn.Micro.Platform\Caliburn.Micro.Platform.WP8.csproj">
-      <Project>{50daa3f0-3bad-433a-b4b2-4a38def9dfaf}</Project>
-      <Name>Caliburn.Micro.Platform.WP8</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Caliburn.Micro\src\Caliburn.Micro\Caliburn.Micro.csproj">
-      <Project>{6d772b52-da8f-4784-971a-4bf50cb6d306}</Project>
-      <Name>Caliburn.Micro</Name>
-    </ProjectReference>
     <ProjectReference Include="..\plurto\Plurto.PortableRx\Plurto.PortableRx.csproj">
       <Project>{7018bb58-b1b4-45f2-b27c-6493fbbad2e6}</Project>
       <Name>Plurto.PortableRx</Name>
