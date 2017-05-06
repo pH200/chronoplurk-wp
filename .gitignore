@@ -1,0 +1,36 @@
+syntax: glob
+
+*.obj
+*.user
+*.aps
+*.pch
+*.vspscc
+*_i.c
+*_p.c
+*.ncb
+*.suo
+*.tlb
+*.tlh
+*.bak
+*.cache
+*.ilk
+*.log
+*.lib
+*.sbr
+*.scc
+[Bb]in
+(?!DebugTextWriter)[Db]ebug*/
+obj/
+[Rr]elease*/
+_ReSharper*/
+[Tt]est[Rr]esult*
+[Bb]uild[Ll]og.*
+*.[Pp]ublish.xml
+*.vs10x
+*.sln.docstates
+
+# Project Ignore Settings
+*.omitconf*
+config_connection_string.py
+*.conf.cs
+packages/
