@@ -3,8 +3,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro"
+    xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro.Platform"
     xmlns:pcontrols="clr-namespace:ChronoPlurk.Views.PlurkControls"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     mc:Ignorable="d"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
@@ -34,15 +35,14 @@
         </DataTemplate>
     </UserControl.Resources>
 
-    <toolkit:LongListSelector x:Name="Items"
+    <phone:LongListSelector x:Name="Items"
                               ItemsSource="{Binding Items}"
                               ListHeaderTemplate="{StaticResource Header}"
                               ListFooterTemplate="{StaticResource Footer}"
                               ListHeader="{Binding}"
                               ListFooter="{Binding}"
-                              IsFlatList="True"
                               Background="Transparent">
-        <toolkit:LongListSelector.ItemTemplate>
+        <phone:LongListSelector.ItemTemplate>
             <DataTemplate>
                 <pcontrols:PlurkItemControl QualifierColor="{Binding QualifierColor}"
                                             pcontrols:TiltEffect.IsTiltEnabled="True"
@@ -76,7 +76,7 @@
                     </toolkit:ContextMenuService.ContextMenu>
                 </pcontrols:PlurkItemControl>
             </DataTemplate>
-        </toolkit:LongListSelector.ItemTemplate>
-    </toolkit:LongListSelector>
+        </phone:LongListSelector.ItemTemplate>
+    </phone:LongListSelector>
 
 </UserControl>

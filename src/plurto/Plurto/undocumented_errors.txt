@@ -1,0 +1,9 @@
+﻿Added to PlurkError:
+"timed out"
+"40106:invalid access token"
+"40004:invalid timestamp or nonce"
+
+
+Not added yet:
+"40104:incorrect signature"
+"40003:we only support HMAC-SHA1 as signature method"

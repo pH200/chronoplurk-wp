@@ -233,10 +233,10 @@ namespace ChronoPlurk.ViewModels.Compose
                     var photoResult = result.Value.EventArgs;
                     switch (photoResult.TaskResult)
                     {
-                        case TaskResult.OK:
+                        case Microsoft.Phone.Tasks.TaskResult.OK:
                             UploadPicture(photoResult.ChosenPhoto, photoResult.OriginalFileName);
                             break;
-                        case TaskResult.Cancel:
+                        case Microsoft.Phone.Tasks.TaskResult.Cancel:
                             if (result.Interval < TimeSpan.FromSeconds(1.5))
                             {
                                 Execute.OnUIThread(() => MessageBox.Show(AppResources.msgDisconnectPC));

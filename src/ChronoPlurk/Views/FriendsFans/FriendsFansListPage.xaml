@@ -17,15 +17,15 @@
     shell:SystemTray.IsVisible="True">
 
     <Grid x:Name="LayoutRoot" Background="Transparent">
-        <controls:Pivot x:Name="Items"
+        <phone:Pivot x:Name="Items"
                         Title="{Binding Path=LocalizedResources.friendsAndFansTitle, Source={StaticResource LocalizedStrings}}"
                         SelectedItem="{Binding ActiveItem, Mode=TwoWay}">
-            <controls:Pivot.HeaderTemplate>
+            <phone:Pivot.HeaderTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding DisplayName}" />
                 </DataTemplate>
-            </controls:Pivot.HeaderTemplate>
-        </controls:Pivot>
+            </phone:Pivot.HeaderTemplate>
+        </phone:Pivot>
     </Grid>
     
 </animation:AnimatedBasePage>

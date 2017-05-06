@@ -7,7 +7,7 @@
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro"
+    xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro.Platform"
     xmlns:pcontrols="clr-namespace:ChronoPlurk.Views.PlurkControls"
     xmlns:imgloader="clr-namespace:ChronoPlurk.Views.ImageLoader"
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
@@ -87,17 +87,17 @@
                                HorizontalAlignment="Left"
                                VerticalAlignment="Top"
                                Margin="12,4"/>
-                <controls:Pivot x:Name="Emoticons"
+                <phone:Pivot x:Name="Emoticons"
                                     Grid.Row="1"
                                     SelectedItem="{Binding ActiveEmoticon, Mode=TwoWay}">
-                    <controls:Pivot.HeaderTemplate>
+                    <phone:Pivot.HeaderTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding DisplayName}"
                                        Margin="-9,16,0,0"
                                        FontSize="{StaticResource PhoneFontSizeNormal}" />
                         </DataTemplate>
-                    </controls:Pivot.HeaderTemplate>
-                    <controls:Pivot.ItemTemplate>
+                    </phone:Pivot.HeaderTemplate>
+                    <phone:Pivot.ItemTemplate>
                         <DataTemplate>
                             <ListBox ItemsSource="{Binding Items}">
                                 <ListBox.ItemTemplate>
@@ -118,8 +118,8 @@
                                 </ListBox.ItemsPanel>
                             </ListBox>
                         </DataTemplate>
-                    </controls:Pivot.ItemTemplate>
-                </controls:Pivot>
+                    </phone:Pivot.ItemTemplate>
+                </phone:Pivot>
             </Grid>
 
             <StackPanel Grid.Row="1"

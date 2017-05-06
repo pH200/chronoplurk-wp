@@ -28,7 +28,6 @@
     <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
     <Utf8Output>true</Utf8Output>
     <ExpressionBlendVersion>4.0.20901.0</ExpressionBlendVersion>
-    <FodyPath>..\packages\Fody.1.13.8.0</FodyPath>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <UpgradeBackupLocation>
@@ -50,6 +49,8 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -112,7 +113,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Autofac, Version=2.6.3.862, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
-      <HintPath>..\packages\Autofac.2.6.3.862\lib\SL4-WindowsPhone71\Autofac.dll</HintPath>
+      <HintPath>$(SolutionDir)packages\Autofac.2.6.3.862\lib\SL4-WindowsPhone71\Autofac.dll</HintPath>
     </Reference>
     <Reference Include="DeepForest.Phone.Assets">
       <HintPath>..\Dependencies\wpassets\DeepForest.Phone.Assets.dll</HintPath>
@@ -139,42 +140,57 @@
       <HintPath>..\Dependencies\ImageTools\ImageTools.Utils.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Phone.Controls, Version=8.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
-    <Reference Include="Microsoft.Phone.Controls.Toolkit, Version=7.0.0.0, Culture=neutral, PublicKeyToken=b772ad94eb9ca604, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\WPtoolkit.4.2013.06.11\lib\sl4-windowsphone71\Microsoft.Phone.Controls.Toolkit.dll</HintPath>
+    <Reference Include="Microsoft.Phone.Controls.Toolkit, Version=8.0.1.0, Culture=neutral, PublicKeyToken=b772ad94eb9ca604, processorArchitecture=MSIL">
+      <HintPath>..\packages\WPtoolkit.4.2013.08.16\lib\wp8\Microsoft.Phone.Controls.Toolkit.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="PhoneCodeContractsAssemblies">
       <HintPath>..\Dependencies\ImageTools\PhoneCodeContractsAssemblies.dll</HintPath>
     </Reference>
     <Reference Include="Polenter.SharpSerializer.Silverlight, Version=2.18.0.0, Culture=neutral, PublicKeyToken=8f4f20011571ee5f, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\SharpSerializer.2.18\lib\sl4-windowsphone71\Polenter.SharpSerializer.Silverlight.dll</HintPath>
+      <HintPath>$(SolutionDir)packages\SharpSerializer.2.18\lib\sl4-windowsphone71\Polenter.SharpSerializer.Silverlight.dll</HintPath>
     </Reference>
     <Reference Include="PropertyChanged">
-      <HintPath>..\packages\PropertyChanged.Fody.1.38.5.0\Lib\portable-net4+sl4+wp7+win8+MonoAndroid16+MonoTouch40\PropertyChanged.dll</HintPath>
+      <HintPath>$(SolutionDir)packages\PropertyChanged.Fody.1.38.5.0\Lib\portable-net4+sl4+wp7+win8+MonoAndroid16+MonoTouch40\PropertyChanged.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="System.Reactive.Core, Version=2.1.30214.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Rx-Core.2.1.30214.0\lib\SL4-WindowsPhone71\System.Reactive.Core.dll</HintPath>
+    <Reference Include="System.Net.Http, Version=1.5.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\sl4-windowsphone71\System.Net.Http.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="System.Reactive.Interfaces, Version=2.1.30214.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Rx-Interfaces.2.1.30214.0\lib\SL4-WindowsPhone71\System.Reactive.Interfaces.dll</HintPath>
+    <Reference Include="System.Net.Http.Extensions, Version=1.5.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\sl4-windowsphone71\System.Net.Http.Extensions.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="System.Reactive.Linq, Version=2.1.30214.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Rx-Linq.2.1.30214.0\lib\SL4-WindowsPhone71\System.Reactive.Linq.dll</HintPath>
+    <Reference Include="System.Net.Http.Primitives, Version=1.5.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\sl4-windowsphone71\System.Net.Http.Primitives.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Reactive.Core, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rx-Core.2.2.5\lib\windowsphone8\System.Reactive.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Reactive.Interfaces, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rx-Interfaces.2.2.5\lib\windowsphone8\System.Reactive.Interfaces.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Reactive.Linq, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rx-Linq.2.2.5\lib\windowsphone8\System.Reactive.Linq.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Reactive.PlatformServices, Version=2.1.30214.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Rx-PlatformServices.2.1.30214.0\lib\SL4-WindowsPhone71\System.Reactive.PlatformServices.dll</HintPath>
+      <HintPath>$(SolutionDir)packages\Rx-PlatformServices.2.1.30214.0\lib\SL4-WindowsPhone71\System.Reactive.PlatformServices.dll</HintPath>
     </Reference>
     <Reference Include="System.Reactive.Windows.Threading, Version=2.1.30214.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Rx-XAML.2.1.30214.0\lib\SL4-WindowsPhone71\System.Reactive.Windows.Threading.dll</HintPath>
+      <HintPath>$(SolutionDir)packages\Rx-XAML.2.1.30214.0\lib\SL4-WindowsPhone71\System.Reactive.Windows.Threading.dll</HintPath>
     </Reference>
-    <Reference Include="System.Windows.Interactivity, Version=3.8.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Interactivity, Version=3.9.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Expression.Blend.Sdk.1.0.2\lib\wp8\System.Windows.Interactivity.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="WP7Contrib.View.Controls">
       <HintPath>..\Dependencies\WP7Contrib\WP7Contrib.View.Controls.dll</HintPath>
     </Reference>
@@ -555,11 +571,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="README_FIRST.txt" />
+    <Content Include="Toolkit.Content\ApplicationBar.Add.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Cancel.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Check.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Delete.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Select.png" />
-    <None Include="Fody.targets" />
+    <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="Properties\AppManifest.xml">
       <SubType>Designer</SubType>
@@ -611,9 +628,25 @@
       <Project>{749adf14-7d11-4380-ab64-ceb61dff2a73}</Project>
       <Name>Caliburn.Micro.Extensions.WP8</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Caliburn.Micro\src\Caliburn.Micro.Platform\Caliburn.Micro.Platform.WP8.csproj">
+      <Project>{50daa3f0-3bad-433a-b4b2-4a38def9dfaf}</Project>
+      <Name>Caliburn.Micro.Platform.WP8</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Caliburn.Micro\src\Caliburn.Micro\Caliburn.Micro.csproj">
       <Project>{6d772b52-da8f-4784-971a-4bf50cb6d306}</Project>
       <Name>Caliburn.Micro</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\plurto\Plurto.PortableRx\Plurto.PortableRx.csproj">
+      <Project>{7018bb58-b1b4-45f2-b27c-6493fbbad2e6}</Project>
+      <Name>Plurto.PortableRx</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\plurto\Plurto.Portable\Plurto.Portable.csproj">
+      <Project>{8b2d09ab-b99e-42a9-a773-f07de5aa8e96}</Project>
+      <Name>Plurto.Portable</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\plurto\Plurto.WP8\Plurto.WP8.csproj">
+      <Project>{85d48e4d-1cc5-45a9-9eb9-118793837ce7}</Project>
+      <Name>Plurto.WP8</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -647,5 +680,16 @@
   <Target Name="AfterBuild" />
   <ProjectExtensions />
   <Target Name="AfterCompile" />
-  <Import Project="Fody.targets" />
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
+    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
+    <Error Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
+  </Target>
+  <Import Project="..\packages\Fody.1.28.3\build\Fody.targets" Condition="Exists('..\packages\Fody.1.28.3\build\Fody.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Fody.1.28.3\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.1.28.3\build\Fody.targets'))" />
+  </Target>
 </Project>

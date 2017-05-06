@@ -1,4 +1,4 @@
-﻿<Application 
+﻿<Application
     x:Class="ChronoPlurk.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -9,6 +9,6 @@
     <!--Application Resources-->
     <Application.Resources>
         <r:LocalizedStrings xmlns:r="clr-namespace:ChronoPlurk" x:Key="LocalizedStrings" />
-        <local:AppBootstrapper x:Key="bootstrapper" />
+        <local:AppBootstrapper x:Key="Bootstrapper" />
     </Application.Resources>
 </Application>

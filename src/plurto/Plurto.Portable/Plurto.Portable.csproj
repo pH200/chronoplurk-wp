@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <MinimumVisualStudioVersion>11.0</MinimumVisualStudioVersion>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{8B2D09AB-B99E-42A9-A773-F07DE5AA8E96}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Plurto</RootNamespace>
+    <AssemblyName>Plurto.Portable</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Profile259</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Commands\CommandBase.cs" />
+    <Compile Include="Commands\EmoticonsCommand.cs" />
+    <Compile Include="Commands\FriendsFansCommand.cs" />
+    <Compile Include="Commands\PlurkTopCommand.cs" />
+    <Compile Include="Commands\PollingCommand.cs" />
+    <Compile Include="Commands\ProfileCommand.cs" />
+    <Compile Include="Commands\ResponsesCommand.cs" />
+    <Compile Include="Commands\SearchCommand.cs" />
+    <Compile Include="Commands\TimelineCommand.cs" />
+    <Compile Include="Commands\UsersCommand.cs" />
+    <Compile Include="Config.cs" />
+    <Compile Include="Converters\EmptyArrayOrUsersConverter.cs" />
+    <Compile Include="Converters\HtmlEntity.cs" />
+    <Compile Include="Converters\IgnoreEmptyArrayConverter.cs" />
+    <Compile Include="Converters\KarmaFallReasonConverter.cs" />
+    <Compile Include="Converters\LimitedToConverter.cs" />
+    <Compile Include="Converters\QualifierConverter.cs" />
+    <Compile Include="Converters\ReplurkerIdConverter.cs" />
+    <Compile Include="Converters\Rfc1123DateTimeConverter.cs" />
+    <Compile Include="Converters\UserPrivacyConverter.cs" />
+    <Compile Include="Core\Attributes.cs" />
+    <Compile Include="Core\DateTimeExtensions.cs" />
+    <Compile Include="Core\EnumExtensions.cs" />
+    <Compile Include="Core\Enums.cs" />
+    <Compile Include="Core\HttpTools.cs" />
+    <Compile Include="Core\IRequestFactory.cs" />
+    <Compile Include="Core\Language.cs" />
+    <Compile Include="Core\Localization.cs" />
+    <Compile Include="Core\OAuth\OAuthAuthorizationHeaderBuilder.cs" />
+    <Compile Include="Core\OAuth\OAuthClientInternal.cs" />
+    <Compile Include="Core\OAuth\OAuthCredential.cs" />
+    <Compile Include="Core\OAuth\OAuthKey.cs" />
+    <Compile Include="Core\OAuth\OAuthSignatureGenerator.cs" />
+    <Compile Include="Core\OAuth\OAuthTokenAndTokenSecret.cs" />
+    <Compile Include="Core\QueryParameter.cs" />
+    <Compile Include="Core\RequestClient.cs" />
+    <Compile Include="Core\ResponseData.cs" />
+    <Compile Include="Core\UploadFile.cs" />
+    <Compile Include="Core\WebResult.cs" />
+    <Compile Include="Entities\CometData.cs" />
+    <Compile Include="Entities\Emoticons.cs" />
+    <Compile Include="Entities\FriendsFansCompletion.cs" />
+    <Compile Include="Entities\ITimeline.cs" />
+    <Compile Include="Entities\KarmaStats.cs" />
+    <Compile Include="Entities\LoginProfile.cs" />
+    <Compile Include="Entities\Plurk.cs" />
+    <Compile Include="Entities\PlurkTop.cs" />
+    <Compile Include="Entities\Profile.cs" />
+    <Compile Include="Entities\ReplurkSuccess.cs" />
+    <Compile Include="Entities\ResponsesResult.cs" />
+    <Compile Include="Entities\SearchResult.cs" />
+    <Compile Include="Entities\TimelineResult.cs" />
+    <Compile Include="Entities\UnreadCount.cs" />
+    <Compile Include="Entities\UploadedPicture.cs" />
+    <Compile Include="Entities\User.cs" />
+    <Compile Include="Entities\UserPlurk.cs" />
+    <Compile Include="Exceptions\PlurkErrorException.cs" />
+    <Compile Include="Exceptions\PlurtoJsonSerializationException.cs" />
+    <Compile Include="Exceptions\RequestFailException.cs" />
+    <Compile Include="Exceptions\SynchronousCallException.cs" />
+    <Compile Include="Exceptions\UnauthorizedException.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Extensions\TypeExtensions.cs" />
+    <Compile Include="Extensions\WebRequestExtensions.cs" />
+    <Compile Include="Helpers\Base36.cs" />
+    <Compile Include="Helpers\Culture.cs" />
+    <Compile Include="Helpers\TryParse.cs" />
+    <Compile Include="Helpers\UrlHelper.cs" />
+    <Compile Include="Logging.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>$(SolutionDir)packages\Newtonsoft.Json.6.0.6\lib\portable-net45+wp80+win8+wpa81+aspnetcore50\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
+
+

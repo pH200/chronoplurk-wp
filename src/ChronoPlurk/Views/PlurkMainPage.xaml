@@ -9,7 +9,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-    xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro"
+    xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro.Platform"
     xmlns:imgloader="clr-namespace:ChronoPlurk.Views.ImageLoader"
     mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
@@ -19,10 +19,10 @@
     shell:SystemTray.IsVisible="True">
 
     <Grid x:Name="LayoutRoot" Background="Transparent">
-        <controls:Pivot
+        <phone:Pivot
                 x:Name="Items"
                 SelectedItem="{Binding ActiveItem, Mode=TwoWay}">
-            <controls:Pivot.Title>
+            <phone:Pivot.Title>
                 <Grid>
                     <Image imgloader:LowProfileImageLoader.UriSource="{Binding UserAvatar}"
                                     HorizontalAlignment="Left"
@@ -31,13 +31,13 @@
                                        HorizontalAlignment="Left"
                                        Margin="24,0,0,0"/>
                 </Grid>
-            </controls:Pivot.Title>
-            <controls:Pivot.HeaderTemplate>
+            </phone:Pivot.Title>
+            <phone:Pivot.HeaderTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding DisplayName}" />
                 </DataTemplate>
-            </controls:Pivot.HeaderTemplate>
-        </controls:Pivot>
+            </phone:Pivot.HeaderTemplate>
+        </phone:Pivot>
     </Grid>
     
     <!-- APP BAR -->

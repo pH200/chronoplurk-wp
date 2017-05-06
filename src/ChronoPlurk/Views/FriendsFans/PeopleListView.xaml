@@ -4,8 +4,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:imgloader="clr-namespace:ChronoPlurk.Views.ImageLoader"
-    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
-    xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro.Platform"
     mc:Ignorable="d"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -27,13 +27,12 @@
     </UserControl.Resources>
 
     <Grid x:Name="LayoutRoot" Background="Transparent">
-        <toolkit:LongListSelector x:Name="Items"
+        <phone:LongListSelector x:Name="Items"
                                   ItemsSource="{Binding Items}"
                                   ListFooterTemplate="{StaticResource Footer}"
                                   ListFooter="{Binding}"
-                                  IsFlatList="True"
                                   Background="Transparent">
-            <toolkit:LongListSelector.ItemTemplate>
+            <phone:LongListSelector.ItemTemplate>
                 <DataTemplate>
                     <Grid cal:Message.Attach="[Event Tap] = [Action OnUserTapped($dataContext)]">
                         <Grid.ColumnDefinitions>
@@ -67,7 +66,7 @@
                         </StackPanel>
                     </Grid>
                 </DataTemplate>
-            </toolkit:LongListSelector.ItemTemplate>
-        </toolkit:LongListSelector>
+            </phone:LongListSelector.ItemTemplate>
+        </phone:LongListSelector>
     </Grid>
 </UserControl>

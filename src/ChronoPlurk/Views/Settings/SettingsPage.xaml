@@ -1,4 +1,4 @@
-﻿<animation:AnimatedBasePage 
+﻿<animation:AnimatedBasePage
     x:Class="ChronoPlurk.Views.Settings.SettingsPage"
     xmlns:animation="clr-namespace:WP7Contrib.View.Transitions.Animation;assembly=WP7Contrib.View.Transitions"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -9,7 +9,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-    xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro"
+    xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro.Platform"
     xmlns:imgloader="clr-namespace:ChronoPlurk.Views.ImageLoader"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
@@ -26,19 +26,19 @@
     </phone:PhoneApplicationPage.Resources>
 
     <Grid x:Name="LayoutRoot" Background="Transparent">
-        <toolkit:LockablePivot x:Name="SettingsPivot"
+        <phone:Pivot x:Name="SettingsPivot"
                                Title="{Binding Path=LocalizedResources.settingsTitle, Source={StaticResource LocalizedStrings}}"
                                cal:Message.Attach="[Event SelectionChanged] = [Action SelectionChanged($source, $eventArgs)]">
-            <controls:PivotItem Header="{Binding Path=LocalizedResources.settingsAccounts, Source={StaticResource LocalizedStrings}}">
+            <phone:PivotItem Header="{Binding Path=LocalizedResources.settingsAccounts, Source={StaticResource LocalizedStrings}}">
                 <Grid>
                     <StackPanel>
                         <TextBlock x:Name="LoginAccount" Style="{StaticResource PhoneTextLargeStyle}" />
                         <Button x:Name="LogoutButton" Content="{Binding Path=LocalizedResources.logout, Source={StaticResource LocalizedStrings}}" Margin="0,20,0,0" HorizontalAlignment="Left" />
                     </StackPanel>
                 </Grid>
-            </controls:PivotItem>
+            </phone:PivotItem>
 
-            <controls:PivotItem Header="{Binding Path=LocalizedResources.settingsGeneral, Source={StaticResource LocalizedStrings}}">
+            <phone:PivotItem Header="{Binding Path=LocalizedResources.settingsGeneral, Source={StaticResource LocalizedStrings}}">
                 <Grid>
                     <ScrollViewer HorizontalScrollBarVisibility="Disabled"
                                   VerticalScrollBarVisibility="Auto">
@@ -70,17 +70,17 @@
                         </StackPanel>
                     </ScrollViewer>
                 </Grid>
-            </controls:PivotItem>
+            </phone:PivotItem>
 
-            <controls:PivotItem Header="{Binding Path=LocalizedResources.settingsBackground, Source={StaticResource LocalizedStrings}}">
+            <phone:PivotItem Header="{Binding Path=LocalizedResources.settingsBackground, Source={StaticResource LocalizedStrings}}">
                 <ContentControl cal:View.Model="{Binding SettingsBgViewModel}"
                                 VerticalAlignment="Stretch"
                                 VerticalContentAlignment="Stretch"
                                 HorizontalAlignment="Stretch"
                                 HorizontalContentAlignment="Stretch" />
-            </controls:PivotItem>
+            </phone:PivotItem>
 
-            <controls:PivotItem Header="{Binding Path=LocalizedResources.settingsAbout, Source={StaticResource LocalizedStrings}}">
+            <phone:PivotItem Header="{Binding Path=LocalizedResources.settingsAbout, Source={StaticResource LocalizedStrings}}">
                 <ScrollViewer HorizontalScrollBarVisibility="Disabled"
                               VerticalScrollBarVisibility="Auto">
                     <StackPanel>
@@ -130,7 +130,7 @@
                             Margin="0,20,0,0" HorizontalAlignment="Left" />
                     </StackPanel>
                 </ScrollViewer>
-            </controls:PivotItem>
-        </toolkit:LockablePivot>
+            </phone:PivotItem>
+        </phone:Pivot>
     </Grid>
 </animation:AnimatedBasePage>

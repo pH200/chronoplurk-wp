@@ -23,7 +23,7 @@ namespace ChronoPlurk
     {
         public AppBootstrapper()
         {
-            Start();
+            Initialize();
         }
 
         protected override Func<INavigationService> BuildFrameAdapter
@@ -38,7 +38,7 @@ namespace ChronoPlurk
         {
             DefaultConfiguration.Initialize();
             EmoticonsDictionary.Initialize();
-            
+
             base.Configure();
 
             var plurkService = Container.Resolve<IPlurkService>();
@@ -73,7 +73,7 @@ namespace ChronoPlurk
 
             builder.RegisterType(typeof(MainPageViewModel)).AsSelf().SingleInstance();
             builder.RegisterType(typeof(PlurkMainPageViewModel)).AsSelf().SingleInstance();
-            
+
             builder.RegisterType<SearchResultViewModel>().AsSelf();
             builder.RegisterType<SearchRecordsViewModel>().AsSelf();
             builder.RegisterType<SearchPageViewModel>().AsSelf();

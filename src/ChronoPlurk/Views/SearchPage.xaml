@@ -9,7 +9,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-    xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro"
+    xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro.Platform"
     mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -38,16 +38,16 @@
             </Border>
         </Grid>
         
-        <controls:Pivot Grid.Row="1"
+        <phone:Pivot Grid.Row="1"
                         x:Name="Items"
                         SelectedItem="{Binding ActiveItem, Mode=TwoWay}"
                         Margin="0,-40,0,0">
-            <controls:Pivot.HeaderTemplate>
+            <phone:Pivot.HeaderTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding DisplayName}" />
                 </DataTemplate>
-            </controls:Pivot.HeaderTemplate>
-        </controls:Pivot>
+            </phone:Pivot.HeaderTemplate>
+        </phone:Pivot>
     </Grid>
     
     <!-- APP BAR -->

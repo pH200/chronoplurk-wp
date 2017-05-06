@@ -8,7 +8,7 @@
     xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro"
+    xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro.Platform"
     xmlns:imgloader="clr-namespace:ChronoPlurk.Views.ImageLoader"
     mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
@@ -23,18 +23,18 @@
                 VerticalAlignment="Top"
                 Margin="0,0,12,0"
                 Width="144" Height="144" />
-        <controls:Pivot
+        <phone:Pivot
                 x:Name="Items"
                 SelectedItem="{Binding ActiveItem, Mode=TwoWay}">
-            <controls:Pivot.Title>
+            <phone:Pivot.Title>
                 <TextBlock x:Name="Username" Text="{Binding Username}" />
-            </controls:Pivot.Title>
-            <controls:Pivot.HeaderTemplate>
+            </phone:Pivot.Title>
+            <phone:Pivot.HeaderTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding DisplayName}" />
                 </DataTemplate>
-            </controls:Pivot.HeaderTemplate>
-        </controls:Pivot>
+            </phone:Pivot.HeaderTemplate>
+        </phone:Pivot>
     </Grid>
     
     <!-- APP BAR -->

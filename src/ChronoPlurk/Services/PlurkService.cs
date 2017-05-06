@@ -50,12 +50,12 @@ namespace ChronoPlurk.Services
         private readonly OAuthClient _client;
 
         public AppUserInfo AppUserInfo { get; private set; }
-        
+
         public string VerifierTemp { get; set; }
 
         public IRequestClient Client { get { return _client; } }
 
-        public string Username 
+        public string Username
         {
             get { return (AppUserInfo == null ? null : AppUserInfo.Username); }
         }
@@ -96,7 +96,7 @@ namespace ChronoPlurk.Services
             {
                 deviceIdPart = "";
             }
-            return _client.ObtainRequestToken()
+            return Observable.FromAsync(() => _client.ObtainRequestTokenAsync())
                 .Do(token => _client.SetToken(token))
                 .Select(token =>
                         new Uri("http://www.plurk.com/m/login?return_url=/m/authorize?oauth_token="
@@ -107,7 +107,8 @@ namespace ChronoPlurk.Services
 
         public IObservable<OAuthClient> GetAccessToken(string verifier)
         {
-            return _client.ObtainAccessToken(verifier).Do(token => _client.SetToken(token)).Select(token => _client);
+            return Observable.FromAsync(() => _client.ObtainAccessTokenAsync(verifier))
+                .Do(token => _client.SetToken(token)).Select(token => _client);
         }
 
         public void FlushConnection()

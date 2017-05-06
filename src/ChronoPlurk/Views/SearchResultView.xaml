@@ -6,7 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     xmlns:designData="clr-namespace:ChronoPlurk.Views.DesignTime"
-    xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro"
+    xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro.Platform"
     xmlns:pcontrols="clr-namespace:ChronoPlurk.Views.PlurkControls"
     mc:Ignorable="d"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
