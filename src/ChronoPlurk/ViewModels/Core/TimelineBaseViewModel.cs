@@ -18,6 +18,8 @@ using Plurto.Entities;
 using WP7Contrib.View.Controls.BindingListener;
 using WP7Contrib.View.Controls.Extensions;
 using System.Windows.Media;
+using Microsoft.Phone.Controls;
+using System.Windows.Controls.Primitives;
 
 namespace ChronoPlurk.ViewModels
 {
@@ -159,27 +161,27 @@ namespace ChronoPlurk.ViewModels
         private void SubscribeTimelineScroll(DependencyObject uiView)
         {
             var timeline = uiView.FindVisualChildByName<TimelineControl>("Timeline");
-            var sv = timeline.GetVisualDescendants()
-                .OfType<ScrollViewer>()
+            var sv = timeline.GetVisualChildren<LongListSelector>()
                 .FirstOrDefault();
             if (sv == null)
             {
                 return;
             }
-            var listener = new DependencyPropertyListener();
-            listener.ValueChanged += (sender, args) =>
+            var sb = sv.GetVisualDescendents<ScrollBar>(false).FirstOrDefault();
+            sb.ValueChanged += (sender, args) =>
             {
-                if (!IsHasMore || sv.VerticalOffset == 0)
+                var offset = 100;
+                if (!IsHasMore || args.NewValue < offset)
                 {
                     return;
                 }
-                var isBottom = (sv.VerticalOffset + 7) >= sv.ScrollableHeight;
+
+                var isBottom = args.NewValue + offset >= sb.Maximum;
                 if (isBottom && GetIsInfiniteScroll())
                 {
                     RequestMore();
                 }
             };
-            listener.Attach(sv, new Binding("VerticalOffset") {Source = sv});
         }
 
         private bool GetIsInfiniteScroll()
