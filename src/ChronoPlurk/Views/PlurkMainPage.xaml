@@ -1,4 +1,4 @@
-﻿<animation:AnimatedBasePage 
+﻿<animation:AnimatedBasePage
     x:Class="ChronoPlurk.Views.PlurkMainPage"
     xmlns:animation="clr-namespace:WP7Contrib.View.Transitions.Animation;assembly=WP7Contrib.View.Transitions"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -34,11 +34,11 @@
             </phone:Pivot.Title>
             <phone:Pivot.HeaderTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding DisplayName}" />
+                    <TextBlock Text="{Binding DisplayName}" Foreground="{Binding ItemColor}"  />
                 </DataTemplate>
             </phone:Pivot.HeaderTemplate>
         </phone:Pivot>
     </Grid>
-    
+
     <!-- APP BAR -->
 </animation:AnimatedBasePage>

@@ -14,13 +14,13 @@ namespace Plurto.Core.OAuth
 {
     public class OAuthClientInternal : IRequestClient
     {
-        private const string RequestTokenEndpoint = "http://www.plurk.com/OAuth/request_token";
+        private const string RequestTokenEndpoint = "https://www.plurk.com/OAuth/request_token";
         private const string RequestTokenEndpointSecure = "https://www.plurk.com/OAuth/request_token";
-        private const string AuthorizationPage = "http://www.plurk.com/OAuth/authorize";
-        private const string AuthorizationPageMobile = "http://www.plurk.com/m/authorize";
-        private const string AccessTokenEndpoint = "http://www.plurk.com/OAuth/access_token";
-        private const string AccessTokenEndpointSecure = "http://www.plurk.com/OAuth/access_token";
-        private const string ApiEndpoint = "http://www.plurk.com/APP";
+        private const string AuthorizationPage = "https://www.plurk.com/OAuth/authorize";
+        private const string AuthorizationPageMobile = "https://www.plurk.com/m/authorize";
+        private const string AccessTokenEndpoint = "https://www.plurk.com/OAuth/access_token";
+        private const string AccessTokenEndpointSecure = "https://www.plurk.com/OAuth/access_token";
+        private const string ApiEndpoint = "https://www.plurk.com/APP";
         private const string ApiEndpointSecure = "https://www.plurk.com/APP";
 
         public string ConsumerKey { get; set; }

@@ -104,11 +104,11 @@ namespace ChronoPlurk.ViewModels.Main
         {
             if (UnreadCount > 0)
             {
-                this.DisplayName = AppResources.filterUnread + "(" + UnreadCount + ")";
+                this.ItemColor = PlurkResources.PhoneAccentBrush;
             }
             else
             {
-                this.DisplayName = AppResources.filterUnread;
+                this.ItemColor = PlurkResources.PhoneForegroundBrush;
             }
         }
 

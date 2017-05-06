@@ -40,10 +40,7 @@
                             Value="{Binding OpacityValue, Mode=TwoWay}"
                             Margin="20,0"
                             cal:Message.Attach="
-                            [Event ValueChanged] = [Action SliderValueChanged($eventArgs)];
-                            [Event ManipulationStarted] = [Action SliderStarted($view)];
-                            [Event ManipulationCompleted] = [Action SliderCompleted($view)]
-                            " />
+                            [Event ValueChanged] = [Action SliderValueChanged($eventArgs)]" />
                         <Button x:Name="ChangeBackground"
                                 HorizontalAlignment="Left"
                                 Width="400"

@@ -17,6 +17,7 @@ using Plurto.Core;
 using Plurto.Entities;
 using WP7Contrib.View.Controls.BindingListener;
 using WP7Contrib.View.Controls.Extensions;
+using System.Windows.Media;
 
 namespace ChronoPlurk.ViewModels
 {
@@ -80,6 +81,8 @@ namespace ChronoPlurk.ViewModels
                 }
             }
         }
+
+        public Brush ItemColor { get; set; } = PlurkResources.PhoneForegroundBrush;
 
         protected Func<TSource, bool> IsHasMoreHandler { get; set; }
 
@@ -459,14 +462,14 @@ namespace ChronoPlurk.ViewModels
                     return cachedScroll;
                 }
             }
-            
+
             var view = GetView() as UIElement;
             if (view == null)
             {
                 return null;
             }
             var scroll = view.FindChildOfType<ScrollViewer>();
-            
+
             if (_scrollCache == null)
             {
                 _scrollCache = new WeakReference(scroll, false);
