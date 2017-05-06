@@ -32,13 +32,13 @@ function replaceImg(imgsrc) {
     img.id = 'inner'
     img.src = imgsrc;
     img.addEventListener('load', function(e) {
-    	window.external.notify('load');
+        window.external.notify('load');
     });
     var container = document.getElementById('container');
     container.replaceChild(img, document.getElementById('inner'));
 }
 function changeBg(color) {
-	document.body.bgColor = color;
+    document.body.bgColor = color;
 }
 </script>
 <style>

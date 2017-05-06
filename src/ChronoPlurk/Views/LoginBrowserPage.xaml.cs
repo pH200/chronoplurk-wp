@@ -72,7 +72,7 @@ namespace ChronoPlurk.Views
             }
         }
 
-        private void Browser_LoadCompleted(object sender, NavigationEventArgs e)
+        private void Browser_Navigated(object sender, NavigationEventArgs e)
         {
             var progressService = IoC.Get<IProgressService>();
             progressService.Hide();
@@ -80,6 +80,10 @@ namespace ChronoPlurk.Views
             {
                 loadedStoryboard.Begin();
             }
+        }
+
+        private void Browser_LoadCompleted(object sender, NavigationEventArgs e)
+        {
             if (e.Uri.OriginalString.Contains("authorizeDone"))
             {
                 ProcessVerifier();

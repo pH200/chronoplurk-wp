@@ -1,4 +1,4 @@
-﻿<animation:AnimatedBasePage 
+﻿<animation:AnimatedBasePage
     x:Class="ChronoPlurk.Views.LoginBrowserPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -14,7 +14,7 @@
     Orientation="Portrait"
     mc:Ignorable="d" d:DesignHeight="768" d:DesignWidth="480"
     shell:SystemTray.IsVisible="True">
-    
+
     <animation:AnimatedBasePage.Resources>
         <Storyboard x:Name="loadedStoryboard"
                     Completed="loadedStoryboard_Completed">
@@ -30,14 +30,15 @@
                           VerticalContentAlignment="Stretch"
                           HorizontalContentAlignment="Stretch"
                           Navigating="Browser_Navigating"
-                          LoadCompleted="Browser_LoadCompleted" />
+                          LoadCompleted="Browser_LoadCompleted"
+                          Navigated="Browser_Navigated" />
         <Grid Background="{StaticResource PhoneBackgroundBrush}"
               x:Name="LoadingGrid">
             <TextBlock Text="Connecting to plurk.com"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center"
                        Margin="0,48,0,0"/>
-            <toolkit:PerformanceProgressBar IsIndeterminate="True" />
+            <ProgressBar IsIndeterminate="True" />
         </Grid>
     </Grid>
 
