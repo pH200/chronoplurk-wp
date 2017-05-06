@@ -36,7 +36,7 @@ namespace ChronoPlurk.ViewModels
         private IDisposable _requestHandler;
         private DateTime _timeBase = DateTime.UtcNow;
         private TSource _lastResult;
-        private WeakReference _scrollCache;
+        private LongListSelector _longListSelector;
         private bool _isCachedItemsLoaded;
         #endregion
 
@@ -167,6 +167,7 @@ namespace ChronoPlurk.ViewModels
             {
                 return;
             }
+            _longListSelector = sv;
             var sb = sv.GetVisualDescendents<ScrollBar>(false).FirstOrDefault();
             sb.ValueChanged += (sender, args) =>
             {
@@ -438,50 +439,18 @@ namespace ChronoPlurk.ViewModels
 
         public void ScrollToTop()
         {
-            var scroll = FindScroll();
-            if (scroll != null)
+            if (_longListSelector != null && _longListSelector.ItemsSource.Count > 0)
             {
-                scroll.ScrollToVerticalOffset(0);
+                _longListSelector.ScrollTo(_longListSelector.ItemsSource[0]);
             }
         }
 
         public void ScrollToEnd()
         {
-            var scroll = FindScroll();
-            if (scroll != null)
+            if (_longListSelector != null && _longListSelector.ItemsSource.Count > 0)
             {
-                scroll.ScrollToVerticalOffset(scroll.ScrollableHeight);
+                _longListSelector.ScrollTo(_longListSelector.ItemsSource[_longListSelector.ItemsSource.Count - 1]);
             }
-        }
-
-        private ScrollViewer FindScroll()
-        {
-            if (_scrollCache != null)
-            {
-                var cachedScroll = _scrollCache.Target as ScrollViewer;
-                if (cachedScroll != null)
-                {
-                    return cachedScroll;
-                }
-            }
-
-            var view = GetView() as UIElement;
-            if (view == null)
-            {
-                return null;
-            }
-            var scroll = view.FindChildOfType<ScrollViewer>();
-
-            if (_scrollCache == null)
-            {
-                _scrollCache = new WeakReference(scroll, false);
-            }
-            else
-            {
-                _scrollCache.Target = scroll;
-            }
-
-            return scroll;
         }
 
         public IEnumerable<long> GetUnreadPlurkIds()
