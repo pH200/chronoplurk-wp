@@ -6,17 +6,16 @@
     <Language code="zh-TW" />
     <Language code="" />
   </Languages>
-  <App xmlns="" ProductID="{2826c958-c7c3-4cca-97e8-1add110fe2cb}" Title="ChronoPlurk" RuntimeType="Silverlight" Version="2.1.0.0" Genre="apps.normal" Author="Ting-Yu Lin" Description="Plurk client for Windows Phone." Publisher="Cytisan" PublisherID="{a04ee325-3955-454e-8b30-f083c64480a3}">
+  <App xmlns="" ProductID="{2826c958-c7c3-4cca-97e8-1add110fe2cb}" Title="ChronoPlurk" RuntimeType="Silverlight" Version="2.2.0.0" Genre="apps.normal" Author="Ting-Yu Lin" Description="Plurk client for Windows Phone." Publisher="Cytisan" PublisherID="{a04ee325-3955-454e-8b30-f083c64480a3}">
     <IconPath IsRelative="true" IsResource="false">ApplicationIcon.png</IconPath>
     <Capabilities>
-      <Capability Name="ID_CAP_PHONEDIALER" />
       <!-- detected by App Hub -->
       <Capability Name="ID_CAP_ISV_CAMERA" />
       <!-- detected by App Hub -->
       <Capability Name="ID_CAP_NETWORKING" />
       <Capability Name="ID_CAP_WEBBROWSERCOMPONENT" />
-      <Capability Name="ID_CAP_MEDIALIB_AUDIO" />
       <Capability Name="ID_CAP_MEDIALIB_PHOTO" />
+      <Capability Name="ID_CAP_MEDIALIB_AUDIO" />
       <Capability Name="ID_CAP_MEDIALIB_PLAYBACK" />
     </Capabilities>
     <Tasks>
@@ -29,10 +28,14 @@
           <Count>0</Count>
           <BackgroundImageURI IsResource="false" IsRelative="true">Background.png</BackgroundImageURI>
           <Title>ChronoPlurk</Title>
-          <BackContent></BackContent>
-          <BackBackgroundImageURI></BackBackgroundImageURI>
-          <BackTitle></BackTitle>
-          <DeviceLockImageURI></DeviceLockImageURI>
+          <BackContent>
+          </BackContent>
+          <BackBackgroundImageURI>
+          </BackBackgroundImageURI>
+          <BackTitle>
+          </BackTitle>
+          <DeviceLockImageURI>
+          </DeviceLockImageURI>
           <HasLarge>false</HasLarge>
         </TemplateFlip>
       </PrimaryToken>
