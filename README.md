@@ -2,6 +2,8 @@
 
 The Open Source [Plurk](https://plurk.com) App for Windows Phone 8.x and Windows 10 Mobile. This app is developed for Windows Phone 8 Silverlight platform.
 
+See [ChronoPlurk](https://www.microsoft.com/store/apps/9nblggh0b1nw) on Microsoft Store.
+
 ## Prerequisites
 
 You must regitered a valid [Plurk App](https://www.plurk.com/API) to replace the app key and app secret strings in this repo.
