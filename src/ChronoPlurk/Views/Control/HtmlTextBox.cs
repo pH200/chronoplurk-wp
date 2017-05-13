@@ -88,7 +88,7 @@ namespace ChronoPlurk.Views.PlurkControls
               new PropertyMetadata(false));
 
         #endregion
-        
+
 
         private RichTextBox _richTextBox;
         protected RichTextBox RichTextBox
@@ -141,41 +141,15 @@ namespace ChronoPlurk.Views.PlurkControls
 
             if (!string.IsNullOrEmpty(html))
             {
-                var sanitized = Regex.Replace(html, @"<(.|\n)*?>", "");
-                var rawParagraph = new Paragraph();
-                rawParagraph.Inlines.Add(sanitized);
-                var imgCount = Regex.Matches(html, "<img").Count;
-                for (var i = 0; i < imgCount; i++)
+                var document = new HtmlDocument();
+                document.LoadHtml(html);
+                var paragraph = new Paragraph();
+                var inlines = ProcessNodeInternal(document.DocumentNode);
+                foreach (var inline in inlines)
                 {
-                    rawParagraph.Inlines.Add(new LineBreak() { FontSize = 20.0 });
+                    paragraph.Inlines.Add(inline);
                 }
-                RichTextBox.Blocks.Add(rawParagraph);
-
-                double recommendHeight; // Get recommend height for LongListSelector scrolling
-                if (RecommendHeightCache.Instance.TryGetValue(html, out recommendHeight))
-                {
-                    RichTextBox.Height = recommendHeight;
-                }
-
-                ThreadEx.OnThreadPool(() =>
-                {
-                    var document = new HtmlDocument();
-                    document.LoadHtml(html);
-                    return document;
-                }, document =>
-                {
-                    RichTextBox.Blocks.Remove(rawParagraph);
-
-                    var paragraph = new Paragraph();
-                    var inlines = ProcessNodeInternal(document.DocumentNode);
-                    foreach (var inline in inlines)
-                    {
-                        paragraph.Inlines.Add(inline);
-                    }
-                    RichTextBox.Blocks.Add(paragraph);
-
-                    RichTextBox.Height = double.NaN; // Reset height to auto.
-                });
+                RichTextBox.Blocks.Add(paragraph);
             }
         }
 
