@@ -613,15 +613,15 @@
     <Content Include="SplashScreenImage.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\plurto\Plurto.PortableRx\Plurto.PortableRx.csproj">
+    <ProjectReference Include="..\Plurto.PortableRx\Plurto.PortableRx.csproj">
       <Project>{7018bb58-b1b4-45f2-b27c-6493fbbad2e6}</Project>
       <Name>Plurto.PortableRx</Name>
     </ProjectReference>
-    <ProjectReference Include="..\plurto\Plurto.Portable\Plurto.Portable.csproj">
+    <ProjectReference Include="..\Plurto.Portable\Plurto.Portable.csproj">
       <Project>{8b2d09ab-b99e-42a9-a773-f07de5aa8e96}</Project>
       <Name>Plurto.Portable</Name>
     </ProjectReference>
-    <ProjectReference Include="..\plurto\Plurto.WP8\Plurto.WP8.csproj">
+    <ProjectReference Include="..\Plurto.WP8\Plurto.WP8.csproj">
       <Project>{85d48e4d-1cc5-45a9-9eb9-118793837ce7}</Project>
       <Name>Plurto.WP8</Name>
     </ProjectReference>

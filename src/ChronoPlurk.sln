@@ -5,17 +5,17 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChronoPlurk", "ChronoPlurk\ChronoPlurk.csproj", "{1DE94618-ACEA-4FC8-9D78-D49D74E881E3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plurto.Portable", "plurto\Plurto.Portable\Plurto.Portable.csproj", "{8B2D09AB-B99E-42A9-A773-F07DE5AA8E96}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plurto.Portable", "Plurto.Portable\Plurto.Portable.csproj", "{8B2D09AB-B99E-42A9-A773-F07DE5AA8E96}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plurto.PortableRx", "plurto\Plurto.PortableRx\Plurto.PortableRx.csproj", "{7018BB58-B1B4-45F2-B27C-6493FBBAD2E6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plurto.PortableRx", "Plurto.PortableRx\Plurto.PortableRx.csproj", "{7018BB58-B1B4-45F2-B27C-6493FBBAD2E6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plurto.WP8", "plurto\Plurto.WP8\Plurto.WP8.csproj", "{85D48E4D-1CC5-45A9-9EB9-118793837CE7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plurto.WP8", "Plurto.WP8\Plurto.WP8.csproj", "{85D48E4D-1CC5-45A9-9EB9-118793837CE7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plurto", "plurto\Plurto\Plurto.csproj", "{34923031-37E8-43B6-9222-E46E09175EA9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plurto", "Plurto\Plurto.csproj", "{34923031-37E8-43B6-9222-E46E09175EA9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plurto.Universal", "plurto\Plurto.Universal\Plurto.Universal.csproj", "{3537D260-34EF-4A01-98C3-83C563701D48}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plurto.Universal", "Plurto.Universal\Plurto.Universal.csproj", "{3537D260-34EF-4A01-98C3-83C563701D48}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plurto.Test", "plurto\Plurto.Test\Plurto.Test.csproj", "{CB633ADF-373C-46D1-AC1A-129386C2940F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plurto.Test", "Plurto.Test\Plurto.Test.csproj", "{CB633ADF-373C-46D1-AC1A-129386C2940F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
